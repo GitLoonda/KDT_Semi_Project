@@ -11,7 +11,7 @@
 <body>
 	<div id="app">
 		hello world.asdfsadfsdkfjsdlfskjdflk00
-		123124134234234
+		123124134234234123123123123
 	</div>
 </body>
 </html>
