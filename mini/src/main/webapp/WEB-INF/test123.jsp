@@ -10,8 +10,16 @@
 </style>
 <body>
 	<div id="app">
+<<<<<<< HEAD
 		hello world.
 		000000
+=======
+		<pre>
+			test123444sdfsdf123123
+			asdfxsss
+			asdfsdfdsdfsdd
+		</pre>
+>>>>>>> branch 'main' of https://github.com/GitLoonda/KDT_Semi_Project.git
 	</div>
 </body>
 </html>
