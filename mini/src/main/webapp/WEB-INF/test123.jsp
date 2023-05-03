@@ -10,8 +10,11 @@
 </style>
 <body>
 	<div id="app">
-		hello world.asdfsadfsdkfjsdlfskjdflk00
-		123124134234234123123123123
+		<pre>
+			test123444sdfsdf123123
+			asdf
+			asdfsdfd
+		</pre>
 	</div>
 </body>
 </html>
