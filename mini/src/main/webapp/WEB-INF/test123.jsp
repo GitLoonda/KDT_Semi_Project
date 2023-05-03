@@ -11,7 +11,7 @@
 <body>
 	<div id="app">
 		hello world.
-		00000000000
+		000000
 	</div>
 </body>
 </html>
