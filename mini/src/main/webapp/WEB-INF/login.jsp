@@ -7,54 +7,6 @@
 	<title>로그인</title>
 </head>
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap')
-	
-	* {
-		font-family: 'Noto Sans KR', sans-serif;
-	}
-    .div1 {
-       margin: auto;
-       width: 300px;
-       background-color: #EEEFF1;
-       border-radius: 5px;
-       text-align: center;
-       padding: 20px;
-    }
-    .div2 {
-       margin: auto;
-       width: 250px;
-       background-color: #EEEFF1;
-       border-radius: 5px;
-       text-align: center;
-       padding: 20px;
-    }
-	
-    input {
-       width: 100%;
-       padding: 10px;
-       box-sizing: border-box;
-       border-radius: 5px;
-       border: none;
-    }
-    
-    .in {
-        margin-bottom: 10px;
-    }
-    
-    #btn {
-	    border-radius: 10px;
-	    display: block;
-	    letter-spacing: 1px;
-	    margin: auto;
-	    padding: 7px 25px;
-    }
-	
-    a {
-       text-decoration: none;
-       color: #9B9B9B;
-       font-size: 12px;
-    }
-	
 </style>
 <body>
 	<div id="app" class="div1">
