@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/find.css">
+	<link rel="stylesheet" href="css/login.css">
 	<title>아이디 찾기</title>
 </head>
 <style>
