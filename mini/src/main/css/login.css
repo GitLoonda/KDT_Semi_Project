@@ -1,4 +1,4 @@
-.container {
+ .container {
     width: 960px;
     margin : 0 auto;
   }
@@ -16,7 +16,7 @@
     font-size: 15px;
     font-weight: bold;
     padding-left:4px;
-    padding-bottom: 12px;	
+    padding-bottom: 12px;
   }
   #signup ul li {
     line-height: 25px;
@@ -91,4 +91,22 @@
  }
  .p1{
   margin-right: 200px;
+  
+ } #signup_add {
+  border-radius: 5px;
+  padding: 20px;
+  width: 600px;	
+  margin:100px auto;
+}
+ #member_addr{
+  width: 225px;
+  margin-bottom: 20px;
+  margin-right: 5px;
+  font-size: 12px;
+ } 
+ #member_post{
+  width: 300px;
+  margin-left: 10px;
+  font-size: 12px;
  }
+ 
