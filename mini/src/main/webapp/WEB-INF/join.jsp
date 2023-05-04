@@ -7,15 +7,10 @@
 	<title>회원가입</title>
 </head>
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
-	
-	* {
-	     font-family: 'Noto Sans KR', sans-serif;
-	}
 </style>
 <body>
 	<div id="app" class="div1">
-		<h2>회원 가입</h2>
+		<h2>회원가입</h2>
 		<div class="div2">
 			<input type="password" class="in" placeholder="아이디"></input>
 			<button id="btn" @click="">중복확인</button>
@@ -33,7 +28,7 @@
 			<input type="text" class="in" placeholder="닉네임"></input>
 		</div>
 		<div class="div2">
-			<label> 성별
+			<label> 성별 
 				<select style="width : 100px;">
 					<option value=""></option>
 					<option value=""></option>
@@ -71,12 +66,12 @@
 		</div>
 		<div class="div2">
 			<input type="text" class="in" placeholder="우편번호"></input>
-			<button id="btn" @click="">주소 찾기</button>
+			<button id="btn" @click="fnAdr">주소 찾기</button>
 			<input type="text" class="in" placeholder="상세주소"></input>
 		</div>
 		<div class="div2">
-			<button id="btn" @click="">회원가입</button>
-			<button id="btn" @click="">취소</button>
+			<button id="btn" @click="fnJoin">회원가입</button>
+			<button id="btn" @click="fnCancle">취소</button>
 		</div>
 	</div> 
 </body>
@@ -89,6 +84,17 @@ var app = new Vue({
 
     }   
     , methods: {
+    	fnAdr : function(){
+    		
+    	}
+    
+    	,fnJoin : function(){
+    		
+    	}
+    
+    	,fnCancle : function(){
+    		
+    	}
     	
     }   
     , created: function () {

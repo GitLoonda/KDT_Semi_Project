@@ -18,5 +18,18 @@ public class LoginController {
 
         return "/join";
     }
+	
+	@RequestMapping("/login/findId.do") //아이디 찾기
+    public String findId(Model model) throws Exception{
+
+        return "/find_id";
+    }
+	
+	@RequestMapping("/login/findPw.do") //비밀번호 찾기
+    public String findPw(Model model) throws Exception{
+
+        return "/find_pw";
+    }
+
 
 }
