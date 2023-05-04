@@ -10,12 +10,12 @@
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 	
 	* {
-	     font-family: 'Noto Sans KR', sans-serif;
+		font-family: 'Noto Sans KR', sans-serif;
 	}
 </style>
 <body>
 	<div id="app" class="div1">
-		<h2>회원 가입</h2>
+		<h2>회원가입</h2>
 		<div class="div2">
 			<input type="password" class="in" placeholder="아이디"></input>
 			<button id="btn" @click="">중복확인</button>
