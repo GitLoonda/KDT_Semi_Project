@@ -1,3 +1,5 @@
+@charset  "UTF-8";
+
 .container {
     width: 960px;
     margin : 0 auto;
@@ -56,3 +58,4 @@
       padding-left: 45px;
       text-align: center;
   }
+  
