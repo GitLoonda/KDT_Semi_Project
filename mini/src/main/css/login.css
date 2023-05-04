@@ -8,10 +8,6 @@
     width: 400px;	
     margin:100px auto;
   }
-  #signup fieldset {
-    margin-bottom: 40px;
-    margin-top: 10px;
-  }
   #signup legend {
     font-size: 15px;
     font-weight: bold;

@@ -10,31 +10,23 @@
 <style>
 </style>
 <body>
-    <div class="container">
         <form id="signup">
-            <fieldset>
-                <img src="../images/insta.jpg">
+                <a href = "#"><img src="../images/insta.jpg"></a>
                 <br><br>
-               <div id="idtext">아이디 찾기</div>
-                <ul>
-                  <li>
-                    <label for="id"> 이름 </label>
-                    <br>
-                    <input id="id" name="id" type="text" required>
-                  </li>
-                  <li>
-                    <label for="ps">이메일</label>
-                    <br>
-                    <input id="ps" name="ps" type="password" required>
-                  </li>          
-                </ul>
-                <br>
-                <form id="signup">
-                    <button type="submit" @click="fnsearch"> 찾기 </button> 
-                </form>
-              </fieldset>
+               <div class="logoImg"><h2>아이디 찾기</h2></div>
+		<div class="div2">
+			<p class="p1">이름</p>
+			<input type="text" class="in" required></input>
+		</div>
+		<div class="div2">
+			<p class="p1">이메일</p>
+			<input type="email" class="in" required></input>
+		</div>
+             <div class="div2">
+			<button id="btn" @click="fnsearch">찾기</button>
+			
+		</div>
      </form>
-   </div>
 </body>
 </html>
 
