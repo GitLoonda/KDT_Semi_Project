@@ -4,6 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<link rel="stylesheet" href="css/login.css">
 	<title>아이디 찾기</title>
 </head>

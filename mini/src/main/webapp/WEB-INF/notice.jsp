@@ -4,6 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<title>공지사항</title>
 </head>
 <style>

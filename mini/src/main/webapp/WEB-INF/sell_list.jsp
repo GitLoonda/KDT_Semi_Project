@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<meta charset="UTF-8">
 	<title>커뮤니티게시판</title>
 </head>

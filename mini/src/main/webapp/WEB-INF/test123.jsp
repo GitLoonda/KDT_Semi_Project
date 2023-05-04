@@ -1,28 +1,75 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>test</title>
-</head>
-<style>
+	pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8">
+			<jsp:include page="/defult/def.jsp"></jsp:include>
+			<title>test</title>
+		</head>
+		<style>
 </style>
-<body>
-	<div id="app">
+		<body>
+			<div id="app">
+				안녕하세요.
+			</div>
+			<div class="table-list">
+	            <table class="board_list">                   
+	                <thead>
+	                    <tr>                       
+	                        <th scope="col">No.</th>
+	                        <th scope="col">학번</th>
+	                        <th scope="col">이름</th>
+	                        <th scope="col">학과</th>
+	                        <th scope="col">학년</th>
+	                        <th scope="col">키</th>
+	                        <th scope="col">몸무게</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr v-for="(item, index) in list" > 
+                            <td>{{index+1}}</td>
+							<td>{{item.id}}</td> 
+                            <td>{{item.name}}</td>
+                            <td>{{item.nick}}</td>
+                            <td>{{item.gender}}</td>     
+                            <td>{{item.email}}</td>     
+                            <td>{{item.addr}}</td>     
+                        </tr>                                       
+	                </tbody>                   
+	            </table>
+				
+		</body>
+	</html>
 
-		hello world.
-		000000
-		<pre>
-			test123444sdfsdf123123
-			asdfxssssdfsdfsdf
-			asdfsdfdsdfsdd
-		</pre>
-
-	</div>
-</body>
-</html>
-
-<script>
-
+	<script type="text/javascript">
+	var app = new Vue({ 
+    el: '#app',
+    data: {
+		list : [],
+    }   
+    , methods: {
+		fnGetList : function(){
+            var self = this;
+            var nparmap = {};
+            $.ajax({
+                url:"/test/list.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+					// console.log(data);                                      
+	                self.list = data.list;
+					console.log(self.list);
+                }
+            }); 
+        } 
+	
+	}
+    , created: function () {
+    	var self = this;
+		self.fnGetList();
+		
+	}
+});
 </script>

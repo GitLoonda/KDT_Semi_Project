@@ -4,6 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<link rel="stylesheet" href="css/find.css">
 	<title>비밀번호 찾기</title>
 </head>
