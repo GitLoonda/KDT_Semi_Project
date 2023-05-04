@@ -42,7 +42,11 @@
     }
     
     #btn {
-       margin-bottom: 30px;
+	    border-radius: 10px;
+	    display: block;
+	    letter-spacing: 1px;
+	    margin: auto;
+	    padding: 7px 25px;
     }
 	
     a {

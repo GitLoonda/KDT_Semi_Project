@@ -1,0 +1,60 @@
+@charset  "UTF-8";
+
+.container {
+    width: 960px;
+    margin : 0 auto;
+  }
+  #signup {
+    border-radius: 5px;
+    padding: 20px;
+    width: 400px;	
+    margin:100px auto;
+  }
+  #signup fieldset {
+    margin-bottom: 40px;
+    margin-top: 10px;
+  }
+  #signup legend {
+    font-size: 15px;
+    font-weight: bold;
+    padding-left:4px;
+    padding-bottom: 12px;	
+  }
+  #signup ul li {
+    line-height: 25px;
+    list-style: none;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+  }
+  #signup label {
+    float: left;
+    font-size: 13px;
+    width : 100px;
+    padding-right: 15px;
+  }
+  #signup input{
+    border: 2px solid #f09d9d;
+    border-radius: 3px;
+    padding: 5px;
+    width: 250px;    
+  }
+  #signup input:checked + label { 
+    font-weight:bold; 
+  }
+
+  #signup button {
+    border-radius: 10px;
+    display: block;
+    letter-spacing: 1px;
+    margin: auto;
+    padding: 7px 25px; 
+  }
+  img{
+      width: 50px;
+      height: 50px;
+      float: right;
+  }
+  #idtext{
+      padding-left: 45px;
+      text-align: center;
+  }
