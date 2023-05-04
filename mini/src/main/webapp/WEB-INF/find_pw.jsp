@@ -12,7 +12,7 @@
 <body>
     <form id="signup">
 	<div id="app" class="div1">
-		<a href="#"><img src="../images/insta.jpg"></a><br><br>
+		<a href="http://localhost:8080/main.do"><img src="../images/insta.jpg"></a><br><br>
 		<div class="logoImg"><h2>비밀번호 찾기</h2></div>
 		<div class="div2">
 			<p class="p1">아이디</p>

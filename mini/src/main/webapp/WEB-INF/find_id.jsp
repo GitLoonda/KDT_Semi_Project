@@ -11,7 +11,7 @@
 </style>
 <body>
         <form id="signup">
-                <a href = "#"><img src="../images/insta.jpg"></a>
+                <a href = "http://localhost:8080/main.do"><img src="../images/insta.jpg"></a>
                 <br><br>
                <div class="logoImg"><h2>아이디 찾기</h2></div>
 		<div class="div2">

@@ -10,7 +10,7 @@
 </style>
 <body>
 	<div id="app" class="div1">
-		<div class="logoImg"><h2>로고</h2></div>
+		<div class="logoImg" ><h2>로고</h2></div>
 		<div class="div2">
 			<input type="text" class="in" placeholder="아이디"></input>
 		</div>

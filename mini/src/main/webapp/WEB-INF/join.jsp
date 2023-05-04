@@ -13,7 +13,7 @@
 		<h2>회원가입</h2>
 		<div class="div2">
 			<input type="password" class="in" placeholder="아이디"></input>
-			<button id="btn" @click="">중복확인</button>
+			<button id="btn" @click="fnIdChk">중복확인</button>
 		</div>
 		<div class="div2">
 			<input type="password" class="in" placeholder="비밀번호"></input>
@@ -65,7 +65,7 @@
 			<input type="text" class="in" placeholder="이메일"></input>
 		</div>
 		<div class="div2">
-			<input type="text" class="in" placeholder="우편번호"></input>
+			<input type="text" class="in" placeholder="도로명주소"></input>
 			<button id="btn" @click="fnAdr">주소 찾기</button>
 			<input type="text" class="in" placeholder="상세주소"></input>
 		</div>
@@ -84,8 +84,11 @@ var app = new Vue({
 
     }   
     , methods: {
-    	fnAdr : function(){
+    	fnIdChk : function(){
     		
+    	}
+    	,fnAdr : function(){
+    		location.href="/join_address.do";
     	}
     
     	,fnJoin : function(){
@@ -93,7 +96,7 @@ var app = new Vue({
     	}
     
     	,fnCancle : function(){
-    		
+    		location.href="/login.do";
     	}
     	
     }   
