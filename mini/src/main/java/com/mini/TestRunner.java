@@ -1,4 +1,4 @@
-package com.example.mini;
+package com.mini;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
