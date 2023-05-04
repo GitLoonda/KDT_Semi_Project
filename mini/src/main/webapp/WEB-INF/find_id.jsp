@@ -18,7 +18,7 @@
                <div id="idtext">아이디 찾기</div>
                 <ul>
                   <li>
-                    <label for="id">이름</label>
+                    <label for="id"> 이름 </label>
                     <br>
                     <input id="id" name="id" type="text" required>
                   </li>

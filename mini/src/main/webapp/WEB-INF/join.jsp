@@ -33,7 +33,7 @@
 			<input type="text" class="in" placeholder="닉네임"></input>
 		</div>
 		<div class="div2">
-			<label> 성별
+			<label> 성별 
 				<select style="width : 100px;">
 					<option value=""></option>
 					<option value=""></option>

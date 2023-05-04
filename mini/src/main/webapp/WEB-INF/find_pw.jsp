@@ -18,7 +18,7 @@
                <div id="idtext">비밀번호 초기화</div>
                 <ul>
                   <li>
-                    <label for="id">아이디</label>
+                    <label for="id"> 아이디 </label>
                     <br>
                     <input id="id" name="id" type="text" required>
                   </li>
