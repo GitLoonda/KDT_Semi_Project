@@ -35,7 +35,7 @@
                 </ul>
                 <br>
                 <form id="signup">
-                    <button type="submit"> 초기화 </button> 
+                    <button type="submit" @click="fnset"> 초기화 </button> 
                     </form>
               </fieldset>
      </form>
@@ -51,7 +51,9 @@ var app = new Vue({
 
     }   
     , methods: {
-    	
+    	fnset : function(){
+    		
+    	}
     }   
     , created: function () {
     

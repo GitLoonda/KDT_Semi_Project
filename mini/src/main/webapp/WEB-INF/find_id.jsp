@@ -30,7 +30,7 @@
                 </ul>
                 <br>
                 <form id="signup">
-                    <button type="submit"> 찾기 </button> 
+                    <button type="submit" @click="fnsearch"> 찾기 </button> 
                 </form>
               </fieldset>
      </form>
@@ -45,6 +45,9 @@ var app = new Vue({
 
     }   
     , methods: {
+    	fnsearch : function(){
+    		
+    	}
     	
     }   
     , created: function () {

@@ -20,9 +20,9 @@
 		<div class="div2">
 			<button id="btn" @click="">로그인</button>
 		</div>
-		<div>계정이 없으신가요? <a href="#">회원가입</a> </div>
-		<div>아이디가 기억나지 않으시나요? <a href="#">아이디 찾기</a> </div>
-		<div>비밀번호가 기억나지 않으시나요? <a href="#">비밀번호 찾기</a> </div>
+		<div>계정이 없으신가요? <a href="http://localhost:8080/join.do">회원가입</a> </div>
+		<div>아이디가 기억나지 않으시나요? <a href="http://localhost:8080/login/findId.do">아이디 찾기</a> </div>
+		<div>비밀번호가 기억나지 않으시나요? <a href="http://localhost:8080/login/findPw.do">비밀번호 찾기</a> </div>
 		
 	</div> 
 </body>

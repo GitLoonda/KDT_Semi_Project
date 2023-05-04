@@ -66,12 +66,12 @@
 		</div>
 		<div class="div2">
 			<input type="text" class="in" placeholder="우편번호"></input>
-			<button id="btn" @click="">주소 찾기</button>
+			<button id="btn" @click="fnAdr">주소 찾기</button>
 			<input type="text" class="in" placeholder="상세주소"></input>
 		</div>
 		<div class="div2">
-			<button id="btn" @click="">회원가입</button>
-			<button id="btn" @click="">취소</button>
+			<button id="btn" @click="fnJoin">회원가입</button>
+			<button id="btn" @click="fnCancle">취소</button>
 		</div>
 	</div> 
 </body>
@@ -84,6 +84,17 @@ var app = new Vue({
 
     }   
     , methods: {
+    	fnAdr : function(){
+    		
+    	}
+    
+    	,fnJoin : function(){
+    		
+    	}
+    
+    	,fnCancle : function(){
+    		
+    	}
     	
     }   
     , created: function () {
