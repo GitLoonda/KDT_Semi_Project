@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TestController {
 	
-	@RequestMapping("/test123.do") 
+	@RequestMapping("") 
     public String insert(Model model) throws Exception{
 
         return "/test123";
