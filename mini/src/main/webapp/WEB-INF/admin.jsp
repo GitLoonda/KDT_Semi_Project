@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<jsp:include page="/defult/def.jsp"></jsp:include>
+	<jsp:include page="/defult/def.jsp"></jsp:include>s
 	<title>관리자</title>
 </head>
 <style>
