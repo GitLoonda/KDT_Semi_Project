@@ -41,8 +41,26 @@
 				
 		</body>
 	</html>
+	<script>
+				ClassicEditor
+				.create( document.querySelector( '.editor' ), {
+					licenseKey: '',
+				} )
+				.then( editor => {
+					window.editor = editor;
+				} )
+				.catch( error => {
+					console.error( 'Oops, something went wrong!' );
+					console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+					console.warn( 'Build id: poh14nld66ba-25nh7lcfw9by' );
+					console.error( error );
+				} );
+		</script>
 
+    
 	<script type="text/javascript">
+	
+    
 	var app = new Vue({ 
     el: '#app',
     data: {
