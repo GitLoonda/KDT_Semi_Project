@@ -156,7 +156,7 @@
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
-			pagecnt : 0
+			
 		}   
 		, methods: {
 			// 리스트 불러오기,페이징6
@@ -166,7 +166,8 @@
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = (self.selectPage * 15) + 1
          	  	var nparmap = {startNum : startNum, lastNum : lastNum};
-				var nparmap = {};
+				   	console.log(startNum);
+					console.log(lastNum);
 				$.ajax({
 					url:"/trade/list.dox",
 					dataType:"json",	
@@ -176,7 +177,7 @@
 						console.log(data);                                      
 						self.list = data.list;
 						self.listcnt = data.cnt;
-						self.pageCount = Math.ceil(self.pagecnt / 15);
+						self.pageCount = Math.ceil(self.listcnt / 15);
 					}
 				}); 
 			},
@@ -194,8 +195,8 @@
 				data : nparmap,
 				success : function(data) {
 					self.list = data.list;
-					self.cnt = data.cnt;
-					self.pageCount = Math.ceil(self.cnt / 15);
+					self.listcnt = data.cnt;
+					self.pageCount = Math.ceil(self.listcnt / 15);
 				}
 			});
 		},

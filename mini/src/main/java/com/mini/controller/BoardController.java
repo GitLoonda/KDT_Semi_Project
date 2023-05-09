@@ -29,6 +29,10 @@ public class BoardController {
 	@ResponseBody
 	public String searchTbrdListInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        // int startNum = (int) map.get("startNum");
+        // int lastNum = (int) map.get("lasttNum");
+        // map.put("startNum", startNum);
+        // map.put("lastNum", lastNum);
 		resultMap = boardService.searchTbrdListInfo(map);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
