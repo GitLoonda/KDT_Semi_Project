@@ -1,24 +1,40 @@
 package com.mini.controller;
 
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.mini.service.BoardService;
 
 @Controller
 public class BoardController {
 
-	@RequestMapping("/main.do") //메인페이지
-    public String main(Model model) throws Exception{
+    @Autowired
+    BoardService boardService;
 
-        return "/main";
-    }
-	
-	@RequestMapping("/sell.do") //거래게시판 페이지
-    public String sell(Model model) throws Exception{
+	@RequestMapping("/trade.do") //거래게시판 페이지
+    public String trade(Model model) throws Exception{
 
-        return "/sell_list";
+        return "/trade_list";
     }
-	
+    //게시판 리스트 불러오기
+    @RequestMapping(value = "/trade/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchTbrdListInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchTbrdListInfo(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+
+
 	@RequestMapping("/request.do") //의뢰게시판 페이지
     public String request(Model model) throws Exception{
 
