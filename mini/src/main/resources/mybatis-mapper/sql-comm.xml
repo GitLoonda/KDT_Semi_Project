@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mini.mapper.CommunityMapper">
+	<select id="selectCbrdList" parameterType="hashmap" resultType="com.mini.model.Cbrd">
+		SELECT 
+			CBNO,
+			ID, 
+			CATE1, 
+			CATE2, 
+			CTITLE, 
+			CCONT, 
+			CDATE, 
+			HITS 
+		FROM mini_db2.T3_CBRD 
+		ORDER BY CDATE DESC
+	</select>
+	
+	<select id="selectCbrdListCnt" parameterType="hashmap" resultType="int">
+		SELECT
+			COUNT(CBNO) AS CBRDCNT
+		FROM mini_db2.T3_CBRD
+	</select>
+</mapper>
