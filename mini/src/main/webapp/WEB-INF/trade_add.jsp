@@ -4,56 +4,78 @@
 	<html>
 		<head>
 			<jsp:include page="/defult/def.jsp"></jsp:include>
+			<!-- 1. vue2editor 에디터 cdn -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+			<script src="https://unpkg.com/vue2-editor@2.3.11/dist/index.js"></script>
 			<meta charset="UTF-8">
 			<title>게시글 등록</title>
 		</head>
 		<style>
-			*{
+			/* *{
 				border: 1px dashed red;
-			}
-	.container{
-         width: 1080px;
-         margin: 1px auto;
-         background-color: #09e19c;
-		 display: block;
-      }
-	  #Taddbox1{
-		padding: 0px 30px;
-	  }
-	  #Taddbox1 hr{
-		border: 2px solid black;
-	  }
-	  .Taddbox1_1{
-		margin: 0px;
-		margin-bottom: 20px;
-	  }
-	  .titlebox{
-		width: 80%;
-		font-size: 12pt;
-		height: 30px;
-	  }
-	  .catebox1{
-		width: 150px;
-		font-size: 12pt;
-		height: 30px;
-	  }
-	  .sumbox{
-		margin: 0px 0px;
-		width: 100%;
-		
-		}
-	  .sumbox1{
-		display: inline-block;
-		width: 49%;
-		padding-left: 5px;
-		    
-	  }
-	  .admintext{
-		width: 100%;
-		background-color: aliceblue;
-		border: 1px solid black;
+			} */
 
-	  }
+			#Taddbox1{
+				padding: 0px 30px;
+			}
+			#Taddbox1 hr{
+				border: 2px solid black;
+			}
+			#Taddbox1 .Taddbox1_1{
+				margin: 0px;
+				margin-bottom: 20px;
+			}
+			#Taddbox1 .titlebox{
+				width: 80%;
+				font-size: 12pt;
+				height: 30px;
+			}
+			#Taddbox1 .sellpirbox{
+				width: 200px;
+				height: 30px;
+			}
+			#Taddbox1 .catebox1{
+				width: 150px;
+				font-size: 12pt;
+				height: 30px;
+			}
+			#Taddbox1 .scatebox{
+				width: 80px;
+				height: 30px;
+				font-size: 12pt;
+			}
+			#Taddbox1 .sumbox{
+				margin: 0px 0px;
+				width: 100%;
+				
+				}
+			#Taddbox1 .sumbox1{
+				display: inline-block;
+				width: 49%;
+				padding-left: 5px;
+					
+			}
+			#Taddbox1 .admintext{
+				width: 100%;
+				background-color: aliceblue;
+				border: 1px solid black;
+				resize: none;
+
+			}
+			/*에디터 설정  */
+			#Taddbox1 .quillWrapper{
+				border: 1px solid black;
+				background-color: white;
+			}
+			#Taddbox1 .editbox{
+				margin: 20px auto;
+			}
+			#Taddbox1 .btnbox{
+				margin: 20px auto;
+				text-align: center;
+			}
+	  
+	  
 	  
 		</style>
 		<body>
@@ -72,16 +94,16 @@
 
 						<div class="Taddbox1_1">
 							<div> 판매가격</div>
-							<div><input type="number"> 원</div>
+							<div><input type="number" class="sellpirbox"> 원</div>
 							<br>
 							<div>상품 카테고리</div>
-							<select>
+							<select class="scatebox">
 								<option value="">cate1</option>
 							</select>
-							<select>
+							<select class="scatebox">
 								<option value="">cate2</option>
 							</select>
-							<select>
+							<select class="scatebox">
 								<option value="">cate3</option>
 							</select>
 							<button> 적용</button>
@@ -106,12 +128,12 @@
 								<br>
 								<div>거래 형식</div>
 								<div>
-									<label for="c1"><input id="a1" type="radio" name="c">직거래</label>
-									<label for="c2"><input id="a2" type="radio" name="c">택배</label>
-									<label for="c3"><input id="a3" type="radio" name="c">온라인</label>
+									<label for="c1"><input id="c1" type="radio" name="c">직거래</label>
+									<label for="c2"><input id="c2" type="radio" name="c">택배</label>
+									<label for="c3"><input id="c3" type="radio" name="c">온라인</label>
 								</div>
 							</div>
-							
+
 							<div class="sumbox1">
 								<div>박스 상태</div>
 								<div>
@@ -127,13 +149,13 @@
 								<br>
 
 								<div>거래 지역</div>
-								<select>
+								<select class="scatebox" >
 									<option value="">local1</option>
 								</select>
-								<select>
+								<select  class="scatebox" >
 									<option value="">local2</option>
 								</select>
-								<select>
+								<select class="scatebox">
 									<option value="">local3</option>
 								</select>
 								<button> 적용</button>
@@ -144,34 +166,83 @@
 						<div class="Taddbox1_1">
 							<div>판매자정보</div>
 							<div>
-							<span>이메일</span>
-							<span> | </span>
-							<span>연락처</span>
+								<span>이메일</span>
+								<span> | </span>
+								<span>연락처</span>
 							</div>
 						</div>
 						<textarea class="admintext" name="" id="" cols="30" rows="10" disabled>asdasd</textarea>
+						<br>
+						<div class="editbox">
+						<div>첨부파일  <input type="file" id="file1" name="file1"> </div>
+						<br>
+						<div>
+							<vue-editor v-model="content"></vue-editor> <!-- 2. 화면 에디터 추가 -->
+						</div>
+
+						<div class="btnbox">
+							<button class="btn">등록</button>
+							<button class="btn">목록</button>
+						</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</body>
 	</html>
 	<script type="text/javascript">
+	console.log(Vue);
+	Vue.use(Vue2Editor);
+	const VueEditor = Vue2Editor.VueEditor;
 	var app = new Vue({ 
 		el: '#app',
 		data: {
 			list : [],
+			title : "",
+			content : "",
+			
 			
 			
 		}   
+		, components: {VueEditor}
 		, methods: {
-
-
+			fnAddBbs : function(){
+            var self = this;
+            var nparmap = {title : self.title, content : self.content};
+            console.log( self.content );
+            /* $.ajax({
+                url:"/bbs/add.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	alert("저장되었습니다.");
+                	location.href="bbs.do";
+                }
+            });  */
+        } 
+		, upload : function(){
+			var form = new FormData();
+	        form.append( "file1", $("#file1")[0].files[0] );
+	        
+	         $.ajax({
+	             url : "/upload.do"
+	           , type : "POST"
+	           , processData : false
+	           , contentType : false
+	           , data : form
+	           , success:function(response) { 
+	        	   
+	           }
+	           
+	       });
+		}
 
 		
 		}
 		, created: function () {
 			var self = this;
-			self.fnGetList();
+
 			
 		}
 	});
