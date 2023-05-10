@@ -57,6 +57,9 @@
 		padding-left: 5pt;
 	   }
 
+	   .pageline{
+		text-align: center;
+	   }
 	   /* 페이징 추가 2 */
 		.pagination {
 			margin:24px;
@@ -115,7 +118,6 @@
 							<div class="itembox" v-for="(item, index) in list">
 								<!-- 이미지 src 참고 -->
 								<img id="tmp" class="imgbox" :src="item.path">
-
 								<div class="itemtxt">{{item.tbno}}.{{item.btitle}}</div>
 								<div class="itemtxt">{{item.bprice}} 원</div>
 								<div class="itemtxt">
@@ -127,18 +129,20 @@
 							</div>
 						</div>
 						<!-- 페이징 추가 3 -->
-						<template>
-							<paginate
-								:page-count="pageCount"
-								:page-range="3"
-								:margin-pages="2"
-								:click-handler="fnSearch"
-								:prev-text="'<'"
-								:next-text="'>'"
-								:container-class="'pagination'"
-								:page-class="'page-item'">
-							</paginate>
-						</template>
+						<div class="pageline">
+							<template>
+								<paginate
+									:page-count="pageCount"
+									:page-range="3"
+									:margin-pages="2"
+									:click-handler="fnSearch"
+									:prev-text="'<'"
+									:next-text="'>'"
+									:container-class="'pagination'"
+									:page-class="'page-item'">
+								</paginate>
+							</template>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -152,7 +156,7 @@
 		el: '#app',
 		data: {
 			list : [],
-			listcnt:"",
+			listcnt:0,
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
@@ -163,8 +167,8 @@
 			fnGetList : function(){
 				var self = this;
 				/* selectPage 시작점에서 ~까지 가져올지  */
-				var startNum = ((self.selectPage-1) * 15);
-    			var lastNum = (self.selectPage * 15) + 1
+				var startNum = ((self.selectPage-1) * 10);
+    			var lastNum = 10;
          	  	var nparmap = {startNum : startNum, lastNum : lastNum};
 				   	console.log(startNum);
 					console.log(lastNum);
@@ -177,7 +181,7 @@
 						console.log(data);                                      
 						self.list = data.list;
 						self.listcnt = data.cnt;
-						self.pageCount = Math.ceil(self.listcnt / 15);
+						self.pageCount = Math.ceil(self.listcnt / 10);
 					}
 				}); 
 			},
@@ -185,9 +189,11 @@
 			fnSearch : function(pageNum){
 			var self = this;
 			self.selectPage = pageNum;
-			var startNum = ((pageNum-1) * 15);
-			var lastNum = (pageNum * 15) + 1;
+			var startNum = ((pageNum-1) * 10);
+			var lastNum = 10;
 			var nparmap = {startNum : startNum, lastNum : lastNum};
+			console.log(startNum);
+			console.log(lastNum);
 			$.ajax({
 				url : "/trade/list.dox",
 				dataType : "json",
@@ -196,7 +202,7 @@
 				success : function(data) {
 					self.list = data.list;
 					self.listcnt = data.cnt;
-					self.pageCount = Math.ceil(self.listcnt / 15);
+					self.pageCount = Math.ceil(self.listcnt / 10);
 				}
 			});
 		},

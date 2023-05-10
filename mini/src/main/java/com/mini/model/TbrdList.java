@@ -29,8 +29,7 @@ public class TbrdList {
     private String delYn;
     private int tbrdcnt;
     private String path;
-    private int startNum;
-    private int lastNum;
+
 
 
 }
