@@ -39,6 +39,13 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 
+    //거래 등록 게시판
+    @RequestMapping("/tradeadd.do") //거래게시판 페이지
+    public String tradeadd(Model model) throws Exception{
+
+        return "/trade_add";
+    }
+
 
 	@RequestMapping("/request.do") //의뢰게시판 페이지
     public String request(Model model) throws Exception{

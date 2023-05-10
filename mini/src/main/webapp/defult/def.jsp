@@ -8,8 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+    <link rel="stylesheet" href="css/borad.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
 </head>
 <body>
     
