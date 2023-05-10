@@ -8,6 +8,14 @@
 	<title>커뮤니티 게시판</title>
 </head>
 <style>
+	.container{
+         width: 1080px;
+         margin: auto;
+    }
+    #cate{
+        margin: 5px;
+        width: 20%;
+    }
 </style>
 <body>
 	<div id="app">
@@ -20,18 +28,18 @@
 					<col width="*"/>
 				</colgroup>
 				<tr> 
-					<select>
-						<option value=""> 1차 분류 </option>
+					<select id="cate">
+						<option value=""> {{CATE1}} </option>
 					</select>
-					<select>
-						<option value=""> 2차 분류 </option>
+					<select id="cate">
+						<option value=""> {{CATE2}} </option>
 					</select>
 				</tr>
 				<tr>
 					<td><input type="text" id="title" name="title" v-model="title" placeholder="제목"></td>
 				</tr>
 				<tr>
-					<td><input type="text" id="title" name="title" v-model="title" placeholder="첨부파일"></td>
+					<td><input type="text" id="" name="" v-model="" placeholder="첨부파일"></td>
 					<td><button @click="" class="btn">첨부</button></td>
 				</tr>
 				<tr>

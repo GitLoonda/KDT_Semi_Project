@@ -7,12 +7,13 @@ public class Cbrd {
 	private String id;
 	private String cate1;
 	private String cate2;
-	private String bTitle;
-	private String bCont;
-	private String hits;
+	private String ctitle;
+	private String ccont;
+	private int hits;
 	private String cdate;
 	private String udate;
 	private String delYn;
+	
 	
 	public int getCbno() {
 		return cbno;
@@ -38,22 +39,22 @@ public class Cbrd {
 	public void setCate2(String cate2) {
 		this.cate2 = cate2;
 	}
-	public String getbTitle() {
-		return bTitle;
+	public String getCtitle() {
+		return ctitle;
 	}
-	public void setbTitle(String bTitle) {
-		this.bTitle = bTitle;
+	public void setCtitle(String ctitle) {
+		this.ctitle = ctitle;
 	}
-	public String getbCont() {
-		return bCont;
+	public String getCcont() {
+		return ccont;
 	}
-	public void setbCont(String bCont) {
-		this.bCont = bCont;
+	public void setCcont(String ccont) {
+		this.ccont = ccont;
 	}
-	public String getHits() {
+	public int getHits() {
 		return hits;
 	}
-	public void setHits(String hits) {
+	public void setHits(int hits) {
 		this.hits = hits;
 	}
 	public String getCdate() {
@@ -74,5 +75,7 @@ public class Cbrd {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
+	
+	
 	
 }
