@@ -16,6 +16,7 @@ public class TbrdList {
     private String cate2name;
     private String cate3name;
     private String bprodname;
+    private String bprosname;
     private String bstatusname;
     private String bpurname;
     private String bboxname;
