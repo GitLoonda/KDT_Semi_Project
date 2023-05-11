@@ -21,4 +21,16 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("list", boardMapper.selectTbrdListInfo(map));
 		return resultMap;
 	}
+
+	@Override
+	public HashMap<String, Object> searchTbrdCateList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("listbrdf", boardMapper.selectTbrdListbrdf(map));
+		resultMap.put("listkindf", boardMapper.selectTbrdListkindf(map));
+		resultMap.put("listcate1", boardMapper.selectTbrdListcate1(map));
+		resultMap.put("listcate2", boardMapper.selectTbrdListcate2(map));
+		resultMap.put("listcate3", boardMapper.selectTbrdListcate3(map));
+		return resultMap;
+	}
 }
