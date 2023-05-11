@@ -405,3 +405,19 @@ padding: 40px;
   width: 150px;
   height: 30px;
 }
+#jjim1{
+margin-left: 30px;
+margin-top: 15px;
+width: 300px;
+border: 1px solid black;
+height: 120px;
+float: left;
+}
+#jjim2{
+  margin-top: 15px;
+  margin-left: 600px;
+  width: 300px;
+  border: 1px solid black;
+  height: 120px;
+  
+  }

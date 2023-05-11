@@ -7,7 +7,7 @@
 	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<title>사용자프로필</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="/css/user.css">
 </head>
 <style>
 </style>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div id="register">
-                    <button onclick="location.href='http://localhost:8080/mypage.do'">마이페이지</button>
+                    <button onclick="goMypage()">마이페이지</button>
                 </div>
             </div>
             <div id="navbar">
@@ -133,7 +133,7 @@
         </div>
         <div id="cre_add_end">
         <button @click="cre_add_ok">요청</button>
-        <button @click="cre_add_no">취소</button>
+        <button onclick="goMypage()">취소</button>
         </div>
 
     </div>
@@ -147,5 +147,8 @@ document.getElementById('file_ad').addEventListener('input', (event) => {
   const files = event.target.files
   output.textContent = Array.from(files).map(file => file.name).join('\n')
 })
+	function goMypage(){
+    	location.href ="/mypage.do"
+    }
 </script>
 </html>

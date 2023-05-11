@@ -7,7 +7,7 @@
 	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<title>크리에이터프로필</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="/css/user.css">
 </head>
 <style>
 </style>

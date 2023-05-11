@@ -5,9 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
-	<title>사용자프로필</title>
+	 <link rel="stylesheet" href="/css/user.css">
+	<title>사용자프로필 수정</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link rel="stylesheet" href="/src/main/css/User.css">
+
 </head>
 <style>
 </style>
@@ -37,8 +38,7 @@
                 </div>
             </div>
             <div id="register">
-                <button>로그인</button>
-                <button>회원가입</button>
+                 <button onclick="goMypage()">마이페이지</button>
             </div>
         </div>
         <div id="navbar">
@@ -163,11 +163,11 @@
             </li>
             <li>
               <label>비밀번호</label>
-              <input name="ps" type="password">
+              <input v-model="info.pwd1" type="password">
             </li>  
             <li>
               <label>비밀번호 확인</label>
-              <input name="psa" type="password">
+              <input v-model="info.pwd2" type="password">
             </li>  
             <li>
               <label>전화번호</label>
@@ -195,89 +195,107 @@
             </div>          
           </ul>
 <br>
-    <button id="updatebtn1" @click="">수정 완료</button>
+    <button v-else id="updatebtn1" @click="fnUserUpdate">수정 완료</button>
 </div>
 </div>
 </body>
 <script>
-    function openZipSearch() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                $('[name=addr1]').val(data.address);
-                $('[name=addr2]').val(data.buildingName);
-            }
-        }).open();
-    }
-    function DropFile(dropAreaId, fileListId) {
-  let dropArea = document.getElementById(dropAreaId);
-  let fileList = document.getElementById(fileListId);
- 
-  // 이벤트 중복 막기
-  function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-  // 드래그 시 표시하기 위한 이벤트
-  // (파일이 상자 안으로 들어가면 highlight / 밖으로 벗어나면 unhighlight 함수 스타일 변경)
-  function highlight(e) {
-    preventDefaults(e);
-    dropArea.classList.add("highlight");
-  }
+function openZipSearch() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            $('[name=addr1]').val(data.address);
+            $('[name=addr2]').val(data.buildingName);
+        }
+    }).open();
+}
+function DropFile(dropAreaId, fileListId) {
+let dropArea = document.getElementById(dropAreaId);
+let fileList = document.getElementById(fileListId);
 
-  function unhighlight(e) {
-    preventDefaults(e);
-    dropArea.classList.remove("highlight");
-  }
+// 이벤트 중복 막기
+function preventDefaults(e) {
+e.preventDefault();
+e.stopPropagation();
+}
+// 드래그 시 표시하기 위한 이벤트
+// (파일이 상자 안으로 들어가면 highlight / 밖으로 벗어나면 unhighlight 함수 스타일 변경)
+function highlight(e) {
+preventDefaults(e);
+dropArea.classList.add("highlight");
+}
 
-  function handleDrop(e) {
-    unhighlight(e);
-    let dt = e.dataTransfer;
-    let files = dt.files;
+function unhighlight(e) {
+preventDefaults(e);
+dropArea.classList.remove("highlight");
+}
 
-    handleFiles(files);
+function handleDrop(e) {
+unhighlight(e);
+let dt = e.dataTransfer;
+let files = dt.files;
 
-    const fileList = document.getElementById(fileListId);
-    if (fileList) {
-      fileList.scrollTo({ top: fileList.scrollHeight });
-    }
-  }
- // 파일 업로드(drop)
-  function handleFiles(files) {
-    files = [...files];
-    // files.forEach(uploadFile);
-    files.forEach(previewFile);
-  }
+handleFiles(files);
 
-  function previewFile(file) {
-    console.log(file);
-    renderFile(file);
-  }
- // 이미지 만들어주는 함수(renderFile 사용) 업로드칸 -> 이미지 변경해줌.
-  function renderFile(file) {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = function () {
-      let img = dropArea.getElementsByClassName("preview")[0];
-      img.src = reader.result;
-      img.style.display = "block";
-    };
-  }
+const fileList = document.getElementById(fileListId);
+if (fileList) {
+  fileList.scrollTo({ top: fileList.scrollHeight });
+}
+}
+// 파일 업로드(drop)
+function handleFiles(files) {
+files = [...files];
+// files.forEach(uploadFile);
+files.forEach(previewFile);
+}
 
-  dropArea.addEventListener("dragenter", highlight, false);
-  dropArea.addEventListener("dragover", highlight, false);
-  dropArea.addEventListener("dragleave", unhighlight, false);
-  dropArea.addEventListener("drop", handleDrop, false);
+function previewFile(file) {
+console.log(file);
+renderFile(file);
+}
+// 이미지 만들어주는 함수(renderFile 사용) 업로드칸 -> 이미지 변경해줌.
+function renderFile(file) {
+let reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onloadend = function () {
+  let img = dropArea.getElementsByClassName("preview")[0];
+  img.src = reader.result;
+  img.style.display = "block";
+};
+}
 
-  return {
-    handleFiles
-  };
+dropArea.addEventListener("dragenter", highlight, false);
+dropArea.addEventListener("dragover", highlight, false);
+dropArea.addEventListener("dragleave", unhighlight, false);
+dropArea.addEventListener("drop", handleDrop, false);
+
+return {
+handleFiles
+};
 }
 
 const dropFile = new DropFile("drop-file", "files");
-    
-
-    
-    </script>
-    
+function goMypage(){
+  	location.href ="/mypage.do"
+}
+</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </html>
+<script type="text/javascript">
+var app = new Vue({ 
+    el: '#app',
+    data: {
+
+    }   
+    , methods: {
+
+	           
+    		
+    	}
+    	
+    }   
+    , created: {
+    
+	}
+});
+</script>
+
