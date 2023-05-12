@@ -4,7 +4,7 @@
 	<html>
 		<head>
 			<jsp:include page="/defult/def.jsp"></jsp:include>
-			
+			<link rel="stylesheet" href="css/borad.css">
 			<meta charset="UTF-8">
 			<title>커뮤니티게시판</title>
 		</head>
@@ -16,7 +16,6 @@
 		</style>
 		<body>
 			<div id="app">
-				거래게시판 페이지 입니다.
 				<div class="container">
 					<div id="sellbox1">
 						<div class="cateF">
