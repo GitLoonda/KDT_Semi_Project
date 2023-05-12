@@ -72,7 +72,7 @@ public class BoardServicelmpl implements BoardService{
 
 	@Override
 	public void TradeInsert(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
+
 		boardMapper.TradeAdd(map);
 	}
 }
