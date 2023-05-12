@@ -54,6 +54,15 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+    //카테고리2 불러오기
+    @RequestMapping(value = "/trade/optioncate2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchTbrdCate2List(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchTbrdCate2List(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
 
 
 

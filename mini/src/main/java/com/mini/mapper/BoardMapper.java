@@ -20,6 +20,7 @@ public interface BoardMapper {
     List<TbrdList> selectTbrdListcate1(HashMap<String, Object> map);
     List<TbrdList> selectTbrdListcate2(HashMap<String, Object> map);
     List<TbrdList> selectTbrdListcate3(HashMap<String, Object> map);
+    
     // List<TbrdList> selectTbrdListlocal1(HashMap<String, Object> map);
     // List<TbrdList> selectTbrdListlocal2(HashMap<String, Object> map);
     // List<TbrdList> selectTbrdListlocal3(HashMap<String, Object> map);

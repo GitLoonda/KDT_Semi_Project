@@ -15,6 +15,15 @@
 				border: 1px dashed red;
 			} */
 
+			.container {
+				width: 1080px;
+				margin: 1px auto;
+				/* background-color: #58ffca; */
+				border: 1px solid black;
+				border-radius: 5px;
+				box-shadow: 0 10px 10px rgba(0,0,0,0.3), 0 20px 40px rgba(0,0,0,0.3);
+				display: block;
+			}	
 			#Taddbox1{
 				padding: 0px 30px;
 			}
@@ -96,8 +105,8 @@
 						<hr>
 						<div class="Taddbox1_1">
 							<select class="catebox1" id="brdfig" v-model="inlist.brdflg">
-									<option value="" disabled>게시판선택</option>
-									<option v-for="(brdf, index) in listbrdf" :value="brdf.cnum">{{brdf.cinfo}}</option>
+								<option value="" disabled>게시판선택</option>
+								<option v-for="(brdf, index) in listbrdf" :value="brdf.cnum">{{brdf.cinfo}}</option>
 							</select>
 
 							<select class="catebox1" id="kindfig" v-model="inlist.kind">
@@ -114,7 +123,7 @@
 							<br>
 
 							<div class="optionT">상품 카테고리</div>
-							<select id="cate1" class="scatebox" v-model="inlist.cate1" onchange="categoryChange(this)">
+							<select id="cate1" class="scatebox" v-model="inlist.cate1" @click="setCate2()">
 								<option value="" disabled>1차</option>
 								<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
 							</select>
@@ -233,6 +242,7 @@
 		</body>
 	</html>
 	<script type="text/javascript">
+	
 	console.log(Vue);
 	Vue.use(Vue2Editor);
 	const VueEditor = Vue2Editor.VueEditor;
@@ -277,37 +287,46 @@
 			},
 			
 	
-		}   
-		, components: {VueEditor}
+		},
+			
+		 components: {VueEditor}
 		, methods: {
 			// seletbox cate 등 값 불러오기
 			optionlist : function(){
-            var self = this;
-            var nparmap = {};
-            $.ajax({
-                url:"/trade/option.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-					console.log(data)
-                	self.listbrdf=data.listbrdf;
-					self.listkindf=data.listkindf;
-					self.listcate1=data.listcate1;
-					self.listcate2=data.listcate2;
-					self.listcate3=data.listcate3;
-					console.log(self.listcate2);
-					// console.log(this.listkindf);
-					// console.log(this.listcate1);
-					// console.log(this.listcate2);
-					// console.log(this.listcate3);
+				var self = this;
+				var nparmap = {};
+				$.ajax({
+					url:"/trade/option.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data)
+						self.listbrdf=data.listbrdf;
+						self.listkindf=data.listkindf;
+						self.listcate1=data.listcate1;
+						self.listcate3=data.listcate3;
 
-                }
-            });
+
+					}
+				});
         } ,
-			
+		// 2카테고리 수정
+			setCate2: function(){
+				var self = this;
+				var nparmap = {pcomm1 : self.inlist.cate1};
+				$.ajax({
+					url:"/trade/optioncate2.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						self.listcate2=data.listcate2
 
-
+					}
+				});
+				
+			},
 			fnAddBbs : function(){
             var self = this;
             var nparmap = {inlist};
@@ -348,4 +367,6 @@
 			
 		}
 	});
+
+	
 </script>

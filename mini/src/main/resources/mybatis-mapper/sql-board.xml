@@ -138,9 +138,10 @@
 		CNUM,
 		CINFO,
 		PCOMM1
-	FROM T3_DESC WHERE CID="CATE2"
+	FROM T3_DESC WHERE CID="CATE2" and PCOMM1=#{pcomm1}
 
 </select>
+
 <select id="selectTbrdListcate3" parameterType="hashmap" resultType="com.mini.model.DescList">
 	SELECT 
 		CNUM,
