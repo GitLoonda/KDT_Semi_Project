@@ -74,7 +74,7 @@
         #searchBar button {
             margin: 0px;
             padding : 0px;
-            width: 40px;
+            width: 50px;
             height: 30px;
             background-color: white;
             border-radius: 0;
@@ -183,28 +183,28 @@
 <div id="app0">
         <div id="container1">
             <div id="header">
-                <div id="logoBox">
-                    <img src="assets/img/tree.jpg" alt="logo">
+                <div @click="fnMain" id="logoBox">
+                    <img src="img/main/unity-logo-200x100-1.jpg" alt="logo">
                 </div>
                 <div id="searchBox">
                     <div id="searchBar">
-                        <select>
-                            <option>::항목::</option>
+                        <select v-model="option">
+                            <option value="">::항목::</option>
                             <option>구매</option>
                             <option>판매</option>
                             <option>의뢰</option>
                         </select>
-                        <input type="text">
-                        <button>검색</button>
+                        <input v-model="keyword" type="text">
+                        <button @click="fnSearch">검색</button>
                     </div>
                     <div id="RcmdItem">
                         <span>추천 검색어 : </span>
-                        <span>검색어</span>
+                        <span v-for="item in cate3">{{item.cInfo}}, </span>
                     </div>
                 </div>
                 <div id="register">
-                    <button>로그인</button>
-                    <button>회원가입</button>
+                    <button @click="fnLogin">로그인</button>
+                    <button @click="fnJoin">회원가입</button>
                 </div>
             </div>
             <div id="navbar">
@@ -282,6 +282,8 @@
     		cate1 : [],
     		cate2 : [],
     		cate3 : [],
+    		option : "",
+    		keyword : "",
     		navParam : []
         }   
         , methods: {
@@ -306,8 +308,57 @@
        	                })
                     }
                 }); 
-            } 
-    	    
+            }
+        	, fnMain : function() {
+        		location.href = "main.do";
+        	}
+        	, fnLogin : function() {
+        		location.href = "login.do";
+        	}
+        	, fnJoin : function() {
+        		location.href = "join.do";
+        	}
+        	, pageChange : function(url, param) {
+        		var target = "_self";
+        		if(param == undefined){
+        		//	this.linkCall(url);
+        			return;
+        		}
+        		var form = document.createElement("form"); 
+        		form.name = "dataform";
+        		form.action = url;
+        		form.method = "post";
+        		form.target = target;
+        		for(var name in param){
+    				var item = name;
+    				var val = "";
+    				if(param[name] instanceof Object){
+    					val = JSON.stringify(param[name]);
+    				} else {
+    					val = param[name];
+    				}
+    				var input = document.createElement("input");
+    	    		input.type = "hidden";
+    	    		input.name = item;
+    	    		input.value = val;
+    	    		form.insertBefore(input, null);
+    			}
+        		document.body.appendChild(form);
+        		form.submit();
+        		document.body.removeChild(form);
+        	}
+        	, fnSearch : function(){
+        		var self = this;
+        		if(self.option == "구매" || self.option == "판매") {
+        			self.pageChange("/trade.do", {option : self.option, keyword : self.keyword});
+        		}
+        		else if(self.option == "의뢰") {
+        			self.pageChange("/request.do", {option : self.option, keyword : self.keyword});
+        		}
+        		else {
+        			alert("게시판을 선택해주세요.");
+        		}
+        	}
         }   
         , created: function () {
         	var self = this;

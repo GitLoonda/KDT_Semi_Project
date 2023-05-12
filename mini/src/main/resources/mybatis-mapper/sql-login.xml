@@ -2,5 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mini.mapper.LoginMapper">
-
+	<select id="selectUserId" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT id
+		FROM T3_USER
+		WHERE ID = #{id} AND PASSWD = #{passwd}
+	</select>
+	
+	<select id="selectCntUser" parameterType="hashmap" resultType="int">
+		SELECT COUNT(ID)
+		FROM T3_USER
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="selectQuizList" parameterType="hashmap" resultType="com.mini.model.Desc">
+		SELECT CINFO, CNUM
+		FROM T3_DESC 
+		WHERE CID = "QUIZ";
+	</select>
 </mapper>

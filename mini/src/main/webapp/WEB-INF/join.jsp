@@ -18,37 +18,37 @@
 	}
 	.container {
 		width : 500px;
-		margin : 50px auto;
+		margin : 30px auto;
 		text-align: center;
 		border-radius: 50px;
 		background-color: #ccc;
 		padding : 40px 40px 80px 40px;
 	}
 	.container .div2 {
-		margin-left: 50px;
+		margin-left: 80px;
 		margin-bottom: 40px;
 		text-align: left;
 	}
 	.in {
 		width: 20em;
 		height : 1.5em;
-		font-size: 20px;
+		font-size: 16px;
 		border: none;
-		border-radius: 10px;
+		border-radius: 5px;
 	}
 	.in2 {
 		width: 14em;
 		height : 1.5em;
-		font-size: 20px;
+		font-size: 16px;
 		border: none;
-		border-radius: 10px;
+		border-radius: 5px;
 	}
 	.in3 {
 		width: 14em;
 		height : 1.5em;
-		font-size: 20px;
+		font-size: 16px;
 		border: none;
-		border-radius: 10px;
+		border-radius: 5px;
 		margin-bottom: 40px;
 	}
 	input:focus, select:focus {
@@ -57,31 +57,37 @@
 	select {
 		width : 5.5em;
 		height : 1.5em;
-		font-size: 20px;
+		font-size: 16px;
 		border: none;
-		border-radius: 10px;
+		border-radius: 5px;
+	}
+	.quiz {
+		width : 20em;	
 	}
 	span {
-		font-size: 20px;
+		font-size: 16px;
 	}
 	button {
 		width : 5.5em;
-		height : 1.5em;
-		font-size: 20px;
+		height : 1.7em;
+		font-size: 16px;
 		border: none;
-		border-radius: 10px;
+		border-radius: 5px;
 		background-color: white;
+	}
+	p {
+		margin : 1px;
 	}
 </style>
 <body>
 	<div id="app" class="div1">
 		<div class="container">
-			<h2 style="margin-bottom: 40px;">회원가입</h2>
+			<h2 style="margin-bottom: 30px;">회원가입</h2>
 			<div class="div2">
 				<input v-model="list.id" type="text" class="in2" placeholder=" 아이디"></input>
 				<button id="btn" @click="fnIdCheck">중복확인</button>
 				<p v-if="idFlg == 1" style="color:blue">사용하실 수 있는 아이디입니다.</p>
-				<p v-if="idFlg == 2" style="color:red">사용하실 수 없는 아이디입니다.</p>
+				<p v-if="idFlg == 2" style="color:red">{{idFalse}}</p>
 			</div>
 			<div class="div2">
 				<input v-model="list.passwd" type="password" class="in" placeholder=" 비밀번호"></input>
@@ -89,7 +95,18 @@
 			<div class="div2">
 				<input @keyup="fnPwdCheck" v-model="list.passwd2" type="password" class="in" placeholder=" 비밀번호 확인"></input>
 				<p v-if="pwFlg == 1" style="color:blue">비밀번호가 일치합니다.</p>
-				<p v-if="pwFlg == 2" style="color:red">비밀번호가 일치하지 않습니다.</p>
+				<p v-if="pwFlg == 2" style="color:red">{{pwFalse}}</p>
+			</div>
+			<div class="div2">
+				<label>
+					<select class="quiz" v-model="sQuiz">
+						<option value="" >비밀번호 찾기 질문</option>
+						<option v-for="item in quizList" :value="item.cNum">{{item.cinfo}}</option>					
+					</select>
+				</label>
+			</div>
+			<div class="div2">
+				<input v-model="list.answer" type="text" class="in" placeholder=" 비밀번호 찾기 답변"></input>
 			</div>
 			<div class="div2">
 				<input v-model="list.name" type="text" class="in" placeholder=" 이름"></input>
@@ -130,18 +147,18 @@
 				</label>
 			</div>
 			<div class="div2">
-				<input type="text" class="in" placeholder=" 전화번호"></input>
+				<input v-model="list.phone" type="text" class="in" placeholder=" 전화번호"></input>
 			</div>
 			<div class="div2">
-				<input type="text" class="in" placeholder=" 이메일"></input>
+				<input v-model="list.email" type="text" class="in" placeholder=" 이메일"></input>
 			</div>
 			<div class="div2">
-				<input type="text" class="in3" placeholder=" 주소"></input>
-				<button id="btn" @click="">주소 찾기</button>
-				<input type="text" class="in" placeholder=" 상세주소"></input>
+				<input v-model="addr" type="text" class="in3" placeholder=" 주소" disabled></input>
+				<button id="btn" @click="fnSearchAddr">주소 찾기</button>
+				<input v-model="addrDetail" type="text" class="in" placeholder=" 상세주소"></input>
 			</div>
 			<div>
-				<button id="btn" @click="">회원가입</button>
+				<button id="btn" @click="fnSignIn">회원가입</button>
 				<button id="btn" @click="fnCancel">취소</button>
 			</div>
 		</div>
@@ -150,22 +167,32 @@
 </html>
 
 <script type="text/javascript">
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+	app.fnResult(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo);
+}
 var app = new Vue({ 
     el: '#app',
     data: {
 		year : []
 		, month : []
 		, day : []
+		, quizList : []
+		, idFalse : ""
 		, idFlg : 0
+		, pwFalse : ""
 		, pwFlg : 0
 		, gender : ""
 		, bYear : ""
 		, bMonth : ""
 		, bDay : ""
+		, sQuiz : ""
+		, roadFullAddr : ""
+		, addr : ""
+		, addrDetail : ""
 		, list : []
     }   
     , methods: {
-    	init : function() {
+    	init : function() { // 생년월일 select option 생성 / 배치
 			var self = this;
 			var initYear = 2023;
 			for(i = 0; i < 80; i++) {
@@ -182,9 +209,31 @@ var app = new Vue({
 				self.day[i] = {day : initDay};
 				initDay++;
 			}
+			var nparmap = {};
+	            $.ajax({
+	                url:"/login/load.dox",
+	                dataType:"json",	
+	                type : "POST",
+	                data : nparmap,
+	                success : function(data) {
+	                	self.quizList = data.quiz;
+	                	console.log(self.quizList);
+	                }
+	            });
 		}
-		, fnIdCheck : function() {
+		, fnIdCheck : function() { // id 유효성 검사
 			var self = this;
+			var idJ = /^[a-z0-9]{6,12}$/;
+			if(self.list.id == null) {
+				self.idFlg = 2;
+				self.idFalse = "아이디를 입력해주세요.";
+				return;
+			}
+			if(!idJ.test(self.list.id)){
+				self.idFlg = 2;
+				self.idFalse = "아이디는 6~12자리의 영문소문자/숫자로 구성되어야합니다.";
+				return;
+			}
             var nparmap = {id : self.list.id};
             $.ajax({
                 url:"/login/idCheck.dox",
@@ -197,29 +246,111 @@ var app = new Vue({
 					}
 					else {
 						self.idFlg = 2;
+						self.idFalse = "사용하실 수 없는 아이디입니다.";
 					}
                 }
             }); 
 		}
-		, fnPwdCheck : function() {
+		, fnPwdCheck : function() { // 비밀번호 유효성 검사
 			var self = this;
-			console.log("enabled");
-			if(self.list.passwd == self.list.passwd2) {
-				pwFlg = 1;
+			var pwJ = /^[A-Za-z0-9]{6,12}$/;
+			if(self.list.passwd == "" || self.list.passwd2 == "") {
+				self.pwFlg = 0;
 			}
-			else {
-				pwFlg = 2;
+			if(!pwJ.test(self.list.passwd)) {
+				self.pwFlg = 2;
+				self.pwFalse = "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.";
+				return;
+			}
+			if(self.list.passwd != self.list.passwd2) {
+				self.pwFlg = 2;
+				self.pwFalse = "두 비밀번호가 일치하지 않습니다.";
+				return;
+			}
+			if(self.list.passwd == self.list.passwd2) {
+				self.pwFlg = 1;
+				return;
 			}
 		}
-		, fnSetGender : function() {
+		, fnSetGender : function() { // select 성별 저장
 			var self = this;
 			self.list.gender = self.gender;
-			console.log(self.list);
 		}
-		, fnSetBirth : function() {
+		, fnSetBirth : function() { // select 생년월일 조합
 			var self = this;
-			self.list.birth = self.bYear + "/" + self.bMonth + "/" + self.bDay;
-			console.log(self.list);
+			self.list.birth = self.bYear + "-" + self.bMonth + "-" + self.bDay;
+		}
+		, fnSearchAddr : function(){ // 주소 검색창 생성
+    		var self = this;
+    		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+    		window.open("addr.do", "test", option);
+    	}
+		, fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+    		var self = this;
+    		self.roadFullAddr = roadFullAddr;
+    		// 도로명 주소
+    		self.addr = roadAddrPart1;
+    		// 상세 주소
+    		self.addrDetail = addrDetail;
+    	}
+		, fnSignIn : function() {
+			var self = this;
+			var idJ = /^[a-z0-9]{6,12}$/;
+			var pwJ = /^[A-Za-z0-9]{6,12}$/;
+			var nmJ = /^[ㄱ-힣]{2,6}$/;
+			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
+			if(self.list.id == null) {
+				alert("아이디를 입력해주세요.");
+				return;
+			}
+			if(!idJ.test(self.list.id)){
+				alert("아이디는 6~12자리의 영문소문자/숫자로 구성되어야합니다.");
+				return;
+			}
+			if(self.list.passwd == null || self.list.passwd2 == null) {
+				alert("비밀번호와 비밀번호 확인을 입력해주세요.");
+				return;
+			}
+			if(!pwJ.test(self.list.passwd)) {
+				alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
+				return;
+			}
+			if(self.list.passwd != self.list.passwd2) {
+				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				return;
+			}
+			if(self.list.quiz == null) {
+				alert("비밀번호 찾기 질문을 선택해주세요.");
+				return;
+			}
+			if(self.list.answer == null) {
+				alert("비밀번호 찾기 답변을 입력해주세요.");
+				return;
+			}
+			if(self.list.name == null) {
+				alert("이름을 입력해주세요.");
+				return;
+			}
+			if(!nmJ.test(self.list.name)) {
+				alert("이름은 2~6자리의 한글로 구성되어야합니다.");
+				return;
+			}
+			if(self.list.nick == null) {
+				alert("닉네임을 입력해주세요.");
+				return;
+			}
+			if(!nkJ.test(self.list.nick)) {
+				alert("닉네임은 2~6자리의 영문대소문자/한글/숫자로 구성되어야합니다.");
+				return;
+			}
+			if(self.list.gender == null) {
+				alert("성별을 선택해주세요.");
+				return;
+			}
+			if(self.list.gender == null) {
+				alert("성별을 선택해주세요.");
+				return;
+			}
 		}
 		, fnCancel : function() {
 			if(confirm("작성을 취소하시겠습니까?")) {
@@ -232,7 +363,7 @@ var app = new Vue({
     }   
     , created: function () {
 		var self = this;
-		self.init();
+		self.$nextTick(self.init());
 	}
 });
 </script>

@@ -68,10 +68,7 @@
 	<div id="app">
 		<div class="banner">
             <div class="view">
-                <img src="img/board/160628_7.jpg" alt="banner1">
-            </div>
-            <div class="wait">
-                <img src="img/board/160628_7.jpg" alt="banner2">
+                <img src="img/board/160628_7.png" alt="banner1">
             </div>
         </div>
         <div id="container">
@@ -79,7 +76,7 @@
             <div id="sellCategory">
                 <div class="sellCateList">
                     <div>
-                        <img src="img/board/160628_7.jpg" alt="cate1">
+                        <img src="img/board/160628_7.png" alt="cate1">
                     </div>
                     <p>스포츠</p>
                 </div>
@@ -130,7 +127,7 @@
             <h2>의뢰 카테고리</h2>
             <div id="commCategory">
                 <div class="commCateList">
-                    <img src="img/board/160628_7.jpg" alt="cate1">
+                    <img src="img/board/160628_7.png" alt="cate1">
                     <p>조립</p>
                 </div>
                 <div class="commCateList">
@@ -178,13 +175,10 @@
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {
-	                	console.log(data);
 	                	self.rcm = data.rec;
-	                	console.log(self.rcmd);
 		           		self.sellRcmd = self.rcm.sell;
 		           		self.buyRcmd = self.rcm.buy;
 		           		self.commRcmd = self.rcm.comm;
-		           		console.log(self.sellRcm);
 	                }
 	            }); 
 	        }

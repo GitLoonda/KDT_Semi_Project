@@ -38,7 +38,7 @@ public class MainController {
 	@ResponseBody
 	public String searchRcmmList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = mainService.searchRcmdList(map);
+		resultMap.put("rec", mainService.searchRcmdList(map));
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
