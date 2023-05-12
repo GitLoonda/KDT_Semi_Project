@@ -54,7 +54,64 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+    //말머리 불러오기
+    @RequestMapping(value = "/trade/setkind.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchTbrdkindList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchTbrdkindList(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
 
+    //카테고리2 불러오기
+    @RequestMapping(value = "/trade/optioncate2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchTbrdCate2List(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchTbrdCate2List(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+    //지역 리스트2 불러오기
+    @RequestMapping(value = "/trade/optionlocal2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchTbrdlocal2List(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+    resultMap = boardService.searchTbrdlocal2List(map);
+        resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+    //지역 리스트3 불러오기
+    @RequestMapping(value = "/trade/optionlocal3.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchTbrdlocal3List(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap = boardService.searchTbrdlocal3List(map);
+        resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+    
+    //사용자 정보 연락처,이메일 불러오기
+    @RequestMapping(value = "/trade/userinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchUserInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchUserInfo(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+
+    @RequestMapping(value = "/trade/insert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String TradeInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+       
+		boardService.TradeInsert(map);
+		resultMap.put("message", "성공");
+		return new Gson().toJson(resultMap);
+	}
 
 
 

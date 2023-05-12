@@ -123,7 +123,7 @@
 	SELECT 
 		CNUM,
 		CINFO
-	FROM T3_DESC WHERE CID="KIND"
+	FROM T3_DESC WHERE CID="KIND" AND PCOMM1=#{pcomm1}
 
 </select>
 <select id="selectTbrdListcate1" parameterType="hashmap" resultType="com.mini.model.DescList">
@@ -138,9 +138,10 @@
 		CNUM,
 		CINFO,
 		PCOMM1
-	FROM T3_DESC WHERE CID="CATE2"
+	FROM T3_DESC WHERE CID="CATE2" AND PCOMM1=#{pcomm1}
 
 </select>
+
 <select id="selectTbrdListcate3" parameterType="hashmap" resultType="com.mini.model.DescList">
 	SELECT 
 		CNUM,
@@ -148,26 +149,43 @@
 	FROM T3_DESC WHERE CID="CATE3"
 
 </select>
-<!-- <select id="selectTbrdListlocal1" parameterType="hashmap" resultType="com.mini.model.TbrdList">
-SELECT 
-	CNUM,
-	CINFO
-FROM T3_DESC WHERE CID="LOCAL1"
+<select id="selectUserInfo" parameterType="hashmap" resultType="com.mini.model.User">
+	SELECT 
+	PHONE,
+	EMAIL,
+	CREAFLG
+	FROM T3_USER WHERE ID=#{userid}
+</select>
+
+
+<select id="selectTbrdListlocal1" parameterType="hashmap" resultType="com.mini.model.Area">
+	SELECT 
+		DISTINCT(si) AS si
+	FROM T_AREA;
 
 </select>
-<select id="selectTbrdListlocal2" parameterType="hashmap" resultType="com.mini.model.TbrdList">
-SELECT 
-	CNUM,
-	CINFO
-FROM T3_DESC WHERE CID="LOCAL2"
-
+<select id="selectTbrdListlocal2" parameterType="hashmap" resultType="com.mini.model.Area">
+	SELECT 
+		DISTINCT(gu) AS gu
+	FROM T_AREA WHERE si=#{local1name}
+	ORDER BY gu ASC
 </select>
-<select id="selectTbrdListlocal3" parameterType="hashmap" resultType="com.mini.model.TbrdList">
-SELECT 
-	CNUM,
-	CINFO
-FROM T3_DESC WHERE CID="LOCAL3"
-</select> -->
+<select id="selectTbrdListlocal3" parameterType="hashmap" resultType="com.mini.model.Area">
+	SELECT 
+		DISTINCT(dong) AS dong
+	FROM T_AREA WHERE si=#{local1name} and gu=#{local2name}
+	ORDER BY dong ASC
+</select>
+
+<!-- 게시글 등록 -->
+<insert id="TradeAdd" parameterType="hashmap" >
+	INSERT INTO T3_TBRD
+	VALUES (NULL, #{id},#{bprice},#{btitle},#{bcont}, 0, 0,
+		#{brdflg},#{kind},#{cate1},#{cate2},#{cate3},
+		 #{bprod},#{bpros},#{bstatus},#{bpur},#{bbox},
+		 #{brcpt}, #{bcms}, #{local1}, #{local2}, #{local3},
+		NOW(), NULL, 'N')
+</insert>
 
 
 </mapper>
