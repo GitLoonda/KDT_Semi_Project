@@ -1,1 +1,4 @@
-/target/
+application.properties
+pom.properties
+mini/target/classes/META-INF/maven/com.example/mini/*
+m2e.projectLocation
