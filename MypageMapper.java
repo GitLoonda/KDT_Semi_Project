@@ -12,6 +12,9 @@ public interface MypageMapper {
 	//프로필 수정
 	void updateUpage(HashMap<String, Object> map);
 	
+	//크리에이터 프로필 수정
+	void updateCrePage(HashMap<String, Object> map);
+	
 	//찜 목록 수정
 	void jjimUpage(HashMap<String, Object> map);
 	

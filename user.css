@@ -155,18 +155,18 @@ a {
     margin: 0px auto;
     padding: 20px;
 }
-#profile_up{
+.profile_up{
 font-size: 15px;
 padding: 40px;
 }
-#profile_up .up_img{
+.profile_up .up_img{
     float: left;
 }
-#profile_up .serve{
+.profile_up .serve{
  float: left;
  padding: 20px;
 }
-#profile_up input{
+.profile_up input{
     height: 30px;
     width: 300px;
     margin: 10px;
@@ -358,18 +358,18 @@ padding: 40px;
   padding: 10px;
   padding-left: 15px;
 }
-#Umy_box{
+.Umy_box{
   margin-left: 10px;
   height: 150px;
   width: 1000px;
   border: 1px solid black;
 }
-#Umypage_btn span{
+#app .Umypage_btn span{
   padding-left: 50px;
   font-size: 20px;
   font-weight: bolder;
 }
-#Umypage_btn button{
+#app .Umypage_btn button{
   float: right;
   margin: 10px;
   margin-right: 30px;
@@ -405,7 +405,7 @@ padding: 40px;
   width: 150px;
   height: 30px;
 }
-#jjim1{
+#app .jjim1{
 margin-left: 30px;
 margin-top: 15px;
 width: 300px;
@@ -413,7 +413,7 @@ border: 1px solid black;
 height: 120px;
 float: left;
 }
-#jjim2{
+#app .jjim2{
   margin-top: 15px;
   margin-left: 600px;
   width: 300px;

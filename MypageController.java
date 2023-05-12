@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MypageController {
 
+	
 	@RequestMapping("/mypage.do") //사용자프로필
     public String Umypage(Model model) throws Exception{
 
