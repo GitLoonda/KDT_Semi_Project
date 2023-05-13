@@ -69,10 +69,20 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("listlocal3", boardMapper.selectTbrdListlocal3(map));
 		return resultMap;
 	}
-
+	//게시글 등록
 	@Override
 	public void TradeInsert(HashMap<String, Object> map) {
-
 		boardMapper.TradeAdd(map);
+	}
+	//게시글 번호 호출
+	@Override
+	public int searchAddTbno(HashMap<String, Object> map) {
+
+		return boardMapper.selectAddTbno(map);
+	}
+	//이미지 입력
+	@Override
+	public void TradeImgInsert(HashMap<String, Object> map) {
+		boardMapper.TradeImgAdd(map);
 	}
 }

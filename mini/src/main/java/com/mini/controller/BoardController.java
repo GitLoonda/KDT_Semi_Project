@@ -45,6 +45,7 @@ public class BoardController {
 
         return "/trade_add";
     }
+    
     //게시판 리스트 불러오기
     @RequestMapping(value = "/trade/option.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -54,6 +55,7 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+
     //말머리 불러오기
     @RequestMapping(value = "/trade/setkind.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -73,6 +75,7 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+
     //지역 리스트2 불러오기
     @RequestMapping(value = "/trade/optionlocal2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -83,6 +86,7 @@ public class BoardController {
         resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }
+
     //지역 리스트3 불러오기
     @RequestMapping(value = "/trade/optionlocal3.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -102,18 +106,43 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
-
+    //게시글 등록
     @RequestMapping(value = "/trade/insert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String TradeInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-       
 		boardService.TradeInsert(map);
 		resultMap.put("message", "성공");
 		return new Gson().toJson(resultMap);
 	}
 
-
+    //게시글등록 후 게시글번호 호출
+    @RequestMapping(value = "/trade/insertTbno.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchAddTbno(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        int tbno = boardService.searchAddTbno(map); 
+        System.out.println(tbno);
+        resultMap.put("tbno", tbno);
+        resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+    //게시글 이미지 등록
+    
+    @RequestMapping(value = "/trade/insertImg.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String AddTradeImg(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        String repck = String.valueOf(map.get("repck"));
+        if(repck.equals("true")){
+            map.put("rep","Y");
+        }else{
+            map.put("rep","N");
+        }
+        boardService.TradeImgInsert(map);
+		resultMap.put("message", "성공");
+		return new Gson().toJson(resultMap);
+	}
 
 	@RequestMapping("/request.do") //의뢰게시판 페이지
     public String request(Model model) throws Exception{

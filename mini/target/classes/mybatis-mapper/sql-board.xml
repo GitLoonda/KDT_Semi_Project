@@ -53,7 +53,7 @@
 	INNER JOIN T3_DESC D5 ON B.CATE3 = D5.CNUM
 	INNER JOIN T3_DESC D7 ON B.BSTATUS = D7.CNUM
 	LEFT JOIN (SELECT TBNO,PATH,REP FROM T3_TIMG WHERE REP='Y') T1 ON B.TBNO = T1.TBNO
-	ORDER BY TBNO ASC LIMIT #{startNum}, #{lastNum}
+	ORDER BY TBNO DESC LIMIT #{startNum}, #{lastNum}
 	
 </select>
 <!-- 게시글 상세 -->
@@ -180,12 +180,23 @@
 <!-- 게시글 등록 -->
 <insert id="TradeAdd" parameterType="hashmap" >
 	INSERT INTO T3_TBRD
-	VALUES (NULL, #{id},#{bprice},#{btitle},#{bcont}, 0, 0,
-		#{brdflg},#{kind},#{cate1},#{cate2},#{cate3},
-		 #{bprod},#{bpros},#{bstatus},#{bpur},#{bbox},
-		 #{brcpt}, #{bcms}, #{local1}, #{local2}, #{local3},
+	VALUES (NULL, #{id}, #{bprice}, #{btitle}, #{bcont}, 0, 0,
+		#{brdflg}, #{kind}, #{cate1}, #{cate2}, #{cate3},
+		#{bprod}, #{bpros}, #{bstatus}, #{bpur}, #{bbox},
+		#{brcpt}, #{bcms}, #{local1}, #{local2}, #{local3},
 		NOW(), NULL, 'N')
 </insert>
 
+<select id="selectAddTbno" parameterType="hashmap" resultType="int">
+	SELECT TBNO 
+	FROM T3_TBRD
+	ORDER BY TBNO DESC LIMIT 1
+</select>
+
+<insert id="TradeImgAdd" parameterType="hashmap" >
+	INSERT INTO T3_TIMG
+	VALUES (NULL,#{tbno},#{imgpath},#{rep})
+</insert>
+	
 
 </mapper>

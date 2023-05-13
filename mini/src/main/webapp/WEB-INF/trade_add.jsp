@@ -132,19 +132,19 @@
 								<div class="optionT">상품 카테고리</div>
 								<select id="cate1" class="scatebox" v-model="inlist.cate1"
 									@click="setCate2()">
-									<option value="" disabled>1차</option>
+									<option value="0" disabled>1차</option>
 									<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
 								</select>
 	
 								<select id="cate2" class="scatebox" v-model="inlist.cate2">
-									<option value="" disabled>2차</option>
+									<option value="0" disabled>2차</option>
 									<template v-for="(cate2, index) in listcate2">
 										<option :value="cate2.cnum">{{cate2.cinfo}}</option>
 									</template>
 								</select>
 	
 								<select class="scatebox" v-model="inlist.cate3">
-									<option value="" disabled>3차</option>
+									<option value="0" disabled>3차</option>
 									<option v-for="(cate3, index) in listcate3" :value="cate3.cnum">{{cate3.cinfo}}</option>
 								</select>
 							</div>
@@ -152,54 +152,39 @@
 								<div class="sumbox1">
 									<div class="optionT">상품 상태</div>
 									<div>
-										<label for="a1"><input id="a1" type="radio" name="a"
-												v-model="inlist.bprod" value="BP1">미개봉</label>
-										<label for="a2"><input id="a2" type="radio" name="a"
-												v-model="inlist.bprod" value="BP2">거의 새것</label>
-										<label for="a3"><input id="a3" type="radio" name="a"
-												v-model="inlist.bprod" value="BP3">상</label>
-										<label for="a4"><input id="a4" type="radio" name="a"
-												v-model="inlist.bprod" value="BP4">중</label>
-										<label for="a5"><input id="a5" type="radio" name="a"
-												v-model="inlist.bprod" value="BP5">하</label>
+										<label for="a1"><input id="a1" type="radio" name="a"v-model="inlist.bprod" value="BP1">미개봉</label>
+										<label for="a2"><input id="a2" type="radio" name="a"v-model="inlist.bprod" value="BP2">거의 새것</label>
+										<label for="a3"><input id="a3" type="radio" name="a"v-model="inlist.bprod" value="BP3">상</label>
+										<label for="a4"><input id="a4" type="radio" name="a"v-model="inlist.bprod" value="BP4">중</label>
+										<label for="a5"><input id="a5" type="radio" name="a"v-model="inlist.bprod" value="BP5">하</label>
 									</div>
 									<br>
 									<div class="optionT">상품 구분</div>
 									<div>
-										<label for="b1"><input id="b1" type="radio" name="b"
-												v-model="inlist.bpros" value="PR1">정품</label>
-										<label for="b2"><input id="b2" type="radio" name="b"
-												v-model="inlist.bpros" value="PR2">가품</label>
-										<label for="b3"><input id="b3" type="radio" name="b"
-												v-model="inlist.bpros" value="PR3">개인제작</label>
+										<label for="b1"><input id="b1" type="radio" name="b"v-model="inlist.bpros" value="PR1">정품</label>
+										<label for="b2"><input id="b2" type="radio" name="b"v-model="inlist.bpros" value="PR2">가품</label>
+										<label for="b3"><input id="b3" type="radio" name="b"v-model="inlist.bpros" value="PR3">개인제작</label>
 									</div>
 									<br>
 									<div class="optionT">거래 형식</div>
 									<div>
-										<label for="c1"><input id="c1" type="radio" name="c"
-												v-model="inlist.bpur" value="BU1">직거래</label>
-										<label for="c2"><input id="c2" type="radio" name="c"
-												v-model="inlist.bpur" value="BU2">택배</label>
-										<label for="c3"><input id="c3" type="radio" name="c"
-												v-model="inlist.bpur" value="BU3">온라인</label>
+										<label for="c1"><input id="c1" type="radio" name="c"v-model="inlist.bpur" value="BU1">직거래</label>
+										<label for="c2"><input id="c2" type="radio" name="c"v-model="inlist.bpur" value="BU2">택배</label>
+										<label for="c3"><input id="c3" type="radio" name="c"v-model="inlist.bpur" value="BU3">온라인</label>
 									</div>
 								</div>
 
 								<div class="sumbox1">
 									<div class="optionT">박스 상태</div>
 									<div>
-										<label for="d1"><input id="d1" type="radio" name="d"
-												v-model="inlist.bbox" value="BB1">있음</label>
-										<label for="d2"><input id="d2" type="radio" name="d"
-												v-model="inlist.bbox" value="BB2">없음</label>
+										<label for="d1"><input id="d1" type="radio" name="d"v-model="inlist.bbox" value="BB1">있음</label>
+										<label for="d2"><input id="d2" type="radio" name="d"v-model="inlist.bbox" value="BB2">없음</label>
 									</div>
 									<br>
 									<div class="optionT">구매 영수증</div>
 									<div>
-										<label for="e1"><input id="e1" type="radio" name="e"
-												v-model="inlist.brcpt" value="BC1">있음</label>
-										<label for="e2"><input id="e2" type="radio" name="e"
-												v-model="inlist.brcpt" value="BC2">없음</label>
+										<label for="e1"><input id="e1" type="radio" name="e"v-model="inlist.brcpt" value="BC1">있음</label>
+										<label for="e2"><input id="e2" type="radio" name="e"v-model="inlist.brcpt" value="BC2">없음</label>
 									</div>
 									<br>
 
@@ -231,19 +216,19 @@
 									<div class="optionT">상품 카테고리</div>
 									<select id="cate1" class="scatebox" v-model="inlist.cate1"
 										@click="setCate2()">
-										<option value="" disabled>1차</option>
+										<option value="0" disabled>1차</option>
 										<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
 									</select>
 		
 									<select id="cate2" class="scatebox" v-model="inlist.cate2">
-										<option value="" disabled>2차</option>
+										<option value="0" disabled>2차</option>
 										<template v-for="(cate2, index) in listcate2">
 											<option :value="cate2.cnum">{{cate2.cinfo}}</option>
 										</template>
 									</select>
 		
 									<select class="scatebox" v-model="inlist.cate3">
-										<option value="" disabled>3차</option>
+										<option value="0" disabled>3차</option>
 										<option v-for="(cate3, index) in listcate3" :value="cate3.cnum">{{cate3.cinfo}}</option>
 									</select>
 								</div>
@@ -251,54 +236,39 @@
 									<div class="sumbox1">
 										<div class="optionT">상품 상태</div>
 										<div>
-											<label for="a1"><input id="a1" type="radio" name="a"
-													v-model="inlist.bprod" value="BP1">미개봉</label>
-											<label for="a2"><input id="a2" type="radio" name="a"
-													v-model="inlist.bprod" value="BP2">거의 새것</label>
-											<label for="a3"><input id="a3" type="radio" name="a"
-													v-model="inlist.bprod" value="BP3">상</label>
-											<label for="a4"><input id="a4" type="radio" name="a"
-													v-model="inlist.bprod" value="BP4">중</label>
-											<label for="a5"><input id="a5" type="radio" name="a"
-													v-model="inlist.bprod" value="BP5">하</label>
+											<label for="a1"><input id="a1" type="radio" name="a"v-model="inlist.bprod" value="BP1">미개봉</label>
+											<label for="a2"><input id="a2" type="radio" name="a"v-model="inlist.bprod" value="BP2">거의 새것</label>
+											<label for="a3"><input id="a3" type="radio" name="a"v-model="inlist.bprod" value="BP3">상</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="inlist.bprod" value="BP4">중</label>
+											<label for="a5"><input id="a5" type="radio" name="a"v-model="inlist.bprod" value="BP5">하</label>
 										</div>
 										<br>
 										<div class="optionT">상품 구분</div>
 										<div>
-											<label for="b1"><input id="b1" type="radio" name="b"
-													v-model="inlist.bpros" value="PR1">정품</label>
-											<label for="b2"><input id="b2" type="radio" name="b"
-													v-model="inlist.bpros" value="PR2">가품</label>
-											<label for="b3"><input id="b3" type="radio" name="b"
-													v-model="inlist.bpros" value="PR3">개인제작</label>
+											<label for="b1"><input id="b1" type="radio" name="b"v-model="inlist.bpros" value="PR1">정품</label>
+											<label for="b2"><input id="b2" type="radio" name="b"v-model="inlist.bpros" value="PR2">가품</label>
+											<label for="b3"><input id="b3" type="radio" name="b"v-model="inlist.bpros" value="PR3">개인제작</label>
 										</div>
 										<br>
 										<div class="optionT">거래 형식</div>
 										<div>
-											<label for="c1"><input id="c1" type="radio" name="c"
-													v-model="inlist.bpur" value="BU1">직거래</label>
-											<label for="c2"><input id="c2" type="radio" name="c"
-													v-model="inlist.bpur" value="BU2">택배</label>
-											<label for="c3"><input id="c3" type="radio" name="c"
-													v-model="inlist.bpur" value="BU3">온라인</label>
+											<label for="c1"><input id="c1" type="radio" name="c"v-model="inlist.bpur" value="BU1">직거래</label>
+											<label for="c2"><input id="c2" type="radio" name="c"v-model="inlist.bpur" value="BU2">택배</label>
+											<label for="c3"><input id="c3" type="radio" name="c"v-model="inlist.bpur" value="BU3">온라인</label>
 										</div>
 									</div>
 	
 									<div class="sumbox1">
 										<div class="optionT">박스 상태</div>
 										<div>
-											<label for="d1"><input id="d1" type="radio" name="d"
-													v-model="inlist.bbox" value="BB1">있음</label>
-											<label for="d2"><input id="d2" type="radio" name="d"
-													v-model="inlist.bbox" value="BB2">없음</label>
+											<label for="d1"><input id="d1" type="radio" name="d"v-model="inlist.bbox" value="BB1">있음</label>
+											<label for="d2"><input id="d2" type="radio" name="d"v-model="inlist.bbox" value="BB2">없음</label>
 										</div>
 										<br>
 										<div class="optionT">구매 영수증</div>
 										<div>
-											<label for="e1"><input id="e1" type="radio" name="e"
-													v-model="inlist.brcpt" value="BC1">있음</label>
-											<label for="e2"><input id="e2" type="radio" name="e"
-													v-model="inlist.brcpt" value="BC2">없음</label>
+											<label for="e1"><input id="e1" type="radio" name="e"v-model="inlist.brcpt" value="BC1">있음</label>
+											<label for="e2"><input id="e2" type="radio" name="e"v-model="inlist.brcpt" value="BC2">없음</label>
 										</div>
 										<br>
 	
@@ -330,19 +300,19 @@
 								<div class="optionT">상품 카테고리</div>
 								<select id="cate1" class="scatebox" v-model="inlist.cate1"
 									@click="setCate2()">
-									<option value="" disabled>1차</option>
+									<option value="0" disabled>1차</option>
 									<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
 								</select>
 	
 								<select id="cate2" class="scatebox" v-model="inlist.cate2">
-									<option value="" disabled>2차</option>
+									<option value="0" disabled>2차</option>
 									<template v-for="(cate2, index) in listcate2">
 										<option :value="cate2.cnum">{{cate2.cinfo}}</option>
 									</template>
 								</select>
 	
 								<select class="scatebox" v-model="inlist.cate3">
-									<option value="" disabled>3차</option>
+									<option value="0" disabled>3차</option>
 									<option v-for="(cate3, index) in listcate3" :value="cate3.cnum">{{cate3.cinfo}}</option>
 								</select>
 							</div>
@@ -350,25 +320,18 @@
 								<div class="sumbox1">
 									<div class="optionT">의뢰 종류</div>
 									<div>
-										<label for="f1"><input id="f1" type="radio" name="a"
-												v-model="inlist.bcms" value="BM1">조립</label>
-										<label for="f2"><input id="f2" type="radio" name="a"
-												v-model="inlist.bcms" value="BM2">도색</label>
-										<label for="f3"><input id="f3" type="radio" name="a"
-												v-model="inlist.bcms" value="BM3">수리</label>
-										<label for="f4"><input id="f4" type="radio" name="a"
-												v-model="inlist.bcms" value="BM4">커미션</label>
+										<label for="f1"><input id="f1" type="radio" name="a"v-model="inlist.bcms" value="BM1">조립</label>
+										<label for="f2"><input id="f2" type="radio" name="a"v-model="inlist.bcms" value="BM2">도색</label>
+										<label for="f3"><input id="f3" type="radio" name="a"v-model="inlist.bcms" value="BM3">수리</label>
+										<label for="f4"><input id="f4" type="radio" name="a"v-model="inlist.bcms" value="BM4">커미션</label>
 
 									</div>
 									<br>
 									<div class="optionT">거래 형식</div>
 									<div>
-										<label for="c1"><input id="c1" type="radio" name="c"
-												v-model="inlist.bpur" value="BU1">직거래</label>
-										<label for="c2"><input id="c2" type="radio" name="c"
-												v-model="inlist.bpur" value="BU2">택배</label>
-										<label for="c3"><input id="c3" type="radio" name="c"
-												v-model="inlist.bpur" value="BU3">온라인</label>
+										<label for="c1"><input id="c1" type="radio" name="c"v-model="inlist.bpur" value="BU1">직거래</label>
+										<label for="c2"><input id="c2" type="radio" name="c"v-model="inlist.bpur" value="BU2">택배</label>
+										<label for="c3"><input id="c3" type="radio" name="c"v-model="inlist.bpur" value="BU3">온라인</label>
 									</div>
 									<br>
 								</div>
@@ -400,19 +363,19 @@
 							<div class="optionT">상품 카테고리</div>
 							<select id="cate1" class="scatebox" v-model="inlist.cate1"
 								@click="setCate2()">
-								<option value="" disabled>1차</option>
+								<option value="0" disabled>1차</option>
 								<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
 							</select>
 
 							<select id="cate2" class="scatebox" v-model="inlist.cate2">
-								<option value="" disabled>2차</option>
+								<option value="0" disabled>2차</option>
 								<template v-for="(cate2, index) in listcate2">
 									<option :value="cate2.cnum">{{cate2.cinfo}}</option>
 								</template>
 							</select>
 
 							<select class="scatebox" v-model="inlist.cate3">
-								<option value="" disabled>3차</option>
+								<option value="0" disabled>3차</option>
 								<option v-for="(cate3, index) in listcate3" :value="cate3.cnum">{{cate3.cinfo}}</option>
 							</select>
 						</div>
@@ -420,25 +383,18 @@
 							<div class="sumbox1">
 								<div class="optionT">의뢰 종류</div>
 								<div>
-									<label for="f1"><input id="f1" type="radio" name="a"
-											v-model="inlist.bcms" value="BM1">조립</label>
-									<label for="f2"><input id="f2" type="radio" name="a"
-											v-model="inlist.bcms" value="BM2">도색</label>
-									<label for="f3"><input id="f3" type="radio" name="a"
-											v-model="inlist.bcms" value="BM3">수리</label>
-									<label for="f4"><input id="f4" type="radio" name="a"
-											v-model="inlist.bcms" value="BM4">커미션</label>
+									<label for="f1"><input id="f1" type="radio" name="a"v-model="inlist.bcms" value="BM1">조립</label>
+									<label for="f2"><input id="f2" type="radio" name="a"v-model="inlist.bcms" value="BM2">도색</label>
+									<label for="f3"><input id="f3" type="radio" name="a"v-model="inlist.bcms" value="BM3">수리</label>
+									<label for="f4"><input id="f4" type="radio" name="a"v-model="inlist.bcms" value="BM4">커미션</label>
 
 								</div>
 								<br>
 								<div class="optionT">거래 형식</div>
 								<div>
-									<label for="c1"><input id="c1" type="radio" name="c"
-											v-model="inlist.bpur" value="BU1">직거래</label>
-									<label for="c2"><input id="c2" type="radio" name="c"
-											v-model="inlist.bpur" value="BU2">택배</label>
-									<label for="c3"><input id="c3" type="radio" name="c"
-											v-model="inlist.bpur" value="BU3">온라인</label>
+									<label for="c1"><input id="c1" type="radio" name="c"v-model="inlist.bpur" value="BU1">직거래</label>
+									<label for="c2"><input id="c2" type="radio" name="c"v-model="inlist.bpur" value="BU2">택배</label>
+									<label for="c3"><input id="c3" type="radio" name="c"v-model="inlist.bpur" value="BU3">온라인</label>
 								</div>
 								<br>
 							</div>
@@ -473,7 +429,9 @@
 					</div>
 
 					<div class="editbox">
-						<div class="optionT">첨부파일 <input type="file" id="file1" name="file1">
+						<div class="optionT">첨부파일 <input type="file" id="file1" name="file1"> 
+							<label for="repck"><input id="repck" type="checkbox" v-model="repck">썸네일</label>
+
 						</div>
 						<br>
 						<div>
@@ -485,6 +443,7 @@
 							<button class="btn">목록</button>
 						</div>
 						<div>{{inlist}}</div>
+						<div>{{tbno}},{{imgpath}},{{repck}}</div>
 					</div>
 				</div>
 			</div>
@@ -507,11 +466,10 @@
 			// 세션
 			sessionid:"test01",
 
-			// 카테고리 리스트
-
+			// 게시판 리스트,말머리태그 설정
 			listbrdf:{},
 			listkindf:{},
-			// 상품
+			// 카테고리 리스트
 			listcate1:{},
 			listcate2:{},
 			listcate3:{},
@@ -524,7 +482,7 @@
 				id:"test10",
 				bprice:0,
 				btitle:"",
-				bcont:"",
+				bcont:" ",
 				brdflg:"0",
 				kind:"0",
 				cate1:"0",
@@ -541,6 +499,10 @@
 				local2:"0",
 				local3:"0"
 			},
+			tbno:0,
+			imgpath:"img/board/160628_7.png",
+			// imgpath:"",
+			repck:false,
 			
 	
 		},
@@ -583,7 +545,6 @@
 		},
 		// 말머리 선택에 따른 구매,판매,홍보,의뢰 설정
 		bstatusSet : function(){
-		
 			var self = this;
 			if(self.inlist.kind == 'KI1'){
 				self.inlist.bstatus='BS1';
@@ -664,7 +625,6 @@
 			//글등록
 			fnAddTrade : function(){
             var self = this;
-			// 리스트 보낼때
             var nparmap = self.inlist;
             $.ajax({
                 url:"/trade/insert.dox",
@@ -672,11 +632,51 @@
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	alert("저장되었습니다.");
-                	// location.href="trade.do";
+					console.log(nparmap);
+					if(self.imgpath==''){
+						alert("저장되었습니다.");
+					}else{
+						self.AddTradeTbno();
+					}
+					
+					// location.href="trade.do";
                 }
-            });
-        } 
+            });	
+        	},
+			//게시글넘버 가져오기
+			AddTradeTbno : function(){
+				var self = this;	
+				var nparmap = {};
+				$.ajax({
+					url:"/trade/insertTbno.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						self.tbno=data.tbno;
+						self.AddTradeImg();
+					}
+				});
+			},
+			//이미지파일 등록
+			AddTradeImg : function(){
+				var self = this;	
+				var nparmap = {tbno:self.tbno, repck:self.repck, imgpath:self.imgpath};
+				console.log(nparmap);
+				$.ajax({
+					url:"/trade/insertImg.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						alert("저장되었습니다.");
+					}
+				});
+			}
+		
+		
+
+
 		, upload : function(){
 			var form = new FormData();
 	        form.append( "file1", $("#file1")[0].files[0] );
@@ -700,6 +700,7 @@
 			var self = this;
 			self.optionlist();
 			self.userinfolist();
+			
 			
 		}
 	});

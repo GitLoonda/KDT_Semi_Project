@@ -28,6 +28,12 @@ public interface BoardMapper {
     //거래글 등록
     void TradeAdd (HashMap<String, Object> map);
     
+    //거래글번호 호출
+    int selectAddTbno(HashMap<String, Object> map);
+
+    //이미지파일 등록
+    void TradeImgAdd (HashMap<String, Object> map);
+
 }
 
 

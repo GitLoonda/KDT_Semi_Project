@@ -17,9 +17,15 @@ public interface BoardService {
     HashMap<String, Object> searchTbrdlocal2List(HashMap<String, Object> map);
     //지역 3차 리스트
     HashMap<String, Object> searchTbrdlocal3List(HashMap<String, Object> map);
+
     //거래글 등록
     void TradeInsert(HashMap<String, Object> map);
+
+    //거래글번호 호출
+    int searchAddTbno(HashMap<String, Object> map);
     
+    //거래글 이미지 파일 등록
+    void TradeImgInsert(HashMap<String, Object> map);
     
 
 }
