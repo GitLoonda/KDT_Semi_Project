@@ -36,7 +36,7 @@
 							<div class="itembox" v-for="(item, index) in list">
 								<!-- 이미지 src 참고 -->
 								<img id="tmp" class="imgbox" :src="item.path">
-								<div class="itemtxt">{{item.tbno}}.{{item.btitle}}</div>
+								<div class="itemtxt">{{item.btitle}}</div>
 								<div class="itemtxt">{{item.bprice}} 원</div>
 								<div class="itemtxt">
 									<span>댓글</span>

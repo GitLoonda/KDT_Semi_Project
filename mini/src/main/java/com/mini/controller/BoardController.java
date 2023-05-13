@@ -38,6 +38,7 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+    
 
     //거래 등록 게시판
     @RequestMapping("/tradeadd.do") //거래게시판 페이지
@@ -45,7 +46,7 @@ public class BoardController {
 
         return "/trade_add";
     }
-    
+
     //게시판 리스트 불러오기
     @RequestMapping(value = "/trade/option.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

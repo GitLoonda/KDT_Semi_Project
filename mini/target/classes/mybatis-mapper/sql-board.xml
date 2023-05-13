@@ -32,7 +32,7 @@
 		B.TBNO AS TBNO,
 		ID,
 		BPRICE,
-		BTITLE,
+		substring(BTITLE,1,8) AS BTITLE,
 		HITS,
 		LIKES,
 		D1.CINFO AS BRDNAME,

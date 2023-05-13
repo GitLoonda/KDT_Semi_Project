@@ -500,8 +500,7 @@
 				local3:"0"
 			},
 			tbno:0,
-			imgpath:"img/board/160628_7.png",
-			// imgpath:"",
+			imgpath:"",
 			repck:false,
 			
 	
@@ -634,7 +633,8 @@
                 success : function(data) { 
 					console.log(nparmap);
 					if(self.imgpath==''){
-						alert("저장되었습니다.");
+						self.imgpath="img/board/160628_7.png";
+						self.AddTradeTbno();
 					}else{
 						self.AddTradeTbno();
 					}
@@ -643,7 +643,8 @@
                 }
             });	
         	},
-			//게시글넘버 가져오기
+			//글등록시 이미지가 있으면 
+			//방금 등록한 게시글넘버 가져오기
 			AddTradeTbno : function(){
 				var self = this;	
 				var nparmap = {};
