@@ -47,7 +47,7 @@ public class BoardController {
         return "/trade_add";
     }
 
-    //게시판 리스트 불러오기
+    //게시판 선택값 가져오기
     @RequestMapping(value = "/trade/option.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchTbrdCateList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -57,7 +57,7 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 
-    //말머리 불러오기
+    //게시판에 맞는 말머리 불러오기
     @RequestMapping(value = "/trade/setkind.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchTbrdkindList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -123,7 +123,6 @@ public class BoardController {
 	public String searchAddTbno(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
         int tbno = boardService.searchAddTbno(map); 
-        System.out.println(tbno);
         resultMap.put("tbno", tbno);
         resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
@@ -145,17 +144,12 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 
-	@RequestMapping("/request.do") //의뢰게시판 페이지
+	@RequestMapping("/tradeview.do") //의뢰게시판 페이지
     public String request(Model model) throws Exception{
 
-        return "/req_list";
+        return "/trade_view";
     }
 	
-	@RequestMapping("/promote.do") //홍보게시판 페이지
-    public String promote(Model model) throws Exception{
-
-        return "/prom_list";
-    }
 	
 	@RequestMapping("/community.do") //커뮤니티 페이지
     public String community(Model model) throws Exception{

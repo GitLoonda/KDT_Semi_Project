@@ -1,7 +1,7 @@
 .container {
   width: 1080px;
   margin: 1px auto;
-  background-color: #58ffca;
+  /* background-color: #58ffca; */
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 0 10px 10px rgba(0,0,0,0.3), 0 20px 40px rgba(0,0,0,0.3);
@@ -38,7 +38,7 @@
 
 #sellbox1 .itembox {
   width: 150px;
-  height: 220px;
+  height: 250px;
   margin: 25px;
   border: 1px solid black;
   border-radius: 2px;
