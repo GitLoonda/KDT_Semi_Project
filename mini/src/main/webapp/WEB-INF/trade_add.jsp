@@ -356,10 +356,7 @@
 					<!-- 홍보게시판 -->
 					<template v-else-if="inlist.brdflg == 'BF3'">
 						<div class="Taddbox1_1">
-							<div class="optionT"> 판매가격</div>
-							<div><input type="number" class="sellpirbox" v-model="inlist.bprice"> 원</div>
-							<br>
-
+							
 							<div class="optionT">상품 카테고리</div>
 							<select id="cate1" class="scatebox" v-model="inlist.cate1"
 								@click="setCate2()">
@@ -381,7 +378,7 @@
 						</div>
 						<div id="optionbox1" class="sumbox">
 							<div class="sumbox1">
-								<div class="optionT">의뢰 종류</div>
+								<div class="optionT">의뢰 가능</div>
 								<div>
 									<label for="f1"><input id="f1" type="radio" name="a"v-model="inlist.bcms" value="BM1">조립</label>
 									<label for="f2"><input id="f2" type="radio" name="a"v-model="inlist.bcms" value="BM2">도색</label>
