@@ -10,59 +10,61 @@
 	<title>커뮤니티 글쓰기</title>
 </head>
 <style>
-	.container{
-         width: 1080px;
-         margin: auto;
-    }
+	.card{
+		width: 90%;
+		margin: auto;
+	}
     #cate{
         margin: 5px;
         width: 20%;
     }
-    .btns{
-		float: right;
-		margin: 5px;
-		
+	.btns {
+		padding: 15px 0;
+		text-align: right;
+		margin-right: 5px;
 	}
 </style>
 <body>
 	<div id="app">
 		<div class="container">
-			<h3>커뮤니티 글쓰기</h3>
-			<hr>
-			<table class="board_detail">
-				<colgroup>
-					<col width="10%"/>
-					<col width="*"/>
-				</colgroup>
-				<tr> 
-					<select id="cate">
-						<option value=""> {{CATE1}} </option>
-					</select>
-					<select id="cate">
-						<option value=""> {{CATE2}} </option>
-					</select>
-				</tr>
-				<tr>
-					<td style="text-align : center;" >제목</td>
-					<td><input type="text" id="title" name="title" v-model="ctitle"></td>
-				</tr>
-				<tr>
-					<td style="text-align : center;" >첨부파일</td>
-					<td>
-						<div>
-						    <input type="file" id="file1" name="file1" > 
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-					  <vue-editor v-model="ccont"></vue-editor> 
-					</td>
-				</tr>
-			</table>
-			<div class="btns">
-				<button @click="fnMoveList()" class="btn" style="float: right;">목록으로</button>
-				<button @click="fnAddCbrd()" class="btn" style="float: right;">저장</button>
+			<div class="card">
+				<h3>커뮤니티 글쓰기</h3>
+				<hr>
+				<table class="board_detail">
+					<colgroup>
+						<col width="10%"/>
+						<col width="*"/>
+					</colgroup>
+					<tr> 
+						<select id="cate">
+							<option value=""> 1 </option>
+						</select>
+						<select id="cate">
+							<option value=""> 2 </option>
+						</select>
+					</tr>
+					<tr>
+						<td style="text-align : center;" >제목</td>
+						<td><input type="text" id="title" name="title" v-model="title"></td>
+					</tr>
+					<tr>
+						<td style="text-align : center;" >첨부파일</td>
+						<td>
+							<div>
+							    <input type="file" id="file1" name="file1" > 
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+						  <vue-editor v-model="content"></vue-editor> 
+						</td>
+					</tr>
+				</table>
+				<div class="btns">
+					<button @click="fnAddCbrd()" class="btn">저장</button>
+					<button @click="fnList()" class="btn" >목록으로</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -79,7 +81,7 @@ var app = new Vue({
 		list : [],
 		checkList : [],
 		title : "",
-		content : "",
+		content : ""
     }
     
     , components: {VueEditor}
@@ -105,29 +107,29 @@ var app = new Vue({
 		}
     	
     	// 목록으로 이동
-    	,fnMoveList : function(){
+    	,fnList : function(){
     		var result = confirm("작성을 취소하고 목록으로 돌아가시겠습니까?");
     		
     		if(result) {
-    			location.href="comm.do";
+    			location.href="/comm.do";
     		}
     	}
     	
     	// 글 저장
     	,fnAddCbrd : function(){
             var self = this;
-            var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
-            console.log( self.ccont );
-            /* $.ajax({
+            var nparmap = {title : self.title, content : self.content};
+            console.log( self.content );
+            $.ajax({
                 url:"/comm/add.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
                 	alert("저장되었습니다.");
-                	location.href="comm.do";
+                	location.href="/comm.do";
                 }
-            });  */
+            });  
         } 
     	
     	

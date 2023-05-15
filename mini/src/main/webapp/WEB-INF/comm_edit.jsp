@@ -8,10 +8,6 @@
 	<title>커뮤니티 게시판</title>
 </head>
 <style>
-	.container{
-         width: 1080px;
-         margin: auto;
-    }
     #cate{
         margin: 5px;
         width: 20%;
@@ -48,13 +44,37 @@
 					</td>
 				</tr>
 			</table>
-			<button @click="" class="btn" style="float: right;">목록으로</button>
+			<button @click="fnList" class="btn" style="float: right;">목록으로</button>
 			<button @click="" class="btn" style="float: right;">저장</button>
 		</div>
 	</div>
 </body>
 </html>
 
-<script>
-
+<script type="text/javascript">
+console.log(Vue);
+Vue.use(Vue2Editor);
+const VueEditor = Vue2Editor.VueEditor;
+var app = new Vue({ 
+    el: '#app',
+    data: {
+    	
+    }
+    
+    , components: {VueEditor}
+    
+    , methods: {
+    	
+    	// 목록으로 이동
+    	fnList : function(){
+    		location.href="/comm.do";
+    		}
+    	}
+    	
+    	
+    }   
+    , created: function () {
+    	var self = this;
+	}
+});
 </script>

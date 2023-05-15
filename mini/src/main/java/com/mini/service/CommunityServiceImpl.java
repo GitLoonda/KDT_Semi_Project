@@ -1,11 +1,14 @@
 package com.mini.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mini.mapper.CommunityMapper;
+import com.mini.model.Cbrd;
+import com.mini.model.Cmre;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -20,5 +23,35 @@ public class CommunityServiceImpl implements CommunityService {
 		resultMap.put("list", communityMapper.selectCbrdList(map));
 		return resultMap;
 	}
+
+	@Override
+	public void addCbrd(HashMap<String, Object> map) {
+		
+		communityMapper.insertCbrd(map);
+	}
+
+	@Override
+	public void removeCbrd(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		communityMapper.deleteCbrd(map);
+	}
+	
+	@Override
+	public HashMap<String, Object> searchCbrd(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Cbrd cbrd = communityMapper.getCbrd(map);
+		if(cbrd != null) {
+			communityMapper.updateCbrdCnt(map);
+		}
+		resultMap.put("info", cbrd);
+		return resultMap;
+	}
+
+	@Override
+	public void editCbrd(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		communityMapper.updateCbrd(map);
+	}
+
 
 }
