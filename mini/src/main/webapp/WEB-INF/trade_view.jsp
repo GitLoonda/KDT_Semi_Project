@@ -8,7 +8,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
 			<script src="https://unpkg.com/vue2-editor@2.3.11/dist/index.js"></script>
 			<meta charset="UTF-8">
-			<title>게시글 등록</title>
+			<title>tradeview.do</title>
 		</head>
 		<style>
 			/* *{
@@ -38,6 +38,9 @@
 			.report{
 				text-align: right;
 				margin-bottom: 10px;
+			}
+			.recdate{
+				margin-right: 5px;
 			}
 			.infobox1{
 				display: flex;
@@ -85,6 +88,13 @@
 			}
 			.info2btn{
 				text-align: right;
+			}
+
+			#Tviewbox2{
+				padding: 0px 30px;
+			}
+			#Tviewbox2 hr{
+				border: 2px solid black;
 			}
 			.itembox{
 				width: 150px;
@@ -141,17 +151,45 @@
 				align-items: center;
 				margin-left: 20px;
 			}
+			.commbox2_1_1{
+				display: flex;
+				flex-direction: column;
+				align-items: baseline;
+			}
 			.commbox2_2{
 				margin-right: 20px;
+			}
+			.commid{
+				font-size: 15pt;
+				margin-bottom: 2px;
 			}
 			.pimg{
 				width: 50px;
 				width: 50px;
 				border-radius: 100%;
 				border: 1px solid black;
+				margin-right: 10px;
 			}
 			.coma{
 				margin: 0px 3px ;
+			}
+			.recommin1{
+				display: none;
+			}
+			.recommin2{
+				display: flex;
+				justify-content: flex-end;
+				
+			}
+			.recommcont{
+				width: 80%;
+				height: 50px;
+				resize: none;
+				
+			}
+			.recommbtn{
+				width: 10%;
+				
 			}
 
 		</style>
@@ -159,24 +197,23 @@
 			<div id="app">
 				<!-- 게시글 상세 -->
 				<div class="container">
-					<div id="Tviewbox1">
-						<div class="optionT">게시글 제목</div>
+					<div id="Tviewbox1" v-for="(list, index) in list">
+						<div class="optionT">{{list.btitle}}</div>
 						<hr>
-						<div class="report"><button>신고</button></div>
+						<div class="report"><span class="recdate">{{list.cdate}}</span><button>신고</button></div>
 						<div class="infobox1">
 							<div class="infobox1_1">
-								<img class="infoimg" src="img/board/160628_7.png" >
+								<img class="infoimg" :src="list.path" >
 							</div>
 							<div class="infobox1_2">
 								<div class="infobox1_2_1">
-									<div>게시글 제목</div>
-									<div>거래 상태 : </div>
-									<div>가격 : </div>
-									<div>판매자 정보 : </div>
-									<div>제품 상태 : </div>
-									<div>거래 방법 : </div>
-									<div>조회 수 : 찜: 판매자 평점 : </div>
-									<div>거래 지연 : </div>
+									<div>[{{list.bstatusname}}] {{list.btitle}}</div>
+									<div>가격 : {{list.bprice}}</div>
+									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
+									<div>제품 상태 : {{list.bprodname}}</div>
+									<div>거래 방법 : {{list.bpurname}}</div>
+									<div>조회 수 : {{list.hits}} 찜: {{list.likes}} 판매자 평점 : {{list.grade}}</div>
+									<div>거래 지역 : {{list.local1name}} {{list.local2name}} {{list.local3name}}</div>
 								</div>
 								<div class="infobox1_2_2">
 									<button>찜</button>
@@ -185,9 +222,12 @@
 							</div>
 						</div>
 						<div class="infobox2">
-							<textarea class="infocont" name="" id="" cols="30" rows="10" disabled>게시글 목록</textarea>
+							<textarea class="infocont" name="" id="" cols="30" rows="10" disabled>{{list.bcont}}</textarea>
 							<div class="info2btn"><button>수정</button> <button>삭제</button> </div>
 						</div>
+					</div>
+					<!-- 염관상품,댓글 -->
+					<div id="Tviewbox2">
 						<div>연관 상품</div>
 						<div>
 							<div class="itembox">
@@ -195,283 +235,129 @@
 							</div>
 						</div>
 						<div class="commbox">
-							댓글(00개)
-							<div class="commpath"> 첨부파일 이름 <button>첨부</button></div>
+							댓글({{commcnt}}개)
+							<div class="commpath" v-model="file1"> 첨부파일 이름 <button>첨부</button></div>
 							<div class="commimg" > <img class="cimg" src=""> 이미지 미리보기</div>
 							<div class="commin">
-								<textarea class="infocont2" name="" id="" cols="30" rows="10"></textarea>
-								<button class="commbtn">등록</button>
+								<textarea class="infocont2" name="" id="" cols="30" rows="10" v-model="content"></textarea>
+								<button class="commbtn" @click="fncommIn()">등록</button>
+							</div>
+							{{tbno}},{{id}},{{content}}
+						</div>
+						<div  v-for="(commlist, index) in commlist">
+							<div class="commbox2" v-if="commlist.delYn == 'N'">
+								<div class="commbox2_1">
+										<div><img class="pimg" src="img/board/160628_7.png"></div>
+										<div class="commbox2_1_1">
+											<div class="commid">{{commlist.id}}</div>
+											<div>{{commlist.conte}}</div>
+										</div>
+								</div>
+								<div class="commbox2_2">
+									<span id="combtn" class="coma">
+										<button @click="combtn(commlist.cno)">답글</button> 
+									</span>
+									<span class="coma">신고</span>
+									<span class="coma">수정</span>
+									<span class="coma">삭제</span>
+									<span class="coma">{{commlist.cdate}}</span>
+								</div>
+							</div>
+							<div v-else>
+								삭제된 댓글
+							</div>
+							<!-- 답글클릭시 보임 -->
+							<div :id="commlist.cno" :class="{recommin1:none,recommin2:flex}" :value="commlist.cno">
+								<textarea class="recommcont" cols="30" rows="10" v-model="content"></textarea>
+								<button class="recommbtn" @click="fnrecommin()">등록</button>
 							</div>
 						</div>
-						<div class="commbox2">
-							<div class="commbox2_1">
-									<div><img class="pimg" src="img/board/160628_7.png"></div>
-									<div>닉네임 : 으ㅏㅏㅏㅏㅏㅏㅏㅏ</div>
-							</div>
-							<div class="commbox2_2">
-								<span class="coma">신고</span>
-								<span>수정</span>
-								<span>삭제</span>
-								<span>작성시간</span>
-							</div>
-						</div>
+						
+						
 					</div>
 				</div>
 			</div>
 		</body>
 </html>
 <script type="text/javascript">
-	
-	console.log(Vue);
-	Vue.use(Vue2Editor);
-	const VueEditor = Vue2Editor.VueEditor;
 	var app = new Vue({ 
 		el: '#app',
 		data: {
-			list : [],
-			title : "",
-			content : "",
-			// 사용자 정보
-			userinfo:{},
-			// 세션
-			sessionid:"test01",
+			tbno : "2",
+			id:"test10",
+			file1:"",
+			content:"",
+			none:true,
+			flex:false,
 
-			// 게시판 리스트,말머리태그 설정
-			listbrdf:{},
-			listkindf:{},
-			// 카테고리 리스트
-			listcate1:{},
-			listcate2:{},
-			listcate3:{},
-			// 지역
-			listlocal1:{},
-			listlocal2:{},
-			listlocal3:{},
-			// INSERT 값
-			inlist:{
-				id:"test10",
-				bprice:0,
-				btitle:"",
-				bcont:" ",
-				brdflg:"0",
-				kind:"0",
-				cate1:"0",
-				cate2:"0",
-				cate3:"0",
-				bprod:"",
-				bpros:"",
-				bstatus:"",
-				bpur:"",
-				bbox:"",
-				brcpt:"",
-				bcms:"",
-				local1:"0",
-				local2:"0",
-				local3:"0"
-			},
-			tbno:0,
-			imgpath:"",
-			repck:false,
-			
-	
+			list:[],
+			commlist:[],
+			commcnt:0,
 		},
-			
-		 components: {VueEditor}
-		, methods: {
-			// seletbox cate 등 값 불러오기
-			optionlist : function(){
+			methods: {
+			//게시글 상세 리스트
+			fnGetList : function(){
 				var self = this;
-				var nparmap = {};
+         	  	var nparmap = {tbno : self.tbno};
 				$.ajax({
-					url:"/trade/option.dox",
+					url:"/tradeView/list.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data)
-						self.listbrdf=data.listbrdf;
-						self.listcate1=data.listcate1;
-						self.listcate3=data.listcate3;
-						self.listlocal1=data.listlocal1;
-
+						self.list = data.list; 
+						self.commcnt=data.cnt;    
+						console.log(self.list);                         
 					}
-				});
-        } ,
-		//게시판 선택, 말머리 리스트
-		setkind : function(){
-			var self = this;
-				var nparmap = {pcomm1 : self.inlist.brdflg};
+				}); 
+			},
+			// 댓글입력
+			fncommIn : function(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno, id:self.id , conetent:self.content};
 				$.ajax({
-					url:"/trade/setkind.dox",
+					url:"/tradeView/commin.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						self.listkindf=data.listkindf;
-						
+						alert("저장!");
+						location.reload();
 					}
-				});
-		},
-		// 말머리 선택에 따른 구매,판매,홍보,의뢰 설정
-		bstatusSet : function(){
-			var self = this;
-			if(self.inlist.kind == 'KI1'){
-				self.inlist.bstatus='BS1';
-			}else if(self.inlist.kind == 'KI2'){
-				self.inlist.bstatus='BS2';
-			}else if(self.inlist.kind == 'KI3'){
-				self.inlist.bstatus='BS3';
-			}else if(self.inlist.kind == 'KI4'){
-				self.inlist.bstatus='BS4';
+				}); 
+			},
+			//댓글 리스트
+			fncommlist : function(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno};
+				$.ajax({
+					url:"/tradeView/commlist.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						self.commcnt=data.cnt;
+						self.commlist=data.commlist;
+					}
+				}); 
+			},
+			combtn(cno){
+				// 작업하던부위
+				var self = this;
+				console.log(cno);
+				var val = $("#cno").value();
+				console.log(val);
+				// if(cno==document.getElementById("#cno").attr("value"))
+				self.none = !self.none;
+				self.flex = !self.flex;
 			}
-		},
-
-		// 2카테고리 수정
-			setCate2 : function(){
-				var self = this;
-				var nparmap = {pcomm1 : self.inlist.cate1};
-				$.ajax({
-					url:"/trade/optioncate2.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.listcate2=data.listcate2
-
-					}
-				});
-				
-			},
-			// 지역2차
-			setlocal2 : function(){
-				var self = this;
-				var nparmap = {local1name : self.inlist.local1};
-				$.ajax({
-					url:"/trade/optionlocal2.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.listlocal2=data.listlocal2
-					}
-				});
-				
-			},
-			// 지역3차
-			setlocal3 : function(){
-				var self = this;
-				var nparmap = {local1name : self.inlist.local1,local2name : self.inlist.local2};
-				$.ajax({
-					url:"/trade/optionlocal3.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.listlocal3=data.listlocal3
-					}
-				});
-				
-			},
-
-
-			// 이메일 연락처 정보
-			userinfolist : function(){
-				var self = this;
-				var nparmap = {userid : self.sessionid };
-				$.ajax({
-					url:"/trade/userinfo.dox",
-					dataType:"json",
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.userinfo=data.userinfo;
-
-					}
-				});
-				
-			},
-
-			//글등록
-			fnAddTrade : function(){
-            var self = this;
-            var nparmap = self.inlist;
-            $.ajax({
-                url:"/trade/insert.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-					console.log(nparmap);
-					if(self.imgpath==''){
-						self.imgpath="img/board/160628_7.png";
-						self.AddTradeTbno();
-					}else{
-						self.AddTradeTbno();
-					}
-					
-					// location.href="trade.do";
-                }
-            });	
-        	},
-			//글등록시 이미지가 있으면 
-			//방금 등록한 게시글넘버 가져오기
-			AddTradeTbno : function(){
-				var self = this;	
-				var nparmap = {};
-				$.ajax({
-					url:"/trade/insertTbno.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.tbno=data.tbno;
-						self.AddTradeImg();
-					}
-				});
-			},
-			//이미지파일 등록
-			AddTradeImg : function(){
-				var self = this;	
-				var nparmap = {tbno:self.tbno, repck:self.repck, imgpath:self.imgpath};
-				console.log(nparmap);
-				$.ajax({
-					url:"/trade/insertImg.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						alert("저장되었습니다.");
-					}
-				});
-			}
-		
-		
-
-
-		, upload : function(){
-			var form = new FormData();
-	        form.append( "file1", $("#file1")[0].files[0] );
-	        
-	         $.ajax({
-	             url : "/upload.do"
-	           , type : "POST"
-	           , processData : false
-	           , contentType : false
-	           , data : form
-	           , success:function(response) { 
-	        	   
-	           }
-	           
-	       });
-		}
-
-		
-		}
-		, created: function () {
-			var self = this;
-			self.optionlist();
-			self.userinfolist();
 			
+		},
+		 created: function () {
+			var self = this;
+			self.fnGetList();
+			self.fncommlist();
 			
 		}
 	});

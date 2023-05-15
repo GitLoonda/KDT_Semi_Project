@@ -13,6 +13,8 @@ public class BoardServicelmpl implements BoardService{
 
 	@Autowired
 	BoardMapper boardMapper;
+	
+	// trade.do
 	// 게시글 리스트 불러오기
 	@Override
 	public HashMap<String, Object> searchTbrdListInfo(HashMap<String, Object> map) {
@@ -21,6 +23,8 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("list", boardMapper.selectTbrdListInfo(map));
 		return resultMap;
 	}
+
+	    // tradeadd.do
 	// 카테고리 리스트 
 	@Override
 	public HashMap<String, Object> searchTbrdCateList(HashMap<String, Object> map) {
@@ -85,4 +89,27 @@ public class BoardServicelmpl implements BoardService{
 	public void TradeImgInsert(HashMap<String, Object> map) {
 		boardMapper.TradeImgAdd(map);
 	}
+
+	//게시물 상세
+	@Override
+	public HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map) {
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("list", boardMapper.selectTbrdInfo(map));
+		return resultMap;
+	}
+
+	//게시물 상세 댓글 등록
+	@Override
+	public void TbrdcommInsert(HashMap<String, Object> map) {
+		boardMapper.TbrdcommAdd(map);
+	}
+
+	@Override
+	public HashMap<String, Object> searchCommInfo(HashMap<String, Object> map) {
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("commlist", boardMapper.selectTbrdcomm(map));
+		resultMap.put("cnt", boardMapper.selectsumcnt(map));
+		return resultMap;
+	}
+	 
 }

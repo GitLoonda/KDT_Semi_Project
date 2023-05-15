@@ -5,11 +5,15 @@ import lombok.Data;
 public class TbrdList {
     private int tbno;
     private String id;
+    private String nick;
+    private String phone;
+    private String email;
     private int bprice;
     private String btitle;
     private String bcont;
     private int hits;
     private int likes;
+    private int grade;
     private String brdname;
     private String kindname;
     private String cate1name;

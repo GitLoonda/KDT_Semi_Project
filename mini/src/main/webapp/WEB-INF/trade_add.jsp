@@ -8,7 +8,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
 			<script src="https://unpkg.com/vue2-editor@2.3.11/dist/index.js"></script>
 			<meta charset="UTF-8">
-			<title>게시글 등록</title>
+			<title>tradeadd.do</title>
 		</head>
 		<style>
 			/* *{

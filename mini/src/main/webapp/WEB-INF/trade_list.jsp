@@ -6,7 +6,7 @@
 			<jsp:include page="/defult/def.jsp"></jsp:include>
 			<link rel="stylesheet" href="css/borad.css">
 			<meta charset="UTF-8">
-			<title>커뮤니티게시판</title>
+			<title>trade.do</title>
 		</head>
 		<style>
 			/* *{

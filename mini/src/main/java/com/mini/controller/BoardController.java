@@ -19,6 +19,7 @@ public class BoardController {
     @Autowired
     BoardService boardService;
 
+    // trade.do
 	@RequestMapping("/trade.do") //거래게시판 페이지
     public String trade(Model model) throws Exception{
 
@@ -39,7 +40,7 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
     
-
+    // tradeadd.do
     //거래 등록 게시판
     @RequestMapping("/tradeadd.do") //거래게시판 페이지
     public String tradeadd(Model model) throws Exception{
@@ -144,18 +145,42 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 
-	@RequestMapping("/tradeview.do") //의뢰게시판 페이지
+    //tradeview.do
+    //게시글 상세
+	@RequestMapping("/tradeview.do") 
     public String request(Model model) throws Exception{
 
         return "/trade_view";
     }
-	
-	
-	@RequestMapping("/community.do") //커뮤니티 페이지
-    public String community(Model model) throws Exception{
 
-        return "/comm_list";
+    //게시글 리스트 불러오기
+    @RequestMapping(value = "/tradeView/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchTbrdInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap = boardService.searchTbrdInfo(map);
+    resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
     }
+    //게시글 댓글입력
+    @RequestMapping(value = "/tradeView/commin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String TbrdcommInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        boardService.TbrdcommInsert(map);
+        resultMap.put("message", "성공");
+        return new Gson().toJson(resultMap);
+    }
+    //게시글 댓글 리스트
+    @RequestMapping(value = "/tradeView/commlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchCommInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap = boardService.searchCommInfo(map);
+    resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+    
 	
 
 
