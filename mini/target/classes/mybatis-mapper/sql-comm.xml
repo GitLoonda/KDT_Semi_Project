@@ -4,20 +4,15 @@
 <mapper namespace="com.mini.mapper.CommunityMapper">
 	<select id="selectCbrdList" parameterType="hashmap" resultType="com.mini.model.Cbrd">
 		SELECT * 
-		FROM (
-			SELECT @ROWNUM := @ROWNUM + 1 AS RN, T3_CBRD .*
-			FROM mini_db2.T3_CBRD, (SELECT @ROWNUM :=0) TMP
-			ORDER BY CDATE ASC 
-			) SUB
-		ORDER BY SUB.RN DESC
-		
-		
+		FROM T3_CBRD
+		ORDER BY CBNO DESC, CDATE DESC
+		LIMIT #{startNum}, #{lastNum}
 	</select>
 	
 	<select id="selectCbrdListCnt" parameterType="hashmap" resultType="int">
 		SELECT
 			COUNT(CBNO) AS CBRDCNT
-		FROM mini_db2.T3_CBRD
+		FROM T3_CBRD
 	</select>
 	
 	<select id="insertCbrd" parameterType="hashmap">
@@ -27,7 +22,7 @@
 	
 	<delete id="deleteCbrd" parameterType="hashmap">
 		DELETE FROM mini_db2.T3_CBRD
-		WHERE BOARD_NO = #{boradKey}
+		WHERE BOARD_NO = #{boardKey}
 	</delete>
 	
 	<select id="getCbrd" parameterType="hashmap" resultType="com.mini.model.Cbrd">
@@ -40,12 +35,12 @@
 			CCONT,
 			CDATE,
 			HITS
-		FROM mini_db2.T3_CBRD
+		FROM T3_CBRD
 		WHERE CBNO = #{CBNO}
 	</select>
 	
 	<update id="updateCbrd" parameterType="hashmap">
-		UPDATE mini_db2.T3_CBRD
+		UPDATE T3_CBRD
 		SET
 			CTITLE = #{title},
 			CCONT = #{content},
@@ -54,7 +49,7 @@
 	</update>
 	
 	<update id="updateCbrdCnt" parameterType="hashmap">
-		UPDATE mini_db2.T3_CBRD
+		UPDATE T3_CBRD
 		SET
 			HITS = HITS + 1
 		WHERE CBNO = #{CBNO}

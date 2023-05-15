@@ -9,7 +9,7 @@
 </head>
 <style>
 	.card1{
-		width: 90%;
+		width: 50%;
 		margin: auto;
 		padding: 20px 0 20px 0;
 	}
@@ -42,18 +42,18 @@
 				<div class="card2">
 					<h3 class="card-header">
 						{{info.ctitle}}
-						<span class="badge badge-pill badge-dark pull-right" style="float: right;">{{info.cdatetime}}</span>
+						<span class="badge badge-pill badge-dark pull-right" style="float: right;">{{info.cdate}}</span>
 					</h3>
 					<div class="card-body">
 					   	<div style="margin: 10px 10px 10px 10px;">
-					   		<pre>{{info.content}}</pre>
+					   		<pre>{{info.ccont}}</pre>
 					   	</div>
 				   	</div>
 				</div>
 				<div class="btns">
-					<button @click="fnUpdateBoard()" >수정</button>
-					<button @click="fnRemoveBoard()" >삭제</button>
-					<button @click="fnReportBoard()" >신고</button>
+					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnUpdate()" >수정</button>
+					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveBoard()" >삭제</button>
+					<button target="_blank" @click="fnReportBoard()" >신고</button>
 					<button @click="fnList()" class="btn" >목록으로</button>
 				</div>
 				
@@ -65,24 +65,27 @@
 						<span>첨부파일</span>
 						<input type="file" id="file1" name="file1" >
 					</div>
-						<textarea v-model="comment" rows="3" cols="100" style="width : 90%;"></textarea>
+						<textarea v-model="comment" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
 						<button @click="fnComment()" class="btn">등록</button>
-						<div style="text-align: right"><input type="checkbox">비밀댓글 설정</div>
+						<div style="text-align: right"><input type="checkbox" value="">비밀댓글 설정</div>
 				</div>
 				
 				<div v-for="(item, index) in commentList" style="font-size : 1em; margin : 10px;">
-					<div>
+					<div v-if="item.delYn == 'N'">
 						<span>
-							{{item.id}}({{item.cdatetime}}) : <pre>{{item.content}}</pre> 
-							<button v-if="item.id == sessionId" @click="fnEditComment()" style="float: right;">수정</button>
-							<button v-if="item.id == sessionId" @click="fnRemoveComment()" style="float: right;">삭제</button>
-							<button v-else @click="fnReportComment()" style="float: right;">신고</button>
+							{{item.id}}({{item.cdate}}) : <pre>{{item.content}}</pre> 
+							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEditComment(item)" style="float: right;">수정</button>
+							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" style="float: right;">삭제</button>
+							<button v-else target="_blank" @click="fnReportComment()" style="float: right;">신고</button>
+						</span>
+						<span v-if="item.delYn == 'Y'">
+						삭제된 댓글 입니다.
 						</span>
 					</div>
-					<!--  <div v-if="cInfo.commentNo == item.commentNo" style="margin-top : 10px;">
-						<textarea v-model="" rows="3" cols="100" style="width : 90%;"></textarea>
+					<div v-if="cInfo.commentNo == item.commentNo" style="margin-top : 10px;">
+						<textarea v-model="comment" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
 						<button @click="" class="btn" style="margin-bottom : 30px;">수정</button>
-					</div>	-->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -98,7 +101,7 @@ var app = new Vue({
        , info : {}
        , cbno : "${map.cbno}"
        , sessionId : "${sessionId}"
-       , sessionStatus : "${sessionStatus}"
+       , sessionAdminflg : "${sessionAdminflg}"
  	   , comment : ""
  	   , commentList : []
  	   , cInfo : {}
@@ -115,15 +118,11 @@ var app = new Vue({
                 success : function(data) {
                 	console.log(data);
 	                self.info = data.info;
-	                self.commentList = data.commentList;
+	                /*self.commentList = data.commentList;*/
                 }
             }); 
         }
-    
-    	, fnList : function(){
-    		location.href="/comm.do";
-    	}
-    	
+
     	, fnUpdate : function(){
     		var self = this;
     		self.pageChange("/commedit.do", {cbno : self.cbno});
@@ -158,7 +157,28 @@ var app = new Vue({
     		form.submit();
     		document.body.removeChild(form);
     	}
-    	<!--
+    	
+        //게시글 목록 이동
+    	, fnList : function(){
+    		location.href="/comm.do";
+    	}
+    	
+    	//게시글 신고 팝업
+    	, fnReportBoard : function() {
+    		let popUrl = "/reportboard.do";
+    		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
+    		window.open(popUrl,"게시글 신고",popOption);	
+    	}
+    	
+    	//댓글 신고 팝업
+    	, fnReportComment : function() {
+    		let popUrl = "/reportcomment.do";
+    		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
+    		window.open(popUrl,"댓글 신고",popOption);	
+    	}
+    	
+    	
+    	/*
     	, fnComment : function(){
     		var self = this;
             var nparmap = {cbno : self.cbno, comment : self.comment, id : self.id};
@@ -204,13 +224,13 @@ var app = new Vue({
 	                self.fnGetBoard();
                 }
             }); 
-    		-->
-    	}
+    	} 
     	
     	, fnEdit : function(item){
     		var self = this;
     		self.cInfo = item;
     	}
+    	*/
     	
     }   
     , created: function () {

@@ -11,7 +11,7 @@
 </head>
 <style>
 	.card{
-		width: 90%;
+		width: 50%;
 		margin: auto;
 	}
     #cate{

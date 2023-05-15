@@ -10,8 +10,12 @@
 	<title>커뮤니티 게시판</title>
 </head>
 <style>
+	.card{
+		width: 50%;
+		margin: auto;
+	}
 	table {
-		width: 950px;
+		width: 1000px;
 		text-align: center;
 		border: 1px solid #fff;
 		border-spacing: 1px;
@@ -19,11 +23,7 @@
 		border-collapse: collapse;
 		border-width: 1px 0;
 	}
-	table a:hover {
-		text-decoration: underline;
-	}
-	
-	table tbody tr:hover {
+	table tbody tr:hover td{
 		background-color:lightcyan;
 	}
 
@@ -86,14 +86,15 @@
 <body>
 	<div id="app">
 		<div class="container">
+		<div class="card">
 			<div>
-				1-15 / <span>{{cnt}}</span>
+				1-15 / <span>{{listcnt}}</span>
 			</div>
 			<div class="table-list">
 				<table class="board_list">
 					<thead>
 						<tr>
-							<!-- <th scope="col"></th> -->
+							<th scope="col" v-if="info.id == sessionId || sessionAdminflg == 'Y'"></th>
 							<th scope="col">No.</th>
 							<th scope="col">제목</th>
 							<th scope="col">조회수</th>
@@ -103,9 +104,9 @@
 					</thead>
 					<tbody>
 						<tr v-for="(item, index) in list" @click="fnView(item.cbno)">
-							<!-- <td><input type="checkbox" v-bind:value="item" v-model="checkList"></td> -->
+							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							<td >{{item.ctitle}}</td>
+							<td style="width: 40%" >{{item.ctitle}}</td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
 							<td>{{item.cdate}}</td>
@@ -115,7 +116,7 @@
 			</div>
 			<div class="btns">
 				<button class="btn" @click="fnAdd()">글쓰기</button>
-				<button class="btn" @click="">삭제</button>
+				<button class="btn" v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="">삭제</button>
 			</div>
 			<div class="searchbox">
 				<select>
@@ -123,8 +124,8 @@
 					<option value=""> 최신순 </option>
 					<option value=""> 조회순 </option>
 				</select>
-				<label><input type="text" ></label>
-				<button class="btn" @click="fnGetList">검색</button>
+				<label><input type="text" v-model="keyword" ></label>
+				<button class="btn" @click="fnGetList" >검색</button>
 			</div>
 			<!-- 페이징 추가 3-->
 				<template>
@@ -139,7 +140,7 @@
 				    :page-class="'page-item'">
 				  </paginate>
 				</template>
-			
+			</div>
 		</div>
 	</div>
 </body>
@@ -154,6 +155,10 @@
 		data: {
 			list: [],
 			listcnt: "",
+			keyword : "",
+			info : {},
+		    sessionId : "${sessionId}",
+		    sessionAdminflg : "${sessionAdminflg}",
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
@@ -165,8 +170,8 @@
 				var self = this;
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage - 1) * 15);
-				var lastNum = (self.selectPage * 15) + 1
-				var nparmap = { startNum: startNum, lastNum: lastNum };
+				var lastNum = 15;
+				var nparmap = {keyword : self.keyword, kind : self.selectItem, startNum: startNum, lastNum: lastNum };
 				console.log(startNum);
 				console.log(lastNum);
 				$.ajax({
@@ -187,7 +192,7 @@
 				var self = this;
 				self.selectPage = pageNum;
 				var startNum = ((pageNum - 1) * 15);
-				var lastNum = (pageNum * 15) + 1;
+				var lastNum = 15;
 				var nparmap = { startNum: startNum, lastNum: lastNum };
 				$.ajax({
 					url: "/comm/list.dox",

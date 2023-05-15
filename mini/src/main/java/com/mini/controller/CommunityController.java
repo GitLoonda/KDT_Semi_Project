@@ -1,10 +1,10 @@
 package com.mini.controller;
 
 import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +27,9 @@ public class CommunityController {
 	
 	
 	@RequestMapping("/comm.do") //커뮤니티 게시판 메인
-    public String main(Model model) throws Exception{
+    public String main(HttpServletRequest request, Model model) throws Exception{
+		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+		request.setAttribute("sessionAdminflg", session.getAttribute("sessionAdminflg"));
 
         return "/comm_list";
     }
@@ -37,6 +39,10 @@ public class CommunityController {
 	@ResponseBody
 	public String searchCbrdList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
 		resultMap = communityService.searchCbrdList(map);
 		resultMap.put("result","success");
 		return new Gson().toJson(resultMap);
@@ -65,9 +71,9 @@ public class CommunityController {
     public String read(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));
-		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		request.setAttribute("sessionAdminflg", session.getAttribute("sessionAdminflg"));
         return "/comm_read";
-    }
+	}
 	
 	// 글 상세
 	@RequestMapping(value = "/comm/read.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -86,6 +92,7 @@ public class CommunityController {
         return "/comm_edit";
     }
 	
+	// 글 수정
 	@RequestMapping(value = "/comm/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String edit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -94,4 +101,19 @@ public class CommunityController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+	
+	
+	//게시글 신고 팝업
+	@RequestMapping("/reportboard.do")
+    public String pop() {
+		return "/report_board";
+	}
+	
+	//댓글 신고 팝업
+	@RequestMapping("/reportcomment.do")
+	public String pop2() {
+		return "/report_comment";
+	}
+	
+
 }
