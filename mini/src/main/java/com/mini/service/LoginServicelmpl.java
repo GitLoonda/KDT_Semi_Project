@@ -19,9 +19,10 @@ public class LoginServicelmpl implements LoginService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int cnt = loginmapper.selectCntUser(map);
 		if(cnt == 1) {
-			User user = loginmapper.selectUserId(map);
+			User user = loginmapper.selectUserInfo(map);
 			if (user != null) {
-				resultMap.put("result", user);
+				resultMap.put("result", "success");
+				resultMap.put("user", user);
 				return resultMap;
 			} else {
 				resultMap.put("result", "fail");
@@ -51,5 +52,12 @@ public class LoginServicelmpl implements LoginService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("quiz", loginmapper.selectQuizList(map));
 		return resultMap;
+	}
+
+	@Override
+	public void addId(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		loginmapper.insertAccount(map);
+		return;
 	}
 }

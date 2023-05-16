@@ -77,6 +77,7 @@
 	}
 	p {
 		margin : 1px;
+		font-size : 12px;
 	}
 </style>
 <body>
@@ -99,9 +100,9 @@
 			</div>
 			<div class="div2">
 				<label>
-					<select class="quiz" v-model="sQuiz">
+					<select @change="fnSetQuiz" class="quiz" v-model="sQuiz">
 						<option value="" >비밀번호 찾기 질문</option>
-						<option v-for="item in quizList" :value="item.cNum">{{item.cinfo}}</option>					
+						<option v-for="item in quizList" :value="item.cNum">{{item.cInfo}}</option>					
 					</select>
 				</label>
 			</div>
@@ -118,8 +119,9 @@
 				<label>
 					<select @change="fnSetGender" v-model="gender">
 						<option value="" >성별</option>
-						<option value="M">남성</option>
-						<option value="F">여성</option>
+						<option value="GE1">남성</option>
+						<option value="GE2">여성</option>
+						<option value="GE3">기타</option>
 					</select>
 				</label>
 			</div>
@@ -217,7 +219,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 	                	self.quizList = data.quiz;
-	                	console.log(self.quizList);
 	                }
 	            });
 		}
@@ -254,8 +255,9 @@ var app = new Vue({
 		, fnPwdCheck : function() { // 비밀번호 유효성 검사
 			var self = this;
 			var pwJ = /^[A-Za-z0-9]{6,12}$/;
-			if(self.list.passwd == "" || self.list.passwd2 == "") {
+			if(self.list.passwd == null || self.list.passwd2 == null) {
 				self.pwFlg = 0;
+				return;
 			}
 			if(!pwJ.test(self.list.passwd)) {
 				self.pwFlg = 2;
@@ -271,6 +273,10 @@ var app = new Vue({
 				self.pwFlg = 1;
 				return;
 			}
+		}
+		, fnSetQuiz : function() { // select 성별 저장
+			var self = this;
+			self.list.quiz = self.sQuiz;
 		}
 		, fnSetGender : function() { // select 성별 저장
 			var self = this;
@@ -347,10 +353,52 @@ var app = new Vue({
 				alert("성별을 선택해주세요.");
 				return;
 			}
-			if(self.list.gender == null) {
-				alert("성별을 선택해주세요.");
+			if(self.bYear == null) {
+				alert("생년을 선택해주세요.");
 				return;
 			}
+			if(self.bMonth == null) {
+				alert("생월을 선택해주세요.");
+				return;
+			}
+			if(self.bDay == null) {
+				alert("생일을 선택해주세요.");
+				return;
+			}
+			if(self.list.phone == null) {
+				alert("전화번호를 입력해주세요.");
+				return;
+			}
+			if(self.list.email == null) {
+				alert("이메일을 입력해주세요.");
+				return;
+			}
+			self.list.addr = self.addr + ", " + self.addrDetail;
+			if(self.list.addr == null) {
+				alert("주소를 입력해주세요.");
+				return;
+			}
+			
+			var nparmap = {id : self.list.id, passwd : self.list.passwd, quiz : self.list.quiz
+					, answer : self.list.answer, name : self.list.name, nick : self.list.nick
+					, gender : self.list.gender, birth : self.list.birth, phone : self.list.phone
+					, email : self.list.email, addr : self.list.addr};
+			console.log(nparmap);
+            $.ajax({
+                url:"/login/addAccount.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+					if(data.result == "success") {
+						alert("가입을 환영합니다.");
+						location.href='login.do';
+					}
+					else {
+						alert("가입에 실패하였습니다.");
+					}
+                }
+            }); 
 		}
 		, fnCancel : function() {
 			if(confirm("작성을 취소하시겠습니까?")) {

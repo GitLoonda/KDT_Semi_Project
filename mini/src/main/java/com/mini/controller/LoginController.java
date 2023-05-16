@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.mini.service.LoginService;
+import com.mini.model.User;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -21,16 +23,55 @@ public class LoginController {
 	@Autowired
 	LoginService loginservice;
 	
+	@Autowired
+	HttpSession session;
+	
 	@RequestMapping("/login.do") //로그인페이지
     public String main(Model model) throws Exception{
+		String id = (String) session.getAttribute("sessionId");
+		String name = (String) session.getAttribute("sessionName");
+		String nick = (String) session.getAttribute("sessionNick");
+		String ustatus = (String) session.getAttribute("sessionuStatus");
+		
+		session.removeAttribute(id);
+		session.removeAttribute(name);
+		session.removeAttribute(nick);
+		session.removeAttribute(ustatus);
+		
+		session.invalidate();
 
         return "/login";
     }
 	
+	@RequestMapping("/logout.do") //로그아웃
+    public String logout(Model model) throws Exception{
+		String id = (String) session.getAttribute("sessionId");
+		String name = (String) session.getAttribute("sessionName");
+		String nick = (String) session.getAttribute("sessionNick");
+		String ustatus = (String) session.getAttribute("sessionUstatus");
+		
+		session.removeAttribute(id);
+		session.removeAttribute(name);
+		session.removeAttribute(nick);
+		session.removeAttribute(ustatus);
+		
+		session.invalidate();
+
+        return "/main";
+    }
+		
 	@RequestMapping(value = "/login/validate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String validateId(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = loginservice.validateUser(map);
+		String result = (String) resultMap.get("result");
+		if(result.equals("success")) {
+			User user = (User) resultMap.get("user");
+			session.setAttribute("sessionId", user.getId());
+			session.setAttribute("sessionName", user.getName());
+			session.setAttribute("sessionNick", user.getNick());
+			session.setAttribute("sessionUstatus", user.getUstatus());
+		}
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -51,6 +92,15 @@ public class LoginController {
 	@ResponseBody
 	public String checkId(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = loginservice.searchId(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/login/addAccount.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addAccount(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		loginservice.addId(map);
+		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
 	

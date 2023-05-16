@@ -96,7 +96,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	console.log(data);
-                	if(data.result.id == self.id) {
+                	if(data.user.id == self.id) {
                 		location.href= "main.do";
                 	}
                 	else if(data.result == "fail") {

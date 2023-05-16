@@ -21,7 +21,22 @@ public class User {
     private String auth2Yn;
     private String creaflg;
     private String adminflg;
-    public String getId() {
+    private String ustatus;
+    private String cdate;
+    
+    public String getUstatus() {
+		return ustatus;
+	}
+	public void setUstatus(String ustatus) {
+		this.ustatus = ustatus;
+	}
+	public String getCdate() {
+		return cdate;
+	}
+	public void setCdate(String cdate) {
+		this.cdate = cdate;
+	}
+	public String getId() {
         return id;
     }
     public void setId(String id) {

@@ -11,9 +11,13 @@ import com.mini.model.User;
 @Mapper
 public interface LoginMapper {
 	
-	User selectUserId(HashMap<String, Object> map);
+	User selectUserInfo(HashMap<String, Object> map);
+	
 	int selectCntUser(HashMap<String, Object> map);
+	
 	List<Desc> selectQuizList(HashMap<String, Object> map);
+	
+	void insertAccount(HashMap<String, Object> map);
 }
 
 

@@ -103,6 +103,16 @@
         #register button:hover {
             background-color: #ccc;
         }
+        #myInfo button {
+            margin : 0 5px;
+            border: none;
+            border-radius: 0;
+            background-color: white;
+            height: 30px;
+        }
+        #myInfo button:hover {
+            background-color: #ccc;
+        }
         #navbar {
             height: 40px;
             background-color: #ADD4D9;
@@ -201,10 +211,20 @@
                         <span v-for="item in cate3">{{item.cInfo}}, </span>
                     </div>
                 </div>
-                <div id="register">
-                    <button @click="fnLogin">로그인</button>
-                    <button @click="fnJoin">회원가입</button>
-                </div>
+                <template v-if="sessionId == ''">
+	                <div id="register">
+	                    <button @click="fnLogin">로그인</button>
+	                    <button @click="fnJoin">회원가입</button>
+	                </div>
+                </template>
+                <template v-else>
+                	<div id="myInfo">
+                		<p>{{sessionNick}} 님, 환영합니다.</p>
+                		<button @click="fnMyPage">마이페이지</button>
+                		<button @click="fnLogout">로그아웃</button>
+                	</div>
+                </template>
+                
             </div>
             <div id="navbar">
                 <ul class="menu">
@@ -283,7 +303,9 @@
     		cate3 : [],
     		option : "",
     		keyword : "",
-    		navParam : []
+    		sessionId : "${sessionId}",
+    		sessionNick : "${sessionNick}",
+    		sessionStatus : "${sessionStatus}",
         }   
         , methods: {
         	fnGetList : function(){
@@ -316,6 +338,12 @@
         	}
         	, fnJoin : function() {
         		location.href = "join.do";
+        	}
+        	, fnMyPage : function() {
+        		location.href = "myPage.do";
+        	}
+        	, fnLogout : function() {
+        		location.href = "logout.do";
         	}
         	, pageChange : function(url, param) {
         		var target = "_self";
@@ -362,6 +390,9 @@
         , created: function () {
         	var self = this;
         	self.$nextTick(self.fnGetList());
+        	console.log(self.sessionId);
+        	console.log(self.sessionNick);
+        	console.log(self.sessionUstatus);
     	}
     });
     </script>
