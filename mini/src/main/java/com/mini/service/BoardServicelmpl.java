@@ -1,11 +1,13 @@
 package com.mini.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mini.mapper.BoardMapper;
+import com.mini.model.TbrdList;
 
 
 @Service
@@ -19,7 +21,7 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchTbrdListInfo(HashMap<String, Object> map) {
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("cnt", boardMapper.selectTbrdListCnt(resultMap));
+		resultMap.put("cnt", boardMapper.selectTbrdListCnt(map));
 		resultMap.put("list", boardMapper.selectTbrdListInfo(map));
 		return resultMap;
 	}
@@ -94,8 +96,32 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map) {
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("jimcnt",boardMapper.jimCnt(map));
 		resultMap.put("list", boardMapper.selectTbrdInfo(map));
 		return resultMap;
+	}
+	// 거래상테 변경
+	@Override
+	public void Tbrdbstupdate(HashMap<String, Object> map) {
+		boardMapper.TbrdbstModify(map);
+	}
+
+	//찜 등록
+	@Override
+	public void Jjiminsert(HashMap<String, Object> map) {
+		boardMapper.jimAdd(map);
+	}
+
+	//찜 삭제
+	@Override
+	public void Jjimdelete(HashMap<String, Object> map) {
+		boardMapper.jimDel(map);
+	}
+
+	//게시글 삭제
+	@Override
+	public void BrdDelete(HashMap<String, Object> map) {
+		boardMapper.BrdDel(map);
 	}
 
 	//게시물 상세 댓글 등록
@@ -111,5 +137,5 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("cnt", boardMapper.selectsumcnt(map));
 		return resultMap;
 	}
-	 
+	
 }

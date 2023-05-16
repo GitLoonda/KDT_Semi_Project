@@ -33,10 +33,10 @@
 						</div>
 						<div class="listbox">
 							<!-- 거래글 리스트 불러오기/필터없음./리스트 -->
-							<div class="itembox" v-for="(item, index) in list">
+							<div class="itembox" v-for="(item, index) in list" @click="fnView(item.tbno)">
 								<!-- 이미지 src 참고 -->
 								<img id="tmp" class="imgbox" :src="item.path">
-								<div class="itemtxt">[{{item.kindname}}]</div>
+								<div class="itemtxt">[{{item.kindname}}] <span>({{item.bstatusname}})</span></div>
 								<div class="itemtxt">{{item.btitle}}</div>
 								<div class="itemtxt">{{item.bprice}} 원</div>
 								<div class="itemtxt">
@@ -154,7 +154,12 @@
     		document.body.appendChild(form);
     		form.submit();
     		document.body.removeChild(form);
-    	}
+    	},
+		fnView(tbno){
+			var self = this;
+			self.pageChange("./tradeview.do",{tbno:tbno});
+			console.log(tbno);
+		}
 
 
 

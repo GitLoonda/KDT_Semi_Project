@@ -13,12 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.mini.service.BoardService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class BoardController {
 
     @Autowired
     BoardService boardService;
 
+    @Autowired
+	HttpSession session;
+    
     // trade.do
 	@RequestMapping("/trade.do") //거래게시판 페이지
     public String trade(Model model) throws Exception{
@@ -114,7 +120,7 @@ public class BoardController {
 	public String TradeInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardService.TradeInsert(map);
-		resultMap.put("message", "성공");
+		resultMap.put("result", "성공");
 		return new Gson().toJson(resultMap);
 	}
 
@@ -148,8 +154,8 @@ public class BoardController {
     //tradeview.do
     //게시글 상세
 	@RequestMapping("/tradeview.do") 
-    public String request(Model model) throws Exception{
-
+    public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        request.setAttribute("map", map);
         return "/trade_view";
     }
 
@@ -161,6 +167,43 @@ public class BoardController {
     resultMap = boardService.searchTbrdInfo(map);
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
+    }
+    // 거래상태변경
+    @RequestMapping(value = "/tradeView/bstupdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Tbrdbstupdate(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        boardService.Tbrdbstupdate(map);
+        resultMap.put("message", "성공");
+        return new Gson().toJson(resultMap);
+    }
+    //찜 등록
+    @RequestMapping(value = "/tradeView/jjimin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Jjiminsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        boardService.Jjiminsert(map);
+        resultMap.put("message", "성공");
+        return new Gson().toJson(resultMap);
+    }
+    //찜 해제
+    @RequestMapping(value = "/tradeView/jjimout.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Jjimdelete(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        boardService.Jjimdelete(map);
+        resultMap.put("message", "성공");
+        return new Gson().toJson(resultMap);
+    }
+    //게시글 삭제
+    
+    @RequestMapping(value = "/tradeView/BrdDel.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String BrdDelete(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        boardService.BrdDelete(map);
+        resultMap.put("message", "성공");
+        return new Gson().toJson(resultMap);
     }
     //게시글 댓글입력
     @RequestMapping(value = "/tradeView/commin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

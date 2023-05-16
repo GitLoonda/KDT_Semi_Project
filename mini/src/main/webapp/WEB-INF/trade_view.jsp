@@ -198,7 +198,7 @@
 				<!-- 게시글 상세 -->
 				<div class="container">
 					<div id="Tviewbox1" v-for="(list, index) in list">
-						<div class="optionT">{{list.btitle}}</div>
+						<div class="optionT">[{{list.kindname}}],{{list.btitle}}</div>
 						<hr>
 						<div class="report"><span class="recdate">{{list.cdate}}</span><button>신고</button></div>
 						<div class="infobox1">
@@ -207,7 +207,27 @@
 							</div>
 							<div class="infobox1_2">
 								<div class="infobox1_2_1">
-									<div>[{{list.bstatusname}}] {{list.btitle}}</div>
+									<div>
+										<template v-if="(list.kindname=='구매')">
+											<label for="a1"><input id="a1" type="radio" name="a"v-model="bstatus" value="BS1">구매</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4">예약/거래중</label>
+											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+										</template>
+										<template v-else-if="(list.kindname=='판매')">
+											<label for="a2"><input id="a2" type="radio" name="a"v-model="bstatus" value="BS2">판매</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4">예약/거래중</label>
+											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+										</template>
+										<template v-else-if="(list.kindname=='의뢰')">
+											<label for="a3"><input id="a3" type="radio" name="a"v-model="bstatus" value="BS3">의뢰요청</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4">예약/거래중</label>
+											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+										</template>
+										<template v-else>
+										</template>
+										<button @click="bstbtn()">적용</button>
+									</div>
+									<div>[{{list.bstatusname}}] / {{list.btitle}}</div>
 									<div>가격 : {{list.bprice}}</div>
 									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
 									<div>제품 상태 : {{list.bprodname}}</div>
@@ -216,14 +236,24 @@
 									<div>거래 지역 : {{list.local1name}} {{list.local2name}} {{list.local3name}}</div>
 								</div>
 								<div class="infobox1_2_2">
-									<button>찜</button>
-									<button>구매</button>
+									<template v-if="(jimst==1)">
+										<button @click="jmbtnout()">찜해제</button>
+									</template>
+									<template v-else>
+										<button @click="jmbtnin()">찜</button>
+									</template>
+									<button>거래하기</button>
 								</div>
 							</div>
 						</div>
 						<div class="infobox2">
-							<textarea class="infocont" name="" id="" cols="30" rows="10" disabled>{{list.bcont}}</textarea>
-							<div class="info2btn"><button>수정</button> <button>삭제</button> </div>
+							<textarea class="infocont" name="" id="" cols="30" rows="10" disabled ><c:out value="list.bcont" />
+								{{list.bcont}}
+							</textarea>
+							<div class="info2btn">
+								<button>수정</button>
+								<button @click="fnTbrdDel()">삭제</button>
+							</div>
 						</div>
 					</div>
 					<!-- 염관상품,댓글 -->
@@ -239,10 +269,10 @@
 							<div class="commpath" v-model="file1"> 첨부파일 이름 <button>첨부</button></div>
 							<div class="commimg" > <img class="cimg" src=""> 이미지 미리보기</div>
 							<div class="commin">
-								<textarea class="infocont2" name="" id="" cols="30" rows="10" v-model="content"></textarea>
+								<textarea class="infocont2" name="" id="" cols="30" rows="10" v-model="commcont"></textarea>
 								<button class="commbtn" @click="fncommIn()">등록</button>
 							</div>
-							{{tbno}},{{id}},{{content}}
+							{{tbno}},{{id}},{{commcont}}
 						</div>
 						<div  v-for="(commlist, index) in commlist">
 							<div class="commbox2" v-if="commlist.delYn == 'N'">
@@ -268,7 +298,7 @@
 							</div>
 							<!-- 답글클릭시 보임 -->
 							<div :id="commlist.cno" :class="{recommin1:none,recommin2:flex}" :value="commlist.cno">
-								<textarea class="recommcont" cols="30" rows="10" v-model="content"></textarea>
+								<textarea class="recommcont" cols="30" rows="10" v-model="commcont"></textarea>
 								<button class="recommbtn" @click="fnrecommin()">등록</button>
 							</div>
 						</div>
@@ -283,22 +313,26 @@
 	var app = new Vue({ 
 		el: '#app',
 		data: {
-			tbno : "2",
+			tbno : "${map.tbno}",
 			id:"test10",
 			file1:"",
-			content:"",
+			cont:"",
 			none:true,
 			flex:false,
+			bstatus:"",
+
 
 			list:[],
 			commlist:[],
+			commcont:"",
 			commcnt:0,
+			jimst:0
 		},
 			methods: {
 			//게시글 상세 리스트
 			fnGetList : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno};
+         	  	var nparmap = {tbno : self.tbno, id:self.id};
 				$.ajax({
 					url:"/tradeView/list.dox",
 					dataType:"json",	
@@ -306,15 +340,18 @@
 					data : nparmap,
 					success : function(data) { 
 						self.list = data.list; 
-						self.commcnt=data.cnt;    
-						console.log(self.list);                         
+						self.commcnt=data.cnt; 
+						self.jimst=data.jimcnt;
+						console.log(data);   
+						self.cont=data.
+                   
 					}
 				}); 
 			},
 			// 댓글입력
 			fncommIn : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno, id:self.id , conetent:self.content};
+         	  	var nparmap = {tbno : self.tbno, id:self.id , conetent:self.commcont};
 				$.ajax({
 					url:"/tradeView/commin.dox",
 					dataType:"json",	
@@ -339,15 +376,78 @@
 						console.log(data);
 						self.commcnt=data.cnt;
 						self.commlist=data.commlist;
+						
+						
 					}
 				}); 
 			},
+			bstbtn(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno,bstatus : self.bstatus};
+				$.ajax({
+					url:"/tradeView/bstupdate.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						alert("거래상태 변경 완료");
+						location.reload();
+					}
+				}); 
+			},
+			jmbtnin(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno,id : self.id};
+				$.ajax({
+					url:"/tradeView/jjimin.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						alert("찜등록 완료");
+						location.reload();
+					}
+				}); 
+			},
+			jmbtnout(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno,id : self.id};
+				$.ajax({
+					url:"/tradeView/jjimout.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						alert("찜해제 완료");
+						location.reload();
+					}
+				}); 
+			},
+			fnTbrdDel(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno};
+				$.ajax({
+					url:"/tradeView/BrdDel.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						alert("삭제완료");
+						location.reload();
+					}
+				}); 
+			},
+
 			combtn(cno){
 				// 작업하던부위
 				var self = this;
-				console.log(cno);
-				var val = $("#cno").value();
-				console.log(val);
+				// console.log(cno);
+				// var val = document.getElementById($("#cno")).value();
+				// console.log(val);
 				// if(cno==document.getElementById("#cno").attr("value"))
 				self.none = !self.none;
 				self.flex = !self.flex;

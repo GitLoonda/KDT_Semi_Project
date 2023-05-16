@@ -34,6 +34,16 @@ public interface BoardService {
     //게시글 상세
     HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map);
 
+    //거래상태 변경
+    void Tbrdbstupdate(HashMap<String, Object> map);
+    
+    // 찜 등록
+    void Jjiminsert(HashMap<String, Object> map);
+    
+    //찜 삭제
+    void Jjimdelete(HashMap<String, Object> map);
+    //게시글 삭제
+    void BrdDelete(HashMap<String, Object> map);
     //게시글 상세 댓글 등록
     void TbrdcommInsert(HashMap<String, Object> map);
 

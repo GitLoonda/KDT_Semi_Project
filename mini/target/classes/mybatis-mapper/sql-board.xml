@@ -54,6 +54,7 @@
 	INNER JOIN T3_DESC D5 ON B.CATE3 = D5.CNUM
 	INNER JOIN T3_DESC D7 ON B.BSTATUS = D7.CNUM
 	LEFT JOIN (SELECT TBNO,PATH,REP FROM T3_TIMG WHERE REP='Y') T1 ON B.TBNO = T1.TBNO
+	WHERE DELYN="N"
 	ORDER BY TBNO DESC LIMIT #{startNum}, #{lastNum}
 	
 </select>
@@ -62,7 +63,8 @@
 <select id="selectTbrdListCnt" parameterType="hashmap" resultType="int">
 	SELECT
 		COUNT(TBNO) AS TBRDCNT
-	FROM T3_TBRD;
+	FROM T3_TBRD
+	WHERE DELYN="N"
 </select>
 
 <!-- tradeadd.do -->
@@ -206,6 +208,36 @@
 	ORDER BY TBNO DESC
 </select>
 
+<!-- 게시글 상세 거래 상태 변경 -->
+<update id="TbrdbstModify"  parameterType="hashmap" >
+	UPDATE T3_TBRD
+	SET BSTATUS=#{bstatus}
+	WHERE TBNO= #{tbno}
+</update>
+
+<insert id="jimAdd" parameterType="hashmap" >
+	INSERT INTO T3_JJIM
+	VALUES(NULL,#{id},#{tbno});
+</insert>
+
+<select id="jimCnt" parameterType="hashmap" resultType="int">
+	SELECT COUNT(JJNO) AS JIMCNT
+	FROM T3_JJIM 
+	WHERE ID=#{id} AND TBNO=#{tbno}
+</select>
+
+<delete id="jimDel" parameterType="hashmap" >
+	DELETE 
+	FROM T3_JJIM 
+	WHERE ID=#{id} AND TBNO=#{tbno}
+</delete>
+
+<update id="BrdDel"  parameterType="hashmap" >
+	UPDATE T3_TBRD
+	SET DELYN="Y"
+	WHERE TBNO= #{tbno}
+</update>
+
 <!-- 게시글 상세 댓글 -->
 <insert id="TbrdcommAdd"  parameterType="hashmap" >
 	INSERT INTO T3_CMRE 
@@ -237,5 +269,8 @@ FROM T3_CMRE
 WHERE TBNO=#{tbno}
 ORDER BY CNO ASC
 </select>
+
+
+
 
 </mapper>
