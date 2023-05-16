@@ -37,15 +37,15 @@
 					</colgroup>
 					<tr> 
 						<select id="cate">
-							<option value=""> 1 </option>
+							<option value=""> {{item.cate1}} </option>
 						</select>
 						<select id="cate">
-							<option value=""> 2 </option>
+							<option value=""> {{item.cate2}} </option>
 						</select>
 					</tr>
 					<tr>
 						<td style="text-align : center;" >제목</td>
-						<td><input type="text" id="title" name="title" v-model="title"></td>
+						<td><input type="text" id="ctitle" name="ctitle" v-model="ctitle"></td>
 					</tr>
 					<tr>
 						<td style="text-align : center;" >첨부파일</td>
@@ -57,7 +57,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-						  <vue-editor v-model="content"></vue-editor> 
+						  <vue-editor v-model="ccont"></vue-editor> 
 						</td>
 					</tr>
 				</table>
@@ -80,8 +80,8 @@ var app = new Vue({
     data: {
 		list : [],
 		checkList : [],
-		title : "",
-		content : ""
+		ctitle : "",
+		ccont : ""
     }
     
     , components: {VueEditor}
@@ -118,8 +118,8 @@ var app = new Vue({
     	// 글 저장
     	,fnAddCbrd : function(){
             var self = this;
-            var nparmap = {title : self.title, content : self.content};
-            console.log( self.content );
+            var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
+            console.log( self.ccont );
             $.ajax({
                 url:"/comm/edit.dox",
                 dataType:"json",	

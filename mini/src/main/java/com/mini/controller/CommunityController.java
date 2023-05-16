@@ -66,9 +66,29 @@ public class CommunityController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//카테고리 1 분류
+    @RequestMapping(value = "/comm/cate1.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchCbrdCate1List(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = communityService.searchCbrdCate1List(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
+  //카테고리 2 분류
+    @RequestMapping(value = "/comm/cate2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchCbrdCate2List(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = communityService.searchCbrdCate2List(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
 	
 	@RequestMapping("/commread.do") //커뮤니티 글 상세
-    public String read(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+    public String read(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));
 		request.setAttribute("sessionAdminflg", session.getAttribute("sessionAdminflg"));
@@ -102,6 +122,16 @@ public class CommunityController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 글 삭제
+	@RequestMapping(value = "/comm/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String remove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		communityService.removeCbrd(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
 	
 	//게시글 신고 팝업
 	@RequestMapping("/reportboard.do")
@@ -110,10 +140,43 @@ public class CommunityController {
 	}
 	
 	//댓글 신고 팝업
-	@RequestMapping("/reportcomment.do")
-	public String pop2() {
-		return "/report_comment";
+		@RequestMapping("/reportcomment.do")
+		public String pop2() {
+			return "/report_comment";
+		}
+	
+	//댓글
+	@RequestMapping(value = "/comm/comment.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String comment(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		communityService.addCbrdComment(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
 	}
+	
+	//댓글 삭제
+	@RequestMapping(value = "/comment/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String cRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		communityService.removeComment(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
+	//댓글 수정
+	@RequestMapping(value = "/comment/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String cEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		communityService.editComment(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
+	
+	
 	
 
 }

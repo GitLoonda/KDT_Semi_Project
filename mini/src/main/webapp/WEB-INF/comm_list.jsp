@@ -30,6 +30,7 @@
 	table td {
 		padding: 10px;
 		background-color: #eee;
+		border-bottom: 1px solid #000;
 	}
 
 	table th {
@@ -43,9 +44,8 @@
 	}
 
 	.btns {
-		padding: 15px 0;
+		padding: 10px 0;
 		text-align: right;
-		margin-right: 10px;
 	}
 	
 		<!-- 페이징 추가 2-->
@@ -88,6 +88,15 @@
 		<div class="container">
 		<div class="card">
 			<div>
+				<a href="main.do" style="none;">홈</a> 
+				<span> > </span>
+				<span>
+					<select style="border: 0;">
+						<option> 전체 </option>
+					</select>
+				</span>
+			</div>
+			<div>
 				1-15 / <span>{{listcnt}}</span>
 			</div>
 			<div class="table-list">
@@ -103,13 +112,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(item, index) in list" @click="fnView(item.cbno)">
+						<tr v-for="(item, index) in list" @click="fnView(item.cbno)" v-if="item.delYn == 'N'">
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
 							<td style="width: 40%" >{{item.ctitle}}</td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
 							<td>{{item.cdate}}</td>
+						</tr>
+						<tr v-else>
+							<td>{{item.cbno}}</td>
+							<td> 삭제된 게시글 입니다. </td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>
@@ -157,8 +173,12 @@
 			listcnt: "",
 			keyword : "",
 			info : {},
-		    sessionId : "${sessionId}",
-		    sessionAdminflg : "${sessionAdminflg}",
+			listcate1:{},
+			listcate2:{},
+		    sessionId : "test01",
+		    sessionAdminflg : "N",
+		    
+		    
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
@@ -245,6 +265,37 @@
 	    		var self = this;
 	    		self.pageChange("/commread.do", {cbno : cbno});
 	    	}
+	    	
+	    	, listcate1 : function(){
+				var self = this;
+				var nparmap = {};
+				$.ajax({
+					url:"/comm/cate1.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data)
+						self.listcate1 = data.listcate1;
+					}
+				});
+	    	}
+        	
+	    	, listcate2 : function(){
+				var self = this;
+				var nparmap = {pcomm1 : self.inlist.cate1};
+				$.ajax({
+					url:"/comm/cate2.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data)
+						self.listcate2 = data.listcate2
+					}
+				});
+				
+			}
 
 
 		}

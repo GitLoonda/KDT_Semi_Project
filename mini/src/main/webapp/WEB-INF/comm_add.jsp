@@ -35,17 +35,20 @@
 						<col width="10%"/>
 						<col width="*"/>
 					</colgroup>
-					<tr> 
-						<select id="cate">
-							<option value=""> 1 </option>
+					<tr>  
+						<select v-model="inlist.cate1" id="cate" @click="cate2List()">
+							<option value="0" disabled>1차</option>
+							<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
 						</select>
-						<select id="cate">
-							<option value=""> 2 </option>
+						
+						<select v-model="inlist.cate2" id="cate">
+							<option value="0" disabled>2차</option>
+							<option v-for="(cate2, index) in listcate2" :value="cate2.cnum">{{cate2.cinfo}}</option>
 						</select>
 					</tr>
 					<tr>
 						<td style="text-align : center;" >제목</td>
-						<td><input type="text" id="title" name="title" v-model="title"></td>
+						<td><input type="text" id="ctitle" name="ctitle" v-model="ctitle"></td>
 					</tr>
 					<tr>
 						<td style="text-align : center;" >첨부파일</td>
@@ -57,7 +60,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-						  <vue-editor v-model="content"></vue-editor> 
+						  <vue-editor v-model="ccont"></vue-editor> 
 						</td>
 					</tr>
 				</table>
@@ -80,8 +83,15 @@ var app = new Vue({
     data: {
 		list : [],
 		checkList : [],
-		title : "",
-		content : ""
+		ctitle : "",
+		ccont : "",
+		listcate1:{},
+		listcate2:{},
+		inlist:{
+			cate1:"0",
+			cate2:"0"
+		},
+		sessionId:"test01"
     }
     
     , components: {VueEditor}
@@ -118,8 +128,8 @@ var app = new Vue({
     	// 글 저장
     	,fnAddCbrd : function(){
             var self = this;
-            var nparmap = {title : self.title, content : self.content};
-            console.log( self.content );
+            var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
+            console.log( self.ccont );
             $.ajax({
                 url:"/comm/add.dox",
                 dataType:"json",	
@@ -132,10 +142,44 @@ var app = new Vue({
             });  
         } 
     	
+    	//카테고리 1차
+    	, cate1List : function(){
+			var self = this;
+			var nparmap = {};
+			$.ajax({
+				url:"/comm/cate1.dox",
+				dataType:"json",	
+				type : "POST", 
+				data : nparmap,
+				success : function(data) { 
+					console.log(data)
+					self.listcate1 = data.listcate1;
+				}
+			});
+    	}
+    	
+    	//카테고리 2차
+    	, cate2List : function(){
+			var self = this;
+			var nparmap = {pcomm1 : self.inlist.cate1};
+			$.ajax({
+				url:"/comm/cate2.dox",
+				dataType:"json",	
+				type : "POST", 
+				data : nparmap,
+				success : function(data) { 
+					self.listcate2 = data.listcate2
+
+				}
+			});
+			
+		}
+    	
     	
     }   
     , created: function () {
     	var self = this;
+    	self.cate1List();
 	}
 });
 </script>

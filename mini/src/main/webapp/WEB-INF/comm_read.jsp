@@ -67,13 +67,13 @@
 					</div>
 						<textarea v-model="comment" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
 						<button @click="fnComment()" class="btn">등록</button>
-						<div style="text-align: right"><input type="checkbox" value="">비밀댓글 설정</div>
+						<div style="text-align: right"><input type="checkbox" value="N">비밀댓글 설정</div>
 				</div>
 				
 				<div v-for="(item, index) in commentList" style="font-size : 1em; margin : 10px;">
 					<div v-if="item.delYn == 'N'">
 						<span>
-							{{item.id}}({{item.cdate}}) : <pre>{{item.content}}</pre> 
+							{{item.id}}({{item.cdate}}) : <pre>{{item.conte}}</pre> 
 							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEditComment(item)" style="float: right;">수정</button>
 							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" style="float: right;">삭제</button>
 							<button v-else target="_blank" @click="fnReportComment()" style="float: right;">신고</button>
@@ -82,7 +82,7 @@
 						삭제된 댓글 입니다.
 						</span>
 					</div>
-					<div v-if="cInfo.commentNo == item.commentNo" style="margin-top : 10px;">
+					<div v-if="cInfo.cno == item.cno" style="margin-top : 10px;">
 						<textarea v-model="comment" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
 						<button @click="" class="btn" style="margin-bottom : 30px;">수정</button>
 					</div>
@@ -99,9 +99,9 @@ var app = new Vue({
     data: {
        list : [] 
        , info : {}
-       , cbno : "${map.cbno}"
-       , sessionId : "${sessionId}"
-       , sessionAdminflg : "${sessionAdminflg}"
+       , cbno : "108"
+       , sessionId : "test18"
+       , sessionAdminflg : "N"
  	   , comment : ""
  	   , commentList : []
  	   , cInfo : {}
@@ -118,15 +118,35 @@ var app = new Vue({
                 success : function(data) {
                 	console.log(data);
 	                self.info = data.info;
-	                /*self.commentList = data.commentList;*/
+	                self.commentList = data.commentList;
                 }
             }); 
         }
-
+		
+    	//게시글 수정
     	, fnUpdate : function(){
     		var self = this;
     		self.pageChange("/commedit.do", {cbno : self.cbno});
     	}
+    	
+    	//게시글 삭제
+    	, fnRemoveBoard : function(cbno){
+   		 var self = this;
+   		 if(!confirm("정말 삭제하시겠습니까?")){
+   			 return;
+   		 }
+            var nparmap = {boradKey : cbno};
+            $.ajax({
+                url:"/comm/remove.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+               	alert("삭제되었습니다.");
+	                self.fnGetList();
+                }
+            }); 
+   	}
     	
     	, pageChange : function(url, param) {
     		var target = "_self";
@@ -177,24 +197,24 @@ var app = new Vue({
     		window.open(popUrl,"댓글 신고",popOption);	
     	}
     	
-    	
-    	/*
+    	//댓글    	
     	, fnComment : function(){
     		var self = this;
-            var nparmap = {cbno : self.cbno, comment : self.comment, id : self.id};
+            var nparmap = {cbno : self.cbno, conte : self.conte, id : self.id};
             $.ajax({
                 url:"/comm/comment.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.comment = "";
+                	self.conte = "";
 	                alert("성공");
 	                self.fnGetBoard();
                 }
             }); 
     	}
     	
+    	//댓글 삭제
     	, fnRemoveComment : function(item){
     		var self = this;
             var nparmap = item;
@@ -210,6 +230,7 @@ var app = new Vue({
             }); 
     	}
     	
+    	//댓글 수정
     	, fnEditComment : function(){
     		var self = this;
             var nparmap = self.cInfo;
@@ -226,11 +247,12 @@ var app = new Vue({
             }); 
     	} 
     	
+    	
     	, fnEdit : function(item){
     		var self = this;
     		self.cInfo = item;
     	}
-    	*/
+    	
     	
     }   
     , created: function () {

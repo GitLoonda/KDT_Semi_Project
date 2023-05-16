@@ -3,7 +3,7 @@ package com.mini.model;
 import lombok.Data;
 
 public class Cmre {
-	private int abno;
+	private int cbno;
 	private String cdate;
 	private int cno;
 	private String conte;
@@ -15,14 +15,14 @@ public class Cmre {
 	private String showYn;
 	private int tbno;
 	private String udate;
-	private int cnt;
 	
 	
-	public int getAbno() {
-		return abno;
+	
+	public int getCbno() {
+		return cbno;
 	}
-	public void setAbno(int abno) {
-		this.abno = abno;
+	public void setCbno(int cbno) {
+		this.cbno = cbno;
 	}
 	public String getCdate() {
 		return cdate;
@@ -90,6 +90,8 @@ public class Cmre {
 	public void setUdate(String udate) {
 		this.udate = udate;
 	}
+	
+
 	
 	
 }
