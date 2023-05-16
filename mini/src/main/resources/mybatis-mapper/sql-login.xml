@@ -45,6 +45,6 @@
                            "N",
                            "1",
                            NOW()
-);
+		);
 	</insert>
 </mapper>

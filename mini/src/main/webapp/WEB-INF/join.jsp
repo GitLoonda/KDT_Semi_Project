@@ -4,6 +4,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<title>로그인</title>
@@ -12,6 +15,7 @@
 	* {
 		text-decoration: none;
 		list-style: none;
+		font-family: 'Nanum Gothic', sans-serif;
 	}
 	a:visited {
 		color: #5a5d69;
@@ -78,6 +82,14 @@
 	p {
 		margin : 1px;
 		font-size : 12px;
+	}
+	.btns button {
+		margin : 0 10px;
+		height : 3em;
+	}
+	#address {
+		width : 16em;
+		font-size : 14px;
 	}
 </style>
 <body>
@@ -155,11 +167,11 @@
 				<input v-model="list.email" type="text" class="in" placeholder=" 이메일"></input>
 			</div>
 			<div class="div2">
-				<input v-model="addr" type="text" class="in3" placeholder=" 주소" disabled></input>
+				<input v-model="addr" id="address" type="text" class="in3" placeholder=" 주소" disabled></input>
 				<button id="btn" @click="fnSearchAddr">주소 찾기</button>
-				<input v-model="addrDetail" type="text" class="in" placeholder=" 상세주소"></input>
+				<input v-model="addrDetail"  type="text" class="in" placeholder=" 상세주소"></input>
 			</div>
-			<div>
+			<div class="btns">
 				<button id="btn" @click="fnSignIn">회원가입</button>
 				<button id="btn" @click="fnCancel">취소</button>
 			</div>
@@ -378,7 +390,6 @@ var app = new Vue({
 				alert("주소를 입력해주세요.");
 				return;
 			}
-			
 			var nparmap = {id : self.list.id, passwd : self.list.passwd, quiz : self.list.quiz
 					, answer : self.list.answer, name : self.list.name, nick : self.list.nick
 					, gender : self.list.gender, birth : self.list.birth, phone : self.list.phone

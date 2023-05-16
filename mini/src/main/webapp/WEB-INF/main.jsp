@@ -68,88 +68,94 @@
 	<div id="app">
 		<div class="banner">
             <div class="view">
-                <img src="img/board/160628_7.png" alt="banner1">
+                <a href="javascript:;"><img src="img/board/160628_7.png" alt="banner1"></a>
             </div>
         </div>
         <div id="container">
-            <h2>상품거래 카테고리</h2>
+            <a href="javascript:;"><h2>상품거래 카테고리</h2></a>
             <div id="sellCategory">
                 <div class="sellCateList">
                     <div>
-                        <img src="img/board/160628_7.png" alt="cate1">
+                        <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     </div>
                     <p>스포츠</p>
                 </div>
                 <div class="sellCateList">
                     <div>
-                        <img src="img/board/160628_7.jpg" alt="cate1">
+                        <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     </div>
                     <p>연예인</p>
                 </div>
                 <div class="sellCateList">
                     <div>
-                        <img src="img/board/160628_7.jpg" alt="cate1">
+                       <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     </div>
                     <p>영화</p>
                 </div>
                 <div class="sellCateList">
                     <div>
-                        <img src="img/board/160628_7.jpg" alt="cate1">
+                        <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     </div>
                     <p>애니메이션</p>
                 </div>
                 <div class="sellCateList">
                     <div>
-                        <img src="img/board/160628_7.jpg" alt="cate1">
+                       <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     </div>
                     <p>게임</p>
                 </div>
                 
             </div>
-            <h2>오늘의 상품 추천</h2>
+            <a href="javascript:;"><h2>오늘의 팔아요</h2></a>
             <div id="sellRc">
                 <div v-for="item in sellRcmd" class="itembox">
-                    <img :src="item.path" alt="itemImg">
-                    <p>{{item.bTitle}}</p>
-                    <p>가격 : {{item.bPrice}}</p>
-                    <p>찜 : {{item.likes}}</p>
+                	<a href="javascript:;">
+	                	<img :src="item.path" alt="itemImg">
+	                    <p>{{item.bTitle}}</p>
+	                    <p>가격 : {{item.bPrice}}</p>
+	                    <p>찜 : {{item.likes}}</p>
+                	</a>
                 </div>
             </div>
-            <h2>오늘의 구해요</h2>
+            <a href="javascript:;"><h2>오늘의 구해요</h2></a>
             <div id="buyRc">
                 <div v-for="item in buyRcmd" class="itembox">
-                    <img :src="item.path" alt="itemImg">
-                    <p>{{item.bTitle}}</p>
-                    <p>가격 : {{item.bPrice}}</p>
-                    <p>찜 : {{item.likes}}</p>
+                    <a href="javascript:;">
+	                	<img :src="item.path" alt="itemImg">
+	                    <p>{{item.bTitle}}</p>
+	                    <p>가격 : {{item.bPrice}}</p>
+	                    <p>찜 : {{item.likes}}</p>
+                	</a>
                 </div>
             </div>
-            <h2>의뢰 카테고리</h2>
+            <a href="javascript:;"><h2>의뢰 카테고리</h2></a>
             <div id="commCategory">
                 <div class="commCateList">
-                    <img src="img/board/160628_7.png" alt="cate1">
+                    <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     <p>조립</p>
                 </div>
                 <div class="commCateList">
-                    <img src="img/board/160628_7.jpg" alt="cate2">
+                    <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     <p>도색</p>
                 </div>
                 <div class="commCateList">
-                    <img src="img/board/160628_7.jpg" alt="cate3">
+                    <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     <p>수리</p>
                 </div>
                 <div class="commCateList">
-                    <img src="img/board/160628_7.jpg" alt="cate3">
+                   <a href="javascript:;"><img src="img/board/160628_7.png" alt="cate1"></a>
                     <p>기타</p>
                 </div>
             </div>
-            <h2>오늘의 의뢰추천</h2>
+            <a href="javascript:;"><h2>오늘의 의뢰</h2></a>
             <div id="commRc">
                 <div v-for="item in commRcmd" class="itembox">
-                    <img :src="item.path" alt="itemImg">
-                    <p>{{item.bTitle}}</p>
-                    <p>가격 : {{item.bPrice}}</p>
-                    <p>찜 : {{item.likes}}</p>
+                    <a href="javascript:;">
+	                	<img :src="item.path" alt="itemImg">
+	                    <p>{{item.bTitle}}</p>
+	                    <p>가격 : {{item.bPrice}}</p>
+	                    <p>찜 : {{item.likes}}</p>
+                	</a>
                 </div>
             </div>
         </div>

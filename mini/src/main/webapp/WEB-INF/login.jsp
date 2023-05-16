@@ -4,6 +4,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<title>회원가입</title>
@@ -12,6 +15,7 @@
 	* {
 		text-decoration: none;
 		list-style: none;
+		font-family: 'Nanum Gothic', sans-serif;
 	}
 	a:visited {
 		color: #5a5d69;

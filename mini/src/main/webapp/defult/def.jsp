@@ -5,6 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <script src="js/jquery.js"></script>
     <script src="assets/ckeditor5/build/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -14,6 +17,7 @@
     	* {
             list-style: none;
             text-decoration: none;
+            font-family: 'Nanum Gothic', sans-serif;
         }
         body {
             width : 1980px;
@@ -193,7 +197,7 @@
         <div id="container1">
             <div id="header">
                 <div @click="fnMain" id="logoBox">
-                    <img src="img/main/unity-logo-200x100-1.jpg" alt="logo">
+                	<a href="javascript:;"><img src="img/main/unity-logo-200x100-1.jpg" alt="logo"></a>
                 </div>
                 <div id="searchBox">
                     <div id="searchBar">
@@ -204,7 +208,8 @@
                             <option>의뢰</option>
                         </select>
                         <input v-model="keyword" type="text">
-                        <button @click="fnSearch">검색</button>
+                        <a href="javascript:;"><button @click="fnSearch">검색</button></a>
+                        
                     </div>
                     <div id="RcmdItem">
                         <span>추천 검색어 : </span>
@@ -219,7 +224,7 @@
                 </template>
                 <template v-else>
                 	<div id="myInfo">
-                		<p>{{sessionNick}} 님, 환영합니다.</p>
+                		<p>{{sessionNick}}님, 환영합니다.</p>
                 		<button @click="fnMyPage">마이페이지</button>
                 		<button @click="fnLogout">로그아웃</button>
                 	</div>
@@ -228,23 +233,23 @@
             </div>
             <div id="navbar">
                 <ul class="menu">
-                    <li>
+                    <li @click="fnTrade">
                         <a href="javascript:;">중고거래</a>
                         <div class="category">
                             <ul class="dep1">
-                                <li v-for="item in cate1">
+                                <li @click="fnCateSelect(item)" v-for="item in cate1">
                                     <a href="javascript:;">
                                     {{item.cInfo}}
                                     <span>></span>
                                     </a>
                                     <ul class="dep2">
-		                                <li v-for="item2 in cate2">
+		                                <li @click="fnCateSelect(item, item2)" v-for="item2 in cate2">
 		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;">
 		                                    {{item2.cInfo}}
 		                                    <span>></span>
 		                                    </a>
 		                                    <ul class="dep3">
-				                                <li v-for="item3 in cate3">
+				                                <li @click="fnCateSelect(item, item2, item3)" v-for="item3 in cate3">
 				                                    <a href="javascript:;">
 				                                    {{item3.cInfo}}
 				                                    </a>
@@ -256,30 +261,12 @@
                             </ul>
                         </div>
                     </li>
-                    <li>
+                    <li @click="fnRequest">
                         <a href="javascript:;">제작의뢰</a>
                         <div class="category">
                             <ul class="dep1">
-                                <li v-for="item in cate1">
-                                    <a href="javascript:;">
-                                    {{item.cInfo}}
-                                    <span>></span>
-                                    </a>
-                                    <ul class="dep2">
-		                                <li v-for="item2 in cate2">
-		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;">
-		                                    {{item2.cInfo}}
-		                                    <span>></span>
-		                                    </a>
-		                                    <ul class="dep3">
-				                                <li v-for="item3 in cate3">
-				                                    <a href="javascript:;">
-				                                    {{item3.cInfo}}
-				                                    </a>
-				                                </li>
-				                            </ul>
-		                                </li>
-		                            </ul>
+                                <li v-for="item in bcms">
+                                    <a href="javascript:;">{{item.cInfo}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -298,9 +285,11 @@
         el: '#app0',
         data: {
         	map : [],
+        	cate : {},
     		cate1 : [],
     		cate2 : [],
     		cate3 : [],
+    		bcms : [],
     		option : "",
     		keyword : "",
     		sessionId : "${sessionId}",
@@ -326,7 +315,11 @@
        	                });
    	                	self.cate3 = self.map.filter(function(element){
        	                	return element.cId == "CATE3";
-       	                })
+       	                });
+   	                	self.bcms = self.map.filter(function(element){
+   	                		return element.cId == "BCMS";
+   	                	});
+   	                	console.log(self.bcms);
                     }
                 }); 
             }
@@ -340,10 +333,41 @@
         		location.href = "join.do";
         	}
         	, fnMyPage : function() {
-        		location.href = "myPage.do";
+        		location.href = "mypage.do";
         	}
         	, fnLogout : function() {
         		location.href = "logout.do";
+        	}
+        	, fnTrade : function() {
+        		location.href = "trade.do";
+        	}
+        	, fnRequest : function() {
+        		location.href = "requeste.do";
+        	}
+        	, fnCateSelect : function(item, item2, item3) {
+        		var self = this;
+        		if(item2 == null) {
+        			self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : null, cate3 : null});
+        			return;
+        		}
+        		if(item3 == null) {
+        			self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : null});
+        			return;
+        		}
+        		console.log(item.cNum, item2.cNum, item3.cNum);
+        		self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : item3.cNum});
+        	}
+        	, fnSearch : function(){
+        		var self = this;
+        		if(self.option == "구매" || self.option == "판매") {
+        			self.pageChange("/trade.do", {option : self.option, keyword : self.keyword});
+        		}
+        		else if(self.option == "의뢰") {
+        			self.pageChange("/request.do", {option : self.option, keyword : self.keyword});
+        		}
+        		else {
+        			alert("게시판을 선택해주세요.");
+        		}
         	}
         	, pageChange : function(url, param) {
         		var target = "_self";
@@ -374,25 +398,10 @@
         		form.submit();
         		document.body.removeChild(form);
         	}
-        	, fnSearch : function(){
-        		var self = this;
-        		if(self.option == "구매" || self.option == "판매") {
-        			self.pageChange("/trade.do", {option : self.option, keyword : self.keyword});
-        		}
-        		else if(self.option == "의뢰") {
-        			self.pageChange("/request.do", {option : self.option, keyword : self.keyword});
-        		}
-        		else {
-        			alert("게시판을 선택해주세요.");
-        		}
-        	}
         }   
         , created: function () {
         	var self = this;
         	self.$nextTick(self.fnGetList());
-        	console.log(self.sessionId);
-        	console.log(self.sessionNick);
-        	console.log(self.sessionUstatus);
     	}
     });
     </script>

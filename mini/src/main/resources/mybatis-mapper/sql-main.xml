@@ -11,7 +11,7 @@
 		PCOMM1,
 		PCOMM2
 		FROM T3_DESC
-		WHERE CID LIKE '%CATE%'
+		WHERE CID LIKE '%CATE%' OR CID LIKE '%BCMS%'
 	</select>
 	
 	<select id="selectSellList" parameterType="hashmap" resultType="com.mini.model.Main">
