@@ -9,28 +9,47 @@
 	<title>비밀번호 찾기</title>
 </head>
 <style>
+	* {
+		font-decoration : none;
+		list-style : none;
+	}
 </style>
 <body>
-    <form id="signup">
-	<div id="app" class="div1">
-		<a href="#"><img src="../images/insta.jpg"></a><br><br>
+	<div id="app">
 		<div class="logoImg"><h2>비밀번호 찾기</h2></div>
-		<div class="div2">
-			<p class="p1">아이디</p>
-			<input type="text" class="in" required></input>
-		</div>
-		<div class="div2">
-			<p class="p1">이름</p>
-			<input type="text" class="in" required></input>
-		</div>
-		<div class="div2">
-			<p class="p1">이메일</p>
-			<input type="email" class="in" required></input>
-		</div>
-		<div class="div2">
-         	<button id="btn" @click="fnset">찾기</button>
-		</div>
-     </form>
+		<template v-if="verifyFlg == false">
+			<div class="div2">
+				<input type="text" class="in" placeholder="아이디" required></input>
+			</div>
+			<div class="div2">
+				<input type="text" class="in"  placeholder="이름" required></input>
+			</div>
+			<div class="div2">
+				<input type="email" class="in" placeholder="이메일" required></input>
+			</div>
+			<div class="div2">
+	         	<button id="btn" @click="fnset">찾기</button>
+			</div>
+		</template>
+		<template v-if="verifyFlg == true">
+			<div class="div2">
+				<p class="p1">아이디</p>
+				<input type="text" class="in" required></input>
+			</div>
+			<div class="div2">
+				<p class="p1">이름</p>
+				<input type="text" class="in" required></input>
+			</div>
+			<div class="div2">
+				<p class="p1">이메일</p>
+				<input type="email" class="in" required></input>
+			</div>
+			<div class="div2">
+	         	<button id="btn" @click="fnset">찾기</button>
+			</div>
+		</template>
+		
+	</div>
 </body>
 </html>
 
@@ -39,7 +58,7 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-
+		verifyFlg : false;
     }   
     , methods: {
     	fnset : function(){
