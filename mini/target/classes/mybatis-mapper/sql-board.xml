@@ -173,7 +173,8 @@
 </select>
 
 <!-- 게시글 등록 -->
-<insert id="TradeAdd" parameterType="hashmap" >
+<!-- 호출한 맵 안에 값이 들어감 map.put("tbno",리턴값) 형태로 -->
+<insert id="TradeAdd" parameterType="hashmap" useGeneratedKeys="true" keyProperty="tbno" keyColumn="TBNO">
 	INSERT INTO T3_TBRD
 	VALUES (NULL, #{id}, #{bprice}, #{btitle}, #{bcont}, 0, 0,
 		#{brdflg}, #{kind}, #{cate1}, #{cate2}, #{cate3},
@@ -181,16 +182,11 @@
 		#{brcpt}, #{bcms}, #{local1}, #{local2}, #{local3},
 		NOW(), NULL, 'N')
 </insert>
-
-<select id="selectAddTbno" parameterType="hashmap" resultType="int">
-	SELECT TBNO 
-	FROM T3_TBRD
-	ORDER BY TBNO DESC LIMIT 1
-</select>
-
-<insert id="TradeImgAdd" parameterType="hashmap" >
+<!-- 이미지 등록 -->
+<insert id="TradeImgAdd" parameterType="hashmap">
 	INSERT INTO T3_TIMG
-	VALUES (NULL,#{tbno},#{imgpath},#{rep})
+	VALUES (NULL,#{tbno},#{path},"Y")
+
 </insert>
 
 <!-- tradeview.do -->
@@ -215,6 +211,7 @@
 		D5.CINFO AS CATE3NAME,
 		D6.CINFO AS BPRODNAME,
 		D7.CINFO AS BPROSNAME,
+		BSTATUS,
 		D8.CINFO AS BSTATUSNAME,
 		D9.CINFO AS BPURNAME,
 		D10.CINFO AS BBOXNAME,

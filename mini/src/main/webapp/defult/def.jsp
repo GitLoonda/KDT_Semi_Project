@@ -101,12 +101,13 @@
                     </li>
                 </ul>
             </div>
-        </div>
-         <div class=sidebar>
+			
+			<!-- <div class=sidebar>
             	<div><a href="javascript:;">최근 본 상품</a></div>
             	<div><a href="javascript:;">찜한 상품</a></div>
             	<div><a href="#header">맨 위로</a></div>
-         </div>
+         </div> -->
+        </div>
     </div>
     </body>
     </html>

@@ -101,6 +101,10 @@
 			#Tviewbox2 hr{
 				border: 2px solid black;
 			}
+			.shbox{
+				border: 1px solid #ccc;
+				margin-bottom: 10px ;
+			}
 			.itembox{
 				width: 150px;
 				height: 250px;
@@ -262,7 +266,7 @@
 					<!-- 염관상품,댓글 -->
 					<div id="Tviewbox2">
 						<div>연관 상품</div>
-						<div>
+						<div class="shbox">
 							<div class="itembox">
 								
 							</div>
@@ -346,7 +350,7 @@
 						self.list = data.list; 
 						self.jimst=data.ujimcnt;
 						self.cont=data.list[0].bcont;
-
+						self.bstatus=data.list[0].bstatus;
 					}
 				}); 
 			},

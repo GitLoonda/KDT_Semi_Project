@@ -426,7 +426,7 @@
 					</div>
 
 					<div class="editbox">
-						<div class="optionT">첨부파일 <input type="file" id="file1" name="file1"> 
+						<div class="optionT">첨부파일 <input type="file" id="file1" name="file1" v-model="file1" MultipartFile> 
 							<label for="repck"><input id="repck" type="checkbox" v-model="repck">썸네일</label>
 
 						</div>
@@ -440,7 +440,7 @@
 							<button class="btn">목록</button>
 						</div>
 						<div>{{inlist}}</div>
-						<div>{{tbno}},{{imgpath}},{{repck}}</div>
+						<div>{{tbno}},{{file1}},{{repck}}</div>
 					</div>
 				</div>
 			</div>
@@ -497,7 +497,7 @@
 				local3:"0"
 			},
 			tbno:0,
-			imgpath:"",
+			file1:"",
 			repck:false,
 			
 	
@@ -628,60 +628,19 @@
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-					console.log(nparmap);
-					if(self.imgpath==''){
-						self.imgpath="img/board/160628_7.png";
-						self.repck="true";
-						self.AddTradeTbno();
-					}else{
-						self.AddTradeTbno();
-					}
-					
-					location.href="trade.do";
+					var form = new FormData();
+						form.append( "file1",  $("#file1")[0].files[0] );
+						form.append( "tbno",  data.tbno); // pk
+						self.upload(form); 
+					alert("성공!")
                 }
             });	
         	},
-			//글등록시 이미지가 있으면 
-			//방금 등록한 게시글넘버 가져오기
-			AddTradeTbno : function(){
-				var self = this;	
-				var nparmap = {};
-				$.ajax({
-					url:"/trade/insertTbno.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.tbno=data.tbno;
-						self.AddTradeImg();
-					}
-				});
-			},
-			//이미지파일 등록
-			AddTradeImg : function(){
-				var self = this;	
-				var nparmap = {tbno:self.tbno, repck:self.repck, imgpath:self.imgpath};
-				console.log(nparmap);
-				$.ajax({
-					url:"/trade/insertImg.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						alert("저장되었습니다.");
-					}
-				});
-			}
-		
-		
-
-
-		, upload : function(){
-			var form = new FormData();
-	        form.append( "file1", $("#file1")[0].files[0] );
-	        
+			// 파일 업로드
+			upload : function(form){
+	    	var self = this;
 	         $.ajax({
-	             url : "/upload.do"
+	             url : "/fileUpload.dox"
 	           , type : "POST"
 	           , processData : false
 	           , contentType : false

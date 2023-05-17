@@ -1,12 +1,8 @@
 * {
-    list-style: none;
     text-decoration: none;
     font-family: 'Nanum Gothic', sans-serif;
 }
-body {
-    width : 1980px;
-    margin : auto;
-}
+
 #container1 {
     width : 1080px;
     margin : auto;
@@ -28,6 +24,7 @@ body {
     padding : 20px 0 0 0;
 }
 #searchBar {
+    
     border: 3px solid #ADD4D9;
     background-color: white;
     margin: 0px;
@@ -104,12 +101,14 @@ body {
 #navbar {
     height: 40px;
     background-color: #ADD4D9;
+    
 }
 a {
     color: black;
     font-weight: bold;
 }
 #navbar .menu > li {
+    list-style: none;
     width: 14%;
     float: left;
     line-height: 40px;
@@ -122,6 +121,7 @@ a {
      z-index : 1;
 }
 #navbar .dep1, .dep2, .dep3 {
+    
     display : none;
     margin: 0;
     padding: 0;
@@ -130,6 +130,7 @@ a {
     width : 160px;
 }
 #navbar .dep1 li {
+    list-style: none;
     position : relative;
 }
 #navbar .dep2 {
@@ -177,7 +178,7 @@ a {
 }
 .sidebar {
     position : fixed;
-    right : 200px;
+    right: 200px;
    	display : grid;
    	grid-template-rows: repeat(3, 50px);
    	padding : 20px;

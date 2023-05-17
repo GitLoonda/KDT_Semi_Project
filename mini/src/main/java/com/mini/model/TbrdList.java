@@ -22,6 +22,7 @@ public class TbrdList {
     private String bprodname;
     private String bprosname;
     private String bstatusname;
+    private String bstatus;
     private String bpurname;
     private String bboxname;
     private String brcptname;

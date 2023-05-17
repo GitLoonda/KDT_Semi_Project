@@ -23,12 +23,8 @@ public interface BoardService {
 
     //거래글 등록
     void TradeInsert(HashMap<String, Object> map);
-
-    //거래글번호 호출
-    int searchAddTbno(HashMap<String, Object> map);
-    
-    //거래글 이미지 파일 등록
     void TradeImgInsert(HashMap<String, Object> map);
+
 
     //tradeview.do
     //게시글 상세
