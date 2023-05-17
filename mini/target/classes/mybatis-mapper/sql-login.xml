@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mini.mapper.LoginMapper">
+	<select id="selectUserInfo" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT id, name, nick, ustatus
+		FROM T3_USER
+		WHERE ID = #{id} AND PASSWD = #{passwd}
+	</select>
+	
+	<select id="selectCntUser" parameterType="hashmap" resultType="int">
+		SELECT COUNT(ID)
+		FROM T3_USER
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="selectQuizList" parameterType="hashmap" resultType="com.mini.model.Desc">
+		SELECT CINFO, CNUM
+		FROM T3_DESC 
+		WHERE CID = "QUIZ"
+	</select>
+	
+	<insert id="insertAccount" parameterType="hashmap">
+		INSERT INTO T3_USER VALUES(
+						   #{id}, 
+						   #{passwd},
+                           #{name},
+                           #{nick},
+						   #{gender},
+                           #{birth},
+                           #{phone},
+                           #{email},
+						   #{addr},
+                           #{quiz},
+                           #{answer},
+                           30,
+                           30,
+                           0,
+						   0,
+						   0,
+						   0,
+                           "Y",
+                           "N",
+                           "N",
+                           "N",
+                           "1",
+                           NOW()
+		);
+	</insert>
+</mapper>

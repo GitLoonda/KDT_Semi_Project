@@ -22,6 +22,7 @@ public class CommunityServiceImpl implements CommunityService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cnt", communityMapper.selectCbrdListCnt(resultMap));
 		resultMap.put("list", communityMapper.selectCbrdList(map));
+		resultMap.put("ccnt", communityMapper.selectsumcnt(map));
 		return resultMap;
 	}
 	
@@ -61,11 +62,13 @@ public class CommunityServiceImpl implements CommunityService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		Cbrd cbrd = communityMapper.getCbrd(map);
 		List<Cmre> commentList = communityMapper.selectCommentList(map);
+		
 		if(cbrd != null) {
 			communityMapper.updateCbrdCnt(map);
 		}
 		resultMap.put("info", cbrd);
 		resultMap.put("commentList", commentList);
+		resultMap.put("ccnt", communityMapper.selectsumcnt(map));
 		return resultMap;
 	}
 	

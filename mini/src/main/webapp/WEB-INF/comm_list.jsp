@@ -47,6 +47,17 @@
 		padding: 10px 0;
 		text-align: right;
 	}
+	.category_path{
+		line-height: 20px;
+		margin-top: 10px;
+	}
+	
+	.category_path select{
+		border: none;
+		text-align: center;
+		appearance: none;
+	}
+
 	
 		<!-- 페이징 추가 2-->
 	.pagination {
@@ -87,16 +98,24 @@
 	<div id="app">
 		<div class="container">
 		<div class="card">
-			<div>
-				<a href="main.do" style="none;">홈</a> 
-				<span> > </span>
+			<div class="category_path">
+				<a href="main.do" style="none; font-size: 0.8em;"> 홈 </a> 
+				<span>  >  </span>
+				<a href="comm.do" style="none; font-size: 0.8em;"> 커뮤니티 </a> 
+				<span>  >  </span>
 				<span>
-					<select style="border: 0;">
-						<option> 전체 </option>
+					<select v-model="inlist.cate1" id="cate" @click="cate2List()">
+						<option value="0" hidden>1차</option>
+						<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
+					</select>
+					<span>  >  </span>
+					<select v-model="inlist.cate2" id="cate" >
+						<option value="0" hidden>2차</option>
+						<option v-for="(cate2, index) in listcate2" :value="cate2.cnum">{{cate2.cinfo}}</option>
 					</select>
 				</span>
 			</div>
-			<div>
+			<div style="margin-top: 10px;">
 				1-15 / <span>{{listcnt}}</span>
 			</div>
 			<div class="table-list">
@@ -115,12 +134,14 @@
 						<tr v-for="(item, index) in list" @click="fnView(item.cbno)" v-if="item.delYn == 'N'">
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							<td style="width: 40%" >{{item.ctitle}}</td>
+							<td v-if="ccnt != 0" style="width: 40%;" >{{item.ctitle}}({{ccnt}})</td>
+							<td v-else style="width: 40%;" >{{item.ctitle}}</td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
 							<td>{{item.cdate}}</td>
 						</tr>
 						<tr v-else>
+							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
@@ -170,12 +191,18 @@
 		el: '#app',
 		data: {
 			list: [],
+			checkList : [],
 			listcnt: "",
+			ccnt: "",
 			keyword : "",
 			info : {},
 			listcate1:{},
 			listcate2:{},
-		    sessionId : "test01",
+			inlist:{
+				cate1:"0",
+				cate2:"0"
+			},
+		    sessionId : "test20",
 		    sessionAdminflg : "N",
 		    
 		    
@@ -203,6 +230,7 @@
 						console.log(data);
 						self.list = data.list;
 						self.listcnt = data.cnt;
+						self.ccnt = data.ccnt;
 						self.pageCount = Math.ceil(self.listcnt / 15);
 					}
 				});
@@ -266,7 +294,7 @@
 	    		self.pageChange("/commread.do", {cbno : cbno});
 	    	}
 	    	
-	    	, listcate1 : function(){
+	    	, cate1List : function(){
 				var self = this;
 				var nparmap = {};
 				$.ajax({
@@ -281,7 +309,7 @@
 				});
 	    	}
         	
-	    	, listcate2 : function(){
+	    	, cate2List : function(){
 				var self = this;
 				var nparmap = {pcomm1 : self.inlist.cate1};
 				$.ajax({
@@ -302,6 +330,7 @@
 		, created: function () {
 			var self = this;
 			self.fnGetList();
+			self.cate1List();
 		}
 	
 	});

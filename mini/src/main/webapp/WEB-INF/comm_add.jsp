@@ -23,6 +23,14 @@
 		text-align: right;
 		margin-right: 5px;
 	}
+	select {
+		padding: 3px;
+		width: 30%;
+	}
+	input {
+		padding: 3px;
+		width: 70%;
+	}
 </style>
 <body>
 	<div id="app">
@@ -91,7 +99,7 @@ var app = new Vue({
 			cate1:"0",
 			cate2:"0"
 		},
-		sessionId:"test01"
+		sessionId:""
     }
     
     , components: {VueEditor}
@@ -128,6 +136,24 @@ var app = new Vue({
     	// 글 저장
     	,fnAddCbrd : function(){
             var self = this;
+            if(self.inlist.cate1 == "0"){
+            	alert("1차 카테고리를 선택하세요.");
+            	return;
+            }
+            
+            if(self.inlist.cate2 == "0"){
+            	alert("2차 카테고리를 선택하세요.");
+            	return;
+            }
+            if(self.ctitle == ""){
+            	alert("제목을 입력하세요.");
+            	return;
+            }
+            if(self.ccont == ""){
+            	alert("내용을 입력하세요.");
+            	return;
+            }
+            
             var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
             console.log( self.ccont );
             $.ajax({

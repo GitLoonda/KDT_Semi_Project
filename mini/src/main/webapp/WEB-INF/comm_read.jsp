@@ -42,12 +42,10 @@
 				<div class="card2">
 					<h3 class="card-header">
 						{{info.ctitle}}
-						<span class="badge badge-pill badge-dark pull-right" style="float: right;">{{info.cdate}}</span>
+						<span  style="float: right;">{{info.cdate}}</span>
 					</h3>
 					<div class="card-body">
-					   	<div style="margin: 10px 10px 10px 10px;">
-					   		<pre>{{info.ccont}}</pre>
-					   	</div>
+					   	<div style="margin: 10px 10px 10px 10px;" v-html="info.ccont"></div>
 				   	</div>
 				</div>
 				<div class="btns">
@@ -57,10 +55,10 @@
 					<button @click="fnList()" class="btn" >목록으로</button>
 				</div>
 				
-				<h4 style="margin-top : 30px;">댓글</h4>
+				<h4 style="margin-top : 30px;">댓글 ({{ccnt}}개)</h4>
 				<div style="clear : both; border-top : 1px solid #000"></div>
 				
-				<div style="margin-top : 10px;">
+				<div v-if="sessionId != null" style="margin-top : 10px;">
 					<div style="margin-bottom : 10px;">
 						<span>첨부파일</span>
 						<input type="file" id="file1" name="file1" >
@@ -70,15 +68,17 @@
 						<div style="text-align: right"><input type="checkbox" value="N">비밀댓글 설정</div>
 				</div>
 				
-				<div v-for="(item, index) in commentList" style="font-size : 1em; margin : 10px;">
+				<div v-for="(item, index) in commentList" style="padding-bottom: 10px; margin: 10px; border-bottom: 1px solid #ccc;">
 					<div v-if="item.delYn == 'N'">
 						<span>
-							{{item.id}}({{item.cdate}}) : <pre>{{item.conte}}</pre> 
-							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEditComment(item)" style="float: right;">수정</button>
-							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" style="float: right;">삭제</button>
-							<button v-else target="_blank" @click="fnReportComment()" style="float: right;">신고</button>
+							{{item.id}} ({{item.cdate}}) : <pre> {{item.conte}}</pre> 
+							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEditComment(item)" >수정</button>
+							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" >삭제</button>
+							<button v-else target="_blank" @click="fnReportComment()" style="">신고</button>
 						</span>
-						<span v-if="item.delYn == 'Y'">
+					</div>
+					<div v-else>
+						<span>
 						삭제된 댓글 입니다.
 						</span>
 					</div>
@@ -99,12 +99,13 @@ var app = new Vue({
     data: {
        list : [] 
        , info : {}
-       , cbno : "108"
-       , sessionId : "test18"
+       , cbno : "124"
+       , sessionId : "test20"
        , sessionAdminflg : "N"
+       , ccnt : ""
  	   , comment : ""
  	   , commentList : []
- 	   , cInfo : {}
+ 	   , cInfo : {}	
     }   
     , methods: {
     	fnGetBoard : function(){
@@ -119,6 +120,7 @@ var app = new Vue({
                 	console.log(data);
 	                self.info = data.info;
 	                self.commentList = data.commentList;
+	                self.ccnt=data.ccnt;
                 }
             }); 
         }
@@ -135,7 +137,7 @@ var app = new Vue({
    		 if(!confirm("정말 삭제하시겠습니까?")){
    			 return;
    		 }
-            var nparmap = {boradKey : cbno};
+            var nparmap = {boardKey : cbno};
             $.ajax({
                 url:"/comm/remove.dox",
                 dataType:"json",	

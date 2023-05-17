@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mini.mapper.AdminMapper">
+
+	<select id="selectAdminInfo" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT
+			ID,
+			NAME,
+			NICK,
+			ADDR,
+			PHONE,
+			EMAIL,
+			ADMINFLG,
+			USTATUS,
+			QUIZ,
+			ANSWER
+		FROM T3_USER
+		WHERE ID = #{id} AND PASSWD = #{pw}
+	</select>
+	
+	<insert id="insertAdmin" parameterType="hashmap">
+		INSERT INTO T3_USER
+		VALUES (#{id} , #{pw} , #{name} , #{nick} , NULL , NULL , #{phone} , #{email} , #{roadFullAddr} , #{quiz} , #{answer} , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 'Y','N', 'Y' , 1 , NOW() )
+	</insert>
+	
+	<!-- 질문들 -->
+	<select id="searchQuiz" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT
+			CNUM
+			, CINFO
+		FROM T3_DESC
+		WHERE CID = 'QUIZ'
+	</select>
+	
+	<select id="selectAdminCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T3_USER
+		WHERE ID = #{id}
+	</select>
+
+	<select id="selectMyAdmin" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT
+			ID,
+			NAME,
+			NICK,
+			ADDR,
+			PHONE,
+			EMAIL,
+			ADMINFLG,
+			USTATUS
+		FROM T3_USER
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- ============================================= -->
+	
+	<!-- 비밀번호 찾기 ( 아이디 리스트 ) -->
+	<select id="selectUserInfo" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT
+			ID,
+			EMAIL,
+			T3_DESC.CINFO,
+            T3_USER.QUIZ,
+			ANSWER
+		FROM T3_USER
+		LEFT JOIN T3_DESC ON T3_DESC.CNUM = T3_USER.QUIZ
+		WHERE ID = #{id} AND EMAIL = #{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 ( 아이디랑 이메일 매칭) -->
+	
+	<select id="findPasswd" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT
+			PASSWD
+		FROM T3_USER
+		WHERE ID = #{id} AND ANSWER = #{answer}
+	</select>
+	
+	
+	<select id="selectNoticeList" parameterType="hashmap" resultType="com.mini.model.Notice">
+		SELECT
+			ABNO,
+			ATITLE,
+			ID,
+			CDATE,
+			HITS
+			
+		FROM T3_ABRD
+		
+		ORDER BY CDATE DESC
+		
+		LIMIT #{startNum} , #{lastNum}
+	</select>
+	
+	<delete id="deleteNotice" parameterType="hashmap">
+		DELETE FROM mini_db2.T3_ABRD
+		WHERE ABNO = #{abNo}
+	</delete>
+	
+		
+	<insert id="insertNotice" parameterType="hashmap">
+		INSERT INTO mini_db2.T3_ABRD (ABNO, ID, CATE0, ATITLE, ACONT, HITS, CDATE, UDATE, DELYN) 
+		VALUES (#{abNo}, #{id}, "CA1" , #{title}, #{content}, 0 , NOW() , NOW(), 'N')
+	</insert>
+	
+	<select id="getNotice" parameterType="hashmap" resultType="com.mini.model.Notice">
+		SELECT
+			ABNO,
+			ID,
+			ATITLE,
+			ACONT,
+			UDATE,
+			HITS   
+		FROM mini_db2.T3_ABRD		
+		WHERE ABNO = #{abNo}
+	</select>
+	
+	<update id="updateNotice" parameterType="hashmap">
+		UPDATE mini_db2.T3_ABRD	
+		SET
+			ATITLE = #{title},
+			ACONT = #{content},
+			UDATE = NOW()
+		WHERE ABNO = #{abNo}
+	</update>
+	
+	<update id="updateNoticeCnt" parameterType="hashmap">
+		UPDATE mini_db2.T3_ABRD	
+		SET
+			HITS = HITS + 1
+		WHERE ABNO = #{abNo}
+	</update>
+	
+	<!-- 공지사항 갯수 -->
+	<select id="noticeCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+			
+		FROM 
+			mini_db2.T3_ABRD
+			
+	</select>
+	
+	<insert id="insertNoticeComment" parameterType="hashmap">
+		INSERT INTO T3_CMRE (TBNO , ID , CONTE , RECONTE , CDATE , UDATE , RECNO , REVWFLG , SHOWYN , DELYN)
+		VALUES
+			(#{tbNo}, #{id}, #{comment}, null, NOW(), NOW() , 0 , 0 , 'Y' , 'N')
+	</insert>
+	
+	<select id="selectNoticeCommentList" parameterType="hashmap" resultType="com.mini.model.Notice">
+		SELECT 
+			CNO,
+			TBNO,
+			ID,
+			CONTE,
+			RECONTE,
+			CDATE,
+			UDATE,
+			RECNO,
+			DELYN
+		FROM 
+			mini_db2.T3_CMRE
+		WHERE TBNO = #{tbNo}
+		ORDER BY CDATE ASC
+	</select>
+	
+	<update id="deleteNoticeComment" parameterType="hashmap">
+		UPDATE T3_CMRE
+		SET
+			DELYN = 'Y',
+			UDATE = SYSDATE
+		WHERE CNO = #{commentList}
+	</update>
+	
+	<update id="updateNoticeComment" parameterType="hashmap">
+		UPDATE T3_CMRE
+		SET
+			CONTEN = #{content},
+			UDATE = SYSDATE
+		WHERE CNO = #{commentList}
+	</update>
+	
+		
+	<select id="blackList" parameterType="hashmap" resultType="com.mini.model.Notice">
+		SELECT 
+			BANO,
+			USERS.ID,
+			TBNO,
+			CNO,
+			CONTENT,
+			BAN.ADATE,
+			USERS.USTATUS,
+			USERS.BANCNT1,
+			USERS.BANCNT2
+		FROM 
+			mini_db2.T3_BAN BAN
+		INNER JOIN T3_USER USERS ON USERS.ID = BAN.ID
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null">
+			AND CONTENT LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		ORDER BY CDATE ASC
+	</select>
+	
+	<!-- 블랙리스트 승인 -->
+	<update id="updateBlackBan" parameterType="hashmap">
+		UPDATE T3_USER
+		SET
+			USTATUS = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 관리자 페이지 승인 목록 -->
+	
+	<select id="recogCreator" parameterType="hashmap" resultType="com.mini.model.Notice">
+		SELECT 
+			CRENO,
+			ID,
+			CRETITLE,
+			CRECONT,
+			CDATE,
+			CREYN,
+			DELYN
+		FROM 
+			mini_db2.T3_CREBRD
+		WHERE CREYN = 'N' AND DELYN = 'N'
+		ORDER BY CDATE DESC
+	</select>
+	
+	<!-- 관리자 페이지 신고 처리 갯수 -->
+	
+	<select id="blackCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+			
+		FROM 
+			mini_db2.T3_BAN
+		
+	</select>
+	
+	<!-- 관리자 페이지 크리에이터 승인 대기 갯수 -->
+	
+	<select id="recogCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+			
+		FROM 
+			mini_db2.T3_CREBRD
+		WHERE CREYN = 'N' AND DELYN = 'N'
+	</select>
+	
+	<!-- 크리에이터 승인 -->
+	<update id="updateStatusCreator" parameterType="hashmap">
+		UPDATE T3_CREBRD
+		SET
+			CREYN = #{creatorStatus}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 크리에이터 거부 -->
+	<update id="delYnCreator" parameterType="hashmap">
+		UPDATE T3_CREBRD
+		SET
+			DELYN = 'Y'
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 관리자 승인 리스트 -->
+	<select id="userForAdmin" parameterType="hashmap" resultType="com.mini.model.User">
+		SELECT 
+			ID,
+			CDATE,
+			ADMINFLG
+		FROM 
+			mini_db2.T3_USER
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null">
+			AND ID LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		ORDER BY ADMINFLG DESC , ID
+		
+		LIMIT #{startNum} , #{lastNum}
+	</select>
+	
+	<!-- 관리자 승인 여부 -->
+	<update id="recogAdmin" parameterType="hashmap">
+		UPDATE T3_USER
+		SET
+			ADMINFLG = #{adminflg}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 관리자 및 회원 수 -->
+	<select id="adminUserCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+			
+		FROM 
+			mini_db2.T3_USER
+	</select>
+	
+	<!-- 관리자 수 -->
+	<select id="adminCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+			
+		FROM 
+			mini_db2.T3_USER
+		WHERE ADMINFLG = 'Y'
+	</select>
+	
+
+	<!-- 게시글 관리 리스트 -->
+	<select id="adminBoardList" parameterType="hashmap" resultType="com.mini.model.Board">
+	
+		SELECT 
+			TBNO,
+			BTITLE,
+			ID,
+			CDATE,
+			BRDFLG,
+			KIND,
+			DELYN
+		FROM T3_TBRD
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null">
+			AND BTITLE LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="brdFlg != '' and brdFlg != null">
+			AND BRDFLG = #{brdFlg}
+		</if>
+		
+		ORDER BY CDATE DESC
+		
+		LIMIT #{startNum} , #{lastNum}
+		
+
+		
+	</select>
+	
+	<!-- 게시글 관리 커뮤니티리스트 -->
+	<select id="adminCommList" parameterType="hashmap" resultType="com.mini.model.Comm">
+	
+		SELECT 
+			CBNO,
+			ID,
+			CATE1,
+			CATE2,
+			CTITLE,
+			CDATE,
+			DELYN
+		FROM T3_CBRD
+		WHERE 1=1
+		<if test="commKeyword != '' and commKeyword != null">
+			AND CTITLE LIKE CONCAT('%', #{commKeyword}, '%')
+		</if>
+		<if test="cate1 != '' and cate1 != null">
+			AND CATE1 = #{cate1}
+		</if>
+		
+		ORDER BY CDATE DESC
+		
+		LIMIT #{startNum} , #{lastNum}
+	</select>
+	
+	
+	<!-- 게시글 관리 블라인드 -->
+	<update id="adminBoardBlind" parameterType="hashmap">
+		UPDATE T3_TBRD
+		SET
+			DELYN = #{bstatus}
+		WHERE id = #{id} AND tbNo = #{tbNo}
+	</update>
+	
+	<!-- 커뮤니티 블라인드 -->
+	<update id="adminCommBlind" parameterType="hashmap">
+		UPDATE T3_CBRD
+		SET
+			DELYN = #{cstatus}
+		WHERE id = #{id} AND cbNo = #{cbNo}
+	</update>
+	
+	<!-- 게시글 관리 삭제  -->
+	
+	<delete id="adminBoardRemove" parameterType="hashmap">
+		DELETE
+		FROM mini_db2.T3_TBRD
+		WHERE TBNO = #{tbNo}
+	</delete>
+	
+	<!-- 게시글 갯수 -->
+	<select id="boardCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM T3_TBRD
+	</select>
+	
+	<!-- 커뮤니티 갯수 -->
+	<select id="commCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM T3_CBRD
+	</select>
+	
+	<!-- 댓글 관리 리스트 -->
+	<select id="adminCommentList" parameterType="hashmap" resultType="com.mini.model.Comment">
+	
+		SELECT 
+			CMRE.CNO,
+			TBRD.TBNO,
+            TBRD.BRDFLG,
+			CBRD.CBNO,
+            CBRD.CATE1,
+            CBRD.CATE2,
+			CMRE.ID,
+			CONTE,
+			RECONTE,
+			CMRE.CDATE,
+			CMRE.UDATE,
+			CMRE.RECNO,
+			CMRE.REVWFLG,
+			CMRE.SHOWYN,
+			CMRE.DELYN
+		FROM mini_db2.T3_CMRE CMRE
+		
+        LEFT JOIN mini_db2.T3_CBRD CBRD ON CBRD.CBNO = CMRE.CBNO
+        LEFT JOIN mini_db2.T3_TBRD TBRD ON TBRD.TBNO = CMRE.TBNO
+        
+		WHERE 1=1
+		<if test="commentKeyword != '' and commentKeyword != null">
+			AND CMRE.CONTE LIKE CONCAT('%', #{commentKeyword}, '%') OR CMRE.ID LIKE CONCAT('%', #{commentKeyword}, '%')
+		</if>
+		<if test="brdFlg != '' and brdFlg != null">
+			AND TBRD.BRDFLG = #{brdFlg}
+		</if>
+		<if test="cate1 != '' and cate1 != null">
+			AND CBRD.CATE1 = #{cate1}
+		</if>
+		<if test="cate2 != '' and cate2 != null">
+			AND CBRD.CATE2 = #{cate2}
+		</if>
+			AND CBRD.CBNO IS NULL
+			
+		ORDER BY CDATE DESC
+		
+		LIMIT #{startNum} , #{lastNum}
+		
+	</select>
+	
+	<!-- 댓글 관리 리스트2 -->
+	<select id="adminCommentList2" parameterType="hashmap" resultType="com.mini.model.Comment">
+	
+		SELECT 
+			CMRE.CNO,
+			TBRD.TBNO,
+            TBRD.BRDFLG,
+			CBRD.CBNO,
+            CBRD.CATE1,
+            CBRD.CATE2,
+			CMRE.ID,
+			CONTE,
+			RECONTE,
+			CMRE.CDATE,
+			CMRE.UDATE,
+			CMRE.RECNO,
+			CMRE.REVWFLG,
+			CMRE.SHOWYN,
+			CMRE.DELYN
+		FROM mini_db2.T3_CMRE CMRE
+		
+        LEFT JOIN mini_db2.T3_CBRD CBRD ON CBRD.CBNO = CMRE.CBNO
+        LEFT JOIN mini_db2.T3_TBRD TBRD ON TBRD.TBNO = CMRE.TBNO
+        
+		WHERE 1=1
+		<if test="commentKeyword != '' and commentKeyword != null">
+			AND CMRE.CONTE LIKE CONCAT('%', #{commentKeyword}, '%') OR CMRE.ID LIKE CONCAT('%', #{commentKeyword}, '%')
+		</if>
+		<if test="brdFlg != '' and brdFlg != null">
+			AND TBRD.BRDFLG = #{brdFlg}
+		</if>
+		<if test="cate1 != '' and cate1 != null">
+			AND CBRD.CATE1 = #{cate1}
+		</if>
+		<if test="cate2 != '' and cate2 != null">
+			AND CBRD.CATE2 = #{cate2}
+		</if>
+			AND TBRD.TBNO IS NULL
+		
+		ORDER BY CDATE DESC
+		
+		LIMIT #{startNum} , #{lastNum}
+		
+		
+		
+		
+	</select>
+	
+	<!-- 댓글 삭제(블라인드) -->
+	<update id="adminCommentRemove" parameterType="hashmap">
+		UPDATE T3_CMRE
+		SET
+			DELYN = #{commentStatus}
+		WHERE CNO= #{cno}
+	</update>
+	
+	<!-- 댓글 갯수 (거래쪽게시글) -->
+	
+	<select id="boardCommentCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM T3_CMRE
+		WHERE CBNO IS NULL
+	</select>
+	
+	<!-- 댓글 갯수 (커뮤니티) -->
+		
+	<select id="commCommentCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM T3_CMRE
+		WHERE TBNO IS NULL
+	</select>
+	
+</mapper>
