@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
-	<title>사용자프로필</title>
+	<title>크리에이터 추가</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="/css/user.css">
 </head>

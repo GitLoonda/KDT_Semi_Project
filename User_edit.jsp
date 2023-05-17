@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
 	 <link rel="stylesheet" href="/css/user.css">
-	<title>사용자프로필</title>
+	<title>사용자프로필 수정</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <style>
@@ -30,7 +30,7 @@
               </div>
         </div>
         <div class="serve">
-    <input class="servename" type="text" placeholder="00님">
+      <input class="servename" type="text" :placeholder="user.name + '님'" readonly>
     <br>
     <b>남김말</b>
     <br>
@@ -64,7 +64,7 @@
         <ul>
             <li>
               <label>아이디</label>
-              <input name="id" type="text" readonly="readonly">
+              <input type="text" :placeholder="user.id" readonly>
             </li>
             <li>
               <label>비밀번호</label>
@@ -81,7 +81,7 @@
             <br>
             <li>
                 <label>이메일</label>
-                    <input type="text" v-model="list.email" size="10px"> @  
+                    <input type="text" v-model="list.email" style="width : 150px"> @  
                     <select>
                         <option value="1">도메인</option>
                         <option value="naver">naver.com</option>
@@ -93,10 +93,10 @@
               <li>
                 <label for="add">
                     주소</label>
-               <input v-model="addr" type="text" class="in3" placeholder=" 주소" disabled></input>
+               <input v-model="addr" type="text" style="width: 150px" class="in3" placeholder=" 주소" disabled></input>
 				<button id="btn" @click="fnSearchAddr">주소 찾기</button><br>
 				<input v-model="addrDetail" type="text" class="in" placeholder=" 상세주소"
-				style="margin-left : 200px; padding-right : 100px"></input></li>
+				style="margin-left : 340px; padding-right : 100px; width:270px"></input></li>
             </div>          
           </ul>
 <br>
@@ -112,14 +112,30 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 var app = new Vue({ 
     el: '#app',
     data: {
-	  roadFullAddr : ""
+    	user : {}
+	,  roadFullAddr : ""
 	, addr : ""
 	, addrDetail : ""
 	, list : []
 	
     }   
     , methods: {
-    	fnSearchAddr : function(){ // 주소 검색창 생성
+    	fnGetInfo : function(){
+            var self = this;
+            var nparmap = {id : app.sessionId};
+            $.ajax({
+                url:"/user/info.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+                	console.log(data.user);
+	                self.user = data.user;
+                }
+            }); 
+        }
+    
+    	,  fnSearchAddr : function(){ // 주소 검색창 생성
     		var self = this;
     		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
     		window.open("addr.do", "test", option);
@@ -133,7 +149,7 @@ var app = new Vue({
     		self.addrDetail = addrDetail;
     	}	
 		, fnSignIn : function() {
-			var self = this;
+			var self = this; 
 			var pwJ = /^[A-Za-z0-9]{6,12}$/;
 			var nmJ = /^[ㄱ-힣]{2,6}$/;
 			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
@@ -158,15 +174,32 @@ var app = new Vue({
 				alert("이메일을 입력해주세요.");
 				return;
 			}
-			alert("수정완료.");
-			location.href ="/mypage.do"
+			var nparmap = {id : self.list.id, passwd : self.list.passwd, phone : self.list.phone
+					, email : self.list.email, addr : self.list.addr};
+			console.log(nparmap);
+            $.ajax({
+                url:"/user/upinfo.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+					if(data.result == "success") {
+						alert("수정 완료.");
+						location.href='mypage.do';
+                }
+            }
+            });
+            
+			// alert("수정완료.");
+			// location.href ="/mypage.do"
 		
-    }   
+    } 
+	} 
     , created: function () {
     	var self = this;
-		self.$nextTick(self.init());
-    }
-    }   
+    	self.fnGetInfo();
+	}
+       
 });
     
     </script>

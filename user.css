@@ -1,13 +1,4 @@
 /*user*/
-@font-face {
-  font-family: 'GangwonEdu_OTFBoldA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-html {font-family: 'GangwonEdu_OTFBoldA'}
-.uploadImg {margin:10px;margin-top:150px;}
-img#previewImg{cursor:pointer;max-height:200px; max-width:100%;display:block;}   
 .user_edit{
 background-color: #ffffff;
 width: 1080px;
@@ -47,8 +38,8 @@ margin-left: 30px;
 }
 
 .file-label {
-margin-top: 30px;
-margin-left: 120px;
+margin-top: 1zlzonquee0px;
+margin-left: 115px;
 background-color: #ccc;
 color: #fff;
 text-align: center;
@@ -136,21 +127,22 @@ margin-bottom: 20px;
 border: 2px solid #646363;
 border-radius: 3px;
 padding: 8px;
-width: 200px;    
+width: 350px;    
 margin: 10px;
 margin-left: 40px;
 margin-bottom : 10px;
 }
+
 .profile_uplist #member_post{
 margin-left: 200px;
 width: 500px;    
 }
 .profile_uplist label {
 float: left;
-font-size: 20px;
+font-size: 16px;
 width : 100px;
 padding-right:20px;
-margin-left: 40px;
+margin-left: 180px;
 padding-top : 18px;
 }
 .profile_uplist ul li {
@@ -158,6 +150,10 @@ line-height: 25px;
 list-style: none;
 padding: 5px 10px;
 margin-bottom: 2px;
+}
+.profile_uplist select{
+height : 30px;
+width : 170px;
 }
 .updatebtn1{
 width: 200px;
@@ -250,13 +246,13 @@ padding-left: 30px;
 .Umy_box{
 margin-left: 30px;
 height: 150px;
-width: 980px;
+width: 940px;
 border: 1px solid black;
 font-size: 20px;
 }
 #app .Umypage_btn span{
 padding-left: 40px;
-font-size: 35px;
+font-size: 32px;
 font-weight: bolder;
 color:rgb(219, 133, 163);
 text-shadow:3px 3px 2px rgb(232, 198, 203);

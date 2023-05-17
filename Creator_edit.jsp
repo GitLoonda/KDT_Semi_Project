@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
 	 <link rel="stylesheet" href="/css/user.css">
-	<title>사용자프로필</title>
+	<title>크리에이터 프로필 수정</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
@@ -59,13 +59,13 @@
         <a href=""><img src="img/mypage/160628_7.png"></a>
     </div>
     <hr>
-    <!--정보 수정-->
+      <!--정보 수정-->
     <h2 style="padding-left: 20px;">정보 수정</h2>
     <div class="profile_uplist">
         <ul>
             <li>
               <label>아이디</label>
-              <input name="id" type="text">
+              <input name="id" type="text" readonly="readonly">
             </li>
             <li>
               <label>비밀번호</label>
@@ -77,12 +77,12 @@
             </li>  
             <li>
               <label>전화번호</label>
-              <input  v-model="list.phone" type="text">
+              <input v-model="list.phone" type="text">
             </li>
             <br>
             <li>
                 <label>이메일</label>
-                    <input type="text" v-model="list.email" size="10px"> @  
+                    <input type="text" v-model="list.email" style="width : 150px"> @  
                     <select>
                         <option value="1">도메인</option>
                         <option value="naver">naver.com</option>
@@ -94,10 +94,10 @@
               <li>
                 <label for="add">
                     주소</label>
-               <input v-model="addr" type="text" class="in3" placeholder=" 주소" disabled></input>
+               <input v-model="addr" type="text" style="width: 150px" class="in3" placeholder=" 주소" disabled></input>
 				<button id="btn" @click="fnSearchAddr">주소 찾기</button><br>
 				<input v-model="addrDetail" type="text" class="in" placeholder=" 상세주소"
-				style="margin-left : 200px; padding-right : 100px"></input></li>
+				style="margin-left : 340px; padding-right : 100px; width:270px"></input></li>
             </div>          
           </ul>
 <br>

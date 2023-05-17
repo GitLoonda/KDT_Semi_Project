@@ -2,6 +2,8 @@ package com.mini.service;
 
 import java.util.HashMap;
 
+import com.mini.model.User;
+
 public interface MypageService {
 	
 	//크리에이터 등록
@@ -19,5 +21,8 @@ public interface MypageService {
 	//포트폴리오 수정
 	void uppoto(HashMap<String, Object> map);
 
-
+	User getUserInfo(HashMap<String, Object> map);
+	
+	void addId(HashMap<String, Object> map);
+	
 }
