@@ -19,7 +19,18 @@
 				<div class="container">
 					<div id="sellbox1">
 						<div class="cateF">
-							카테고리 필터
+							<template v-if="(item1n!=null && item2n!=null && item3n!=null)">
+								{{item1n}} > {{item2n}} > {{item3n}}  
+							</template>
+							<template v-else-if="(item1n!=null && item2n!=null && item3n==null)">
+								{{item1n}} > {{item2n}}  
+							</template>
+							<template v-else-if="(item1n!=null && item2n==null && item3n==null)">
+								{{item1n}} 
+							</template>
+							<template v-else>  
+							</template>
+							 
 						</div>
 						<div class="indexbox1">
 							<select class="indexL">
@@ -78,6 +89,10 @@
 			list : [],
 			listcnt:0,
 			
+			item1n:"",
+			item2n:"",
+			item3n:"",
+			
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
@@ -85,18 +100,16 @@
 		}   
 		, methods: {
 			// 리스트 불러오기,페이징6
-			fnGetTradeList : function(item, item2, item3,item4,item5,item6){
-				console.log(item);
-				console.log(item2);
-				console.log(item3);
-				console.log(item4);
-				console.log(item5);
-				console.log(item6);
+			fnGetTradeList : function(item1, item1n, item2, item2n, item3, item3n){
 				var self = this;
+				self.item1n=item1n;
+				self.item2n=item2n;
+				self.item3n=item3n;
+				console.log(self.item1n);
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
-         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item, cate2:item3, cate3:item5};
+         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3};
 				   	console.log(startNum);
 					console.log(lastNum);
 				$.ajax({
