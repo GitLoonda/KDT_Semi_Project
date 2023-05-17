@@ -32,7 +32,7 @@
               </div>
         </div>
      <div class="serve">
-    <input class="servename" type="text" placeholder="00님">
+    <input class="servename" type="text" :placeholder="user.name + '님'">
     <br>
     <b>소개/공지</b>
     <br>
@@ -54,7 +54,7 @@
      <!-- 이력 -->
      <br> <br> <br>
      <div class="Umy_text">정보</div>
-     <div class="Umy_box">주소정보 등</div>
+     <div class="Umy_box">{{user.addr}}</div>
      <div class="Umy_text">등록제품</div>
      <div class="Umy_box"></div>
      <div class="Umy_text">후기</div>
@@ -77,19 +77,36 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-	
+		user : {}
     }   
     , methods: {
-	CreatAdd(){
-		location.href ="/creadd.do";
-	}
-	,UpProfile(){
-		location.href ="/useredit.do";
-		
-	}
+    	fnGetInfo : function(){
+            var self = this;
+            var nparmap = {id : app.sessionId};
+            $.ajax({
+                url:"/user/info.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+                	console.log(data.user);
+	                self.user = data.user;
+                }
+            }); 
+        }
+    	
+    	
+		, CreatAdd(){
+			location.href ="/creadd.do";
+		}
+		,UpProfile(){
+			location.href ="/useredit.do";
+			
+		}
     }   
     , created: function () {
-    
+    	var self = this;
+    	self.fnGetInfo();
 	}
 });
 </script>

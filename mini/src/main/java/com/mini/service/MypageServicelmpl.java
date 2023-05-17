@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mini.mapper.MypageMapper;
+import com.mini.model.User;
 
 @Service
 public class MypageServicelmpl implements MypageService{
@@ -37,6 +38,11 @@ public class MypageServicelmpl implements MypageService{
 	public void uppoto(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		mypagemapper.portfileUpage(map);
+	}
+	@Override
+	public User getUserInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mypagemapper.selectUserInfo(map);
 	}
 	
 }

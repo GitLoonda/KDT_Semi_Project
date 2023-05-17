@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.mini.model.User;
 import com.mini.service.MypageService;
 
 import jakarta.servlet.http.HttpSession;
@@ -68,4 +69,14 @@ public class MypageController {
 
         return "/creator_add";
     }
+	
+    @RequestMapping(value = "/user/info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User user = mypageService.getUserInfo(map);
+		resultMap.put("user", user);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
 }

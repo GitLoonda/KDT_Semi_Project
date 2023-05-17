@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.mini.model.User;
+
 @Mapper
 public interface MypageMapper {
 	//크리에이터 등록
@@ -20,4 +22,6 @@ public interface MypageMapper {
 	
 	// 포트폴리오 목록 수정
 	void portfileUpage(HashMap<String, Object> map);
+	
+	User selectUserInfo(HashMap<String, Object> map);
 }
