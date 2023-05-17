@@ -16,11 +16,11 @@
 	<div class="user_edit">
 	<!--사용자 프로필-->
 	<div class="Umypage_btn">
-      <span>사용자프로필</span>
-	<button @click="UpProfile()">프로필 수정</button>
-      <button @click="CreatAdd()">크리에이터 등록</button>
+      <span>사용자프로필 </span>
+	<button class="btn1" @click="UpProfile()">프로필 수정</button>
+      <button class="btn2" @click="CreatAdd()">크리에이터 등록</button>
       </div>
-    <hr width="95%">
+    <hr width="92%">
     <div class="profile_up">
         <div class="up_img">
             <div class="upload-box">
@@ -32,12 +32,12 @@
               </div>
         </div>
      <div class="serve">
-    <input type="text" placeholder="00님" size="20px">
+    <input class="servename" type="text" placeholder="00님">
     <br>
     <b>소개/공지</b>
     <br>
-    <input type="text" placeholder="ㅎㅇ" size="50px">
-    <br>
+    <input type="text" placeholder="소개/공지란 입니다.">
+    <br><br>
     <b>거래 평점</b>
     <!--별 찍기(평점)-->
     <div class="star-ratings">
@@ -50,10 +50,11 @@
       </div>
     </div>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
      <!-- 이력 -->
+     <br> <br> <br>
      <div class="Umy_text">정보</div>
-     <div class="Umy_box"></div>
+     <div class="Umy_box">주소정보 등</div>
      <div class="Umy_text">등록제품</div>
      <div class="Umy_box"></div>
      <div class="Umy_text">후기</div>
@@ -76,14 +77,15 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-
+	
     }   
     , methods: {
 	CreatAdd(){
-		location.href ="/Cpage/creadd.do";
+		location.href ="/creadd.do";
 	}
 	,UpProfile(){
-		location.href ="/mypage/useredit.do";
+		location.href ="/useredit.do";
+		
 	}
     }   
     , created: function () {

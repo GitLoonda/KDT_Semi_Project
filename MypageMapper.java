@@ -10,7 +10,7 @@ public interface MypageMapper {
 	void creaddUpage(HashMap<String, Object> map);
 	
 	//프로필 수정
-	void updateUpage(HashMap<String, Object> map);
+	void updatemyPage(HashMap<String, Object> map);
 	
 	//크리에이터 프로필 수정
 	void updateCrePage(HashMap<String, Object> map);

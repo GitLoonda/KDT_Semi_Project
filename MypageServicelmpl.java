@@ -19,12 +19,12 @@ public class MypageServicelmpl implements MypageService{
 		mypagemapper.creaddUpage(map);
 	}
 	@Override
-	public void updatemy(HashMap<String, Object> map) {
+	public void editMyPageUser(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		mypagemapper.updateUpage(map);
+		mypagemapper.updatemyPage(map);
 	}
 	@Override
-	public void updatecre(HashMap<String, Object> map) {
+	public void editMyCreUser(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		mypagemapper.updateCrePage(map);
 	}
