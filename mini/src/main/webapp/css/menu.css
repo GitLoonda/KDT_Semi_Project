@@ -1,0 +1,28 @@
+*{padding:0;margin:0}
+li{list-style:none}
+a{text-decoration:none;font-size:14px}
+
+.menu {
+  overflow: hidden;
+  width: 1024px;
+  margin : 0 auto;
+}
+.menu > li {
+  width: 16.6666%; /*20*5=100%*/
+  float: left;
+  text-align: center;
+  line-height: 40px;
+  background-color: #5778ff;
+  
+}
+.menu a {
+  color: #fff;
+}
+.submenu > li {
+  line-height: 50px;
+  background-color: #94a9ff;
+}
+.submenu {
+  height: 0; /*ul의 높이를 안보이게 처리*/
+  overflow: hidden;
+}

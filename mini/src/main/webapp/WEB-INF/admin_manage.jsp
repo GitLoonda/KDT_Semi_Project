@@ -5,11 +5,11 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
-	<!--  페이징 추가 1 -->
+
 	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
-	<link rel="stylesheet" href="css/style.css">
-	<title>공지사항</title>
+	<link rel="stylesheet" href="../css/style.css">
+	<title>관리자 계정 관리</title>
 
 </head>
 <style>
@@ -46,38 +46,47 @@
 	.pagination li.active a {
 	    color:#fff;
 	}
-
 </style>
 <body>
 	<div id="app" >
 		<div class="container">
-			<h2>📢 공지사항</h2>
+			<h2>관리자 계정 관리</h2>
+			<div> 
+				<input type="text" v-model="keyword" @keyup.enter="fnGetList">
+				<button @click="fnGetList">검색</button>	
+			</div>
+			
 	        <div class="table-list">
+	        	<h2>관리자 목록</h2>
 	            <table class="board_list">                   
 	                <thead>
 	                    <tr>            
 	                        <!-- <th scope="col"></th> -->
 	                        <th scope="col">No.</th>
-	                        <th scope="col">제목</th>
-	                        <th scope="col">아이디</th>
-	                        <th scope="col">작성일</th>
-	                        <th scope="col">조회수</th>
+	                        <th scope="col">ID</th>
+	                        <th scope="col">가입날짜</th>
+	                        <th scope="col">관리자여부</th>
+	                        <th scope="col">승인여부</th>
 	                        <th scope="col"></th>
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr v-for="(item, index) in list" > 
+	                    <tr v-for="(item, index) in list"> 
                             <!-- <td><input type="checkbox" v-bind:value="item" v-model="checkList"></td> -->
-                            <td>{{item.abNo}}</td>
-                            <td @click="fnView(item)"><a href="javascript:;">{{item.atitle}}</a></td>
-                            <td>{{item.id}}</td>     
-                            <td>{{item.cdate}}</td>     
-                            <td>{{item.hits}}</td>     
-                            <td><button class="btn" @click="fnRemove(item)">삭제</button></td>     
+                            
+                            <td>{{index + 1}}</td>
+                            <td>{{item.id}}</td>
+                            <td>{{item.cdate}}</td>   
+                            <td v-if="item.adminflg == 'Y'">관리자</td>  
+                            <td v-else>회원</td>  
+                            <td>
+                            	<button @click="fnRecogAdmin('Y' , item)">승인</button>
+                            	<button @click="fnRecogAdmin('N' , item)">거부</button>
+                            </td>     
                         </tr>                                       
 	                </tbody>                   
 	            </table>
-	             <!-- 페이징 추가 3-->
+	            <!-- 페이징 추가 3-->
 				<template>
 				  <paginate
 				    :page-count="pageCount"
@@ -90,11 +99,11 @@
 				    :page-class="'page-item'">
 				  </paginate>
 				</template>
-	           
 	        </div>
+	        
 	        <div>
 	        	<!-- <button class="btn">삭제</button> -->
-	        	<button class="btn" @click="fnAdd()">등록</button>
+	        	<!-- <button class="btn" @click="fnAdd()">등록</button> -->
 	        </div>
         </div>
 	</div>
@@ -106,19 +115,14 @@ Vue.component('paginate', VuejsPaginate)
 var app = new Vue({ 
     el: '#app',
     data: {
-    	info : {}
-    	, list : []
-    	, checkList : []
+    	list : []
     	, keyword : ""
-    	, selectItem : ""
-    	, sessionId : "${sessionId}" 	// request 에있는걸 가져온다는 뜻
-    	, sessionStatus : "${sessionUstatus}"
-    	, updateCnt : "${updateCnt}"
-        , abNo : "${map.abNo}"
+    	, AA : "관리자"
+    	, UU : "일반회원"
     		<!-- 페이징 추가 5-->
-    	, selectPage : 1
-    	, pageCount : 1
-		, noticeCnt : 0
+		, selectPage: 1
+		, pageCount: 1
+		, cnt : 0
     }   
     , methods: {
     	
@@ -126,65 +130,62 @@ var app = new Vue({
             var self = this;
             <!-- 페이징 추가 6-->
 			var startNum = ((self.selectPage-1) * 10);
-			var lastNum = (self.selectPage * 10)
-            var nparmap = {startNum : startNum, lastNum : lastNum};
+    		var lastNum = 10;
+            var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
             $.ajax({
-                url:"/notice.dox",
+                url:"/admin/manage.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {   
                 	console.log(data);
 	                self.list = data.list;
-	                self.noticeCnt = data.noticeCnt;
-	                self.pageCount = Math.ceil(self.noticeCnt / 10);
+	                self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 10);
                 }
             }); 
         }
+    	
 	    <!-- 페이징 추가 7-->
 		, fnSearch : function(pageNum){
 			var self = this;
 			self.selectPage = pageNum;
-			var startNum = ((pageNum-1) * 10) + 1;
-			var lastNum = (self.selectPage * 10)
+			var startNum = ((pageNum-1) * 10);
+			var lastNum = 10;
 			var nparmap = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
-				url : "/notice.dox",
+				url : "/admin/manage.dox",
 				dataType : "json",
 				type : "POST",
 				data : nparmap,
 				success : function(data) {
 					self.list = data.list;
-					self.noticeCnt = data.noticeCnt;
-					self.pageCount = Math.ceil(self.noticeCnt / 10);
+					self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 10);
 				}
 			});
 		}
-    	, fnAdd : function() {
-    		location.href = "/notice/insert.do"
-    	}
-    	
-    	, fnRemove : function(item) {	//매개변수를 줘야함
+    	, fnRecogAdmin : function(adminflg , item) {
     		var self = this;
-    		console.log(item);
-            var nparmap = item;		// item 자체가 맵이라서 {} 이거 안씀
-            if(!confirm("정말 삭제하시겠습니까?")){	// confirm 은 조건문이라서 if 붙임
-            	return;	// 취소 누르면 완전 빠져나가라는 뜻
-            }
-            
+            var nparmap = {id : item.id , adminflg : adminflg};
             $.ajax({
-                url:"/notice/remove.dox",
+                url:"/admin/recogAdmin.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {   
                 	console.log(data);
-                	alert("삭제되었습니다.")
-                	self.fnGetList();	// 지우고 나서 리스트 바로 출력
+                	if(adminflg == 'Y'){
+                		alert("관리자로 승격하었습니다.");
+                	}else{
+                		alert("관리자 거부 당했습니다 . 슈퍼관리자한테 문의하세요");
+                	}
+                	self.fnGetList();
                 }
-            });  
+            }); 
+    		
     	}
-
+	   
     	, pageChange : function(url, param) {
     		var target = "_self";
     		if(param == undefined){
@@ -213,11 +214,6 @@ var app = new Vue({
     		document.body.appendChild(form);
     		form.submit();
     		document.body.removeChild(form);
-    	}
-    	
-    	, fnView : function(item){
-    		var self = this;
-    		self.pageChange("./notice/info.do", {tbNo : item.tbNo, abNo : item.abNo});
     	}
     	
     }   
