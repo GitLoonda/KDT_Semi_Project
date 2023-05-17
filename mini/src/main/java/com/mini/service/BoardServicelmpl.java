@@ -96,9 +96,14 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map) {
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("jimcnt",boardMapper.jimCnt(map));
+		resultMap.put("ujimcnt",boardMapper.jimCnt(map));
 		resultMap.put("list", boardMapper.selectTbrdInfo(map));
 		return resultMap;
+	}
+	//게시글 찜 갯수
+	@Override
+	public int searchjimcnt(HashMap<String, Object> map){
+		return boardMapper.selectjimcnt(map);
 	}
 	// 거래상테 변경
 	@Override

@@ -219,7 +219,13 @@
 	INSERT INTO T3_JJIM
 	VALUES(NULL,#{id},#{tbno});
 </insert>
-
+<!-- 게시글 찜 갯수 -->
+<select id="selectjimcnt" parameterType="hashmap" resultType="int">
+	SELECT COUNT(JJNO) AS JIMCNT
+	FROM T3_JJIM 
+	WHERE TBNO=#{tbno}
+</select>
+<!-- 사용자 찜 체크 -->
 <select id="jimCnt" parameterType="hashmap" resultType="int">
 	SELECT COUNT(JJNO) AS JIMCNT
 	FROM T3_JJIM 

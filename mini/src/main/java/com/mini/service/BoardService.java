@@ -34,6 +34,9 @@ public interface BoardService {
     //게시글 상세
     HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map);
 
+    //게시글 찜 갯수
+    int searchjimcnt(HashMap<String, Object> map);
+    
     //거래상태 변경
     void Tbrdbstupdate(HashMap<String, Object> map);
     

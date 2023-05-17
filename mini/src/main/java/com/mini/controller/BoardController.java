@@ -190,6 +190,16 @@ public class BoardController {
         resultMap.put("message", "성공");
         return new Gson().toJson(resultMap);
     }
+    // 게시글 찜 갯수
+    @RequestMapping(value = "/tradeView/jjimcnt.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchjimcnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        int jimsum = boardService.searchjimcnt(map); 
+        resultMap.put("jimsum",jimsum);
+        resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
     //찜 등록
     @RequestMapping(value = "/tradeView/jjimin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -208,6 +218,8 @@ public class BoardController {
         resultMap.put("message", "성공");
         return new Gson().toJson(resultMap);
     }
+    
+
     //게시글 삭제
     
     @RequestMapping(value = "/tradeView/BrdDel.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

@@ -232,7 +232,7 @@
 									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
 									<div>제품 상태 : {{list.bprodname}}</div>
 									<div>거래 방법 : {{list.bpurname}}</div>
-									<div>조회 수 : {{list.hits}} 찜: {{list.likes}} 판매자 평점 : {{list.grade}}</div>
+									<div>조회 수 : {{list.hits}} 찜: {{jiamsum}} 판매자 평점 : {{list.grade}}</div>
 									<div>거래 지역 : {{list.local1name}} {{list.local2name}} {{list.local3name}}</div>
 								</div>
 								<div class="infobox1_2_2">
@@ -326,7 +326,8 @@
 			commlist:[],
 			commcont:"",
 			commcnt:0,
-			jimst:0
+			jimst:0,
+			jiamsum:0
 		},
 			methods: {
 			//게시글 상세 리스트
@@ -341,7 +342,7 @@
 					success : function(data) { 
 						self.list = data.list; 
 						self.commcnt=data.cnt; 
-						self.jimst=data.jimcnt;
+						self.jimst=data.ujimcnt;
 						console.log(data);   
 						// self.cont=data.
                    
@@ -373,7 +374,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						self.commcnt=data.cnt;
 						self.commlist=data.commlist;
 						
@@ -390,7 +390,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						alert("거래상태 변경 완료");
 						location.reload();
 					}
@@ -405,7 +404,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						alert("찜등록 완료");
 						location.reload();
 					}
@@ -420,12 +418,26 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						alert("찜해제 완료");
 						location.reload();
 					}
 				}); 
 			},
+			jimsumcnt(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno};
+				$.ajax({
+					url:"/tradeView/jjimcnt.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						self.jimsum=data.jimsum;
+					}
+				}); 
+			},
+
 			fnTbrdDel(){
 				var self = this;
          	  	var nparmap = {tbno : self.tbno};
@@ -435,7 +447,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						alert("삭제완료");
 						location.reload();
 					}
@@ -457,6 +468,7 @@
 		 created: function () {
 			var self = this;
 			self.fnGetList();
+			self.jimsumcnt();
 			self.fncommlist();
 			
 		}

@@ -43,6 +43,8 @@ public interface BoardMapper {
     // 찜 했는지 검증
     int jimCnt(HashMap<String, Object> map);
 
+    //개시글 찜 갯수 
+    int selectjimcnt(HashMap<String, Object> map);
     //게시글 상태 변경
     void TbrdbstModify (HashMap<String, Object> map);
     
