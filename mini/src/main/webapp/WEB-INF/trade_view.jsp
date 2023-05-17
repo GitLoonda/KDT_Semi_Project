@@ -205,7 +205,7 @@
 					<div id="Tviewbox1" v-for="(list, index) in list">
 						<div class="optionT">[{{list.kindname}}]{{list.btitle}}</div>
 						<hr>
-						<div class="report"><span class="recdate">{{list.cdate}}</span><button>신고</button></div>
+						<div class="report"><span class="recdate">{{list.tbno}} {{list.cdate}}</span><button>신고</button></div>
 						<div class="infobox1">
 							<div class="infobox1_1">
 								<img class="infoimg" :src="list.path" >
@@ -232,7 +232,7 @@
 										</template>
 										<button @click="bstbtn()">적용</button>
 									</div>
-									<div>[{{list.bstatusname}}] / {{list.btitle}}</div>
+									<div>[{{list.bstatusname}}]{{list.btitle}}</div>
 									<div>가격 : {{list.bprice}}</div>
 									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
 									<div>제품 상태 : {{list.bprodname}}</div>
@@ -241,7 +241,7 @@
 									<div>거래 지역 : {{list.local1name}} {{list.local2name}} {{list.local3name}}</div>
 								</div>
 								<div class="infobox1_2_2">
-									<template v-if="(jimst==1)">
+									<template v-if="(jimst>=1)">
 										<button @click="jmbtnout()">찜해제</button>
 									</template>
 									<template v-else>
@@ -361,7 +361,8 @@
 					data : nparmap,
 					success : function(data) { 
 						alert("저장!");
-						location.reload();
+						self.fncommlist();
+						self.commcont="";
 					}
 				}); 
 			},
@@ -380,6 +381,7 @@
 					}
 				}); 
 			},
+			// 거래상태변경
 			bstbtn(){
 				var self = this;
          	  	var nparmap = {tbno : self.tbno,bstatus : self.bstatus};
@@ -390,10 +392,12 @@
 					data : nparmap,
 					success : function(data) { 
 						alert("거래상태 변경 완료");
-						location.reload();
+						self.fnGetList();
+						// location.reload();
 					}
 				}); 
 			},
+			// 찜등록
 			jmbtnin(){
 				var self = this;
          	  	var nparmap = {tbno : self.tbno,id : self.id};
@@ -404,10 +408,12 @@
 					data : nparmap,
 					success : function(data) { 
 						alert("찜등록 완료");
-						location.reload();
+						self.fnGetList();
+						self.jimsumcnt();
 					}
 				}); 
 			},
+			// 찜삭제
 			jmbtnout(){
 				var self = this;
          	  	var nparmap = {tbno : self.tbno,id : self.id};
@@ -418,10 +424,12 @@
 					data : nparmap,
 					success : function(data) { 
 						alert("찜해제 완료");
-						location.reload();
+						self.fnGetList();
+						self.jimsumcnt();
 					}
 				}); 
 			},
+			// 찜수
 			jimsumcnt(){
 				var self = this;
          	  	var nparmap = {tbno : self.tbno};
@@ -447,7 +455,7 @@
 					data : nparmap,
 					success : function(data) { 
 						alert("삭제완료");
-						location.reload();
+						location.href="trade.do";
 					}
 				}); 
 			},

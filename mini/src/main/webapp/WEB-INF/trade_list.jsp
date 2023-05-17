@@ -88,7 +88,8 @@
 			// 가져오는값
 			list : [],
 			listcnt:0,
-			
+			jimsumcnt:[],
+
 			item1n:"",
 			item2n:"",
 			item3n:"",

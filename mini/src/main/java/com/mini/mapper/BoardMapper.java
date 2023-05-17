@@ -12,6 +12,8 @@ public interface BoardMapper {
 	// trade.do
     // 게시글 리스트
     List<TbrdList> selectTbrdListInfo(HashMap<String, Object> map);
+    List<TbrdList> selectjimtbnoList(HashMap<String, Object> map);
+    
     //게시판 전체 갯수
     int selectTbrdListCnt(HashMap<String, Object> map);
     
@@ -45,14 +47,17 @@ public interface BoardMapper {
 
     //개시글 찜 갯수 
     int selectjimcnt(HashMap<String, Object> map);
+
     //게시글 상태 변경
     void TbrdbstModify (HashMap<String, Object> map);
     
     // 찜 등록
     void jimAdd (HashMap<String, Object> map);
+    void likeAdd (HashMap<String, Object> map);
     
     // 찜 삭제
     void jimDel (HashMap<String, Object> map);
+    void likeDel (HashMap<String, Object> map);
 
     //게시글 삭제
     void BrdDel (HashMap<String, Object> map);

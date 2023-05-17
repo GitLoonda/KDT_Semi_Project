@@ -21,6 +21,7 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchTbrdListInfo(HashMap<String, Object> map) {
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("jimsumcnt",boardMapper.selectjimtbnoList(map));
 		resultMap.put("cnt", boardMapper.selectTbrdListCnt(map));
 		resultMap.put("list", boardMapper.selectTbrdListInfo(map));
 		return resultMap;
@@ -115,12 +116,14 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public void Jjiminsert(HashMap<String, Object> map) {
 		boardMapper.jimAdd(map);
+		boardMapper.likeAdd(map);
 	}
 
 	//찜 삭제
 	@Override
 	public void Jjimdelete(HashMap<String, Object> map) {
 		boardMapper.jimDel(map);
+		boardMapper.likeDel(map);
 	}
 
 	//게시글 삭제

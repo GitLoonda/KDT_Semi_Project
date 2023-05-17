@@ -73,7 +73,18 @@
 		</otherwise>
 	</choose>
 </select>
+<!-- 게시글 찜 리스트 -->
+<select id="selectjimtbnoList" parameterType="hashmap" resultType="com.mini.model.TbrdList">
+	SELECT 
+		T.TBNO AS TBNO,
+		COUNT(JJNO) AS SUMJIMCNT
+	FROM T3_TBRD T
+	LEFT JOIN T3_JJIM J ON T.TBNO=J.TBNO
+	GROUP BY T.TBNO
+</select>
 
+
+<!-- 게시글 전체 수 -->
 <select id="selectTbrdListCnt" parameterType="hashmap" resultType="int">
 	SELECT
 		COUNT(TBNO) AS TBRDCNT
@@ -241,11 +252,18 @@
 	SET BSTATUS=#{bstatus}
 	WHERE TBNO= #{tbno}
 </update>
-
+<!-- 찜등록 -->
 <insert id="jimAdd" parameterType="hashmap" >
 	INSERT INTO T3_JJIM
-	VALUES(NULL,#{id},#{tbno});
+	VALUES(NULL,#{id},#{tbno});;
 </insert>
+<!-- 찜등록시 게시글에 likes 수 증가 -->
+<update id="likeAdd" parameterType="hashmap" >
+	UPDATE T3_TBRD
+		SET LIKES=LIKES+1
+	WHERE TBNO=#{tbno}
+</update>
+
 <!-- 게시글 찜 갯수 -->
 <select id="selectjimcnt" parameterType="hashmap" resultType="int">
 	SELECT COUNT(JJNO) AS JIMCNT
@@ -259,11 +277,19 @@
 	WHERE ID=#{id} AND TBNO=#{tbno}
 </select>
 
+<!-- 찜삭제 -->
 <delete id="jimDel" parameterType="hashmap" >
 	DELETE 
 	FROM T3_JJIM 
 	WHERE ID=#{id} AND TBNO=#{tbno}
 </delete>
+
+<!-- 찜등록시 게시글에 likes 수 감소 -->
+<update id="likeDel" parameterType="hashmap" >
+	UPDATE T3_TBRD
+		SET LIKES=LIKES-1
+	WHERE TBNO=#{tbno}
+</update>
 
 <update id="BrdDel"  parameterType="hashmap" >
 	UPDATE T3_TBRD
