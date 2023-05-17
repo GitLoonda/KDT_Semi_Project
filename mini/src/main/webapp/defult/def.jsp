@@ -342,20 +342,24 @@
         		location.href = "trade.do";
         	}
         	, fnRequest : function() {
-        		location.href = "requeste.do";
+        		location.href = "request.do";
         	}
         	, fnCateSelect : function(item, item2, item3) {
         		var self = this;
+                self.cate1set=item.cNum;
         		if(item2 == null) {
         			self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : null, cate3 : null});
         			return;
         		}
-        		if(item3 == null) {
+        		else if(item3 == null) {
         			self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : null});
         			return;
-        		}
+        		}else{
+                    self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : item3.cNum});
+                }
         		console.log(item.cNum, item2.cNum, item3.cNum);
-        		self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : item3.cNum});
+                alert("1");
+        		
         	}
         	, fnSearch : function(){
         		var self = this;

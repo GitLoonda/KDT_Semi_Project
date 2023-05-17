@@ -74,8 +74,20 @@
 		var app = new Vue({ 
 		el: '#app',
 		data: {
+			// 세션
+			sescate1:"${def.cate1}",
+			seslist:{
+			
+			sescate2:"${def.cate2}",
+			sescate3:"${def.cate3}"
+			},
+			
+			
+			
+
 			list : [],
 			listcnt:0,
+			
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
@@ -158,7 +170,6 @@
 		fnView(tbno){
 			var self = this;
 			self.pageChange("./tradeview.do",{tbno:tbno});
-			console.log(tbno);
 		}
 
 
@@ -168,7 +179,8 @@
 		, created: function () {
 			var self = this;
 			self.fnGetList();
-			
+			console.log(self.sescate1);
+			console.log(cate1set);			
 		}
 	});
 </script>

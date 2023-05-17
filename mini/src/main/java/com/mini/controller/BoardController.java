@@ -25,12 +25,30 @@ public class BoardController {
     @Autowired
 	HttpSession session;
     
-    // trade.do
-	@RequestMapping("/trade.do") //거래게시판 페이지
-    public String trade(Model model) throws Exception{
+    //거래게시판 페이지
+	@RequestMapping("/trade.do") 
+    public String trade(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        System.out.println(session.getAttribute("cate1"));
+        System.out.println(session.getAttribute("cate2"));
+        System.out.println(session.getAttribute("cate3"));
+        map.put("cate1",session.getAttribute("cate1"));
+        map.put("cate1",session.getAttribute("cate2"));
+        map.put("cate1",session.getAttribute("cate3"));
 
+        System.out.println(session.getAttribute("option"));
+        System.out.println(session.getAttribute("keyword"));
+        
+        request.setAttribute("def", map);
+        
         return "/trade_list";
     }
+    //게시글 상세
+	@RequestMapping("/tradeview.do") 
+    public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        request.setAttribute("trlist", map);
+        return "/trade_view";
+    }
+    // trade.do
     //게시판 리스트 불러오기
     @RequestMapping(value = "/trade/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -152,12 +170,7 @@ public class BoardController {
 	}
 
     //tradeview.do
-    //게시글 상세
-	@RequestMapping("/tradeview.do") 
-    public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-        request.setAttribute("map", map);
-        return "/trade_view";
-    }
+    
 
     //게시글 리스트 불러오기
     @RequestMapping(value = "/tradeView/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

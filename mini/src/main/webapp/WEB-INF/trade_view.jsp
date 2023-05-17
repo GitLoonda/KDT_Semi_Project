@@ -198,7 +198,7 @@
 				<!-- 게시글 상세 -->
 				<div class="container">
 					<div id="Tviewbox1" v-for="(list, index) in list">
-						<div class="optionT">[{{list.kindname}}],{{list.btitle}}</div>
+						<div class="optionT">[{{list.kindname}}]{{list.btitle}}</div>
 						<hr>
 						<div class="report"><span class="recdate">{{list.cdate}}</span><button>신고</button></div>
 						<div class="infobox1">
@@ -313,7 +313,7 @@
 	var app = new Vue({ 
 		el: '#app',
 		data: {
-			tbno : "${map.tbno}",
+			tbno : "${trlist.tbno}",
 			id:"test10",
 			file1:"",
 			cont:"",
@@ -343,7 +343,7 @@
 						self.commcnt=data.cnt; 
 						self.jimst=data.jimcnt;
 						console.log(data);   
-						self.cont=data.
+						// self.cont=data.
                    
 					}
 				}); 
