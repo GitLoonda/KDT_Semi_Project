@@ -631,12 +631,13 @@
 					console.log(nparmap);
 					if(self.imgpath==''){
 						self.imgpath="img/board/160628_7.png";
+						self.repck="true";
 						self.AddTradeTbno();
 					}else{
 						self.AddTradeTbno();
 					}
 					
-					// location.href="trade.do";
+					location.href="trade.do";
                 }
             });	
         	},

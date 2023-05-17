@@ -70,21 +70,11 @@
 	<script type="text/javascript">
 		<!-- 페이징 추가 4-->
 		Vue.component('paginate', VuejsPaginate)	
-
-		var app = new Vue({ 
+		
+		var tlist = new Vue({ 
 		el: '#app',
 		data: {
-			// 세션
-			sescate1:"${def.cate1}",
-			seslist:{
-			
-			sescate2:"${def.cate2}",
-			sescate3:"${def.cate3}"
-			},
-			
-			
-			
-
+			// 가져오는값
 			list : [],
 			listcnt:0,
 			
@@ -95,12 +85,15 @@
 		}   
 		, methods: {
 			// 리스트 불러오기,페이징6
-			fnGetList : function(){
+			fnGetTradeList : function(item, item2, item3){
+				console.log(item);
+				console.log(item2);
+				console.log(item3);
 				var self = this;
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
-         	  	var nparmap = {startNum : startNum, lastNum : lastNum};
+         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item, cate2:item2, cate3:item3};
 				   	console.log(startNum);
 					console.log(lastNum);
 				$.ajax({
@@ -178,9 +171,7 @@
 		}
 		, created: function () {
 			var self = this;
-			self.fnGetList();
-			console.log(self.sescate1);
-			console.log(cate1set);			
+			self.fnGetTradeList();		
 		}
 	});
 </script>

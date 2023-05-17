@@ -76,8 +76,8 @@
 			
 			.infobox2{
 				width: 100%;
-				height: 200px;
-				resize: none;	
+				min-height: 200px;
+				/* resize: none; */
 				margin-bottom: 30px;
 			}
 			.infocont{
@@ -85,6 +85,11 @@
 				height: 100%;
 				font-size: 15pt;
 				resize: none;
+			}
+			.infocont p{
+				margin-left: 5px;
+				margin-top: 0px;
+				margin-bottom: 3px;
 			}
 			.info2btn{
 				text-align: right;
@@ -232,7 +237,7 @@
 									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
 									<div>제품 상태 : {{list.bprodname}}</div>
 									<div>거래 방법 : {{list.bpurname}}</div>
-									<div>조회 수 : {{list.hits}} 찜: {{jiamsum}} 판매자 평점 : {{list.grade}}</div>
+									<div>조회 수 : {{list.hits}} 찜: {{jimsum}} 판매자 평점 : {{list.grade}}</div>
 									<div>거래 지역 : {{list.local1name}} {{list.local2name}} {{list.local3name}}</div>
 								</div>
 								<div class="infobox1_2_2">
@@ -247,9 +252,7 @@
 							</div>
 						</div>
 						<div class="infobox2">
-							<textarea class="infocont" name="" id="" cols="30" rows="10" disabled ><c:out value="list.bcont" />
-								{{list.bcont}}
-							</textarea>
+							<div class="infocont" v-html="cont"></div>
 							<div class="info2btn">
 								<button>수정</button>
 								<button @click="fnTbrdDel()">삭제</button>
@@ -327,7 +330,7 @@
 			commcont:"",
 			commcnt:0,
 			jimst:0,
-			jiamsum:0
+			jimsum:0
 		},
 			methods: {
 			//게시글 상세 리스트
@@ -341,11 +344,9 @@
 					data : nparmap,
 					success : function(data) { 
 						self.list = data.list; 
-						self.commcnt=data.cnt; 
 						self.jimst=data.ujimcnt;
-						console.log(data);   
-						// self.cont=data.
-                   
+						self.cont=data.list[0].bcont;
+
 					}
 				}); 
 			},
@@ -376,8 +377,6 @@
 					success : function(data) { 
 						self.commcnt=data.cnt;
 						self.commlist=data.commlist;
-						
-						
 					}
 				}); 
 			},
@@ -468,8 +467,9 @@
 		 created: function () {
 			var self = this;
 			self.fnGetList();
-			self.jimsumcnt();
 			self.fncommlist();
+			self.jimsumcnt();
+			
 			
 		}
 	});
