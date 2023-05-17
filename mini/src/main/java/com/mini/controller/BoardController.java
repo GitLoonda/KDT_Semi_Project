@@ -28,17 +28,6 @@ public class BoardController {
     //거래게시판 페이지
 	@RequestMapping("/trade.do") 
     public String trade(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-        System.out.println(session.getAttribute("cate1"));
-        System.out.println(session.getAttribute("cate2"));
-        System.out.println(session.getAttribute("cate3"));
-        map.put("cate1",session.getAttribute("cate1"));
-        map.put("cate1",session.getAttribute("cate2"));
-        map.put("cate1",session.getAttribute("cate3"));
-
-        System.out.println(session.getAttribute("option"));
-        System.out.println(session.getAttribute("keyword"));
-        
-        request.setAttribute("def", map);
         
         return "/trade_list";
     }
@@ -58,7 +47,6 @@ public class BoardController {
         int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
         map.put("startNum", startNum);
         map.put("lastNum", lastNum);
-        
 		resultMap = boardService.searchTbrdListInfo(map);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
@@ -170,14 +158,15 @@ public class BoardController {
 	}
 
     //tradeview.do
-    
-
     //게시글 리스트 불러오기
     @RequestMapping(value = "/tradeView/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String searchTbrdInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
     HashMap<String, Object> resultMap = new HashMap<String, Object>();
     resultMap = boardService.searchTbrdInfo(map);
+    
+    
+
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }

@@ -85,15 +85,18 @@
 		}   
 		, methods: {
 			// 리스트 불러오기,페이징6
-			fnGetTradeList : function(item, item2, item3){
+			fnGetTradeList : function(item, item2, item3,item4,item5,item6){
 				console.log(item);
 				console.log(item2);
 				console.log(item3);
+				console.log(item4);
+				console.log(item5);
+				console.log(item6);
 				var self = this;
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
-         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item, cate2:item2, cate3:item3};
+         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item, cate2:item3, cate3:item5};
 				   	console.log(startNum);
 					console.log(lastNum);
 				$.ajax({

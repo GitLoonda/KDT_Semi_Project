@@ -63,19 +63,19 @@
                         <div class="category">
                             <ul class="dep1">
                                 <li  v-for="item in cate1">
-                                    <a href="javascript:;" @click="fnCateSelect(item.cNum)">
+                                    <a href="javascript:;" @click="fnCateSelect(item.cNum,item.cInfo)">
                                     {{item.cInfo}}
                                     <span>></span>
                                     </a>
                                     <ul class="dep2">
 		                                <li  v-for="item2 in cate2">
-		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;"@click="fnCateSelect(item.cNum, item2.cNum)">
+		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;"@click="fnCateSelect(item.cNum,item.cInfo, item2.cNum,item2.cInfo)">
 		                                    {{item2.cInfo}}
 		                                    <span>></span>
 		                                    </a>
 		                                    <ul class="dep3">
 				                                <li  v-for="item3 in cate3">
-				                                    <a href="javascript:;"@click="fnCateSelect(item.cNum, item2.cNum, item3.cNum)">
+				                                    <a href="javascript:;"@click="fnCateSelect(item.cNum,item.cInfo, item2.cNum,item2.cInfo,item3.cNum,item3.cInfo)">
 				                                    {{item3.cInfo}}
 				                                    </a>
 				                                </li>
@@ -178,9 +178,9 @@
         	, fnRequest : function() {
         		location.href = "request.do";
         	}
-        	, fnCateSelect : function(item, item2, item3) {
+        	, fnCateSelect : function(item, item2, item3,item4,item5,item6) {
         		var self = this;
-                tlist.fnGetTradeList(item, item2, item3);
+                tlist.fnGetTradeList(item, item2, item3,item4,item5,item6);
         		// if(item2 == null) {
         		// 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : null, cate3 : null});
         		// 	return;
