@@ -15,9 +15,17 @@ public interface LoginMapper {
 	
 	int selectCntUser(HashMap<String, Object> map);
 	
+	int selectCntQuiz(HashMap<String, Object> map);
+	
 	List<Desc> selectQuizList(HashMap<String, Object> map);
 	
 	void insertAccount(HashMap<String, Object> map);
+	
+	User selectId(HashMap<String, Object> map);
+
+	User selectQuiz(HashMap<String, Object> map);
+	
+	void updatePwd(HashMap<String, Object> map);
 }
 
 

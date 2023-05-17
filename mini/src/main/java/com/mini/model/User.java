@@ -11,12 +11,14 @@ public class User {
     private String phone;
     private String email;
     private String addr;
+    private String quiz;
+    private String answer;
     private String grade;
     private String cgrade;
     private String point;
     private String bancnt1;
     private String bancnt2;
-    private String pwcont;
+	private String pwcont;
     private String auth1Yn;
     private String auth2Yn;
     private String creaflg;
@@ -90,6 +92,18 @@ public class User {
     public void setAddr(String addr) {
         this.addr = addr;
     }
+    public String getQuiz() {
+		return quiz;
+	}
+	public void setQuiz(String quiz) {
+		this.quiz = quiz;
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
     public String getGrade() {
         return grade;
     }

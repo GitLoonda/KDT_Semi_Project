@@ -60,4 +60,62 @@ public class LoginServicelmpl implements LoginService {
 		loginmapper.insertAccount(map);
 		return;
 	}
+	
+	@Override
+	public HashMap<String, Object> searchUserId(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User user = loginmapper.selectId(map);
+		if (user != null) {
+			resultMap.put("result", "success");
+			resultMap.put("user", user);
+			return resultMap;
+		} else {
+			resultMap.put("result", "fail");
+			return resultMap;
+		}
+	}
+
+	@Override
+	public HashMap<String, Object> searchQuiz(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User user = loginmapper.selectQuiz(map);
+		if (user != null) {
+			resultMap.put("result", "success");
+			resultMap.put("user", user);
+			return resultMap;
+		} else {
+			resultMap.put("result", "fail");
+			return resultMap;
+		}
+	}
+
+	@Override
+	public HashMap<String, Object> contrastQuiz(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = loginmapper.selectCntQuiz(map);
+		if(cnt == 1) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
+	@Override
+	public HashMap<String, Object> changePwd(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = loginmapper.selectCntUser(map);
+		if(cnt == 0) {
+			loginmapper.updatePwd(map);
+			resultMap.put("result", "success");
+		}
+		else if(cnt == 1) {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
 }

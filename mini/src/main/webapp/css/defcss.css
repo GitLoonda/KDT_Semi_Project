@@ -175,3 +175,23 @@ a {
 #navbar .dep3 > li:hover {
     background-color: #bbd8f2;
 }
+.sidebar {
+    position : fixed;
+    right : 200px;
+   	display : grid;
+   	grid-template-rows: repeat(3, 50px);
+   	padding : 20px;
+   	background-color : #eee;
+   	border-radius : 10px;
+   	row-gap : 30px;
+ }
+.sidebar div {
+	width : 100px;
+	background-color : white;
+	text-align : center;
+	line-height : 50px;
+ }
+        
+.sidebar div:hover {
+ 	background-color : #ccc;
+ }

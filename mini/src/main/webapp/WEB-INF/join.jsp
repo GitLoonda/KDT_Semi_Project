@@ -26,12 +26,16 @@
 		text-align: center;
 		border-radius: 50px;
 		background-color: #ccc;
-		padding : 40px 40px 80px 40px;
+		padding : 20px 40px 80px 40px;
 	}
 	.container .div2 {
 		margin-left: 80px;
 		margin-bottom: 40px;
 		text-align: left;
+	}
+	div img {
+		margin-left : 300px;
+		border-radius : 20px;
 	}
 	.in {
 		width: 20em;
@@ -95,6 +99,10 @@
 <body>
 	<div id="app" class="div1">
 		<div class="container">
+			<div>
+				<a @click="fnMain" href="javascript:;"><img src="img/main/unity-logo-200x100-1.jpg" alt="logo"></a>
+				
+			</div>
 			<h2 style="margin-bottom: 30px;">회원가입</h2>
 			<div class="div2">
 				<input v-model="list.id" type="text" class="in2" placeholder=" 아이디"></input>
@@ -113,13 +121,13 @@
 			<div class="div2">
 				<label>
 					<select @change="fnSetQuiz" class="quiz" v-model="sQuiz">
-						<option value="" >비밀번호 찾기 질문</option>
+						<option value="" >비밀번호 초기화 질문</option>
 						<option v-for="item in quizList" :value="item.cNum">{{item.cInfo}}</option>					
 					</select>
 				</label>
 			</div>
 			<div class="div2">
-				<input v-model="list.answer" type="text" class="in" placeholder=" 비밀번호 찾기 답변"></input>
+				<input v-model="list.answer" type="text" class="in" placeholder=" 비밀번호 초기화 답변"></input>
 			</div>
 			<div class="div2">
 				<input v-model="list.name" type="text" class="in" placeholder=" 이름"></input>
@@ -234,6 +242,9 @@ var app = new Vue({
 	                }
 	            });
 		}
+	    , fnMain : function() {
+			location.href = "main.do";
+		} 
 		, fnIdCheck : function() { // id 유효성 검사
 			var self = this;
 			var idJ = /^[a-z0-9]{6,12}$/;
@@ -338,11 +349,11 @@ var app = new Vue({
 				return;
 			}
 			if(self.list.quiz == null) {
-				alert("비밀번호 찾기 질문을 선택해주세요.");
+				alert("비밀번호 초기화 질문을 선택해주세요.");
 				return;
 			}
 			if(self.list.answer == null) {
-				alert("비밀번호 찾기 답변을 입력해주세요.");
+				alert("비밀번호 초기화 답변을 입력해주세요.");
 				return;
 			}
 			if(self.list.name == null) {

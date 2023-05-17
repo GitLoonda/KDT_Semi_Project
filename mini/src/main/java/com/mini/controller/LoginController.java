@@ -100,7 +100,6 @@ public class LoginController {
 	public String addAccount(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		loginservice.addId(map);
-		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -110,17 +109,45 @@ public class LoginController {
 		return "/jusoPopup";
     }
 	
-	@RequestMapping("/login/findId.do") //아이디 찾기
+	@RequestMapping("/findId.do") //아이디 찾기
     public String findId(Model model) throws Exception{
 
         return "/find_id";
     }
 	
-	@RequestMapping("/login/findPw.do") //비밀번호 찾기
+	@RequestMapping("/findPw.do") //비밀번호 찾기
     public String findPw(Model model) throws Exception{
 
         return "/find_pw";
     }
+	
+	@RequestMapping(value = "/find/id.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchUserId(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = loginservice.searchUserId(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/find/validate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String findUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = loginservice.searchQuiz(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/find/quiz.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String findQuiz(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = loginservice.contrastQuiz(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/find/reset.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String resetPwd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = loginservice.changePwd(map);
+		return new Gson().toJson(resultMap);
+	}
 
 
 }

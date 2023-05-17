@@ -17,6 +17,9 @@
 		list-style: none;
 		font-family: 'Nanum Gothic', sans-serif;
 	}
+	a {
+		color: #5a5d69;
+	}
 	a:visited {
 		color: #5a5d69;
 	}
@@ -30,6 +33,9 @@
 	}
 	.container div {
 		margin-bottom: 40px;
+	}
+	div img {
+		border-radius : 20px;
 	}
 	input {
 		width: 20em;
@@ -54,7 +60,7 @@
 	<div id="app" class="div1">
 		<div class="container">
 			<div class="logoImg">
-				<img src="img/main/unity-logo-200x100-1.jpg">
+				<a href="javascript:;" @click="fnMain"><img src="img/main/unity-logo-200x100-1.jpg"></a>
 			</div>
 			<div class="div2">
 				<input v-model="id" type="text" class="in" placeholder=" 아이디"></input>
@@ -65,9 +71,9 @@
 			<div class="div2">
 				<button id="btn" @click="fnValidate">로그인</button>
 			</div>
-			<div>계정이 없으신가요? <a @click="fnJoin">회원가입</a> </div>
-			<div>아이디가 기억나지 않으시나요? <a @click="fnFindId">아이디 찾기</a> </div>
-			<div>비밀번호가 기억나지 않으시나요? <a @click="fnFindPw">비밀번호 찾기</a> </div>
+			<div>계정이 없으신가요? <a href="javascript:;" @click="fnJoin">회원가입</a> </div>
+			<div>아이디가 기억나지 않으시나요? <a href="javascript:;" @click="fnFindId">아이디 찾기</a> </div>
+			<div>비밀번호가 기억나지 않으시나요? <a href="javascript:;" @click="fnFindPw">비밀번호 초기화</a> </div>
 		</div>
 	</div> 
 </body>
@@ -81,14 +87,17 @@ var app = new Vue({
 		passwd : ""
     }   
     , methods: {
-    	fnJoin :function() {
+    	fnMain : function() {
+    		location.href = "main.do";
+    	} 
+    	, fnJoin :function() {
     		location.href = "join.do";
     	}
     	, fnFindId :function() {
-    		location.href = "login/findId.do";
+    		location.href = "findId.do";
     	}
     	, fnFindPw :function() {
-    		location.href = "login/findPw.do";
+    		location.href = "findPw.do";
     	}
     	, fnValidate : function() {
             var self = this;

@@ -86,8 +86,8 @@
                             </ul>
                         </div>
                     </li>
-                    <li @click="fnRequest">
-                        <a href="javascript:;">제작의뢰</a>
+                    <li >
+                        <a href="javascript:;" @click="fnTrade">제작의뢰</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li v-for="item in bcms">
@@ -102,6 +102,11 @@
                 </ul>
             </div>
         </div>
+         <div class=sidebar>
+            	<div><a href="javascript:;">최근 본 상품</a></div>
+            	<div><a href="javascript:;">찜한 상품</a></div>
+            	<div><a href="#header">맨 위로</a></div>
+         </div>
     </div>
     </body>
     </html>
@@ -152,8 +157,7 @@
        	                });
    	                	self.bcms = self.map.filter(function(element){
    	                		return element.cId == "BCMS";
-   	                	});
-   	                	console.log(self.bcms);
+   	                	});;
                     }
                 }); 
             }
@@ -175,8 +179,8 @@
         	, fnTrade : function() {
         		location.href = "trade.do";
         	}
-        	, fnRequest : function() {
-        		location.href = "request.do";
+        	, fnComm : function() {
+        		location.href = "comm.do";
         	}
         	, fnCateSelect : function(item, item2, item3,item4,item5,item6) {
         		var self = this;
