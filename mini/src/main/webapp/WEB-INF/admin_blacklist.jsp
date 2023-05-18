@@ -5,31 +5,97 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+		
+	<!-- 폰트 추가 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	
 	<!--  페이징 추가 1 -->
 	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 	<link rel="stylesheet" href="../css/style.css">
-	<title>관리자 블랙리스트</title>
+	<title>🕵🏻‍♀️ 신고접수</title>
 
 </head>
 <style>
+	<!-- 페이징 추가 2 -->
+	.pagination {
+        margin:24px;
+        display: inline-flex;
+        
+    }
+    ul {
+        text-align: center;
+    }
+	.pagination li {
+	    min-width:32px;
+	    padding:2px 6px;
+	    text-align:center;
+	    margin:0 3px;
+	    border-radius: 6px;
+	    border:1px solid #eee;
+	    color:#666;
+	    display : inline;
+	}
+	.pagination li:hover {
+	    background: #E4DBD6;
+	}
+	.page-item a {
+	    color:#666;
+	    text-decoration: none;
+	}
+	.pagination li.active {
+	    background-color : #E7AA8D;
+	    color:#fff;
+	}
+	.pagination li.active a {
+	    color:#fff;
+	}
+	
+
+	* {
+			text-decoration: none;
+			list-style: none;
+			font-family: 'Nanum Gothic', sans-serif;
+		}
+
+
+	.btn5 {
+	 		background-color: #9B9B9B;
+            color: white;
+            border-radius: 5px;
+            border-style: hidden;
+            margin-right: 8px; 
+            padding : 4px;
+            font-size : 0.7rem;
+            
+		}
+
+
 </style>
 <body>
 	<div id="app" >
 		<div class="container">
-			<h2>블랙리스트 관리</h2>
+			<h2>🕵🏻‍♀️ 신고접수</h2>
 			<div style="float : right; margin-right : 20px">
 				<div>{{sessionId}} 님 환영합니다 😀</div>
 			</div>
-			<div> 
-				<input type="text" v-model="keyword" @keyup.enter="fnGetList">
-				<button @click="fnGetList">검색</button>
-			</div>
+			<pre>
+			</pre>
 			<div style="float : right; margin-right : 20px">
 				<div><a href="../admin/login.do" v-if="sessionId != ''">로그아웃 📴</a></div>
 			</div>
+			<pre>
+			</pre>
 	        <div class="table-list">
-	        	<h2>블랙리스트 목록</h2>
+	        	<h3 style="font-size : 1.2rem">
+	        		 ▪  블랙리스트 목록  ▪ 
+	        		<div style="float:right;">
+						<input class=txtbox1 type="text" v-model="keyword" @keyup.enter="fnGetList">
+						<button class=btn @click="fnGetList">검색</button>
+					</div>
+				</h3>
 	            <table class="board_list">                   
 	                <thead>
 	                    <tr>            
@@ -37,7 +103,7 @@
 	                        <th scope="col">No.</th>
 	                        <th scope="col">신고사유</th>
 	                        <th scope="col">ID</th>
-	                        <th scope="col">신청일</th>
+	                        <th scope="col">등록일</th>
 	                        <th scope="col">게시글 신고 횟수</th>
 	                        <th scope="col">댓글 신고 횟수</th>
 	                        <th scope="col">상태</th>
@@ -57,12 +123,26 @@
                             <td v-else-if="item.ustatus == 2">사용불가</td>     
                             <td v-else-if="item.ustatus == 3">사용정지</td>     
                             <td>
-                            	<button @click="fnBan('3', item)">승인</button>
-                            	<button @click="fnBan('1', item)">해제</button>
+                            	<button class=btn5 @click="fnBan('3', item)">승인</button>
+                            	<button class=btn5 @click="fnBan('1', item)">해제</button>
                             </td>     
                         </tr>                                       
 	                </tbody>                   
 	            </table>
+	            <!-- 페이징 추가 3-->
+				<template>
+				  <paginate
+				    :page-count="pageCount"
+				    :page-range="3"
+				    :margin-pages="2"
+				    :click-handler="fnSearch"
+				    :prev-text="'<'"
+				    :next-text="'>'"
+				    :container-class="'pagination'"
+				    :page-class="'page-item'">
+				  </paginate>
+				</template>
+	           
 	        </div>
 	        <div>
 	        	<!-- <button class="btn">삭제</button> -->
@@ -70,9 +150,13 @@
 	        </div>
         </div>
 	</div>
+	
+<jsp:include page="/layout/footer.jsp"></jsp:include>	
 </body>
 </html>
 <script type="text/javascript">
+<!-- 페이징 추가 4-->
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({ 
     el: '#app',
     data: {
@@ -80,12 +164,18 @@ var app = new Vue({
     	, blackUser : []
     	, keyword : ""
     	, sessionId : "${sessionId}"
+	    <!-- 페이징 추가 5-->
+		, selectPage : 1
+		, pageCount : 1
+		, blackCnt : 0
     }   
     , methods: {
     	
         fnGetList : function(){
             var self = this;
-            var nparmap = {keyword : self.keyword};
+   		 	var startNum = ((self.selectPage-1) * 10);
+			var lastNum = 10
+            var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
             $.ajax({
                 url:"/admin/blacklist.dox",
                 dataType:"json",	
@@ -94,9 +184,30 @@ var app = new Vue({
                 success : function(data) {   
                 	console.log(data);
 	                self.list = data.list;
+	                self.blackCnt = data.blackCnt;
+	                self.pageCount = Math.ceil(self.blackCnt / 10);
                 }
             }); 
         }
+    	<!-- 페이징 추가 7-->
+		, fnSearch : function(pageNum){
+			var self = this;
+			self.selectPage = pageNum;
+			var startNum = ((pageNum-1) * 10);
+			var lastNum = 10
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/admin/blacklist.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.list = data.list;
+					self.blackCnt = data.blackCnt;
+					self.pageCount = Math.ceil(self.blackCnt / 10);
+				}
+			});
+		}
     
     	, fnBan : function (status, item){
     		var self = this;
