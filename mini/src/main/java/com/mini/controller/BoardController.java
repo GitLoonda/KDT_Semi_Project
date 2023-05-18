@@ -1,6 +1,7 @@
 package com.mini.controller;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -135,53 +136,94 @@ public class BoardController {
 		resultMap.put("result", "성공");
 		return new Gson().toJson(resultMap);
 	}
-
     @RequestMapping("/fileUpload.dox")
-	    public String result(@RequestParam("file1") MultipartFile multi, @RequestParam("tbno") int tbno, HttpServletRequest request,HttpServletResponse response, Model model)
+        // 여러개 MultipartFile files[] 형식으로 받음
+	    public String result(@RequestParam("files") MultipartFile files[], @RequestParam("tbno") int tbno, HttpServletRequest request,HttpServletResponse response, Model model)
 	    {
-	        String url = null;
-	        String path="c:\\img";
-            System.out.println(path);
+            // 파일갯수만큼 반복
+            for(int i=0;i<files.length;i++){
+
+                MultipartFile multi=files[i];
+                String url = null;
+                String path="c:\\img";
+                System.out.println(path);
+                
+                try {
+        
+                    //String uploadpath = request.getServletContext().getRealPath(path);
+
+                    String uploadpath = path;
+                    String originFilename = multi.getOriginalFilename();
+                    String extName = originFilename.substring(originFilename.lastIndexOf("."),originFilename.length());
+                    long size = multi.getSize();
+                    String saveFileName = genSaveFileName(extName);
+
+                    System.out.println("uploadpath : " + uploadpath);
+                    System.out.println("originFilename : " + originFilename);
+                    System.out.println("extensionName : " + extName);
+                    System.out.println("size : " + size);
+                    System.out.println("saveFileName : " + saveFileName);
+                    
+                    String path2 = System.getProperty("user.dir");
+                    String path3 = "\\src\\main\\webapp\\img\\board\\";
+
+                    System.out.println("Working Directory = " + path2 + path3 +String.valueOf(tbno)+"\\");
+                    
+                    System.out.println(path2+path3);
+
+                    // 디비 파일 경로
+                    String setpath="img/board/"+String.valueOf(tbno)+"/"+saveFileName;
+                    System.out.println(setpath);
+
+                    if(!multi.isEmpty())
+                    {
+                        // 파일저장경로설정
+                        File forder= new File(path2+path3+String.valueOf(tbno));
+                        forder.mkdir();
+                        System.out.println(forder);
+                        // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+                        if (!forder.exists()) {
+                            try{
+                                forder.mkdir(); //폴더 생성합니다.
+                                System.out.println("폴더가 생성되었습니다.");
+                                } 
+                                catch(Exception e){
+                                e.getStackTrace();
+                            }        
+                            }else {
+                            System.out.println("이미 폴더가 생성되어 있습니다.");
+                        }
+
+                        File file = new File(path2+path3+String.valueOf(tbno)+"\\", saveFileName);
+
+                        multi.transferTo(file);
+                        
+                        HashMap<String, Object> map = new HashMap<String, Object>();
+                        if(i==0){
+                            map.put("rep", "Y");
+                            map.put("path", setpath);
+                            map.put("tbno", tbno);
+                        }else{
+                            map.put("rep", "N");
+                            map.put("path", setpath);
+                            map.put("tbno", tbno);
+                        }
+                        
+                        
+                        // insert 쿼리 실행
+                        boardService.TradeImgInsert(map);
+                        
+                        
+                        model.addAttribute("filename", multi.getOriginalFilename());
+                        model.addAttribute("uploadPath", file.getAbsolutePath());
+                        
+                        
+                    }
+                }catch(Exception e) {
+                    System.out.println(e);
+                }
+            }
             
-	        try {
-	 
-	            //String uploadpath = request.getServletContext().getRealPath(path);
-	            String uploadpath = path;
-	            String originFilename = multi.getOriginalFilename();
-	            String extName = originFilename.substring(originFilename.lastIndexOf("."),originFilename.length());
-	            long size = multi.getSize();
-	            String saveFileName = genSaveFileName(extName);
-	            
-	            System.out.println("uploadpath : " + uploadpath);
-	            System.out.println("originFilename : " + originFilename);
-	            System.out.println("extensionName : " + extName);
-	            System.out.println("size : " + size);
-	            System.out.println("saveFileName : " + saveFileName);
-	            String path2 = System.getProperty("user.dir");
-	            System.out.println("Working Directory = " + path2 + "\\src\\webapp\\img\\"+String.valueOf(tbno)+"\\");
-                String setpath="img/"+String.valueOf(tbno)+"/"+saveFileName;
-                System.out.println(setpath);
-	            if(!multi.isEmpty())
-	            {
-	                File file = new File(path2 + "\\src\\main\\webapp\\img", saveFileName);
-	                multi.transferTo(file);
-	                
-	                HashMap<String, Object> map = new HashMap<String, Object>();
-	                map.put("path", setpath);
-	                map.put("tbno", tbno);
-	                
-	                // insert 쿼리 실행
-                    boardService.TradeImgInsert(map);
-	                // insertBoardImg(map); 
-	                
-	                model.addAttribute("filename", multi.getOriginalFilename());
-	                model.addAttribute("uploadPath", file.getAbsolutePath());
-	                
-	                return "filelist";
-	            }
-	        }catch(Exception e) {
-	            System.out.println(e);
-	        }
 	        return "redirect:trade.do";
 	    }
 

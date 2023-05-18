@@ -426,9 +426,8 @@
 					</div>
 
 					<div class="editbox">
-						<div class="optionT">첨부파일 <input type="file" id="file1" name="file1" v-model="file1" MultipartFile> 
-							<label for="repck"><input id="repck" type="checkbox" v-model="repck">썸네일</label>
-
+						<div class="optionT">첨부파일 
+							<input type="file" id="filelist" name="filelist" multiple> 
 						</div>
 						<br>
 						<div>
@@ -440,7 +439,7 @@
 							<button class="btn">목록</button>
 						</div>
 						<div>{{inlist}}</div>
-						<div>{{tbno}},{{file1}},{{repck}}</div>
+						<div>{{tbno}},{{file1}}</div>
 					</div>
 				</div>
 			</div>
@@ -452,6 +451,7 @@
 	console.log(Vue);
 	Vue.use(Vue2Editor);
 	const VueEditor = Vue2Editor.VueEditor;
+
 	var app = new Vue({ 
 		el: '#app',
 		data: {
@@ -498,7 +498,6 @@
 			},
 			tbno:0,
 			file1:"",
-			repck:false,
 			
 	
 		},
@@ -629,10 +628,26 @@
                 data : nparmap,
                 success : function(data) { 
 					var form = new FormData();
-						form.append( "file1",  $("#file1")[0].files[0] );
+						files = document.getElementById("filelist").files;
+						for(var i=0;i<files.length;i++){
+							form.append( "files", files[i]);
+							
+						}
 						form.append( "tbno",  data.tbno); // pk
-						self.upload(form); 
+						self.upload(form);
+
+						/* key 확인하기 */
+						for (let key of form.keys()) {
+							console.log(key);
+						}
+
+						/* value 확인하기 */
+						for (let value of form.values()) {
+							console.log(value);
+						}
+
 					alert("성공!")
+					location.href("trade.do");
                 }
             });	
         	},
@@ -650,7 +665,7 @@
 	           }
 	           
 	       });
-		}
+		},
 
 		
 		}

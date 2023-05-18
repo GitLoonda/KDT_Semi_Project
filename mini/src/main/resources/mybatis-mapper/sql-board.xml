@@ -185,7 +185,7 @@
 <!-- 이미지 등록 -->
 <insert id="TradeImgAdd" parameterType="hashmap">
 	INSERT INTO T3_TIMG
-	VALUES (NULL,#{tbno},#{path},"Y")
+	VALUES (NULL,#{tbno},#{path},#{rep})
 
 </insert>
 

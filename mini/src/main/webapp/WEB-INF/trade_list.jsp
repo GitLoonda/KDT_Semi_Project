@@ -40,7 +40,8 @@
 							</select>
 						</div>
 						<div>
-							1-15 / <span>{{listcnt}}</span>
+							1-15 / <span>{{listcnt}}</span><span><button @click="fnAddTradebtn">글쓰기</button></span>
+							
 						</div>
 						<div class="listbox">
 							<!-- 거래글 리스트 불러오기/필터없음./리스트 -->
@@ -181,10 +182,10 @@
 			var self = this;
 			self.pageChange("./tradeview.do",{tbno:tbno});
 		}
-
-
-
-		
+		,fnAddTradebtn(){
+			
+			location.href="tradeadd.do";
+		}
 		}
 		, created: function () {
 			var self = this;
