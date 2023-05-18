@@ -59,7 +59,7 @@
             <div id="navbar">
                 <ul class="menu">
                     <li >
-                        <a href="javascript:;"@click="fnTrade">중고거래</a>
+                        <a href="javascript:;"@click="fnTrade(1)">중고거래</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li  v-for="item in cate1">
@@ -87,7 +87,7 @@
                         </div>
                     </li>
                     <li >
-                        <a href="javascript:;" @click="fnTrade">제작의뢰</a>
+                        <a href="javascript:;" @click="fnTrade(2)">제작의뢰</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li v-for="item in bcms">
@@ -177,8 +177,9 @@
         	, fnLogout : function() {
         		location.href = "logout.do";
         	}
-        	, fnTrade : function() {
-        		location.href = "trade.do";
+        	, fnTrade : function(i) {
+        		var self = this;
+        		self.pageChange("/trade.do", {brdflg : i});
         	}
         	
         	, fnCateSelect : function(item, item2, item3, item4, item5, item6) {
@@ -189,14 +190,14 @@
         		}
         		else {
         			if(item2 == null) {
-            		 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : null, cate3 : null});
+            		 	self.pageChange("/trade.do", {cate1 : item, cate2 : null, cate3 : null});
             		 	return;
             		 }
             		 else if(item3 == null) {
-            		 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : null});
+            		 	self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : null});
             		 	return;
             		 }else{
-                         self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : item3.cNum});
+                         self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : item5});
                      }
         		}
                
