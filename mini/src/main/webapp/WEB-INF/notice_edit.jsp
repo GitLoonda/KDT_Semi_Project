@@ -16,7 +16,7 @@
 <body>
 	<div id="app">
 		<div class="container">
-			<h2>게시판 수정</h2>
+			<h2>📢 공지사항 수정</h2>
 			<table class="board_detail">
 				<colgroup>
 					<col width="10%"/>
@@ -24,12 +24,7 @@
 				</colgroup>
 				<tr>
 					<td style="text-align : center;" >제목</td>
-					<td><input type="text" id="title" name="title" v-model="info.title"></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<textarea id="contents" name="contents" v-model="info.content"></textarea>
-					</td>
+					<td><input type="text" id="title" name="title" v-model="info.atitle"></td>
 				</tr>
 				<tr>
 					<td style="text-align : center;" >첨부파일</td>
@@ -41,15 +36,16 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-					  <vue-editor v-model="info.content"></vue-editor> <!-- 2. 화면 에디터 추가 -->
+					  <vue-editor v-model="info.acont"></vue-editor> <!-- 2. 화면 에디터 추가 -->
 					</td>
 				</tr>
 			</table>
 			<button @click="fnHome" class="btn" style="float: right;">목록으로</button>
-			<button @click="fnEditBbs" class="btn" style="float: right;">수정</button>
+			<button @click="fnEditBbs" class="btn" style="float: right;">저장</button>
 		</div>
 	</div>
 </body>
+	
 </html>
 <script type="text/javascript">
 
@@ -65,8 +61,9 @@ var app = new Vue({
 		abNo : "${map.abNo}"
 		
 		// 4. 컴포넌트 추가
-		, components: {VueEditor}
+		
     }   
+	, components: {VueEditor}
     , methods: {
     	
     	fnHome : function () {
@@ -81,7 +78,7 @@ var app = new Vue({
             /* var nparmap = self.info;
             nparmap.boardNo = self.boardNo; */
             $.ajax({
-                url:"/bbs/edit.dox",
+                url:"/notice/edit.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
