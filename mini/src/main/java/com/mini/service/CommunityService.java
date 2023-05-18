@@ -7,6 +7,9 @@ public interface CommunityService {
 	//커뮤니티 게시글 조회
 	HashMap<String, Object> searchCbrdList(HashMap<String, Object> map);
 	
+	 //카테고리 전체 리스트 조회
+    HashMap<String, Object> searchCbrdCateList(HashMap<String, Object> map);
+	
     //카테고리 1 리스트 조회
     HashMap<String, Object> searchCbrdCate1List(HashMap<String, Object> map);
     

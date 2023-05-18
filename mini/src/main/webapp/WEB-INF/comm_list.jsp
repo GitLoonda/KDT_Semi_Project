@@ -134,11 +134,11 @@
 					<tbody>
 						<!-- 글 삭제 X -->
 						<tr v-for="(item, index) in list" v-if="item.delYn == 'N'">
-							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList" values=""></td>
+							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
 							<td>[{{item.cate1}}]</td>
-							<td v-if="ccnt != 0" style="width: 30%;" @click="fnView(item.cbno)"> <a>{{item.ctitle}}({{ccnt}})</a></td>
-							<td v-else style="width: 30%;" @click="fnView(item.cbno)"><a>{{item.ctitle}}</a></td>
+							<td v-if="ccnt != 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}({{ccnt}})</a></td>
+							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}}</a></td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
 							<td v-if="item.udate == null">{{item.cdate}}</td>

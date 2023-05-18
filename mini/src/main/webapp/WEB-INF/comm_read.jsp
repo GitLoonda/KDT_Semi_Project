@@ -30,9 +30,28 @@
     	background-color: rgba(0, 0, 0, 0.03); 
     	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     }
+    .pimg{
+    	width: 50px;
+		border-radius: 100%;
+		border: 1px solid black;
+		margin-right: 10px;
+	}
+    .commbox2_1_1{
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+	}
+	.commid{
+		font-size: 15pt;
+		margin-bottom: 2px;
+	}
     .btns {
 		text-align: right;
 		margin-right: 5px;
+	}
+	textarea {
+		width : 90%; 
+		resize: none;
 	}
 </style>
 <body>
@@ -67,16 +86,19 @@
 						<span>첨부파일</span>
 						<input type="file" id="file1" name="file1" >
 					</div>
-						<textarea v-model="comment" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
+						<textarea v-model="comment" rows="3" cols="100"></textarea>
 						<button @click="fnComment()" class="btn">등록</button>
 						<div style="text-align: right"><input type="checkbox" value="N">비밀댓글 설정</div>
 				</div>
 				
 				<div v-for="(item, index) in commentList" style="padding-bottom: 10px; margin: 10px; border-bottom: 1px solid #ccc;">
 					<div v-if="item.delYn == 'N'">
+						<div><img class="pimg" src="img/board/160628_7.png"></div>
+						<div class="commbox2_1_1">
+							<div class="commid">{{item.id}}</div>
+							<div>{{item.conte}}</div>
+						</div>
 						<span> 
-							<span v-if="item.udate == null"> {{item.id}} ({{item.cdate}}) : <pre> {{item.conte}}</pre> </span>
-							<span v-else> {{item.id}} ({{item.udate}}) : <pre> {{item.conte}} </pre> </span>
 							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEdit(item)" >수정</button>
 							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" >삭제</button>
 							<button v-else target="_blank" @click="fnReportComment()">신고</button>
@@ -88,7 +110,7 @@
 						</span>
 					</div>
 					<div v-if="cInfo.cno == item.cno" style="margin-top : 10px;">
-						<textarea v-model="editconte" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
+						<textarea v-model="editconte" rows="3" cols="100"></textarea>
 						<button @click="fnEditComment" class="btn" style="margin-bottom : 30px;">수정</button>
 					</div>
 				</div>
@@ -105,7 +127,7 @@ var app = new Vue({
        list : [] 
        , info : {}
        , cbno : "${map.cbno}"
-       , sessionId : ""
+       , sessionId : "test20"
        , sessionAdminflg : ""
        , ccnt : ""
  	   , comment : ""

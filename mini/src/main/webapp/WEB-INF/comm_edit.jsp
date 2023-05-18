@@ -26,6 +26,7 @@
 	select {
 		padding: 3px;
 		width: 30%;
+		appearance: none;
 	}
 	input {
 		padding: 3px;
@@ -44,12 +45,12 @@
 						<col width="*"/>
 					</colgroup>
 					<tr>  
-						<select v-model="info.cate1" id="cate" style="appearance: none;" disabled>
-							<option v-for="(cate1, index) in listcate1" :value="cate1.cnum" >{{cate1.cinfo}}</option>
+						<select v-model="info.cate1" id="cate" disabled>
+							<option v-for="(cate1, index) in listcate" :value="cate1.cnum" >{{cate1.cinfo}}</option>
 						</select>
 						
-						<select v-model="info.cate2" id="cate" style="appearance: none;" disabled>
-							<option v-for="(cate2, index) in listcate2" :value="cate2.cnum">{{cate2.cinfo}}</option>
+						<select v-model="info.cate2" id="cate" disabled>
+							<option v-for="(cate2, index) in listcate" :value="cate2.cnum">{{cate2.cinfo}}</option>
 						</select>
 					</tr>
 					
@@ -91,8 +92,7 @@ var app = new Vue({
     data: {
 		info : {}, 
 		cbno : "${map.cbno}",
-		listcate1:{},
-		listcate2:{}
+		listcate : {}
 				
     }
     
@@ -165,37 +165,22 @@ var app = new Vue({
     	}
 
     	
-    	, cate1List : function(){
+    	, cateList : function(){
 			var self = this;
 			var nparmap = {};
 			$.ajax({
-				url:"/comm/cate1.dox", 
+				url:"/comm/cate.dox", 
 				dataType:"json",	
 				type : "POST", 
 				data : nparmap,
 				success : function(data) { 
 					console.log(data);
-					self.listcate1 = data.listcate1;
+					self.listcate = data.listcate;
 				}
 			});
     	}
     	
-    	, cate2List : function(){
-			var self = this;
-			var nparmap = {pcomm1 : self.info.cate1};
-			$.ajax({
-				url:"/comm/cate2.dox",
-				dataType:"json",	
-				type : "POST", 
-				data : nparmap,
-				success : function(data) { 
-					console.log(data);
-					self.listcate2 = data.listcate2;
 
-				}
-			});
-			
-		}
 		
     	
     	
@@ -203,8 +188,7 @@ var app = new Vue({
     , created: function () {
     	var self = this;
     	self.fnGetBoard();
-    	self.cate1List();
-    	self.cate2List();
+    	self.cateList();
 	}
 });
 </script>

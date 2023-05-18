@@ -26,6 +26,15 @@ public class CommunityServiceImpl implements CommunityService {
 		return resultMap;
 	}
 	
+	//카테고리 전체 리스트
+		@Override
+		public HashMap<String, Object> searchCbrdCateList(HashMap<String, Object> map) {
+			HashMap<String,Object> resultMap = new HashMap<String,Object>();
+			resultMap.put("listcate", communityMapper.selectCbrdListcate(map));
+			return resultMap;
+		
+		}
+	
 	//카테고리 리스트 1
 	@Override
 	public HashMap<String, Object> searchCbrdCate1List(HashMap<String, Object> map) {

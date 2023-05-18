@@ -66,6 +66,16 @@ public class CommunityController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//카테고리 전체 분류
+    @RequestMapping(value = "/comm/cate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchCbrdCateList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = communityService.searchCbrdCateList(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
 	//카테고리 1 분류
     @RequestMapping(value = "/comm/cate1.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

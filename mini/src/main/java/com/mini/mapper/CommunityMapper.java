@@ -31,8 +31,13 @@ public interface CommunityMapper {
 	// 게시글 조회수 증가
 	void updateCbrdCnt(HashMap<String, Object> map);
 	
-	//카테고리 1, 2
+	//카테고리 전체 리스트
+	List<Cbrd> selectCbrdListcate(HashMap<String, Object> map);
+	
+	//카테고리 1 리스트
     List<Cbrd> selectCbrdListcate1(HashMap<String, Object> map);
+    
+    //카테고리 2 리스트
     List<Cbrd> selectCbrdListcate2(HashMap<String, Object> map);
     
     //댓글 갯수
