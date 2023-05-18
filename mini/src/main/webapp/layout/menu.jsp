@@ -12,9 +12,16 @@
 <style>
 </style>
 <body>
+	
+
+<div class="header">
+  <div @click="fnMain" class="logoBox">
+  	<a href="/admin/main.do"><img src="/img/main/unity-logo-200x100-1.jpg" alt="logo"></a>
+  </div>
+
     <ul class="menu">
       <li>
-        <a href="/admin/main.do" style="color:#fff">승인목록</a>
+        <a href="/admin/main.do">📰 승인목록</a>
         <ul class="submenu">
           <li><a href="#">submenu01</a></li>
           <li><a href="#">submenu02</a></li>
@@ -24,7 +31,7 @@
         </ul>
       </li>
       <li>
-        <a href="/admin/blacklist.do" style="color:#fff">신고접수</a>
+        <a href="/admin/blacklist.do">🕵🏻‍♀️ 신고접수</a>
         <ul class="submenu">
           <li><a href="#">submenu01</a></li>
           <li><a href="#">submenu02</a></li>
@@ -34,7 +41,7 @@
         </ul>
       </li>
       <li>
-        <a href="/admin/manage.do" style="color:#fff">관리자계정</a>
+        <a href="/admin/manage.do">👨🏻‍✈️ 관리자계정</a>
         <ul class="submenu">
           <li><a href="#">submenu01</a></li>
           <li><a href="#">submenu02</a></li>
@@ -44,7 +51,7 @@
         </ul>
       </li>
       <li>
-        <a href="/notice.do" style="color:#fff">공지사항</a>
+        <a href="/notice.do">📢 공지사항</a>
         <ul class="submenu">
           <li><a href="#">submenu01</a></li>
           <li><a href="#">submenu02</a></li>
@@ -54,7 +61,7 @@
         </ul>
       </li>
       <li>
-        <a href="/admin/board.do" style="color:#fff">게시물관리</a>
+        <a href="/admin/board.do">📑 게시물관리</a>
         <ul class="submenu">
           <li><a href="#">submenu01</a></li>
           <li><a href="#">submenu02</a></li>
@@ -64,7 +71,7 @@
         </ul>
       </li>
       <li>
-        <a href="/admin/comment.do" style="color:#fff">댓글관리</a>
+        <a href="/admin/comment.do">💬 댓글관리</a>
         <ul class="submenu">
           <li><a href="#">submenu01</a></li>
           <li><a href="#">submenu02</a></li>
@@ -74,5 +81,6 @@
         </ul>
       </li>
     </ul>
+   </div>
 </body>
 </html>
