@@ -15,7 +15,7 @@
 	        }
 	
 	        body {
-	            background-color: #1BBC9B;
+	            background-color: #ADD4D9;
 	        }
 	
 	        .div1 {
@@ -48,9 +48,12 @@
 	        }
 	
 	        #btn {
-	            background-color: #1BBC9B;
-	            margin-bottom: 30px;
+	            background-color: #9B9B9B;
+	            margin-bottom: 20px;
 	            color: white;
+	            border-radius: 5px;
+	            border-style: hidden;
+	            margin-right: 8px; 
 	        }
 	
 	        a {
@@ -62,7 +65,7 @@
 	</head>
 	<body>
 		<div id="app" class="div1">
-			<h2>비밀번호 찾기</h2>
+			<h2>🤷🏻‍♀️ 비밀번호 찾기</h2>
 			<div>
 			
 				<div class="div2">
@@ -88,8 +91,8 @@
 				<div class="div2" v-if="passwd != ''">비밀번호는 {{passwd}} 입니다</div>
 			</div>
 			
-			<div><a href="login.do">로그인 하시겠습니까?</a></div>
-			<a href="join.do">아직 회원가입을 안하셨나요?</a>
+			<div><a href="login.do"> ▪ 로그인 하시겠습니까? ▪ </a></div>
+			<a href="join.do"> ▪ 아직 회원가입을 안하셨나요? ▪ </a>
 		</div> 
 	</body>
 </html>
