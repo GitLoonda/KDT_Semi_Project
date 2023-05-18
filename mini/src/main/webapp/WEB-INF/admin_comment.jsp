@@ -5,11 +5,17 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+						
+	<!-- 폰트 추가 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	
 	<!--  페이징 추가 1 -->
 	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 	<link rel="stylesheet" href="../css/style.css">
-	<title>관리자 게시판 관리</title>
+	<title>💬 관리자 댓글 관리</title>
 
 </head>
 <style>
@@ -46,19 +52,51 @@
 	.pagination li.active a {
 	    color:#fff;
 	}
+	
+		* {
+		text-decoration: none;
+		list-style: none;
+		font-family: 'Nanum Gothic', sans-serif;
+		}
+	
+			.btn5 {
+	 		background-color: #9B9B9B;
+            color: white;
+            border-radius: 5px;
+            border-style: hidden;
+            margin-right: 8px; 
+            padding : 4px;
+            font-size : 0.7rem;
+            
+		}
+				
+		select {
+        	border-radius: 5px;
+        	width: 110px;
+        	padding: 2.8px;
+            box-sizing: border-box;
+        	border-style: solid;
+ 		    text-align: center;
+ 		    color: gray;
+        }	
 </style>
 <body>
 	<div id="app" >
 		<div class="container">
 			<div>
-			<h2>댓글 관리</h2>
-			
-			<div> 
-				<input type="text" v-model="commentKeyword" @keyup.enter="fnGetList">
-				<button @click="fnGetList">검색</button>	
+			<h2>💬 댓글 관리</h2>
+			<div style="float : right; margin-right : 20px">
+				<div>{{sessionId}} 님 환영합니다 😀</div>
 			</div>
+			<pre>
+			</pre>
+			<div style="float : right; margin-right : 20px">
+				<div><a href="../admin/login.do" v-if="sessionId != ''">로그아웃 📴</a></div>
+			</div>
+			<pre>
+			</pre>
 			
-			<div> 게시글 분류 →
+			<div> <h3 style="font-size:1.1rem;"> ▪ 게시글 분류 ▪ →
 				<select v-model="selectBrdFlg">
 					<option value="">:: 전체 ::</option>
 					<option value="BF1">거래게시판</option>
@@ -67,6 +105,11 @@
 				</select>
 				
 				<button class="btn" @click="fnGetList()">검색</button>
+				<div style="float: right;"> 
+					전체검색 : 
+					<input class=txtbox1 type="text" v-model="commentKeyword" @keyup.enter="fnGetList">
+					<button class=btn @click="fnGetList">검색</button>	
+				</div>
 				
 			</div>
 
@@ -98,6 +141,7 @@
                             <td v-if="item.brdFlg == 'BF1'">거래게시판</td>
                             <td v-else-if="item.brdFlg == 'BF2'">의뢰게시판</td>
                             <td v-else-if="item.brdFlg == 'BF3'">홍보게시판</td>
+                            <td v-else>NULL</td>
                             
                             <td>{{item.tbNo}}</td>
                             <td>{{item.cno}}</td>
@@ -107,8 +151,8 @@
                             <td v-if="item.delYn == 'Y'">삭제처리완료</td>     
                             <td v-else></td>     
                             <td>
-                          	  <button @click="fnRemove('Y' , item)">삭제</button>
-                          	  <button @click="fnRemove('N' , item)">복구</button>
+                          	  <button class=btn5 @click="fnRemove('Y' , item)">삭제</button>
+                          	  <button class=btn5 @click="fnRemove('N' , item)">복구</button>
                             </td>     
                         </tr>                                       
 	                </tbody>                   
@@ -130,9 +174,11 @@
 	        
 	        <!-- 커뮤니티 게시판 리스트  -->
 	        
-	        			<div> 커뮤니티 분류 →
+	        	<pre>
+	        	</pre>
+	        			<div> <h3 style="font-size:1.1rem;">▪ 커뮤니티 분류 ▪ →
 				<select v-model="selectCate1">
-					<option value="">:: 전체 1차 분류 ::</option>
+					<option value="">:: 1차 분류 ::</option>
 					<option value="SPO">스포츠</option>
 					<option value="CEL">연예인</option>
 					<option value="MOV">영화</option>
@@ -141,7 +187,7 @@
 				</select>
 				
 				<select v-model="selectCate2">
-					<option value="">:: 전체 2차 분류 ::</option>
+					<option value="">:: 2차 분류 ::</option>
 					<option value="SPO1">구기종목</option>
 					<option value="SPO2">라켓종목</option>
 					<option value="SPO3">헬스/요가/필라테스</option>
@@ -198,6 +244,7 @@
                             <td v-else-if="item.cate1 == 'MOV'">영화</td>
                             <td v-else-if="item.cate1 == 'ANI'">애니메이션</td>
                             <td v-else-if="item.cate1 == 'GAM'">게임</td>
+                            <td v-else>NULL</td>
                             
                             <!-- 커뮤니티 2차 분류 -->
                             
@@ -223,6 +270,7 @@
                             <td v-else-if="item.cate2 == 'GAM2'">국내콘솔게임</td>
                             <td v-else-if="item.cate2 == 'GAM3'">해외온라인게임</td>
                             <td v-else-if="item.cate2 == 'GAM4'">해외콘솔게임</td>
+                            <td v-else>NULL</td>
                             
                             <td>{{item.cbNo}}</td>
                             <td>{{item.cno}}</td>
@@ -232,8 +280,8 @@
                             <td v-if="item.delYn == 'Y'">삭제처리완료</td>     
                             <td v-else></td>     
                             <td>
-                          	  <button @click="fnRemove('Y' , item)">삭제</button>
-                          	  <button @click="fnRemove('N' , item)">복구</button>
+                          	  <button class=btn5 @click="fnRemove('Y' , item)">삭제</button>
+                          	  <button class=btn5 @click="fnRemove('N' , item)">복구</button>
                             </td>     
                         </tr>                                       
 	                </tbody>                   
@@ -261,6 +309,7 @@
 	</div>
 	</div>
 </body>
+<jsp:include page="/layout/footer.jsp"></jsp:include>
 </html>
 
 <script type="text/javascript">
@@ -284,6 +333,7 @@ var app = new Vue({
     	, selectCommPage : 1
     	, commPageCount : 1
     	, commCnt : 0
+    	, sessionId : "${sessionId}"
     }   
     , methods: {
     	
