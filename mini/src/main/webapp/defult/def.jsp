@@ -38,7 +38,7 @@
                     </div>
                     <div id="RcmdItem">
                         <span>추천 검색어 : </span>
-                        <span v-for="item in cate3">{{item.cInfo}}, </span>
+                        <span v-for="item in cate3"><a @click="" href="javascript:;">{{item.cInfo}}</a>, </span>
                     </div>
                 </div>
                 <template v-if="sessionId == ''">
@@ -97,7 +97,7 @@
                         </div>
                     </li>
                     <li v-for="item in cate1">
-                        <a href="javascript:;">{{item.cInfo}}</a>
+                        <a href="javascript:;" @click="fnComm(item.cNum,item.cInfo)">{{item.cInfo}}</a>
                     </li>
                 </ul>
             </div>
@@ -133,7 +133,7 @@
                 setcate2:"",
                 setcate3:"",
                 option:"",
-                keyword:"",
+                keyword:""
             }
         }   
         , methods: {
@@ -180,34 +180,40 @@
         	, fnTrade : function() {
         		location.href = "trade.do";
         	}
-        	, fnComm : function() {
-        		location.href = "comm.do";
-        	}
-        	, fnCateSelect : function(item, item2, item3,item4,item5,item6) {
+        	
+        	, fnCateSelect : function(item, item2, item3, item4, item5, item6) {
         		var self = this;
-                tlist.fnGetTradeList(item, item2, item3,item4,item5,item6);
-        		// if(item2 == null) {
-        		// 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : null, cate3 : null});
-        		// 	return;
-        		// }
-        		// else if(item3 == null) {
-        		// 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : null});
-        		// 	return;
-        		// }else{
-                //     self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : item3.cNum});
-                // }
+        		if(typeof tlist !== 'undefined') {
+        			 tlist.fnGetTradeList(item, item2, item3, item4, item5, item6);
+        			 return;
+        		}
+        		else {
+        			if(item2 == null) {
+            		 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : null, cate3 : null});
+            		 	return;
+            		 }
+            		 else if(item3 == null) {
+            		 	self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : null});
+            		 	return;
+            		 }else{
+                         self.pageChange("/trade.do", {cate1 : item.cNum, cate2 : item2.cNum, cate3 : item3.cNum});
+                     }
+        		}
+               
+        		 
         	}
         	, fnSearch : function(){
         		var self = this;
-        		if(self.option == "구매" || self.option == "판매") {
+        		if(self.option == "구매" || self.option == "판매" || self.option == "의뢰") {
         			self.pageChange("/trade.do", {option : self.option, keyword : self.keyword});
-        		}
-        		else if(self.option == "의뢰") {
-        			self.pageChange("/request.do", {option : self.option, keyword : self.keyword});
         		}
         		else {
         			alert("게시판을 선택해주세요.");
         		}
+        	}
+        	, fnComm : function(item, item2) {
+        		var self = this;
+        		self.pageChange("/comm.do", {cnum : item, cinfo : item2});
         	}
         	, pageChange : function(url, param) {
         		var target = "_self";

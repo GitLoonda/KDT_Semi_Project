@@ -2,9 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mini.mapper.MypageMapper">
+
 	<select id="selectUserInfo" parameterType="hashmap" resultType="com.mini.model.User">
 		SELECT * 
-		FROM 
-		T3_USER where ID = #{id}
+		FROM T3_USER 
+		where ID = #{id}
 	</select>
+	
+	<update id="updateUserInfo" parameterType="hashmap">
+		SELECT 
+		ID,
+		PASSWD,
+		PHONE,
+		EMAIL,
+		ADDR
+		FROM T3_USER 
+		where ID = #{id}
+	</update>
+
+	
 </mapper>
