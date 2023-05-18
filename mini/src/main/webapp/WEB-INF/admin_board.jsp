@@ -5,11 +5,17 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+					
+	<!-- 폰트 추가 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	
 	<!-- 페이징 추가 1-->
 	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 	<link rel="stylesheet" href="../css/style.css">
-	<title>관리자 게시판 관리</title>
+	<title>📑 관리자 게시판 관리</title>
 
 </head>
 <style>
@@ -46,6 +52,32 @@
 	.pagination li.active a {
 	    color:#fff;
 	}
+	
+		* {
+		text-decoration: none;
+		list-style: none;
+		font-family: 'Nanum Gothic', sans-serif;
+		}
+		.btn5 {
+	 		background-color: #9B9B9B;
+            color: white;
+            border-radius: 5px;
+            border-style: hidden;
+            margin-right: 8px; 
+            padding : 4px;
+            font-size : 0.7rem;
+            
+		}
+		
+		select {
+        	border-radius: 5px;
+        	width: 110px;
+        	padding: 2.8px;
+            box-sizing: border-box;
+        	border-style: solid;
+ 		    text-align: center;
+ 		    color: gray;
+        }	
 </style>
 <body>
 	<div id="app" >
@@ -54,19 +86,34 @@
 			<!-- 거래 게시판 -->
 			
 			<div>
-			<h2>게시글 관리</h2>
-				<div> 
-					<input type="text" v-model="keyword" @keyup.enter="fnGetList">
-					<button @click="fnGetList">검색</button>	
-				</div>
+			
+			<h2>📑 게시글 관리</h2>
+			<div style="float : right; margin-right : 20px">
+				<div>{{sessionId}} 님 환영합니다 😀</div>
+			</div>
+			<pre>
+			</pre>
+			<div style="float : right; margin-right : 20px">
+				<div><a href="../admin/login.do" v-if="sessionId != ''">로그아웃 📴</a></div>
+			</div>
+			<pre>
+			</pre>
+			
+				
 				<select v-model="selectItem">
-					<option value="">:: 전체 ::</option>
+					<option value="">:: 전체 분류 ::</option>
 					<option value="BF1">거래게시판</option>
 					<option value="BF2">의뢰게시판</option>
 					<option value="BF3">홍보게시판</option>
 				</select>
 				
 				<button class="btn" @click="fnGetList()">검색</button>
+				<div style="float:right;"> 
+					<h3 style="font-size:1.1rem;">전체검색 : 
+					<input class=txtbox1 type="text" v-model="keyword" @keyup.enter="fnGetList">
+					<button class=btn @click="fnGetList">검색</button>	
+				</div>
+				
 			</div>
 	        <div class="table-list">
 	            <table class="board_list">                   
@@ -95,10 +142,9 @@
                             <td v-if="item.delYn == 'Y'">블라인드</td>     
                             <td v-else></td>     
                             <td>
-                          	  <button @click="fnBlind('Y' , item)">블라인드</button>
-                          	  <button @click="fnBlind('N' , item)">블라인드취소</button>
-                          	  <button>수정</button>
-                          	  <button @click="fnRemove(item)">삭제</button>
+                          	  <button class=btn5 @click="fnBlind('Y' , item)">블라인드</button>
+                          	  <button class=btn5 @click="fnBlind('N' , item)">블라인드취소</button>
+                          	  <button class=btn5 @click="fnRemove(item)">삭제</button>
                             </td>     
                         </tr>                                       
 	                </tbody>                   
@@ -123,13 +169,14 @@
 	        
 	        
 	        <div>
-			<h2>커뮤니티 게시판 관리</h2>
-				<div> 
-					<input type="text" v-model="commKeyword" @keyup.enter="fnGetList">
-					<button @click="fnGetList">검색</button>	
+			<h2>📃 커뮤니티 게시판 관리</h2>
+				<div style="float: right;"> 
+					<h3 style="font-size:1.1rem;">전체검색 : 
+					<input class=txtbox1 type="text" v-model="commKeyword" @keyup.enter="fnGetList">
+					<button class=btn @click="fnGetList">검색</button>	
 				</div>
- 				<select v-model="selectCommItem">
-					<option value="">:: 전체 ::</option>
+ 				<select class=selbox v-model="selectCommItem">
+					<option value="">:: 전체 분류 ::</option>
 					<option value="SPO">스포츠</option>
 					<option value="CEL">연예인</option>
 					<option value="MOV">영화</option>
@@ -156,22 +203,22 @@
 	                <tbody>
 	                    <tr v-for="(item, index) in commList" > 
                             <!-- <td><input type="checkbox" v-bind:value="item" v-model="checkList"></td> -->
-                            <td @click=""><a href="javascript:;">{{item.cbNo}}</a></td>
+                            <td>{{item.cbNo}}</a></td>
                             <td v-if="item.cate1 == 'SPO'">스포츠</td>
                             <td v-else-if="item.cate1 == 'CEL'">연예인</td>
                             <td v-else-if="item.cate1 == 'MOV'">영화</td>
                             <td v-else-if="item.cate1 == 'ANI'">애니메이션</td>
-                            <td v-else>게임</td>
-                            <td>{{item.ctitle}}</td>     
+                            <td v-else-if="item.cate1 == 'GAM'">게임</td>
+                            <td v-else>NULL</td>
+                            <td @click="fnView(item.cbNo)"><a href="javascript:;">{{item.ctitle}}</a></td>     
                             <td>{{item.id}}</td>     
                             <td>{{item.cdate}}</td>     
                             <td v-if="item.delYn == 'Y'">블라인드</td>     
                             <td v-else></td>     
                             <td>
-                          	  <button @click="fnCommBlind('Y' , item)">블라인드</button>
-                          	  <button @click="fnCommBlind('N' , item)">블라인드취소</button>
-                          	  <button>수정</button>
-                          	  <button @click="">삭제</button>
+                          	  <button class=btn5 @click="fnCommBlind('Y' , item)">블라인드</button>
+                          	  <button class=btn5 @click="fnCommBlind('N' , item)">블라인드취소</button>
+                          	  <button class=btn5 @click="fnCommRemove(item)">삭제</button>
                             </td>     
                         </tr>                                       
 	                </tbody>                   
@@ -196,6 +243,7 @@
 	        </div>
         </div>
 	</div>
+<jsp:include page="/layout/footer.jsp"></jsp:include>
 </body>
 </html>
 <script type="text/javascript">
@@ -213,6 +261,7 @@ var app = new Vue({
     	, sessionId : "${sessionId}" 	// request 에있는걸 가져온다는 뜻
     	, sessionStatus : "${sessionStatus}"
     	, tbNo : "${map.tbNo}"
+    	, cbNo : "${map.cbNo}"
     	<!-- 페이징 추가 5-->
 		, selectPage: 1
 		, pageCount: 1
@@ -358,7 +407,28 @@ var app = new Vue({
                 }
             });  
     	}
+    	
 
+    	, fnCommRemove : function(item) {	//매개변수를 줘야함
+    		var self = this;
+    		console.log(item);
+            var nparmap = item;		// item 자체가 맵이라서 {} 이거 안씀
+            if(!confirm("정말 삭제하시겠습니까?")){	// confirm 은 조건문이라서 if 붙임
+            	return;	// 취소 누르면 완전 빠져나가라는 뜻
+            }
+            
+            $.ajax({
+                url:"/admin/boardlist/comm/remove.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {   
+                	console.log(data);
+                	alert("게시글이 삭제되었습니다.")
+                	self.fnGetList();	// 지우고 나서 리스트 바로 출력
+                }
+            });  
+    	}
     	, pageChange : function(url, param) {
     		var target = "_self";
     		if(param == undefined){
@@ -389,9 +459,11 @@ var app = new Vue({
     		document.body.removeChild(form);
     	}
     	
-    	, fnView : function(boardNo){
+    	, fnView : function(cbNo){
+    	
     		var self = this;
-    		self.pageChange("./read.do", {boardKey : boardNo});
+    		console.log(cbNo);
+    		self.pageChange("/commread.do", {cbNo : cbNo});
     	}
     	
     }   
