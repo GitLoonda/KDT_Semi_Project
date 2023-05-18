@@ -104,7 +104,7 @@ var app = new Vue({
     data: {
        list : [] 
        , info : {}
-       , cbno : "20"
+       , cbno : "${map.cbno}"
        , sessionId : "test20"
        , sessionAdminflg : "N"
        , ccnt : ""

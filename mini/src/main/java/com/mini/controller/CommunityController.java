@@ -27,7 +27,7 @@ public class CommunityController {
 	
 	
 	@RequestMapping("/comm.do") //커뮤니티 게시판 메인
-    public String main(HttpServletRequest request, Model model) throws Exception{
+    public String main(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));
 		request.setAttribute("sessionAdminflg", session.getAttribute("sessionAdminflg"));
 
