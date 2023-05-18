@@ -43,7 +43,7 @@ public class AdminServicelmpl implements AdminService{
 				} else {
 					resultMap.put("user", user);
 					resultMap.put("result", "success");
-					resultMap.put("message", user.getName() + "님 환영합니다.");
+					resultMap.put("message", user.getName() + "님 환영합니다 😀");
 				} 
 			} else {
 				resultMap.put("result", "fail");
@@ -322,6 +322,18 @@ public class AdminServicelmpl implements AdminService{
 	public int commCommentCnt(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminmapper.commCommentCnt(map);
+	}
+
+	@Override
+	public void adminCommRemove(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		adminmapper.adminCommRemove(map);
+	}
+
+	@Override
+	public int creatorCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminmapper.creatorCnt(map);
 	}
 
 
