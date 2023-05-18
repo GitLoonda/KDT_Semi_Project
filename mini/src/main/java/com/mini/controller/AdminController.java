@@ -41,10 +41,12 @@ public class AdminController {
 		String id = (String) session.getAttribute("sessionId");
 		String name = (String) session.getAttribute("sessionName");
 		String status = (String) session.getAttribute("sessionUstatus");
+		String adminFlg = (String) session.getAttribute("sessionAdminFlg");
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
 		session.removeAttribute(status);
+		session.removeAttribute(adminFlg);
 		
 		session.invalidate();
 
@@ -63,6 +65,7 @@ public class AdminController {
 			session.setAttribute("sessionId", user.getId());
 			session.setAttribute("sessionName", user.getName());
 			session.setAttribute("sessionUstatus", user.getUstatus());
+			session.setAttribute("sessionAdminFlg", user.getAdminflg());
 		}
 		return new Gson().toJson(resultMap);
 	}
@@ -156,14 +159,25 @@ public class AdminController {
 	@ResponseBody
 	public String admin_main(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		
+		
 		List<Notice> list = adminService.recogCreator(map);
 		int cnt = adminService.blackCnt(map);
 		int recogCnt = adminService.recogCnt(map);
 		int adminCnt = adminService.adminCnt(map);
+		int creatorCnt = adminService.creatorCnt(map);
 		resultMap.put("list", list);
 		resultMap.put("cnt", cnt);
 		resultMap.put("recogCnt", recogCnt);
 		resultMap.put("adminCnt", adminCnt);
+		resultMap.put("creatorCnt", creatorCnt);
 		
 		return new Gson().toJson(resultMap);
 	}
@@ -187,8 +201,19 @@ public class AdminController {
 	@ResponseBody
 	public String admin_blacklist(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		
 		List<Notice> list = adminService.blackList(map);
+		int blackCnt = adminService.blackCnt(map);
+		
 		resultMap.put("list", list);
+		resultMap.put("blackCnt", blackCnt);
+		
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -235,9 +260,19 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+//	
+//	@RequestMapping("/commread.do") //커뮤니티 글 상세
+//    public String commmread(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+//		request.setAttribute("map", map);
+//		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+//		request.setAttribute("sessionAdminflg", session.getAttribute("sessionAdminflg"));
+//        return "/comm_read";
+//	}
+//	
+	
 	@RequestMapping("/admin/board.do") //어드민 메인
-	public String admin_board(Model model) throws Exception{
-		
+	public String admin_board(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
 		return "/admin_board";
 	}
 	
@@ -279,6 +314,15 @@ public class AdminController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		adminService.adminBoardRemove(map);
 		resultMap.put("message", "게시글삭제완료");
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/admin/boardlist/comm/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String admin_commRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.adminCommRemove(map);
+		resultMap.put("message", "커뮤글삭제완료");
 		return new Gson().toJson(resultMap);
 	}
 	
