@@ -90,11 +90,14 @@
 			list : [],
 			listcnt:0,
 			jimsumcnt:[],
+			
+			selectbrd:"",
+
 
 			item1n:"",
 			item2n:"",
 			item3n:"",
-			
+
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,

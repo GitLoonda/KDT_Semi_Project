@@ -88,6 +88,11 @@
 			
 		FROM T3_ABRD
 		
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null">
+			AND ATITLE LIKE CONCAT('%', #{keyword}, '%') OR ID LIKE CONCAT('%', #{keyword}, '%') 
+		</if>
+		
 		ORDER BY CDATE DESC
 		
 		LIMIT #{startNum} , #{lastNum}
@@ -199,7 +204,9 @@
 		<if test="keyword != '' and keyword != null">
 			AND CONTENT LIKE CONCAT('%', #{keyword}, '%')
 		</if>
-		ORDER BY CDATE ASC
+		ORDER BY ADATE DESC
+		
+		LIMIT #{startNum} , #{lastNum}
 	</select>
 	
 	<!-- 블랙리스트 승인 -->
@@ -209,7 +216,8 @@
 			USTATUS = #{status}
 		WHERE id = #{id}
 	</update>
-	
+
+
 	<!-- 관리자 페이지 승인 목록 -->
 	
 	<select id="recogCreator" parameterType="hashmap" resultType="com.mini.model.Notice">
@@ -223,8 +231,14 @@
 			DELYN
 		FROM 
 			mini_db2.T3_CREBRD
-		WHERE CREYN = 'N' AND DELYN = 'N'
-		ORDER BY CDATE DESC
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null">
+			AND ID LIKE CONCAT('%', #{keyword}, '%') OR CRETITLE LIKE CONCAT('%', #{keyword}, '%') OR CRECONT LIKE CONCAT('%', #{keyword}, '%') 
+		</if>
+			AND DELYN = 'N'
+		ORDER BY CREYN ASC , CDATE DESC 
+		
+		LIMIT #{startNum} , #{lastNum}
 	</select>
 	
 	<!-- 관리자 페이지 신고 처리 갯수 -->
@@ -235,6 +249,15 @@
 		FROM 
 			mini_db2.T3_BAN
 		
+	</select>
+	
+	<!-- 크리에이터 리스트 갯수 -->
+	
+	<select id="creatorCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+			
+		FROM 
+			mini_db2.T3_CREBRD
 	</select>
 	
 	<!-- 관리자 페이지 크리에이터 승인 대기 갯수 -->
@@ -279,6 +302,7 @@
 		
 		LIMIT #{startNum} , #{lastNum}
 	</select>
+	
 	
 	<!-- 관리자 승인 여부 -->
 	<update id="recogAdmin" parameterType="hashmap">
@@ -382,6 +406,13 @@
 		DELETE
 		FROM mini_db2.T3_TBRD
 		WHERE TBNO = #{tbNo}
+	</delete>
+	<!-- 커뮤니티 게시글 관리 삭제  -->
+	
+	<delete id="adminCommRemove" parameterType="hashmap">
+		DELETE
+		FROM mini_db2.T3_CBRD
+		WHERE CBNO = #{cbNo}
 	</delete>
 	
 	<!-- 게시글 갯수 -->

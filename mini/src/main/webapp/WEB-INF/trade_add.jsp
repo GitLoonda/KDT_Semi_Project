@@ -104,13 +104,13 @@
 						<div class="optionT">게시판 글쓰기</div>
 						<hr>
 						<div class="Taddbox1_1">
-							<select class="catebox1" id="brdfig" v-model="inlist.brdflg"
+							<select class="catebox1" id="brdfig" v-model="inlist.brdflg" 
 								@click="setkind()">
 								<option value="0" disabled>게시판선택</option>
 								<option v-for="(brdf, index) in listbrdf" :value="brdf.cnum">{{brdf.cinfo}}</option>
 							</select>
 
-							<select class="catebox1" id="kindfig" v-model="inlist.kind"
+							<select class="catebox1" id="kindfig" v-model="inlist.kind" 
 								@click="bstatusSet()">
 								<option value="0" disabled>말머리</option>
 								<option v-for="(kindf, index) in listkindf" :value="kindf.cnum">{{kindf.cinfo}}</option>
@@ -436,10 +436,8 @@
 
 						<div class="btnbox">
 							<button class="btn" @click="fnAddTrade()">등록</button>
-							<button class="btn">목록</button>
+							<button class="btn" @click="fntolist()">목록</button>
 						</div>
-						<div>{{inlist}}</div>
-						<div>{{tbno}},{{file1}}</div>
 					</div>
 				</div>
 			</div>
@@ -537,6 +535,7 @@
 						
 					}
 				});
+				self.fninsertReset();
 		},
 		// 말머리 선택에 따른 구매,판매,홍보,의뢰 설정
 		bstatusSet : function(){
@@ -598,8 +597,6 @@
 				});
 				
 			},
-
-
 			// 이메일 연락처 정보
 			userinfolist : function(){
 				var self = this;
@@ -616,6 +613,27 @@
 				});
 				
 			},
+			//게시판 선택시 글리셋
+			fninsertReset(){
+				var self=this;
+				self.inlist.bprice=0,
+				self.inlist.btitle="",
+				self.inlist.bcont=" ",
+				self.inlist.kind="0"
+				self.inlist.cate1="0",
+				self.inlist.cate2="0",
+				self.inlist.cate3="0",
+				self.inlist.bprod="",
+				self.inlist.bpros="",
+				self.inlist.bstatus="",
+				self.inlist.bpur="",
+				self.inlist.bbox="",
+				self.inlist.brcpt="",
+				self.inlist.bcms="",
+				self.inlist.local1="0",
+				self.inlist.local2="0",
+				self.inlist.local3="0"
+			},
 
 			//글등록
 			fnAddTrade : function(){
@@ -631,23 +649,11 @@
 						files = document.getElementById("filelist").files;
 						for(var i=0;i<files.length;i++){
 							form.append( "files", files[i]);
-							
 						}
 						form.append( "tbno",  data.tbno); // pk
 						self.upload(form);
-
-						/* key 확인하기 */
-						for (let key of form.keys()) {
-							console.log(key);
-						}
-
-						/* value 확인하기 */
-						for (let value of form.values()) {
-							console.log(value);
-						}
-
 					alert("성공!")
-					location.href("trade.do");
+					location.href="trade.do";
                 }
             });	
         	},
@@ -666,6 +672,9 @@
 	           
 	       });
 		},
+		fntolist(){
+			location.href="trade.do";
+		}
 
 		
 		}

@@ -18,7 +18,7 @@
 		SELECT 
 			B.TBNO AS TBNO,
 		    ID, 
-			BPRICE,
+			FORMAT (BPRICE, 0) AS BPRICE,
 		    BTITLE,
 		    HITS,
 		    LIKES,
@@ -41,7 +41,7 @@
 		SELECT 
 			B.TBNO AS TBNO,
 		    ID, 
-			BPRICE,
+			FORMAT (BPRICE, 0) AS BPRICE,
 		    BTITLE,
 		    HITS,
 		    LIKES,
@@ -64,7 +64,7 @@
 		SELECT 
 			B.TBNO AS TBNO,
 		    ID, 
-			BPRICE,
+			FORMAT (BPRICE, 0) AS BPRICE,
 		    BTITLE,
 		    HITS,
 		    LIKES,
