@@ -5,11 +5,18 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+	
+			
+	<!-- 폰트 추가 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	
 
 	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 	<link rel="stylesheet" href="../css/style.css">
-	<title>관리자 계정 관리</title>
+	<title>👨🏻‍✈️ 관리자 계정 관리</title>
 
 </head>
 <style>
@@ -46,18 +53,49 @@
 	.pagination li.active a {
 	    color:#fff;
 	}
+	
+	* {
+		text-decoration: none;
+		list-style: none;
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+
+	
+	.btn5 {
+	 		background-color: #9B9B9B;
+            color: white;
+            border-radius: 5px;
+            border-style: hidden;
+            margin-right: 8px; 
+            padding : 4px;
+            font-size : 0.7rem;
+            
+		}
+	
 </style>
 <body>
 	<div id="app" >
 		<div class="container">
-			<h2>관리자 계정 관리</h2>
-			<div> 
-				<input type="text" v-model="keyword" @keyup.enter="fnGetList">
-				<button @click="fnGetList">검색</button>	
+			<h2>👨🏻‍✈️ 관리자 계정 관리</h2>
+			<div style="float : right; margin-right : 20px">
+				<div>{{sessionId}} 님 환영합니다 😀</div>
 			</div>
-			
+			<pre>
+			</pre>
+			<div style="float : right; margin-right : 20px">
+				<div><a href="../admin/login.do" v-if="sessionId != ''">로그아웃 📴</a></div>
+			</div>
+			<pre>
+			</pre>
 	        <div class="table-list">
-	        	<h2>관리자 목록</h2>
+	        
+	        	<h3 style="font-size : 1.2rem">  ▪  관리자 목록  ▪ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        	<div style="float: right;">
+			        	<input s class=txtbox1 type="text" v-model="keyword" @keyup.enter="fnGetList">
+						<button class=btn @click="fnGetList">검색</button>	
+					</div>
+				</h3>
+			
 	            <table class="board_list">                   
 	                <thead>
 	                    <tr>            
@@ -80,8 +118,8 @@
                             <td v-if="item.adminflg == 'Y'">관리자</td>  
                             <td v-else>회원</td>  
                             <td>
-                            	<button @click="fnRecogAdmin('Y' , item)">승인</button>
-                            	<button @click="fnRecogAdmin('N' , item)">거부</button>
+                            	<button class=btn5 @click="fnRecogAdmin('Y' , item)">승인</button>
+                            	<button class=btn5 @click="fnRecogAdmin('N' , item)">거부</button>
                             </td>     
                         </tr>                                       
 	                </tbody>                   
@@ -107,7 +145,9 @@
 	        </div>
         </div>
 	</div>
+
 </body>
+<jsp:include page="/layout/footer.jsp"></jsp:include>
 </html>
 <script type="text/javascript">
 <!-- 페이징 추가 4-->
@@ -123,6 +163,7 @@ var app = new Vue({
 		, selectPage: 1
 		, pageCount: 1
 		, cnt : 0
+		, sessionId : "${sessionId}"
     }   
     , methods: {
     	
