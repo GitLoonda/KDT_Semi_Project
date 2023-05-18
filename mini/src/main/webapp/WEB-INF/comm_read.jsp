@@ -40,9 +40,13 @@
 		<div class="container">
 			<div class="card1">
 				<div class="card2">
-					<h3 class="card-header">
+					<h3 class="card-header" v-if="info.udate == null">
 						{{info.ctitle}}
 						<span  style="float: right;">{{info.cdate}}</span>
+					</h3>
+					<h3 class="card-header" v-else>
+						{{info.ctitle}}
+						<span  style="float: right;">{{info.udate}}</span>
 					</h3>
 					<div class="card-body">
 					   	<div style="margin: 10px 10px 10px 10px;" v-html="info.ccont"></div>
@@ -51,7 +55,7 @@
 				<div class="btns">
 					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnUpdate()" >수정</button>
 					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveBoard()" >삭제</button>
-					<button target="_blank" @click="fnReportBoard()" >신고</button>
+					<button v-else target="_blank" @click="fnReportBoard()" >신고</button>
 					<button @click="fnList()" class="btn" >목록으로</button>
 				</div>
 				
@@ -70,11 +74,12 @@
 				
 				<div v-for="(item, index) in commentList" style="padding-bottom: 10px; margin: 10px; border-bottom: 1px solid #ccc;">
 					<div v-if="item.delYn == 'N'">
-						<span>
-							{{item.id}} ({{item.cdate}}) : <pre> {{item.conte}}</pre> 
-							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEditComment(item)" >수정</button>
+						<span> 
+							<span v-if="item.udate == null"> {{item.id}} ({{item.cdate}}) : <pre> {{item.conte}}</pre> </span>
+							<span v-else> {{item.id}} ({{item.udate}}) : <pre> {{item.conte}} </pre> </span>
+							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEdit(item)" >수정</button>
 							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" >삭제</button>
-							<button v-else target="_blank" @click="fnReportComment()" style="">신고</button>
+							<button v-else target="_blank" @click="fnReportComment()">신고</button>
 						</span>
 					</div>
 					<div v-else>
@@ -83,8 +88,8 @@
 						</span>
 					</div>
 					<div v-if="cInfo.cno == item.cno" style="margin-top : 10px;">
-						<textarea v-model="comment" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
-						<button @click="" class="btn" style="margin-bottom : 30px;">수정</button>
+						<textarea v-model="editconte" rows="3" cols="100" style="width : 90%; resize: none;"></textarea>
+						<button @click="fnEditComment" class="btn" style="margin-bottom : 30px;">수정</button>
 					</div>
 				</div>
 			</div>
@@ -99,13 +104,14 @@ var app = new Vue({
     data: {
        list : [] 
        , info : {}
-       , cbno : "124"
+       , cbno : "20"
        , sessionId : "test20"
        , sessionAdminflg : "N"
        , ccnt : ""
  	   , comment : ""
  	   , commentList : []
- 	   , cInfo : {}	
+ 	   , cInfo : {}
+       , editconte : ""
     }   
     , methods: {
     	fnGetBoard : function(){
@@ -145,7 +151,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                	alert("삭제되었습니다.");
-	                self.fnGetList();
+               	location.href="/comm.do";
                 }
             }); 
    	}
@@ -188,14 +194,14 @@ var app = new Vue({
     	//게시글 신고 팝업
     	, fnReportBoard : function() {
     		let popUrl = "/reportboard.do";
-    		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
+    		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
     		window.open(popUrl,"게시글 신고",popOption);	
     	}
     	
     	//댓글 신고 팝업
     	, fnReportComment : function() {
     		let popUrl = "/reportcomment.do";
-    		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
+    		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
     		window.open(popUrl,"댓글 신고",popOption);	
     	}
     	
@@ -210,7 +216,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.conte = "";
-	                alert("성공");
+	                alert("댓글이 작성되었습니다.");
 	                self.fnGetBoard();
                 }
             }); 
@@ -226,7 +232,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-	                alert("성공");
+	                alert("댓글이 삭제되었습니다.");
 	                self.fnGetBoard();
                 }
             }); 
@@ -242,7 +248,8 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-	                alert("성공");
+                	self.editconte = self.cInfo.conte;
+	                alert("댓글이 수정되었습니다.");
 	                self.cInfo = {};
 	                self.fnGetBoard();
                 }

@@ -15,7 +15,7 @@
 		margin: auto;
 	}
 	table {
-		width: 1000px;
+		width: 950px;
 		text-align: center;
 		border: 1px solid #fff;
 		border-spacing: 1px;
@@ -55,7 +55,7 @@
 	.category_path select{
 		border: none;
 		text-align: center;
-		appearance: none;
+ 	   	appearance: none;
 	}
 
 	
@@ -124,6 +124,7 @@
 						<tr>
 							<th scope="col" v-if="info.id == sessionId || sessionAdminflg == 'Y'"></th>
 							<th scope="col">No.</th>
+							<th scope="col"></th>
 							<th scope="col">제목</th>
 							<th scope="col">조회수</th>
 							<th scope="col">작성자</th>
@@ -131,18 +132,23 @@
 						</tr>
 					</thead>
 					<tbody>
+						<!-- 글 삭제 X -->
 						<tr v-for="(item, index) in list" @click="fnView(item.cbno)" v-if="item.delYn == 'N'">
-							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
+							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList" values=""></td>
 							<td>{{item.cbno}}</td>
-							<td v-if="ccnt != 0" style="width: 40%;" >{{item.ctitle}}({{ccnt}})</td>
-							<td v-else style="width: 40%;" >{{item.ctitle}}</td>
+							<td>[{{item.cate1}}]</td>
+							<td v-if="ccnt != 0" style="width: 30%;" > {{item.ctitle}}({{ccnt}})</td>
+							<td v-else style="width: 30%;" >{{item.ctitle}}</td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
-							<td>{{item.cdate}}</td>
+							<td v-if="item.udate == null">{{item.cdate}}</td>
+							<td v-else>{{item.udate}}</td>
 						</tr>
+						<!-- 글 삭제 O -->
 						<tr v-else>
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
+							<td>[{{item.cate1}}]</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -153,7 +159,7 @@
 			</div>
 			<div class="btns">
 				<button class="btn" @click="fnAdd()">글쓰기</button>
-				<button class="btn" v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="">삭제</button>
+				<button class="btn" v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemove(item.cno)">삭제</button>
 			</div>
 			<div class="searchbox">
 				<select>
@@ -292,6 +298,24 @@
 	    	, fnView : function(cbno){
 	    		var self = this;
 	    		self.pageChange("/commread.do", {cbno : cbno});
+	    	}
+	    	
+	    	, fnRemove : function(cno){
+	    		 var self = this;
+	    		 if(!confirm("정말 삭제하시겠습니까?")){
+	    			 return;
+	    		 }
+	             var nparmap = {boardKey : cno};
+	             $.ajax({
+	                 url:"/comm/remove.dox",
+	                 dataType:"json",	
+	                 type : "POST", 
+	                 data : nparmap,
+	                 success : function(data) {
+	                	alert("삭제되었습니다.");
+	 	                self.fnGetList();
+	                 }
+	             }); 
 	    	}
 	    	
 	    	, cate1List : function(){

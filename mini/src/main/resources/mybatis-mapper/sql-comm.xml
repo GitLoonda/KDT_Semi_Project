@@ -13,8 +13,7 @@
 	
 	<!-- 총 게시글 수 -->
 	<select id="selectCbrdListCnt" parameterType="hashmap" resultType="int">
-		SELECT
-			COUNT(CBNO) AS CBRDCNT
+		SELECT MAX(CBNO) AS CBRDCNT
 		FROM T3_CBRD
 	</select>
 	
@@ -28,12 +27,16 @@
 	<!-- 게시글 추가 -->
 	<select id="insertCbrd" parameterType="hashmap">
 		INSERT INTO mini_db2.T3_CBRD
+		<!-- VALUES (NULL, #{userId}, #{cate1}, #{cate2}, #{ctitle}, #{ccont}, 0, NOW(), NULL, 'N')  -->
 		VALUES (NULL, 'test20', #{cate1}, #{cate2}, #{ctitle}, #{ccont}, 0, NOW(), NULL, 'N')
 	</select>
 	
 	<!-- 게시글 삭제 -->
 	<delete id="deleteCbrd" parameterType="hashmap">
-		DELETE FROM mini_db2.T3_CBRD
+		UPDATE T3_CBRD
+		SET
+			DELYN = 'Y',
+			UDATE = NOW()
 		WHERE CBNO = #{boardKey}
 	</delete>
 	
@@ -47,6 +50,7 @@
 			CTITLE,
 			CCONT,
 			CDATE,
+			UDATE,
 			HITS
 		FROM T3_CBRD
 		WHERE CBNO = #{cbno}
@@ -58,6 +62,8 @@
 		SET
 			CTITLE = #{ctitle},
 			CCONT = #{ccont},
+			CATE1 = #{cate1},
+			CATE2 = #{cate2},
 			UDATE = NOW()
 		WHERE CBNO = #{cbno}
 	</update>
@@ -68,7 +74,6 @@
 		SET
 			HITS = HITS + 1
 		WHERE CBNO = #{cbno}
-		
 	</update>
 	
 	<!-- 1차 카테고리 -->
@@ -92,7 +97,8 @@
 	<insert id="insertCbrdComment" parameterType="hashmap">
 		INSERT INTO T3_CMRE
 		VALUES
-			(NULL, NULL, #{cbno}, #{userId}, #{conte}, NULL, NOW(), NULL, 0, 0, 'Y', 'N')
+			<!-- (NULL, NULL, #{cbno}, #{userId}, #{conte}, NULL, NOW(), NULL, 0, 0, 'Y', 'N')  -->
+			(NULL, NULL, #{cbno}, 'test20', 'test', NULL, NOW(), NULL, 0, 0, 'Y', 'N')
 	</insert>
 	
 	<!-- 게시글 댓글 리스트 -->

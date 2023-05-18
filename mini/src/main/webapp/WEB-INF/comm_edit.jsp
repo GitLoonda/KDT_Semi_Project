@@ -36,25 +36,23 @@
 	<div id="app">
 		<div class="container">
 			<div class="card">
-				<h3>커뮤니티 글쓰기</h3>
+				<h3>커뮤니티 글 수정</h3>
 				<hr>
 				<table class="board_detail">
 					<colgroup>
 						<col width="10%"/>
 						<col width="*"/>
 					</colgroup>
-					<!-- <tr>  
-						<select v-model="info.inlist.cate1" id="cate" @click="cate2List()">
-							<option value="0" disabled>1차</option>
-							<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
+					<tr>  
+						<select v-model="info.cate1" id="cate" style="appearance: none;" disabled>
+							<option v-for="(cate1, index) in listcate1" :value="cate1.cnum" >{{cate1.cinfo}}</option>
 						</select>
 						
-						<select v-model="info.inlist.cate2" id="cate">
-							<option value="0" disabled>2차</option>
+						<select v-model="info.cate2" id="cate" style="appearance: none;" disabled>
 							<option v-for="(cate2, index) in listcate2" :value="cate2.cnum">{{cate2.cinfo}}</option>
 						</select>
 					</tr>
-					 -->
+					
 					
 					<tr>
 						<td style="text-align : center;" >제목</td>
@@ -75,7 +73,7 @@
 					</tr>
 				</table>
 				<div class="btns">
-					<button @click="fnAddCbrd()" class="btn">저장</button>
+					<button @click="fnEditCbrd()" class="btn">저장</button>
 					<button @click="fnList()" class="btn" >목록으로</button>
 				</div>
 			</div>
@@ -93,25 +91,22 @@ var app = new Vue({
     data: {
 		info : {}, 
 		cbno : "${map.cbno}",
-		<!--
-		inlist:{
-			cate1:"0",
-			cate2:"0"
-		}
-		-->
+		listcate1:{},
+		listcate2:{}
+				
     }
     
     , components: {VueEditor}
     
     , methods: {
-    	
+    	//게시글 수정
     	fnEditCbrd : function(){
             var self = this;
             var nparmap = {ctitle : self.info.ctitle
             				, ccont : self.info.ccont
-            				, cate1 : self.info.inlist.cate1
-            				, cate2 : self.info.inlist.cate2
-            				, cbno : self.cbno};
+            				, cate1 : self.info.cate1
+            				, cate2 : self.info.cate2           				
+            				, cbno : self.info.cbno};
             /* var nparmap = self.info;
             nparmap.cbno = self.cbno; */
             $.ajax({
@@ -120,12 +115,13 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	console.log(data);
                 	alert("저장되었습니다.");
                 	location.href="comm.do";
                 }
             }); 
         }
-    
+    	
 	    , fnGetBoard : function(){
 	        var self = this;
 	        var nparmap = {cbno : self.cbno};
@@ -167,34 +163,18 @@ var app = new Vue({
     			location.href="/comm.do";
     		}
     	}
-    	
-    	// 글 저장
-    	, fnAddCbrd : function(){
-            var self = this;
-            var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
-            console.log( self.ccont );
-            $.ajax({
-                url:"/comm/edit.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	alert("저장되었습니다.");
-                	location.href="/comm.do";
-                }
-            });  
-        } 
+
     	
     	, cate1List : function(){
 			var self = this;
 			var nparmap = {};
 			$.ajax({
-				url:"/comm/cate1.dox",
+				url:"/comm/cate1.dox", 
 				dataType:"json",	
 				type : "POST", 
 				data : nparmap,
 				success : function(data) { 
-					console.log(data)
+					console.log(data);
 					self.listcate1 = data.listcate1;
 				}
 			});
@@ -202,20 +182,21 @@ var app = new Vue({
     	
     	, cate2List : function(){
 			var self = this;
-			var nparmap = {pcomm1 : self.inlist.cate1};
+			var nparmap = {pcomm1 : self.info.cate1};
 			$.ajax({
 				url:"/comm/cate2.dox",
 				dataType:"json",	
 				type : "POST", 
 				data : nparmap,
 				success : function(data) { 
-					console.log(data)
-					self.listcate2 = data.listcate2
+					console.log(data);
+					self.listcate2 = data.listcate2;
+
 				}
 			});
 			
 		}
-
+		
     	
     	
     }   
@@ -223,6 +204,7 @@ var app = new Vue({
     	var self = this;
     	self.fnGetBoard();
     	self.cate1List();
+    	self.cate2List();
 	}
 });
 </script>
