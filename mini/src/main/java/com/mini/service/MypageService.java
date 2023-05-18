@@ -22,4 +22,7 @@ public interface MypageService {
 	void uppoto(HashMap<String, Object> map);
 
 	User getUserInfo(HashMap<String, Object> map);
+	
+	void addId(HashMap<String, Object> map);
+	
 }

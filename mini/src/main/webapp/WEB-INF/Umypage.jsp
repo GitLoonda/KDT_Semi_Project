@@ -32,7 +32,7 @@
               </div>
         </div>
      <div class="serve">
-    <input class="servename" type="text" :placeholder="user.name + '님'">
+    <input class="servename" type="text" :placeholder="user.name + '님'" readonly>
     <br>
     <b>소개/공지</b>
     <br>
@@ -54,23 +54,20 @@
      <!-- 이력 -->
      <br> <br> <br>
      <div class="Umy_text">정보</div>
-     <div class="Umy_box">{{user.addr}}</div>
+     <textarea class="Umy_box">{{user.addr}}</textarea>
      <div class="Umy_text">등록제품</div>
-     <div class="Umy_box"></div>
+     <textarea class="Umy_box">{{user.addr}}</textarea>
      <div class="Umy_text">후기</div>
-     <div class="Umy_box"></div>
+     <textarea class="Umy_box">{{user.addr}}</textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
-     <div class="Umy_box">
-     <div class="jjim1"> 찜1+정보</div>
-     <div class="jjim2"> 찜2+정보</div>
-    </div>
+     <textarea class="Umy_box">{{user.addr}}</textarea>
+    
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
-     <div class="Umy_box"></div>
+     <textarea class="Umy_box">{{user.addr}}</textarea></div>
      </div>
     </div>
-	</div>
 </body>
 </html>
 <script type="text/javascript">

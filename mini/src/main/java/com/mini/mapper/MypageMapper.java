@@ -24,4 +24,6 @@ public interface MypageMapper {
 	void portfileUpage(HashMap<String, Object> map);
 	
 	User selectUserInfo(HashMap<String, Object> map);
+	
+	void insertAccount(HashMap<String, Object> map);
 }

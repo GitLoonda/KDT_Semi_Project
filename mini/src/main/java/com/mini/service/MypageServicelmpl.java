@@ -44,5 +44,11 @@ public class MypageServicelmpl implements MypageService{
 		// TODO Auto-generated method stub
 		return mypagemapper.selectUserInfo(map);
 	}
+	@Override
+	public void addId(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }

@@ -36,16 +36,6 @@ public class MypageController {
 
         return "/Cmypage";
     }
-	
-	@RequestMapping(value = "/useredit.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String edit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		mypageService.editMyPageUser(map);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
-	
 	@RequestMapping("/useredit.do") //사용자프로필 수정
     public String User_edi2t(Model model) throws Exception{
 
@@ -56,26 +46,28 @@ public class MypageController {
 
         return "/Creator_edit";
     }
-	@RequestMapping(value = "/creedit.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String cre(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		mypageService.editMyPageUser(map);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
 	@RequestMapping("/creadd.do") //크리에이터 등록
     public String creator_add(Model model) throws Exception{
 
         return "/creator_add";
     }
 	
+	// mypage 내용 불러오기
     @RequestMapping(value = "/user/info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		User user = mypageService.getUserInfo(map);
 		resultMap.put("user", user);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+    // 프로필 정보수정
+    @RequestMapping(value = "/user/upinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addAccount(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		mypageService.addId(map);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
