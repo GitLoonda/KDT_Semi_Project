@@ -6,6 +6,12 @@
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<link rel="stylesheet" href="../css/style.css">
+							
+	<!-- 폰트 추가 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	
 	<!-- 1. vue2editor 에디터 cdn -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
 	<script src="https://unpkg.com/vue2-editor@2.3.11/dist/index.js"></script>
@@ -13,12 +19,19 @@
 
 </head>
 <style>
+
+	* {
+			text-decoration: none;
+			list-style: none;
+			font-family: 'Nanum Gothic', sans-serif;
+		}
+
 </style>
 <body>
 	
 	<div id="app">
 		<div class="container">
-			<h2>공지사항 등록</h2>
+			<h2>📢 공지사항 등록</h2>
 			<table class="board_detail">
 				<colgroup>
 					<col width="10%"/>
@@ -52,6 +65,7 @@
 		</div>
 	</div>
 </body>
+
 </html>
 <script type="text/javascript">
 
@@ -67,6 +81,7 @@ var app = new Vue({
     	, checkList : []
     	, title : ""
     	, content : ""
+    	
     	// 4. 컴포넌트 추가
     	
     } 
