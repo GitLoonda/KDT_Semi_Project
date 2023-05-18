@@ -15,12 +15,12 @@
 	        }
 	
 	        body {
-	            background-color: #1BBC9B;
+	            background-color: #ADD4D9;
 	        }
 	
 	        .div1 {
 	            margin: auto;
-	            width: 300px;
+	            width: 350px;
 	            background-color: #EEEFF1;
 	            border-radius: 5px;
 	            text-align: center;
@@ -48,9 +48,12 @@
 	        }
 	
 	        #btn {
-	            background-color: #1BBC9B;
-	            margin-bottom: 30px;
+	            background-color: #9B9B9B;
+	            margin-bottom: 20px;
 	            color: white;
+	            border-radius: 5px;
+	            border-style: hidden;
+	            margin-right: 8px; 
 	        }
 	
 	        a {
@@ -58,11 +61,32 @@
 	            color: #9B9B9B;
 	            font-size: 12px;
 	        }
+	        
+	        select {
+	        	border-radius: 5px;
+	        	width: 100%;
+	        	padding: 10px;
+	            box-sizing: border-box;
+	        	border-style: hidden;
+  		        text-align: center;
+  		        color: gray;
+	        }	
+	        option {
+	        	border-radius: 5px;
+	        	width: 100%;
+	        	padding: 10px;
+	            box-sizing: border-box;
+	        	border-style: hidden;
+  		        text-align: center;
+  		        color: gray;
+	        }
+	        	
+	        }
     	</style>
 	</head>
 	<body>
 		<div id="app" class="div1">
-			<h2>관리자 등록</h2>
+			<h2>📲 관리자 등록</h2>
 			<div class="div2">
 				<input @keyup="fnChange" v-model="info.id" type="text" class="in" placeholder="아이디" ></input>
 				<template v-if="info.joinId != ''">
@@ -97,7 +121,7 @@
 			
 			<div class="div2">
 				<select v-model="info.quiz">
-					<option value="" selected>::::: 질문을 선택해주세요 :::::</option>
+					<option value="" selected> ❕❕❕❕❕ 질문을 선택해주세요 ❕❕❕❕❕ </option>
 					<option v-for="(item , index) in quizList" :value="item.cnum">{{item.cinfo}}</option>
 				</select>
 			</div>
@@ -112,7 +136,7 @@
 				<button id="btn" @click="fnCancel" >취소</button>
 			</div>
 			
-			<a href="login.do">로그인 하시겠습니까?></a>
+			<a href="login.do"> ▪ 로그인 하시겠습니까? ▪ </a>
 			
 		</div> 
 	</body>
