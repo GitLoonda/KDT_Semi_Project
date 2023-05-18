@@ -26,6 +26,40 @@ public class User {
     private String ustatus;
     private String cdate;
     
+    private int dno;
+    private String cid;
+    private String cnum;
+    private String cinfo;
+    
+    public int getDno() {
+		return dno;
+	}
+	public void setDno(int dno) {
+		this.dno = dno;
+	}
+	
+    public String getCid() {
+		return cid;
+	}
+	public void setCid(String cid) {
+		this.cid = cid;
+	}
+	
+    public String getCnum() {
+		return cnum;
+	}
+	public void setCnum(String cnum) {
+		this.cnum = cnum;
+	}
+	
+    public String getCinfo() {
+		return cinfo;
+	}
+	public void setCinfo(String cinfo) {
+		this.cinfo = cinfo;
+	}
+    
+    
     public String getUstatus() {
 		return ustatus;
 	}
