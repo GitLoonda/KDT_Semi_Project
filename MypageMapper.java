@@ -8,22 +8,18 @@ import com.mini.model.User;
 
 @Mapper
 public interface MypageMapper {
-	//크리에이터 등록
-	void creaddUpage(HashMap<String, Object> map);
-	
-	//프로필 수정
-	void updatemyPage(HashMap<String, Object> map);
-	
-	//크리에이터 프로필 수정
-	void updateCrePage(HashMap<String, Object> map);
-	
-	//찜 목록 수정
-	void jjimUpage(HashMap<String, Object> map);
-	
-	// 포트폴리오 목록 수정
-	void portfileUpage(HashMap<String, Object> map);
-	
+
+	// 프로필 아이디/주소 불러오기
 	User selectUserInfo(HashMap<String, Object> map);
 	
-	void insertAccount(HashMap<String, Object> map);
+	//프로필 하단 정보 수정/업데이트
+	void updateMyPage(HashMap<String, Object> map);
+	
+	//프로필 상단 업데이트
+	void updateUppro(HashMap<String, Object> map);
+	
+	//프로필 상단(남김말/정보) 불러오기
+	void selectUppro(HashMap<String, Object> map);
+	
+	
 }

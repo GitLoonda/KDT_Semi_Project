@@ -34,7 +34,7 @@
     <br>
     <b>남김말</b>
     <br>
-    <input class=twobox type="text" placeholder="남김말 입니다.">
+    <input class=twobox type="text" :placeholder="user.intro">
     <br>
     <b>정보</b>
     <br>
@@ -64,7 +64,7 @@
         <ul>
             <li>
               <label>아이디</label>
-              <input type="text" :placeholder="user.id" readonly>
+              <input type="text" v-model="list.id" :placeholder="user.id" readonly>
             </li>
             <li>
               <label>비밀번호</label>
@@ -100,7 +100,7 @@
             </div>          
           </ul>
 <br>
-    <button class="updatebtn1" @click="fnSignIn">수정 완료</button>
+    <button class="updatebtn1" @click="fnUserUpdate">수정 완료</button>
 </div>
 </div>
 </body>
@@ -117,6 +117,10 @@ var app = new Vue({
 	, addr : ""
 	, addrDetail : ""
 	, list : []
+	,joinId : ""
+	,passwd : ""
+	,passwd2 : ""
+	,name : ""
 	
     }   
     , methods: {
@@ -147,57 +151,35 @@ var app = new Vue({
     		self.addr = roadAddrPart1;
     		// 상세 주소
     		self.addrDetail = addrDetail;
-    	}	
-		, fnSignIn : function() {
-			var self = this; 
-			var pwJ = /^[A-Za-z0-9]{6,12}$/;
-			var nmJ = /^[ㄱ-힣]{2,6}$/;
-			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
-			
-			if(self.list.passwd == null || self.list.passwd2 == null) {
-				alert("비밀번호와 비밀번호 확인을 입력해주세요.");
-				return;
-			}
-			if(!pwJ.test(self.list.passwd)) {
-				alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
-				return;
-			}
-			if(self.list.passwd != self.list.passwd2) {
-				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-				return;
-			}
-			if(self.list.phone == null) {
-				alert("전화번호를 입력해주세요.");
-				return;
-			}
-			if(self.list.email == null) {
-				alert("이메일을 입력해주세요.");
-				return;
-			}
-			var nparmap = {id : self.list.id, passwd : self.list.passwd, phone : self.list.phone
-					, email : self.list.email, addr : self.list.addr};
-			console.log(nparmap);
-            $.ajax({
-                url:"/user/upinfo.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-					if(data.result == "success") {
-						alert("수정 완료.");
-						location.href='mypage.do';
-                }
-            }
-            });
+    	}
+
+		, fnUserUpdate : function(){
+	    	var self = this;
+	    	if(self.list.passwd != self.list.passwd2){
+    			alert("비밀번호 두개가 다르다");
+    			return;
+    		} 
+	    	var nparmap = self.info;
+	           $.ajax({
+	                url:"/mypage/edit.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	alert("수정되었습니다.");
+	                	console.log(data.user);
+	                	
+	                }
+	        }); 
+	    }
             
 			// alert("수정완료.");
-			// location.href ="/mypage.do"
-		
+			// location.href ="/mypage.do"	
     } 
-	} 
     , created: function () {
     	var self = this;
     	self.fnGetInfo();
+
 	}
        
 });

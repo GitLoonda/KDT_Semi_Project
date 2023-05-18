@@ -6,23 +6,17 @@ import com.mini.model.User;
 
 public interface MypageService {
 	
-	//크리에이터 등록
-	void creadd(HashMap<String, Object> map);
-	
-	//사용자프로필 수정
-	 void editMyPageUser(HashMap<String, Object> map);
-	
-	//크리에이터프로필 수정
-	void editMyCreUser(HashMap<String, Object> map);
-	
-	//찜목록 수정
-	void upjjim(HashMap<String, Object> map);
-	
-	//포트폴리오 수정
-	void uppoto(HashMap<String, Object> map);
-
+	// 프로필 아이디/주소 불러오기
 	User getUserInfo(HashMap<String, Object> map);
 	
-	void addId(HashMap<String, Object> map);
+	//프로필 하단 정보 수정/업데이트
+	User getProDown(HashMap<String, Object> map);
+	
+	//프로필 상단 업데이트
+	User getUserUpdate(HashMap<String, Object> map);
+	
+	//프로필 상단(남김말/정보) 불러오기
+	User getProUp(HashMap<String, Object> map);
+	
 	
 }
