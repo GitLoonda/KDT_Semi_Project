@@ -212,8 +212,7 @@ public class BoardController {
                         
                         // insert 쿼리 실행
                         boardService.TradeImgInsert(map);
-                        
-                        
+
                         model.addAttribute("filename", multi.getOriginalFilename());
                         model.addAttribute("uploadPath", file.getAbsolutePath());
                         
