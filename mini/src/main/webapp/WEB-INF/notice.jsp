@@ -5,11 +5,17 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
+				
+	<!-- 폰트 추가 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	
 	<!--  페이징 추가 1 -->
 	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 	<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 	<link rel="stylesheet" href="css/style.css">
-	<title>공지사항</title>
+	<title>📢 공지사항</title>
 
 </head>
 <style>
@@ -46,12 +52,46 @@
 	.pagination li.active a {
 	    color:#fff;
 	}
+	
+		* {
+		text-decoration: none;
+		list-style: none;
+		font-family: 'Nanum Gothic', sans-serif;
+			}
+		.btn5 {
+	 		background-color: #9B9B9B;
+            color: white;
+            border-radius: 5px;
+            border-style: hidden;
+            margin-right: 8px; 
+            padding : 4px;
+            font-size : 0.7rem;
+		}
+		
+		.btn:hover{
+			background-color : fuchsia;
+		}
 
 </style>
 <body>
 	<div id="app" >
 		<div class="container">
 			<h2>📢 공지사항</h2>
+			
+			<div style="float : right; margin-right : 20px">
+				<div>{{sessionId}} 님 환영합니다 😀</div>
+			</div>
+			<pre>
+			</pre>
+			<div style="float : right; margin-right : 20px">
+				<div><a href="../admin/login.do" v-if="sessionId != ''">로그아웃 📴</a></div>
+			</div>
+			
+			<div>
+	        	<!-- <button class="btn">삭제</button> -->
+	        	<button class="btn" @click="fnAdd()" v-if="sessionAdminFlg == 'Y'"> ▪ 공지사항 등록 ▪ </button>
+	        </div>
+
 	        <div class="table-list">
 	            <table class="board_list">                   
 	                <thead>
@@ -73,7 +113,7 @@
                             <td>{{item.id}}</td>     
                             <td>{{item.cdate}}</td>     
                             <td>{{item.hits}}</td>     
-                            <td><button class="btn" @click="fnRemove(item)">삭제</button></td>     
+                            <td><button class="btn5" @click="fnRemove(item)" v-if="sessionAdminFlg == 'Y'">삭제</button></td>     
                         </tr>                                       
 	                </tbody>                   
 	            </table>
@@ -92,12 +132,16 @@
 				</template>
 	           
 	        </div>
-	        <div>
-	        	<!-- <button class="btn">삭제</button> -->
-	        	<button class="btn" @click="fnAdd()">등록</button>
-	        </div>
+
+        		<div style="text-align: center; margin-top: 10px">
+        			제목 / 아이디 : 
+		        	<input s class=txtbox1 type="text" v-model="keyword" @keyup.enter="fnGetList">
+					<button class=btn @click="fnGetList">검색</button>	
+				</div>
+	       
         </div>
 	</div>
+<jsp:include page="/layout/footer.jsp"></jsp:include>
 </body>
 </html>
 <script type="text/javascript">
@@ -113,6 +157,7 @@ var app = new Vue({
     	, selectItem : ""
     	, sessionId : "${sessionId}" 	// request 에있는걸 가져온다는 뜻
     	, sessionStatus : "${sessionUstatus}"
+   		, sessionAdminFlg : "${sessionAdminFlg}"
     	, updateCnt : "${updateCnt}"
         , abNo : "${map.abNo}"
     		<!-- 페이징 추가 5-->
@@ -127,7 +172,7 @@ var app = new Vue({
             <!-- 페이징 추가 6-->
 			var startNum = ((self.selectPage-1) * 10);
 			var lastNum = (self.selectPage * 10)
-            var nparmap = {startNum : startNum, lastNum : lastNum};
+            var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
             $.ajax({
                 url:"/notice.dox",
                 dataType:"json",	
@@ -161,16 +206,22 @@ var app = new Vue({
 			});
 		}
     	, fnAdd : function() {
-    		location.href = "/notice/insert.do"
+    		console.log(self.sessionAdminFlg);
+   
+    			location.href = "/notice/insert.do"
+    		
     	}
     	
     	, fnRemove : function(item) {	//매개변수를 줘야함
     		var self = this;
     		console.log(item);
             var nparmap = item;		// item 자체가 맵이라서 {} 이거 안씀
-            if(!confirm("정말 삭제하시겠습니까?")){	// confirm 은 조건문이라서 if 붙임
-            	return;	// 취소 누르면 완전 빠져나가라는 뜻
-            }
+           
+    		
+	   			if(!confirm("정말 삭제하시겠습니까?")){	// confirm 은 조건문이라서 if 붙임
+	   	           return;	// 취소 누르면 완전 빠져나가라는 뜻
+	   			}
+           
             
             $.ajax({
                 url:"/notice/remove.dox",
