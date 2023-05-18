@@ -36,7 +36,7 @@ public class AdminController {
 	HttpSession session;
 	
 	@RequestMapping("/admin/login.do") //어드민 메인
-    public String admin(Model model) throws Exception{
+    public String admin(Model model) throws Exception{ 
 		
 		String id = (String) session.getAttribute("sessionId");
 		String name = (String) session.getAttribute("sessionName");
