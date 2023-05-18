@@ -36,6 +36,13 @@ public class Notice {
     
     //----------------------- 크리에이터 승인 목록
 
+    private int creno;
+	public int getCreno() {
+		return creno;
+	}
+	public void setCreno(int creno) {
+		this.creno = creno;
+	}
 	private String cretitle;
     private String crecont;
     private String creYn;
