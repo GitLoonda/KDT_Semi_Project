@@ -15,7 +15,7 @@
 	        }
 	
 	        body {
-	            background-color: #1BBC9B;
+	            background-color: #ADD4D9;
 	        }
 	
 	        .div1 {
@@ -44,13 +44,16 @@
 	        }
 	
 	        .in {
-	            margin-bottom: 10px;
+	            margin-bottom: 5px;
 	        }
 	
 	        #btn {
-	            background-color: #1BBC9B;
-	            margin-bottom: 30px;
+	            background-color: #9B9B9B;
+	            margin-bottom: 20px;
 	            color: white;
+	            border-radius: 5px;
+	            border-style: hidden;
+	            margin-right: 8px; 
 	        }
 	
 	        a {
@@ -62,7 +65,7 @@
 	</head>
 	<body>
 		<div id="app" class="div1">
-			<h2>관리자 로그인</h2>
+			<h2>👨🏻‍✈️ 관리자 로그인</h2>
 			<div class="div2">
 				<input type="text" class="in" v-model="id" placeholder="아이디"></input>
 			</div>
@@ -73,7 +76,8 @@
 				<button id="btn" @click="fnLogin()">로그인</button>
 				<button id="btn" @click="fnJoin" >관리자 등록</button>
 			</div>
-			<a href="find.do">비밀번호를 잊어버리셨나요?</a>
+			<a href="/login.do"> ▪ 일반 사용자로 로그인 ▪ </a>
+			<div><a href="find.do"> ▪ 비밀번호를 잊어버리셨나요? ▪ </a></div>
 		</div> 
 	</body>
 </html>
