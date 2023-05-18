@@ -11,11 +11,30 @@
 </head>
 <style>
 	.card{
-		width: 50%;
-		margin: auto;
+		width: 1080px;
+		margin: 1px auto;
+	}
+	.listcnt {
+		padding-left: 10px;
+		margin-top: 10px;
+	}
+	.category_path{
+		line-height: 20px;
+		padding-left: 10px;
+		margin-top: 10px;
+	}
+	.category_path a {
+		style: none; 
+		font-size: 0.8em;
+	}
+	
+	.category_path select{
+		border: none;
+		text-align: center;
+ 	   	appearance: none;
 	}
 	table {
-		width: 950px;
+		width: 1080px;
 		text-align: center;
 		border: 1px solid #fff;
 		border-spacing: 1px;
@@ -47,16 +66,7 @@
 		padding: 10px 0;
 		text-align: right;
 	}
-	.category_path{
-		line-height: 20px;
-		margin-top: 10px;
-	}
 	
-	.category_path select{
-		border: none;
-		text-align: center;
- 	   	appearance: none;
-	}
 
 	
 		<!-- 페이징 추가 2-->
@@ -99,9 +109,9 @@
 		<div class="container">
 		<div class="card">
 			<div class="category_path">
-				<a href="main.do" style="none; font-size: 0.8em;"> 홈 </a> 
+				<a href="main.do"> 홈 </a> 
 				<span>  >  </span>
-				<a href="comm.do" style="none; font-size: 0.8em;"> 커뮤니티 </a> 
+				<a href="comm.do"> 커뮤니티 </a> 
 				<span>  >  </span>
 				<span>
 					<select v-model="inlist.cate1" id="cate" @click="cate2List()">
@@ -115,7 +125,7 @@
 					</select>
 				</span>
 			</div>
-			<div style="margin-top: 10px;">
+			<div class="listcnt">
 				1-15 / <span>{{listcnt}}</span>
 			</div>
 			<div class="table-list">

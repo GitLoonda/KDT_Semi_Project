@@ -9,8 +9,8 @@
 </head>
 <style>
 	.card1{
-		width: 50%;
-		margin: auto;
+		width: 1080px;
+		margin: 1px auto;
 		padding: 20px 0 20px 0;
 	}
 	.card2{
@@ -30,11 +30,41 @@
     	background-color: rgba(0, 0, 0, 0.03); 
     	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     }
+    .card-body{
+    	margin: 10px;
+    }
+    .commbox{
+    	margin-top : 30px;
+    	clear : both; 
+		margin-bottom: 20px;
+		border-bottom: 1px solid #ccc;
+	}
+	.commpath{
+		margin-bottom : 10px;
+	}
+	.cimg{
+		width: 250px;
+		height: 200px;
+		margin: 5px;
+	}
     .pimg{
     	width: 50px;
 		border-radius: 100%;
 		border: 1px solid black;
 		margin-right: 10px;
+	}
+	.commbox2{
+		display: flex;
+		align-items: center;
+   		justify-content: space-between;
+		margin-bottom: 20px;
+	}
+	.commbox2_1{
+		display: flex;
+		text-align: center;
+		flex-direction: row;
+		align-items: center;
+		margin-left: 20px;
 	}
     .commbox2_1_1{
 		display: flex;
@@ -43,7 +73,7 @@
 	}
 	.commid{
 		font-size: 15pt;
-		margin-bottom: 2px;
+		margin-bottom: 5px;
 	}
     .btns {
 		text-align: right;
@@ -53,6 +83,18 @@
 		width : 90%; 
 		resize: none;
 	}
+	.commbox{
+		padding-bottom: 10px; 
+		margin: 10px; 
+		border-bottom: 1px solid #ccc;
+	}
+	.coma{
+		margin: 0px 3px ;
+	}
+	.editbox{
+		margin-top: 10px;
+	}
+	
 </style>
 <body>
 	<div id="app">
@@ -63,53 +105,61 @@
 						{{info.ctitle}}
 						<span  style="float: right;">{{info.cdate}}</span>
 					</h3>
+					<!-- 수정 시 작성시간 udate 출력 -->
 					<h3 class="card-header" v-else>
 						{{info.ctitle}}
 						<span  style="float: right;">{{info.udate}}</span>
 					</h3>
 					<div class="card-body">
-					   	<div style="margin: 10px 10px 10px 10px;" v-html="info.ccont"></div>
+					   	<div  v-html="info.ccont"></div>
 				   	</div>
 				</div>
 				<div class="btns">
 					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnUpdate()" >수정</button>
 					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveBoard()" >삭제</button>
 					<button v-else target="_blank" @click="fnReportBoard()" >신고</button>
-					<button @click="fnList()" class="btn" >목록으로</button>
+					<button @click="fnList()" class="btn">목록으로</button>
 				</div>
 				
-				<h4 style="margin-top : 30px;">댓글 ({{ccnt}}개)</h4>
-				<div style="clear : both; border-top : 1px solid #000"></div>
-				
-				<div v-if="sessionId != null" style="margin-top : 10px;">
-					<div style="margin-bottom : 10px;">
-						<span>첨부파일</span>
-						<input type="file" id="file1" name="file1" >
-					</div>
+				<div class="commbox">
+					<h4>댓글 ({{ccnt}}개)</h4>
+					<div v-if="sessionId != null">
+						<div>
+							<div class="commpath">첨부파일 <input type="file" id="file1"></div>
+							<div class="commimg" > <img class="cimg" src=""> 이미지 미리보기</div>
+						</div>
 						<textarea v-model="comment" rows="3" cols="100"></textarea>
 						<button @click="fnComment()" class="btn">등록</button>
-						<div style="text-align: right"><input type="checkbox" value="N">비밀댓글 설정</div>
+						<div style="text-align: right"><input type="checkbox">비밀댓글 설정</div>
+					</div>
 				</div>
-				
-				<div v-for="(item, index) in commentList" style="padding-bottom: 10px; margin: 10px; border-bottom: 1px solid #ccc;">
-					<div v-if="item.delYn == 'N'">
-						<div><img class="pimg" src="img/board/160628_7.png"></div>
-						<div class="commbox2_1_1">
-							<div class="commid">{{item.id}}</div>
-							<div>{{item.conte}}</div>
+				<div v-for="(item, index) in commentList">
+					<div class="commbox2" v-if="item.delYn == 'N'">
+						<div class="commbox2_1">
+							<div><img class="pimg" src="img/board/160628_7.png"></div>
+							<div class="commbox2_1_1">
+								<div class="commid">{{item.id}}</div>
+								<div>{{item.conte}}</div>
+							</div>
 						</div>
-						<span> 
-							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnEdit(item)" >수정</button>
-							<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveComment(item)" >삭제</button>
-							<button v-else target="_blank" @click="fnReportComment()">신고</button>
-						</span>
+						<div class="commbox2_2">
+							<span v-if="info.id == sessionId || sessionAdminflg == 'Y'">
+								<span class="coma" @click="fnEdit(item)">수정</span>
+								<span class="coma" @click="fnRemoveComment(item)">삭제</span>
+							</span>
+							<span v-else>
+								<span class="coma" @click="fnReportComment()">신고</span>
+								<span class="coma" @click="">답글</span>
+							</span>
+							<span class="coma">{{item.cdate}}</span>
+						</div>
 					</div>
 					<div v-else>
 						<span>
 						삭제된 댓글 입니다.
 						</span>
 					</div>
-					<div v-if="cInfo.cno == item.cno" style="margin-top : 10px;">
+					<div class="editbox" v-if="cInfo.cno == item.cno">
 						<textarea v-model="editconte" rows="3" cols="100"></textarea>
 						<button @click="fnEditComment" class="btn" style="margin-bottom : 30px;">수정</button>
 					</div>

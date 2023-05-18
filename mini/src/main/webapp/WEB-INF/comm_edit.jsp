@@ -11,8 +11,12 @@
 </head>
 <style>
 	.card{
-		width: 50%;
-		margin: auto;
+		width: 1080px;
+		margin: 1px auto;
+	}
+	.board_title {
+		padding-left: 20px;
+		margin-bottom: 20px;
 	}
     #cate{
         margin: 5px;
@@ -37,8 +41,7 @@
 	<div id="app">
 		<div class="container">
 			<div class="card">
-				<h3>커뮤니티 글 수정</h3>
-				<hr>
+				<h3 class="board_title">커뮤니티 글 수정</h3>
 				<table class="board_detail">
 					<colgroup>
 						<col width="10%"/>

@@ -11,8 +11,8 @@
 </head>
 <style>
 	.card{
-		width: 50%;
-		margin: auto;
+		width: 1080px;
+		margin: 1px auto;
 	}
     #cate{
         margin: 5px;
