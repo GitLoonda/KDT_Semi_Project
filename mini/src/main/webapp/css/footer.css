@@ -1,0 +1,93 @@
+
+
+.footer {
+  overflow: hidden;
+  width: 1024px;
+  margin : 0 auto;
+  border-radius : 5px;
+  margin-bottom: 30px;
+
+}
+
+
+.wrapper {
+  background-color: #badce0;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding: 20px;
+  padding-left: 30px;
+
+}
+.topArea {
+  float:left;
+}
+
+.btmArea p{
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.btmArea a {
+  font-size: 1.2rem;
+  color: #535252;
+  font-weight: bold;
+}
+.btmArea .time {
+  font-size: 1.1rem;
+  padding-left: 10px;
+  padding-top: 7px;
+
+
+}
+.btmArea .caption {
+  font-size: 0.8rem;
+  color: #9B9B9B;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 20px;
+}
+
+.btmArea {
+  float: inline-end;
+  margin-left: 620px;
+  padding-left: 5px;
+  border-left: 2px #9B9B9B dashed;
+  border-style: dashed;
+  padding-top: 5px;
+}
+.logotitle {
+  font-size: 1.9rem;
+  font-weight: bold;
+}
+
+.footdetail {
+  font-weight: bold;
+  padding: 5px;
+}
+.copyBox {
+  padding-top: 3px;
+  padding-left: 8px;
+}
+
+.copyright {
+  padding-top: 5px;
+
+}
+
+.footer > li {
+  width: 16.6666%; /*20*5=100%*/
+  float: left;
+  text-align: center;
+  line-height: 50px;
+  background-color: #ADD4D9;
+  
+}
+
+.submenu > li {
+  line-height: 50px;
+  background-color: #94a9ff;
+}
+.submenu {
+  height: 0; /*ul의 높이를 안보이게 처리*/
+  overflow: hidden;
+}
