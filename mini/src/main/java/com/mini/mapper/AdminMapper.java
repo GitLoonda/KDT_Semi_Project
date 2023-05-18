@@ -97,6 +97,9 @@ public interface AdminMapper {
 	// 관리자 페이지 크리에이터 거부
 	void delYnCreator(HashMap<String, Object> map);
 	
+	// 크리에이터 리스트 갯수
+	int creatorCnt(HashMap<String, Object> map);
+	
 	/* -----------------------------------------------*/
 
 	// 관리자 페이지 관리자 부여 리스트
@@ -121,6 +124,9 @@ public interface AdminMapper {
 	
 	// 게시글 관리 삭제
 	void adminBoardRemove(HashMap<String, Object> map);
+	
+	// 커뮤니티 게시글 관리 삭제
+	void adminCommRemove(HashMap<String, Object> map);
 	
 	/* -----------------------------------------------*/
 	
