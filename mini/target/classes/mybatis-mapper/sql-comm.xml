@@ -27,8 +27,7 @@
 	<!-- 게시글 추가 -->
 	<select id="insertCbrd" parameterType="hashmap">
 		INSERT INTO mini_db2.T3_CBRD
-		<!-- VALUES (NULL, #{userId}, #{cate1}, #{cate2}, #{ctitle}, #{ccont}, 0, NOW(), NULL, 'N')  -->
-		VALUES (NULL, 'test20', #{cate1}, #{cate2}, #{ctitle}, #{ccont}, 0, NOW(), NULL, 'N')
+		VALUES (NULL, #{userId}, #{cate1}, #{cate2}, #{ctitle}, #{ccont}, 0, NOW(), NULL, 'N')
 	</select>
 	
 	<!-- 게시글 삭제 -->
@@ -97,8 +96,7 @@
 	<insert id="insertCbrdComment" parameterType="hashmap">
 		INSERT INTO T3_CMRE
 		VALUES
-			<!-- (NULL, NULL, #{cbno}, #{userId}, #{conte}, NULL, NOW(), NULL, 0, 0, 'Y', 'N')  -->
-			(NULL, NULL, #{cbno}, 'test20', 'test', NULL, NOW(), NULL, 0, 0, 'Y', 'N')
+			(NULL, NULL, #{cbno}, #{userId}, #{conte}, NULL, NOW(), NULL, 0, 0, 'Y', 'N')
 	</insert>
 	
 	<!-- 게시글 댓글 리스트 -->

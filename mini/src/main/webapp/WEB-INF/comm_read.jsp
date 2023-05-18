@@ -105,8 +105,8 @@ var app = new Vue({
        list : [] 
        , info : {}
        , cbno : "${map.cbno}"
-       , sessionId : "test20"
-       , sessionAdminflg : "N"
+       , sessionId : ""
+       , sessionAdminflg : ""
        , ccnt : ""
  	   , comment : ""
  	   , commentList : []

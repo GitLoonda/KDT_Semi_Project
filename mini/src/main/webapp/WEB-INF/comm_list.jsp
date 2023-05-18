@@ -208,8 +208,8 @@
 				cate1:"0",
 				cate2:"0"
 			},
-		    sessionId : "test20",
-		    sessionAdminflg : "N",
+		    sessionId : "",
+		    sessionAdminflg : "",
 		    
 		    
 			/* 페이징 추가 5 */
