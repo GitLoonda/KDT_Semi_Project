@@ -46,6 +46,12 @@
   border-radius: 2px;
   box-shadow: 1px;
   background-color: aliceblue;
+  /* 마우스 모양 */
+  cursor: pointer;
+  
+}
+#sellbox1 .itembox:hover{
+  box-shadow: 1px 0px 4px 2px #c8c8c8;
 }
 
 #sellbox1 .imgbox {

@@ -21,7 +21,7 @@ public class MainController {
 
 	@RequestMapping("/main.do") //메인페이지
     public String main(Model model) throws Exception{
-
+		
         return "/main";
     }
 	

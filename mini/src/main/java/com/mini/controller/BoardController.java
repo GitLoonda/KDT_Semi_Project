@@ -34,14 +34,44 @@ public class BoardController {
 	@RequestMapping("/trade.do") 
     public String trade(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         
+        // 중고거래,제작의뢰 클릭시 게시글리스트 이동
+        // 다른페이지에서 접근시 null로 날라와서 아래와같이 적용
+        String brdF = String.valueOf(map.get("brdflg"));
+        if(brdF.equals("2")){
+            map.put("brdflg","BF2");
+        }else{
+            map.put("brdflg","BF1");
+        }
+        
+        request.setAttribute("mainlist", map);
+        request.setAttribute("sessionId", session.getAttribute("sessionId"));
+        request.setAttribute("sessionName", session.getAttribute("sessionName"));
+        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
+        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_list";
     }
     //게시글 상세
 	@RequestMapping("/tradeview.do") 
     public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         request.setAttribute("trlist", map);
+        request.setAttribute("sessionId", session.getAttribute("sessionId"));
+        request.setAttribute("sessionName", session.getAttribute("sessionName"));
+        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
+        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_view";
     }
+    
+    //거래 등록 게시판
+    @RequestMapping("/tradeadd.do") //거래게시판 페이지
+    public String tradeadd(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        request.setAttribute("sessionId", session.getAttribute("sessionId"));
+        request.setAttribute("sessionName", session.getAttribute("sessionName"));
+        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
+        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
+        return "/trade_add";
+    }
+
+
     // trade.do
     //게시판 리스트 불러오기
     @RequestMapping(value = "/trade/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -58,12 +88,7 @@ public class BoardController {
 	}
     
     // tradeadd.do
-    //거래 등록 게시판
-    @RequestMapping("/tradeadd.do") //거래게시판 페이지
-    public String tradeadd(Model model) throws Exception{
-
-        return "/trade_add";
-    }
+    
 
     //게시판 선택값 가져오기
     @RequestMapping(value = "/trade/option.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

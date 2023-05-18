@@ -18,20 +18,39 @@
 			<div id="app">
 				<div class="container">
 					<div id="sellbox1">
-						<div class="cateF">
-							<template v-if="(item1n!=null && item2n!=null && item3n!=null)">
-								{{item1n}} > {{item2n}} > {{item3n}}  
-							</template>
-							<template v-else-if="(item1n!=null && item2n!=null && item3n==null)">
-								{{item1n}} > {{item2n}}  
-							</template>
-							<template v-else-if="(item1n!=null && item2n==null && item3n==null)">
-								{{item1n}} 
-							</template>
-							<template v-else>  
-							</template>
-							 
-						</div>
+						<template v-if="(brdset=='BF1')">
+							<div class="cateF">
+								<template v-if="(item1n!=null && item2n!=null && item3n!=null)">
+									거래 게시판 > {{item1n}} > {{item2n}} > {{item3n}}  
+								</template>
+								<template v-else-if="(item1n!=null && item2n!=null && item3n==null)">
+									거래 게시판 > {{item1n}} > {{item2n}}  
+								</template>
+								<template v-else-if="(item1n!=null && item2n==null && item3n==null)">
+									거래 게시판 > {{item1n}} 
+								</template>
+								<template v-else>  
+									거래 게시판 
+								</template>
+							</div>
+						</template>
+						<template v-else="(brdset=='BF2')">
+							<div class="cateF">
+								<template v-if="(item1n!=null && item2n!=null && item3n!=null)">
+									의뢰 게시판 > {{item1n}} > {{item2n}} > {{item3n}}  
+								</template>
+								<template v-else-if="(item1n!=null && item2n!=null && item3n==null)">
+									의뢰 게시판 > {{item1n}} > {{item2n}}  
+								</template>
+								<template v-else-if="(item1n!=null && item2n==null && item3n==null)">
+									의뢰 게시판 > {{item1n}} 
+								</template>
+								<template v-else>  
+									의뢰 게시판 
+								</template>
+							</div>
+						</template>
+
 						<div class="indexbox1">
 							<select class="indexL">
 								<option value="DESC">최신순</option>
@@ -86,14 +105,19 @@
 		var tlist = new Vue({ 
 		el: '#app',
 		data: {
-			// 가져오는값
+			// 리스트처리 값
 			list : [],
 			listcnt:0,
 			jimsumcnt:[],
+
+			//세션
+			brdset:"${mainlist.brdflg}",
+			// 세션
+			sessionId:"${sessionId}",
+			sessionName:"${sessionName}",
+			sessionNick:"${sessionNick}",
+			sessionUstatus:"${sessionUstatus}",
 			
-			selectbrd:"",
-
-
 			item1n:"",
 			item2n:"",
 			item3n:"",
@@ -114,9 +138,8 @@
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
-         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3};
-				   	console.log(startNum);
-					console.log(lastNum);
+         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3, brdset:self.brdset};
+					console.log(nparmap);
 				$.ajax({
 					url:"/trade/list.dox",
 					dataType:"json",	
@@ -192,7 +215,8 @@
 		}
 		, created: function () {
 			var self = this;
-			self.fnGetTradeList();		
+			self.fnGetTradeList();	
+			console.log(self.mainlist);	
 		}
 	});
 </script>

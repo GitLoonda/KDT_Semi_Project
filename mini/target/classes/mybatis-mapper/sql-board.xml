@@ -54,7 +54,15 @@
 	INNER JOIN T3_DESC D5 ON B.CATE3 = D5.CNUM
 	INNER JOIN T3_DESC D7 ON B.BSTATUS = D7.CNUM
 	LEFT JOIN (SELECT TBNO,PATH,REP FROM T3_TIMG WHERE REP='Y') T1 ON B.TBNO = T1.TBNO
-	WHERE DELYN="N" AND BRDFLG="BF1"
+	WHERE DELYN="N" 
+	<choose>
+		<when test="#{brdset}==null">
+			AND BRDFLG="BF1"
+		</when>
+		<otherwise>
+			AND BRDFLG=#{brdset}
+		</otherwise>
+	</choose>
 	<choose>
 		<when test="cate1 !=null and cate2!=null and cate3!=null">
 			AND CATE1=#{cate1} AND CATE2=#{cate2} AND CATE3=#{cate3}
@@ -73,23 +81,13 @@
 		</otherwise>
 	</choose>
 </select>
-<!-- 게시글 찜 리스트 -->
-<select id="selectjimtbnoList" parameterType="hashmap" resultType="com.mini.model.TbrdList">
-	SELECT 
-		T.TBNO AS TBNO,
-		COUNT(JJNO) AS SUMJIMCNT
-	FROM T3_TBRD T
-	LEFT JOIN T3_JJIM J ON T.TBNO=J.TBNO
-	GROUP BY T.TBNO
-</select>
-
 
 <!-- 게시글 전체 수 -->
 <select id="selectTbrdListCnt" parameterType="hashmap" resultType="int">
 	SELECT
 		COUNT(TBNO) AS TBRDCNT
 	FROM T3_TBRD
-	WHERE DELYN="N" AND BRDFLG="BF1"
+	WHERE DELYN="N" AND BRDFLG=#{brdset}
 	<choose>
 		<when test="cate1 !=null and cate2!=null and cate3!=null">
 			AND CATE1=#{cate1} AND CATE2=#{cate2} AND CATE3=#{cate3}
@@ -104,6 +102,18 @@
 		</otherwise>
 	</choose>
 </select>
+<!-- 게시글 찜 리스트 -->
+<select id="selectjimtbnoList" parameterType="hashmap" resultType="com.mini.model.TbrdList">
+	SELECT 
+		T.TBNO AS TBNO,
+		COUNT(JJNO) AS SUMJIMCNT
+	FROM T3_TBRD T
+	LEFT JOIN T3_JJIM J ON T.TBNO=J.TBNO
+	GROUP BY T.TBNO
+</select>
+
+
+
 
 <!-- tradeadd.do -->
 <!-- 카테고리 리스트  -->

@@ -459,7 +459,10 @@
 			// 사용자 정보
 			userinfo:{},
 			// 세션
-			sessionid:"test01",
+			sessionId:"${sessionId}",
+			sessionName:"${sessionName}",
+			sessionNick:"${sessionNick}",
+			sessionUstatus:"${sessionUstatus}",
 
 			// 게시판 리스트,말머리태그 설정
 			listbrdf:{},
@@ -474,7 +477,7 @@
 			listlocal3:{},
 			// INSERT 값
 			inlist:{
-				id:"test10",
+				id:"${sessionId}",
 				bprice:0,
 				btitle:"",
 				bcont:" ",
@@ -639,6 +642,22 @@
 			fnAddTrade : function(){
             var self = this;
             var nparmap = self.inlist;
+			if(self.inlist.brdflg=="0" || self.inlist.kind=="0"){
+				alert("게시판이나 말머리를 선택해주세요");
+				return;
+			}
+			if(self.inlist.btitle==null){
+				alert("제목을 입력해주세요");
+				return;
+			}
+			if(self.inlist.bprice==0){
+				alert("금액을 입력해주세요");
+				return;
+			}
+			if(self.inlist.cate1=="0"){
+				alert("상품 카테고리를 지정해 주세요")
+				return;
+			}
             $.ajax({
                 url:"/trade/insert.dox",
                 dataType:"json",	

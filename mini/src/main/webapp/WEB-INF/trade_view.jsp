@@ -279,7 +279,6 @@
 								<textarea class="infocont2" name="" id="" cols="30" rows="10" v-model="commcont"></textarea>
 								<button class="commbtn" @click="fncommIn()">등록</button>
 							</div>
-							{{tbno}},{{id}},{{commcont}}
 						</div>
 						<div  v-for="(commlist, index) in commlist">
 							<div class="commbox2" v-if="commlist.delYn == 'N'">
@@ -321,7 +320,12 @@
 		el: '#app',
 		data: {
 			tbno : "${trlist.tbno}",
-			id:"test10",
+			// 세션
+			sessionId:"${sessionId}",
+			sessionName:"${sessionName}",
+			sessionNick:"${sessionNick}",
+			sessionUstatus:"${sessionUstatus}",
+
 			file1:"",
 			cont:"",
 			none:true,
@@ -340,7 +344,7 @@
 			//게시글 상세 리스트
 			fnGetList : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno, id:self.id};
+         	  	var nparmap = {tbno : self.tbno, id:self.sessionId};
 				$.ajax({
 					url:"/tradeView/list.dox",
 					dataType:"json",	
@@ -357,7 +361,7 @@
 			// 댓글입력
 			fncommIn : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno, id:self.id , conetent:self.commcont};
+         	  	var nparmap = {tbno : self.tbno, id:self.sessionId , conetent:self.commcont};
 				$.ajax({
 					url:"/tradeView/commin.dox",
 					dataType:"json",	
@@ -404,7 +408,7 @@
 			// 찜등록
 			jmbtnin(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno,id : self.id};
+         	  	var nparmap = {tbno : self.tbno,id : self.sessionId};
 				$.ajax({
 					url:"/tradeView/jjimin.dox",
 					dataType:"json",	
@@ -420,7 +424,7 @@
 			// 찜삭제
 			jmbtnout(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno,id : self.id};
+         	  	var nparmap = {tbno : self.tbno,id : self.sessionId};
 				$.ajax({
 					url:"/tradeView/jjimout.dox",
 					dataType:"json",	
@@ -443,7 +447,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						self.jimsum=data.jimsum;
 					}
 				}); 
