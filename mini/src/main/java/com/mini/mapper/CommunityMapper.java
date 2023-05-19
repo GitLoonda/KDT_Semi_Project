@@ -41,7 +41,7 @@ public interface CommunityMapper {
     List<Cbrd> selectCbrdListcate2(HashMap<String, Object> map);
     
     //댓글 갯수
-    int selectsumcnt(HashMap<String, Object> map);
+
 	
 	// 댓글 추가
 	void insertCbrdComment(HashMap<String, Object> map);
