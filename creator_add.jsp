@@ -13,7 +13,7 @@
 </style>
 <body>
     <div id="app">
-        <br><br><br><br>
+        <br><br><br><br> 
     <div class="user_edit">
         <div class="creator_adbox">
         <h3><div class="creaddti">크리에이터 등록</div></h3>
@@ -71,7 +71,7 @@ var app = new Vue({
             });
         },
         OkCre: function() {
-        	alert("완료");
+        	alert("신청이 완료되었습니다");
             location.href = "/main.do";
         },
         Nocre: function() {

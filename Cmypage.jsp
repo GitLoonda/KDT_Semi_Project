@@ -11,7 +11,7 @@
 </head>
 <style>
 </style>
-<body>
+<body> 
   <div id="app">
   <div class="user_edit">
     <!--사용자 프로필-->
@@ -35,7 +35,7 @@
     <br>
     <b>소개/공지</b>
     <br>
-    <input type="text" placeholder="소개/공지란 입니다." readonly>
+    <input type="text" :placeholder="mypg.cintro" readonly>
     <br><br>
     <!--별 찍기(평점)-->
     <div class="Cmy_star">
@@ -55,7 +55,7 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
      <!-- 이력 -->
      <div class="Umy_text">정보</div>
-     <textarea class="Umy_box" readonly>{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>주소 : {{mypg.addr}} </textarea>
      <!--포트폴리오(이미지)-->
      <div class="Umy_text">포트폴리오</div>
      <div class="Cmy_Portfolio">
@@ -67,7 +67,7 @@
      </div>
      <!--후기 개수-->
      <div class="Umy_text">의뢰 후기(x건)</div>
-     <div class="Umy_box"></div>
+     <textarea class="Umy_box" style= "resize : none;" readonly ></textarea>>
   
 </div>
 </div>
@@ -78,9 +78,10 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-    	user : {}
+    	mypg : {}
     }   
     , methods: {
+    	// 프로필 내역 받아오기
     	fnGetInfo : function(){
             var self = this;
             var nparmap = {id : app.sessionId};
@@ -90,13 +91,15 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
-                	console.log(data.user);
-	                self.user = data.user;
+                	console.log(data.mypg);
+	                self.mypg = data.mypg;
                 }
             }); 
         }
-    ,
-			UpProfile(){
+
+    
+    //프로필 수정 버튼 클릭시 페이지 이동
+			,UpProfile(){
 		location.href ="/creedit.do";
 	}
     }   

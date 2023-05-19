@@ -13,7 +13,7 @@
 </style>
 <body>
 	<div id="app">
-	<div class="user_edit">
+	<div class="user_edit"> 
 	<!--사용자 프로필-->
 	<div class="Umypage_btn">
       <span>사용자프로필 </span>
@@ -32,40 +32,43 @@
               </div>
         </div>
      <div class="serve">
-    <input class="servename" type="text" :placeholder="user.name + '님'" readonly>
+    <input class="servename" type="text" placeholder="크리에이터 00님" readonly>
     <br>
     <b>소개/공지</b>
     <br>
-    <input type="text" placeholder="소개/공지란 입니다.">
+    <input type="text" :placeholder="mypg.cintro" readonly>
     <br><br>
-    <b>거래 평점</b>
     <!--별 찍기(평점)-->
+    <div class="Cmy_star">
+    <b>거래 평점</b>
     <div class="star-ratings">
       <div 
-        class="star-ratings-fill space-x-2 text-lg">
+        class="star-ratings-fill space-x-2 text-lg"
+      >
         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
       </div>
       <div class="star-ratings-base space-x-2 text-lg">
         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>( x 점 )
-      </div>
+    </div></div>
+    <br>
     </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br>
      <!-- 이력 -->
      <br> <br> <br>
      <div class="Umy_text">정보</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
      <div class="Umy_text">등록제품</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
      <div class="Umy_text">후기</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
     
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea></div>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea></div>
      </div>
     </div>
 </body>
@@ -74,9 +77,10 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-		user : {}
+    	mypg : {}
     }   
     , methods: {
+    	// 프로필 내역 받아오기
     	fnGetInfo : function(){
             var self = this;
             var nparmap = {id : app.sessionId};
@@ -86,12 +90,12 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
-                	console.log(data.user);
-	                self.user = data.user;
+                	console.log(data.mypg);
+	                self.mypg = data.mypg;
                 }
             }); 
         }
-    	
+
     	
 		, CreatAdd(){
 			location.href ="/creadd.do";

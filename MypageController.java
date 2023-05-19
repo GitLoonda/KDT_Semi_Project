@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.mini.model.User;
+import com.mini.model.Mypg;
 import com.mini.service.MypageService;
 
 import jakarta.servlet.http.HttpSession;
@@ -57,8 +57,8 @@ public class MypageController {
 	@ResponseBody
 	public String info1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		User user = mypageService.getUserInfo(map);
-		resultMap.put("user", user);
+		Mypg mypg = mypageService.getUserInfo(map);
+		resultMap.put("mypg", mypg);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
@@ -68,32 +68,11 @@ public class MypageController {
 	@ResponseBody
 	public String up1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		User user = mypageService.getProDown(map);
-		resultMap.put("user", user);
+		Mypg mypg = mypageService.getProDown(map);
+		resultMap.put("mypg", mypg);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
     
-  //프로필 상단 업데이트
-    @RequestMapping(value = "/user/uppro.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String up2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		User user = mypageService.getUserUpdate(map);
-		resultMap.put("user", user);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
-    
-  //프로필 상단(남김말/정보) 불러오기
-    @RequestMapping(value = "/user/infoup.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String info2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		User user = mypageService.getProUp(map);
-		resultMap.put("mypg", user);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
-    
+
 }
