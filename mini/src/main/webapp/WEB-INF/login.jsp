@@ -74,6 +74,7 @@
 			<div>계정이 없으신가요? <a href="javascript:;" @click="fnJoin">회원가입</a> </div>
 			<div>아이디가 기억나지 않으시나요? <a href="javascript:;" @click="fnFindId">아이디 찾기</a> </div>
 			<div>비밀번호가 기억나지 않으시나요? <a href="javascript:;" @click="fnFindPw">비밀번호 초기화</a> </div>
+			<h3><a href="/admin/login.do">☢ 관리자로 로그인 하시겠습니까? ☢</a> </h3>
 		</div>
 	</div> 
 </body>
