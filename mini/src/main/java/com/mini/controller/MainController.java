@@ -43,6 +43,18 @@ public class MainController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	@RequestMapping("/recent.do") //메인페이지
+    public String recent(Model model) throws Exception{
+		
+        return "/recent_list";
+    }
+	
+	@RequestMapping("/jjim.do") //메인페이지
+    public String jjim(Model model) throws Exception{
+		
+        return "/jjim_list";
+    }
+	
 	@RequestMapping("/denied.do") //메인페이지
     public String deny(Model model) throws Exception{
 		

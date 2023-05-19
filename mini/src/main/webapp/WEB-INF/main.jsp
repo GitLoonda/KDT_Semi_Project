@@ -14,7 +14,7 @@
 </style>
 <body>
 	<div id="app">
-		<carousel :per-page = "1">
+		<carousel :per-page="1" :autoplay="true" :loop="true">
             <slide>
                 <a class="label" href="javascript:;"><img src="assets/banner/11729.jpg" alt="banner1"></a>
             </slide>
@@ -77,7 +77,9 @@
             <div id="sellRc">
                 <div v-for="item in sellRcmd" @click="fnView(item.tbNo)" class="itembox">
                 	<a href="javascript:;">
-	                	<img :src="item.path" alt="itemImg">
+                		<div class="imgbox">
+                			<img :src="item.path" alt="itemImg">
+                		</div>
 	                    <p>{{item.bTitle}}</p>
 	                    <p>가격 : {{item.bPrice}}원</p>
 	                    <p>찜 : {{item.likes}}</p>
@@ -88,7 +90,9 @@
             <div id="buyRc">
                 <div v-for="item in buyRcmd" @click="fnView(item.tbNo)" class="itembox">
                     <a href="javascript:;">
-	                	<img :src="item.path" alt="itemImg">
+	                	<div class="imgbox">
+                			<img :src="item.path" alt="itemImg">
+                		</div>
 	                    <p>{{item.bTitle}}</p>
 	                    <p>가격 : {{item.bPrice}}원</p>
 	                    <p>찜 : {{item.likes}}</p>
@@ -126,7 +130,9 @@
             <div id="commRc">
                 <div v-for="item in commRcmd" @click="fnView(item.tbNo)" class="itembox">
                     <a href="javascript:;">
-	                	<img :src="item.path" alt="itemImg">
+	                	<div class="imgbox">
+                			<img :src="item.path" alt="itemImg">
+                		</div>
 	                    <p>{{item.bTitle}}</p>
 	                    <p>가격 : {{item.bPrice}}원</p>
 	                    <p>찜 : {{item.likes}}</p>

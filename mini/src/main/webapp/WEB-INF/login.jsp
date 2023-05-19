@@ -109,12 +109,17 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	console.log(data);
+                	if(data.result == "fail") {
+                		alert("입력하신 아이디, 비밀번호와 일치하는 계정이 존재하지 않습니다.");
+                		return;
+                	}
                 	if(data.user.id == self.id) {
                 		location.href= "main.do";
+                		return;
                 	}
-                	else if(data.result == "fail") {
+                	else {
                 		alert("입력하신 아이디, 비밀번호와 일치하는 계정이 존재하지 않습니다.");
+                		return;
                 	}
                 }
             }); 

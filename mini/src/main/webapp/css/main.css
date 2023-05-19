@@ -64,21 +64,38 @@
     justify-content: center;
     margin: 40px 0;
 }
+.commCateList a:hover > img {
+	box-shadow : 5px 5px 5px 0 #ccc;
+}
+.sellCateList a:hover > div img {
+	box-shadow : 5px 5px 5px 0 #ccc;
+}
 .itembox {
     margin: 0 20px;
     background-color: #ccc;
     border-radius : 5px;
 }
 .itembox:hover {
+	box-shadow : 3px 0px 10px 0 #ccc;
 	
 }
 .itembox img {
     width: 140px;
     height: 140px;
+    border-top-left-radius : 5px;
+    border-top-right-radius : 5px;
 }
 .itembox p {
 	font-size : 14px;
     margin-top: 0;
     margin-bottom: 5px;
     padding : 0 5px;
+}
+.imgbox {
+	width: 140px;
+    height: 140px;
+    border-top-left-radius : 5px;
+    border-top-right-radius : 5px;
+    background-image: url("../img/share/no-image01.gif");
+    background-size: 100% 150px;
 }
