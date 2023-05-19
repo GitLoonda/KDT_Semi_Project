@@ -47,9 +47,6 @@
 		height: 200px;
 		margin: 5px;
 	}
-	.commsecret {
-		text-align: right;
-	}
     .pimg{
     	width: 50px;
 		border-radius: 100%;
@@ -120,12 +117,12 @@
 				<div class="btns">
 					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnUpdate()" >수정</button>
 					<button v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemoveBoard()" >삭제</button>
-					<button v-else target="_blank" @click="fnReportBoard(cbno)" >신고</button>
+					<button v-else target="_blank" @click="fnReportBoard()" >신고</button>
 					<button @click="fnList()" class="btn">목록으로</button>
 				</div>
 				
 				<div class="commbox">
-					<h4>댓글 ({{info.commentcnt}}개)</h4>
+					<h4>댓글 ({{ccnt}}개)</h4>
 					<div v-if="sessionId != null">
 						<div>
 							<div class="commpath">첨부파일 <input type="file" id="file1"></div>
@@ -133,7 +130,7 @@
 						</div>
 						<textarea v-model="comment" rows="3" cols="100"></textarea>
 						<button @click="fnComment()" class="btn">등록</button>
-						<div class="commsecret"><input type="checkbox">비밀댓글 설정</div>
+						<div style="text-align: right"><input type="checkbox">비밀댓글 설정</div>
 					</div>
 				</div>
 				<div v-for="(item, index) in commentList">
@@ -151,13 +148,13 @@
 								<span class="coma" @click="fnRemoveComment(item)">삭제</span>
 							</span>
 							<span v-else>
-								<span class="coma" @click="fnReportComment(cbno)">신고</span>
+								<span class="coma" @click="fnReportComment()">신고</span>
 								<span class="coma" @click="">답글</span>
 							</span>
 							<span class="coma">{{item.cdate}}</span>
 						</div>
 					</div>
-					<div class="commbox" v-else>
+					<div v-else>
 						<span>
 						삭제된 댓글 입니다.
 						</span>
@@ -180,8 +177,9 @@ var app = new Vue({
        list : [] 
        , info : {}
        , cbno : "${map.cbno}"
-       , sessionId : ""
+       , sessionId : "test20"
        , sessionAdminflg : ""
+       , ccnt : ""
  	   , comment : ""
  	   , commentList : []
  	   , cInfo : {}
@@ -200,6 +198,7 @@ var app = new Vue({
                 	console.log(data);
 	                self.info = data.info;
 	                self.commentList = data.commentList;
+	                self.ccnt=data.ccnt;
                 }
             }); 
         }
@@ -265,14 +264,14 @@ var app = new Vue({
     	}
     	
     	//게시글 신고 팝업
-    	, fnReportBoard : function(cbno) {
+    	, fnReportBoard : function() {
     		let popUrl = "/reportboard.do";
     		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
     		window.open(popUrl,"게시글 신고",popOption);	
     	}
     	
     	//댓글 신고 팝업
-    	, fnReportComment : function(cbno) {
+    	, fnReportComment : function() {
     		let popUrl = "/reportcomment.do";
     		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
     		window.open(popUrl,"댓글 신고",popOption);	

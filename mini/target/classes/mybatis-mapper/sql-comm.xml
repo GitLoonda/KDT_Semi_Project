@@ -17,6 +17,13 @@
 		FROM T3_CBRD
 	</select>
 	
+	<!-- 게시글 댓글 수 -->
+	<select id="selectsumcnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(CNO) AS CCNT
+		FROM T3_CMRE
+		WHERE CBNO = #{cbno};
+	</select>
+	
 	<!-- 게시글 추가 -->
 	<select id="insertCbrd" parameterType="hashmap">
 		INSERT INTO mini_db2.T3_CBRD
@@ -96,18 +103,6 @@
 		WHERE CID="CATE2" AND PCOMM1=#{pcomm1}
 	</select>
 	
-	<!-- 게시글 댓글 수 -->
-	<select id="selectsumcnt" parameterType="hashmap" resultType="int">
-		UPDATE T3_CBRD B
-		SET B.COMMENTCNT = (
-			SELECT COUNT(CNO) AS CCNT
-			FROM T3_CMRE
-			WHERE CBNO = #{cbno}
-		)
-		WHERE B.CBNO = #{cbno}
-		;
-	</select>
-	
 	<!-- 댓글 추가 -->
 	<insert id="insertCbrdComment" parameterType="hashmap">
 		INSERT INTO T3_CMRE
@@ -115,13 +110,6 @@
 			<!-- (NULL, NULL, #{cbno}, #{userId}, #{conte}, NULL, NOW(), NULL, 0, 0, 'Y', 'N') --> 
 			(NULL, NULL, #{cbno}, 'test20', 'test', NULL, NOW(), NULL, 0, 0, 'Y', 'N')
 	</insert>
-	
-	<!-- 댓글 개수 -->
-	<update id="updateCommentcnt" parameterType="hashmap">
-		UPDATE T3_CBRD
-		SET COMMENTCNT = COMMENTCNT + 1
-		WHERE CBNO = #{cbno}
-	</update>
 	
 	<!-- 게시글 댓글 리스트 -->
 	<select id="selectCommentList" parameterType="hashmap" resultType="com.mini.model.Cmre">

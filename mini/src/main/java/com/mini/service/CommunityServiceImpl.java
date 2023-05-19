@@ -22,6 +22,7 @@ public class CommunityServiceImpl implements CommunityService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cnt", communityMapper.selectCbrdListCnt(resultMap));
 		resultMap.put("list", communityMapper.selectCbrdList(map));
+		resultMap.put("ccnt", communityMapper.selectsumcnt(map));
 		return resultMap;
 	}
 	
@@ -76,6 +77,7 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		resultMap.put("info", cbrd);
 		resultMap.put("commentList", commentList);
+		resultMap.put("ccnt", communityMapper.selectsumcnt(map));
 		return resultMap;
 	}
 	
@@ -84,20 +86,17 @@ public class CommunityServiceImpl implements CommunityService {
 	public void editCbrd(HashMap<String, Object> map) {
 		communityMapper.updateCbrd(map);
 	}
-	
-	//댓글 등록
+
 	@Override
 	public void addCbrdComment(HashMap<String, Object> map) {
 		communityMapper.insertCbrdComment(map);
 	}
-	
-	//댓글 삭제
+
 	@Override
 	public void removeComment(HashMap<String, Object> map) {
 		communityMapper.deleteComment(map);
 	}
 
-	//댓글 수정
 	@Override
 	public void editComment(HashMap<String, Object> map) {
 		communityMapper.updateComment(map);

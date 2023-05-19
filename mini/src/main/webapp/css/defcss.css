@@ -105,7 +105,7 @@
 }
 a {
     color: black;
-    /*font-weight: bold;*/
+    font-weight: bold;
 }
 #navbar .menu > li {
     list-style: none;

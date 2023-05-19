@@ -13,7 +13,6 @@ public class Cbrd {
 	private String cdate;
 	private String udate;
 	private String delYn;
-	private int commentcnt;
 	
 	
 	public int getCbno() {
@@ -75,12 +74,6 @@ public class Cbrd {
 	}
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
-	}
-	public int getCommentcnt() {
-		return commentcnt;
-	}
-	public void setCommentcnt(int commentcnt) {
-		this.commentcnt = commentcnt;
 	}
 	
 	

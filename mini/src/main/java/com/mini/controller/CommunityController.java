@@ -150,10 +150,10 @@ public class CommunityController {
 	}
 	
 	//댓글 신고 팝업
-	@RequestMapping("/reportcomment.do")
-	public String pop2() {
-		return "/report_comment";
-	}
+		@RequestMapping("/reportcomment.do")
+		public String pop2() {
+			return "/report_comment";
+		}
 	
 	//댓글
 	@RequestMapping(value = "/comm/comment.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

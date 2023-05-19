@@ -51,10 +51,6 @@
 		background-color: #eee;
 		border-bottom: 1px solid #000;
 	}
-	
-	table td a {
-		cursor: pointer;
-	}
 
 	table th {
 		border-bottom: 1px solid #000;
@@ -148,19 +144,11 @@
 					<tbody>
 						<!-- 글 삭제 X -->
 						<tr v-for="(item, index) in list" v-if="item.delYn == 'N'">
-							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
+							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							
-							<td v-if="item.cate1 == 'SPO'">[스포츠]</td>
-                            <td v-else-if="item.cate1 == 'CEL'">[연예인]</td>
-                            <td v-else-if="item.cate1 == 'MOV'">[영화]</td>
-                            <td v-else-if="item.cate1 == 'ANI'">[애니메이션]</td>
-                            <td v-else-if="item.cate1 == 'GAM'">[게임]</td>
-                            <td v-else></td>
-                            
-							<td v-if="item.commentcnt == 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}</a></td>
-							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}} ({{item.commentcnt}})</a></td>
-							
+							<td>[{{item.cate1}}]</td>
+							<td v-if="ccnt != 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}({{ccnt}})</a></td>
+							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}}</a></td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
 							<td v-if="item.udate == null">{{item.cdate}}</td>
@@ -170,14 +158,7 @@
 						<tr v-else>
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							
-							<td v-if="item.cate1 == 'SPO'">[스포츠]</td>
-                            <td v-else-if="item.cate1 == 'CEL'">[연예인]</td>
-                            <td v-else-if="item.cate1 == 'MOV'">[영화]</td>
-                            <td v-else-if="item.cate1 == 'ANI'">[애니메이션]</td>
-                            <td v-else-if="item.cate1 == 'GAM'">[게임]</td>
-                            <td v-else></td>
-                            
+							<td>[{{item.cate1}}]</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -196,7 +177,7 @@
 					<option value=""> 최신순 </option>
 					<option value=""> 조회순 </option>
 				</select>
-				<label><input type="text" v-model="keyword" @keyup.enter="fnGetList"></label>
+				<label><input type="text" v-model="keyword" ></label>
 				<button class="btn" @click="fnGetList" >검색</button>
 			</div>
 			<!-- 페이징 추가 3-->
@@ -228,6 +209,7 @@
 			list: [],
 			checkList : [],
 			listcnt: "",
+			ccnt: "",
 			keyword : "",
 			info : {},
 			listcate1:{},
@@ -264,6 +246,7 @@
 						console.log(data);
 						self.list = data.list;
 						self.listcnt = data.cnt;
+						self.ccnt = data.ccnt;
 						self.pageCount = Math.ceil(self.listcnt / 15);
 					}
 				});
