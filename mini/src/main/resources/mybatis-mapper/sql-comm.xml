@@ -5,16 +5,58 @@
 	
 	<!-- 게시판 리스트 -->
 	<select id="selectCbrdList" parameterType="hashmap" resultType="com.mini.model.Cbrd">
-		SELECT * 
-		FROM T3_CBRD
-		ORDER BY CBNO DESC, CDATE DESC
-		LIMIT #{startNum}, #{lastNum}
+		SELECT 
+			CBNO, 
+			ID, 
+			CATE1, 
+			CATE2, 
+			CTITLE, 
+			CCONT, 
+			HITS, 
+			CDATE, 
+			UDATE, 
+			DELYN, 
+			COMMENTCNT, 
+			D1.CINFO AS CATE1NAME, 
+			D2.CINFO AS CATE2NAME
+		FROM T3_CBRD B
+		INNER JOIN T3_DESC D1 ON B.CATE1 = D1.CNUM
+		INNER JOIN T3_DESC D2 ON B.CATE2 = D2.CNUM
+		
+		<choose>
+			<when test="cate1 != null and cate2 != null">
+				AND D1.CINFO = #{cate1} AND D2.CINFO = #{cate2}
+				ORDER BY CBNO DESC 
+				LIMIT #{startNum}, #{lastNum} 
+			</when>
+			<when test="cate1 != null and cate2 == null">
+				AND D1.CINFO = #{cate1}
+				ORDER BY CBNO DESC 
+				LIMIT #{startNum}, #{lastNum}
+			</when>
+			<otherwise>
+				ORDER BY CBNO DESC 
+				LIMIT #{startNum}, #{lastNum}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<!-- 총 게시글 수 -->
 	<select id="selectCbrdListCnt" parameterType="hashmap" resultType="int">
 		SELECT COUNT(CBNO) AS CBRDCNT
-		FROM T3_CBRD
+		FROM T3_CBRD B
+		INNER JOIN T3_DESC D1 ON B.CATE1 = D1.CNUM
+		INNER JOIN T3_DESC D2 ON B.CATE2 = D2.CNUM
+		<choose>
+			<when test="cate1 != null and cate2 != null">
+				AND D1.CINFO = #{cate1} AND D2.CINFO = #{cate2}
+			</when>
+			<when test="cate1 != null and cate2 == null">
+				AND D1.CINFO = #{cate1}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
 	</select>
 	
 	<!-- 게시글 댓글 수 -->

@@ -111,18 +111,16 @@
 			<div class="category_path">
 				<a href="main.do"> 홈 </a> 
 				<span>  >  </span>
-				<a href="comm.do"> 커뮤니티 </a> 
-				<span>  >  </span>
 				<span>
-					<select v-model="inlist.cate1" id="cate" @click="cate2List()">
-						<option value="0" hidden>1차</option>
-						<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
-					</select>
-					<span>  >  </span>
-					<select v-model="inlist.cate2" id="cate" >
-						<option value="0" hidden>2차</option>
-						<option v-for="(cate2, index) in listcate2" :value="cate2.cnum">{{cate2.cinfo}}</option>
-					</select>
+					<template v-if="(test1 != null && test2 != null)">
+						커뮤니티 > {{test1}} > {{test2}}
+					</template>
+					<template v-else-if="(test1 != null && test2 == null)">
+						커뮤니티 > {{test1}} 
+					</template>
+					<template v-else>  
+						커뮤니티 
+					</template>					
 				</span>
 			</div>
 			<div class="listcnt">
@@ -146,8 +144,8 @@
 						<tr v-for="(item, index) in list" v-if="item.delYn == 'N'">
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							<td>[{{item.cate1}}]</td>
-							<td v-if="ccnt != 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}({{ccnt}})</a></td>
+							<td >[{{test1}}]</td>
+							<td v-if="item.commentcnt != 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}({{item.commentcnt}})</a></td>
 							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}}</a></td>
 							<td>{{item.hits}}</td>
 							<td>{{item.id}}</td>
@@ -158,7 +156,7 @@
 						<tr v-else>
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							<td>[{{item.cate1}}]</td>
+							<td>[{{test1}}]</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -209,17 +207,15 @@
 			list: [],
 			checkList : [],
 			listcnt: "",
-			ccnt: "",
 			keyword : "",
 			info : {},
-			listcate1:{},
-			listcate2:{},
-			inlist:{
-				cate1:"0",
-				cate2:"0"
-			},
-		    sessionId : "",
-		    sessionAdminflg : "",
+			
+		    sessionId : "${sessionId}",
+		    sessionNick : "${sessionNick}",
+		    sessionAdminflg : "${sessionAdminflg}",
+		    
+		   	test1 : "${mainlist.cinfo1}",
+		    test2 : "${mainlist.cinfo2}",
 		    
 		    
 			/* 페이징 추가 5 */
@@ -231,12 +227,14 @@
 			// 리스트 불러오기,페이징6
 			fnGetList: function () {
 				var self = this;
+				self.item1=item1;
+				self.item2=item2;
+				console.log(self.item1);
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage - 1) * 15);
 				var lastNum = 15;
-				var nparmap = {keyword : self.keyword, kind : self.selectItem, startNum: startNum, lastNum: lastNum };
-				console.log(startNum);
-				console.log(lastNum);
+				var nparmap = {startNum: startNum, lastNum: lastNum, item1: self.test1, item2: self.test2};
+				console.log(nparmap);
 				$.ajax({
 					url: "/comm/list.dox",
 					dataType: "json",
@@ -246,7 +244,6 @@
 						console.log(data);
 						self.list = data.list;
 						self.listcnt = data.cnt;
-						self.ccnt = data.ccnt;
 						self.pageCount = Math.ceil(self.listcnt / 15);
 					}
 				});
@@ -257,7 +254,7 @@
 				self.selectPage = pageNum;
 				var startNum = ((pageNum - 1) * 15);
 				var lastNum = 15;
-				var nparmap = { startNum: startNum, lastNum: lastNum };
+				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: self.test1, cate2: self.test2};
 				$.ajax({
 					url: "/comm/list.dox",
 					dataType: "json",
@@ -302,12 +299,19 @@
 			}
 			
 			, fnAdd: function () {
-				location.href = "/commadd.do";
+				var self = this;
+				console.log(self.sessionId);
+				if(self.sessionId == ''){
+					alert("로그인이 필요합니다.");
+					location.href="login.do";
+				} else {
+				location.href = "commadd.do";
+				}
 			}
 			
 	    	, fnView : function(cbno){
 	    		var self = this;
-	    		self.pageChange("/commread.do", {cbno : cbno});
+	    		self.pageChange("commread.do", {cbno : cbno});
 	    	}
 	    	
 	    	, fnRemove : function(cno){
@@ -327,44 +331,15 @@
 	                 }
 	             }); 
 	    	}
-	    	
-	    	, cate1List : function(){
-				var self = this;
-				var nparmap = {};
-				$.ajax({
-					url:"/comm/cate1.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data)
-						self.listcate1 = data.listcate1;
-					}
-				});
-	    	}
-        	
-	    	, cate2List : function(){
-				var self = this;
-				var nparmap = {pcomm1 : self.inlist.cate1};
-				$.ajax({
-					url:"/comm/cate2.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data)
-						self.listcate2 = data.listcate2
-					}
-				});
-				
-			}
+	
 
 
 		}
 		, created: function () {
 			var self = this;
 			self.fnGetList();
-			self.cate1List();
+			console.log("${mainlist}");
+			console.log(self.test1, self.test2)
 		}
 	
 	});

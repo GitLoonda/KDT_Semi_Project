@@ -1,4 +1,4 @@
-package com.mini.controller;
+	package com.mini.controller;
 
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,9 @@ public class CommunityController {
 	
 	@RequestMapping("/comm.do") //커뮤니티 게시판 메인
     public String main(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("mainlist", map);
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
 		request.setAttribute("sessionAdminflg", session.getAttribute("sessionAdminflg"));
 
         return "/comm_list";
