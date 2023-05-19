@@ -75,7 +75,7 @@
 		                                    </a>
 		                                    <ul class="dep3">
 				                                <li  v-for="item3 in cate3">
-				                                    <a href="javascript:;"@click="fnCateSelect(item.cNum,item.cInfo, item2.cNum,item2.cInfo,item3.cNum,item3.cInfo)">
+				                                    <a href="javascript:;"@click="fnCateSelect(item.cNum,item.cInfo,item2.cNum,item2.cInfo,item3.cNum,item3.cInfo)">
 				                                    {{item3.cInfo}}
 				                                    </a>
 				                                </li>
@@ -97,7 +97,14 @@
                         </div>
                     </li>
                     <li v-for="item in cate1">
-                        <a href="javascript:;" @click="fnComm(item.cNum,item.cInfo)">{{item.cInfo}}</a>
+                        <a href="javascript:;" @click="fnComm(item.cNum, item.cInfo)">{{item.cInfo}}</a>
+                        <div class="category">
+                            <ul class="dep1">
+                                <li v-for="item2 in cate2">
+                                    <a v-if="item2.pComm1 == item.cNum" @click="fnComm(item.cNum, item.cInfo, item2.cNum, item2.cInfo)" href="javascript:;">{{item2.cInfo}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -219,9 +226,15 @@
        				return;
        			}
         	}
-        	, fnComm : function(item, item2) {
+        	, fnComm : function(item, item2, item3, item4) {
         		var self = this;
-        		self.pageChange("/comm.do", {cnum : item, cinfo : item2});
+        		if (item3 == null) {
+        			self.pageChange("/comm.do", {cnum1 : item, cinfo1 : item2});
+        		}
+        		else {
+        			self.pageChange("/comm.do", {cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4});
+        		}
+        		
         	}
         	, pageChange : function(url, param) {
         		var target = "_self";

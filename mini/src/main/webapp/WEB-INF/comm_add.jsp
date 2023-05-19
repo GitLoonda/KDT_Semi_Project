@@ -140,7 +140,6 @@ var app = new Vue({
             	alert("1차 카테고리를 선택하세요.");
             	return;
             }
-            
             if(self.inlist.cate2 == "0"){
             	alert("2차 카테고리를 선택하세요.");
             	return;
@@ -154,7 +153,10 @@ var app = new Vue({
             	return;
             }
             
-            var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
+            var nparmap = {ctitle : self.ctitle
+            				, ccont : self.ccont
+            				, cate1 : self.inlist.cate1
+            				, cate2 : self.inlist.cate2};
             console.log( self.ccont );
             $.ajax({
                 url:"/comm/add.dox",
