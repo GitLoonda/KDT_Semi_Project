@@ -5,94 +5,12 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
+	<link rel="stylesheet" href="css/main.css">
 	<script src="https://ssense.github.io/vue-carousel/js/vue-carousel.min.js"></script>
 	<title>메인</title>
 </head>
 <style>
-	 #container {
-         width : 1080px;
-         margin: auto;
-         position: static;
-         z-index: 1;
-     }
-     .VueCarousel-wrapper {
-     	width : 1080px;
-     	height : 300px;
-     	margin : auto;
-     	z-index: 1;
-     }
-     .VueCarousel-slide {
-		 position: relative;
-		 background: #fff;
-		 color: #fff;
-		 font-family: Arial;
-	  	 font-size: 24px;
-	  	 text-align: center;
-	  	 min-height : 300px;
-	  	 width : 100%;
-	  	 z-index: 1;
-	 }
-	 .label {
-	 	 position: absolute;
-		 top: 50%;
-		 left: 50%;
-		 transform: translate(-50%, -50%);
-		 width : 100%;
-		 height : 100%;
-		 z-index: 1;
-	 }
-	 .label img {
-	 	 width : 100%;
-		 height : 100%;
-		 z-index: 1;
-	 }
-     #container h2 {
-         margin-left: 4em;
-         margin-top: 40px;
-     }
-     #sellCategory, #commCategory {
-         display: flex;
-         justify-content: center;
-         margin: 40px 0;
-     }
-     .sellCateList, .commCateList {
-         text-align: center;
-         font-weight: bold;
-         margin: 0 30px;
-     }
-     .sellCateList img {
-         width: 120px;
-         height: 120px;
-         border-radius: 25%;
-     }
-     .commCateList img {
-         width: 120px;
-         height: 120px;
-         border-radius: 50%;
-     }
-     #sellRc, #buyRc, #commRc{
-         display: flex;
-         justify-content: center;
-         margin: 40px 0;
-     }
-     .itembox {
-         margin: 0 20px;
-         background-color: #ccc;
-         border-radius : 5px;
-     }
-     .itembox:hover {
-     	
-     }
-     .itembox img {
-         width: 140px;
-         height: 140px;
-     }
-     .itembox p {
-     	 font-size : 14px;
-         margin-top: 0;
-         margin-bottom: 5px;
-         padding : 0 5px;
-     }
+	
 </style>
 <body>
 	<div id="app">
@@ -106,9 +24,12 @@
             <slide>
                 <a class="label" href="javascript:;"><img src="assets/banner/11732.jpg" alt="banner3"></a>
             </slide>
+            <slide>
+                <a class="label" href="javascript:;"><img src="img/board/160628_7.png" alt="banner4"></a>
+            </slide>
         </carousel>
         <div id="container">
-            <a @click="fnTrade" href="javascript:;"><h2>상품거래 카테고리</h2></a>
+            <a><h2>상품거래 카테고리</h2></a>
             <div id="sellCategory">
                 <div class="sellCateList">
                     <a @click="fnCateSelect('SPO')" href="javascript:;">
@@ -152,7 +73,7 @@
                 </div>
                 
             </div>
-            <a href="javascript:;"><h2>오늘의 팔아요</h2></a>
+            <a><h2>오늘의 팔아요</h2></a>
             <div id="sellRc">
                 <div v-for="item in sellRcmd" @click="fnView(item.tbNo)" class="itembox">
                 	<a href="javascript:;">
@@ -163,7 +84,7 @@
                 	</a>
                 </div>
             </div>
-            <a href="javascript:;"><h2>오늘의 구해요</h2></a>
+            <a><h2>오늘의 구해요</h2></a>
             <div id="buyRc">
                 <div v-for="item in buyRcmd" @click="fnView(item.tbNo)" class="itembox">
                     <a href="javascript:;">
@@ -174,7 +95,7 @@
                 	</a>
                 </div>
             </div>
-            <a @click="fnTrade" href="javascript:;"><h2>의뢰 카테고리</h2></a>
+            <a><h2>의뢰 카테고리</h2></a>
             <div id="commCategory">
                 <div class="commCateList">
                     <a @click="fnCateSelect('BM1')" href="javascript:;">
@@ -201,7 +122,7 @@
                    </a>
                 </div>
             </div>
-            <a href="javascript:;"><h2>오늘의 의뢰</h2></a>
+            <a><h2>오늘의 의뢰</h2></a>
             <div id="commRc">
                 <div v-for="item in commRcmd" @click="fnView(item.tbNo)" class="itembox">
                     <a href="javascript:;">
@@ -223,8 +144,7 @@
 	    	rcm : [],
 	    	sellRcmd : [],
 	    	buyRcmd : [],
-	    	commRcmd : [],
-	    	index : 0
+	    	commRcmd : []
 	    }   
 		, components : {
 			'carousel' : VueCarousel.Carousel,
@@ -247,36 +167,6 @@
 	                }
 	            }); 
 	        }
-		    , fnPage : function(i) {
-	    		var self = this;
-	    		var slide = document.getElementById('slide');
-	    		slide.style.transform = 'translate3d(-' + (-1080 * i) + 'px, 0, 0)';
-	    		console.log(slide.style.transform);
-	    	} 
-	    	, fnPrev : function() {
-	    		var self = this;
-	    		var slide = document.getElementById('slide');
-	    		if (self.index == 0) {
-	    			self.index = 4;
-	    		}
-	    		else {
-	    			self.index -= 1;
-	    		}
-	    		slide.style.transform = 'translate3d(-' + (-1080 * self.index) + 'px, 0, 0)';
-	    		console.log(slide.style.transform);
-	    	} 
-	    	, fnNext : function() {
-	    		var self = this;
-	    		var slide = document.getElementById('slide');
-	    		if (self.index == 4) {
-	    			self.index = 0;
-	    		}
-	    		else {
-	    			self.index += 1;
-	    		}
-	    		slide.style.transform = 'translate3d(-' + (-1080 * self.index) + 'px, 0, 0)';
-	    		console.log(slide.style.transform);
-	    	}
 	    	, pageChange : function(url, param) {
 	    		var target = "_self";
 	    		if(param == undefined){
@@ -306,9 +196,6 @@
 	    		form.submit();
 	    		document.body.removeChild(form);
 	    	}
-	    	, fnTrade : function() {
-        		location.href = "/trade.do";       		 
-        	}
 	    	, fnCateSelect : function(item) {
         		var self = this;
         		self.pageChange("/trade.do", {cate1 : item});       		 

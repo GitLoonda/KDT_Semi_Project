@@ -181,36 +181,43 @@
         		var self = this;
         		self.pageChange("/trade.do", {brdflg : i});
         	}
-        	
         	, fnCateSelect : function(item, item2, item3, item4, item5, item6) {
         		var self = this;
         		if(typeof tlist !== 'undefined') {
-        			 tlist.fnGetTradeList(item, item2, item3, item4, item5, item6);
-        			 return;
+        			tlist.fnGetTradeList(item, item2, item3, item4, item5, item6);
+        			return;
         		}
         		else {
         			if(item2 == null) {
-            		 	self.pageChange("/trade.do", {cate1 : item, cate2 : null, cate3 : null});
+            			self.pageChange("/trade.do", {cate1 : item, cate2 : null, cate3 : null});
             		 	return;
-            		 }
-            		 else if(item3 == null) {
+            		}
+            		else if(item3 == null) {
             		 	self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : null});
             		 	return;
-            		 }else{
-                         self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : item5});
-                     }
+            		} else {
+                        self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : item5});
+                    }
         		}
-               
-        		 
         	}
         	, fnSearch : function(){
         		var self = this;
-        		if(self.option == "구매" || self.option == "판매" || self.option == "의뢰") {
-        			self.pageChange("/trade.do", {option : self.option, keyword : self.keyword});
-        		}
-        		else {
+        		if(self.option == null || self.option == "") {
         			alert("게시판을 선택해주세요.");
+        			return;
         		}
+       			if(self.option == "구매") {
+       				self.pageChange("/trade.do", {brdflg : 1, kind : 1, keyword : self.keyword});
+       				return;
+       			}
+       			if(self.option == "판매") {
+       				self.pageChange("/trade.do", {brdflg : 1, kind : 2, keyword : self.keyword});
+       				return;
+       			}
+       			if(self.option == "의뢰") {
+       				self.pageChange("/trade.do", {brdflg : 2, kind : 3, keyword : self.keyword});
+       				return;
+       			}
         	}
         	, fnComm : function(item, item2) {
         		var self = this;

@@ -43,4 +43,10 @@ public class MainController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	@RequestMapping("/denied.do") //메인페이지
+    public String deny(Model model) throws Exception{
+		
+        return "/access_denied";
+    }
+	
 }
