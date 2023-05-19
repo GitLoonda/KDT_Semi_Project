@@ -31,7 +31,7 @@
 		    FROM T3_TIMG
 		    WHERE REP = "Y"
 		) I ON B.TBNO = I.TBNO
-		WHERE D1.CINFO = "거래게시판" AND D2.CINFO = "판매" AND DELYN ="N"
+		WHERE D1.CINFO = "거래게시판" AND D2.CINFO = "판매" AND DELYN ="N" AND BSTATUS NOT IN ("BS4", "BS5")
 		ORDER BY LIKES DESC
 		LIMIT 5
 	</select>
@@ -54,7 +54,7 @@
 		    FROM T3_TIMG
 		    WHERE REP = "Y"
 		) I ON B.TBNO = I.TBNO
-		WHERE D1.CINFO = "거래게시판" AND D2.CINFO = "구매" AND DELYN ="N"
+		WHERE D1.CINFO = "거래게시판" AND D2.CINFO = "구매" AND DELYN ="N" AND BSTATUS NOT IN ("BS4", "BS5")
 		ORDER BY LIKES DESC
 		LIMIT 5
 	</select>
@@ -77,7 +77,7 @@
 		    FROM T3_TIMG
 		    WHERE REP = "Y"
 		) I ON B.TBNO = I.TBNO
-		WHERE D1.CINFO = "의뢰게시판" AND DELYN ="N"
+		WHERE D1.CINFO = "의뢰게시판" AND DELYN ="N" AND BSTATUS NOT IN ("BS4", "BS5")
 		ORDER BY LIKES DESC
 		LIMIT 5
 	</select>
