@@ -31,15 +31,15 @@
               </div>
         </div>
         <div class="serve">
-    <input class="servename" type="text" placeholder="크리에이터 00님" readonly>
+    <input class="servename" type="text" :placeholder="mypg.nick + '님'" readonly>
     <br>
     <b>남김말</b>
     <br>
-    <input class=twobox type="text" placeholder="남김말 입니다.">
+    <input class=twobox type="text" v-model="mypg.intro" :placeholder="mypg.intro">
     <br>
     <b>정보</b>
     <br>
-    <input class=twobox type="text" placeholder="정보 입니다.">
+    <input class=twobox type="text" v-model="mypg.addr" :placeholder="mypg.addr">
     </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -65,43 +65,43 @@
         <ul>
             <li>
               <label>아이디</label>
-              <input type="text" :placeholder="user.id" readonly>
+              <input type="text" :placeholder="mypg.id" readonly>
             </li>
             <li>
               <label>비밀번호</label>
-              <input v-model="list.passwd" type="password">
+              <input v-model="mypg.passwd" type="password">
             </li>  
             <li>
               <label>비밀번호 확인</label>
-              <input v-model="list.passwd2" type="password">
+              <input v-model="mypg.passwd2" type="password">
             </li>  
             <li>
               <label>전화번호</label>
-              <input v-model="list.phone" type="text">
+              <input v-model="mypg.phone" type="text">
             </li>
             <br>
             <li>
                 <label>이메일</label>
-                    <input type="text" v-model="list.email" style="width : 150px"> @  
+                    <input type="text" v-model="mypg.email" style="width : 150px"> @  
                     <select>
                         <option value="1">도메인</option>
                         <option value="naver">naver.com</option>
-                        <option value="1">daum.net</option>
-                        <option value="1">hanmail.com</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="hanmail.com">hanmail.com</option>
                         </select>
               </li> 
               <br><br>
               <li>
                 <label for="add">
                     주소</label>
-               <input v-model="addr" type="text" style="width: 150px" class="in3" placeholder=" 주소" disabled></input>
+               <input v-model="mypg.addr" type="text" style="width: 150px" class="in3" placeholder=" 주소" disabled></input>
 				<button id="btn" @click="fnSearchAddr">주소 찾기</button><br>
-				<input v-model="addrDetail" type="text" class="in" placeholder=" 상세주소"
+				<input v-model="mypg.addrDetail" type="text" class="in" placeholder=" 상세주소"
 				style="margin-left : 340px; padding-right : 100px; width:270px"></input></li>
             </div>          
           </ul>
 <br>
-    <button class="updatebtn1" @click="fnSignIn">수정 완료</button>
+    <button class="updatebtn1" @click="fnUserUpdate">수정 완료</button>
 </div>
 </div>
 </body>
@@ -120,7 +120,8 @@ var app = new Vue({
 	, list : []
 	, dropArea : ""
 	, fileList : ""
-	, user : {}
+	, mypg : {}
+    , domain : ""
     }   
     , methods: {
     	fnGetInfo : function(){
@@ -132,58 +133,82 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
-                	console.log(data.user);
-	                self.user = data.user;
+                	console.log(data.mypg);
+	                self.mypg = data.mypg;
+	                self.mypg.intro = "";
+	                self.mypg.cintro = "";
+	                self.mypg.passwd = "";
+	                self.mypg.phone = "";
+	                self.mypg.email = "";
+	                self.mypg.addr = "";
                 }
             }); 
         }
-    	,fnSearchAddr : function(){ // 주소 검색창 생성
-    		var self = this;
-    		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
-    		window.open("addr.do", "test", option);
-    	}
-		, fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
-    		var self = this;
-    		self.roadFullAddr = roadFullAddr;
-    		// 도로명 주소
-    		self.addr = roadAddrPart1;
-    		// 상세 주소
-    		self.addrDetail = addrDetail;
-    	}
-		, fnSignIn : function() {
-			var self = this;
-			var pwJ = /^[A-Za-z0-9]{6,12}$/;
-			var nmJ = /^[ㄱ-힣]{2,6}$/;
-			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
+	,  fnSearchAddr : function(){ // 주소 검색창 생성
+		var self = this;
+		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+		window.open("addr.do", "test", option);
+	}
+	, fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+		var self = this;
+		self.roadFullAddr = roadFullAddr;
+		// 도로명 주소
+		self.mypg.addr = roadAddrPart1;
+		// 상세 주소
+		self.mypg.addrDetail = addrDetail;
+	}
+
+	,  
+	//프로필 하단 정보수정란
+	fnUserUpdate : function(){
+    	var self = this;
+    	var pwJ = /^[A-Za-z0-9]{6,12}$/;
+		var nmJ = /^[ㄱ-힣]{2,6}$/;
+		var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
+    	if(self.mypg.passwd != self.mypg.passwd2){
+			alert("비밀번호 두개가 다르다");
+			return;
+		} 
+    	if(!pwJ.test(self.mypg.passwd)) {
+			alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
+			return;
+		}
+		if(self.mypg.passwd != self.mypg.passwd2) {
+			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			return;
+		}
+		if(self.mypg.phone == null) {
+			alert("전화번호를 입력해주세요.");
+			return;
+		}
+		if(self.mypg.email == null) {
+			alert("이메일을 입력해주세요.");
 			
-			if(self.list.passwd == null || self.list.passwd2 == null) {
-				alert("비밀번호와 비밀번호 확인을 입력해주세요.");
-				return;
-			}
-			if(!pwJ.test(self.list.passwd)) {
-				alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
-				return;
-			}
-			if(self.list.passwd != self.list.passwd2) {
-				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-				return;
-			}
-			if(self.list.phone == null) {
-				alert("전화번호를 입력해주세요.");
-				return;
-			}
-			if(self.list.email == null) {
-				alert("이메일을 입력해주세요.");
-				return;
-			}
-			alert("수정완료");
-			location.href ="/Cpage.do"
+		} else {
+			self.mypg.email =  self.mypg.email + "@" + self.domain;
+		}
+		if(self.mypg.addr == null) {
+			alert("주소를 입력해주세요.");
+			
+		} else {
+			self.mypg.addr =  self.mypg.addr + " " +self.mypg.addrDetail;
+		}
 		
-    }   
-	
-		
-		
-    }   
+    	var nparmap = self.mypg;
+    	console.log(self.mypg);
+           $.ajax({
+                url:"/mypage/edit.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	alert("수정되었습니다.");
+                	console.log(data);
+                	
+                }
+        }); 
+    }
+} 
     , created: function () {
     	var self = this;
     	self.fnGetInfo();

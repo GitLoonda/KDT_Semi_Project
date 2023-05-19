@@ -30,15 +30,15 @@
               </div>
         </div>
         <div class="serve">
-      <input class="servename" type="text" :placeholder="user.name + '님'" readonly>
+      <input class="servename" type="text" :placeholder="mypg.name + '님'" readonly>
     <br>
     <b>남김말</b>
     <br>
-    <input class=twobox type="text" :placeholder="user.intro">
+    <input class=twobox type="text" v-model="mypg.intro" :placeholder="mypg.intro">
     <br>
     <b>정보</b>
     <br>
-    <input class=twobox type="text" placeholder="정보 입니다.">
+    <input class=twobox type="text" v-model="mypg.intro" :placeholder="mypg.intro">
     </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -64,38 +64,38 @@
         <ul>
             <li>
               <label>아이디</label>
-              <input type="text" v-model="list.id" :placeholder="user.id" readonly>
+              <input type="text" v-model="mypg.id" :placeholder="mypg.id" readonly>
             </li>
             <li>
               <label>비밀번호</label>
-              <input v-model="list.passwd" type="password">
+              <input v-model="mypg.passwd" type="password">
             </li>  
             <li>
               <label>비밀번호 확인</label>
-              <input v-model="list.passwd2" type="password">
+              <input v-model="mypg.passwd2" type="password">
             </li>  
             <li>
               <label>전화번호</label>
-              <input v-model="list.phone" type="text">
+              <input v-model="mypg.phone" type="text">
             </li>
             <br>
             <li>
                 <label>이메일</label>
-                    <input type="text" v-model="list.email" style="width : 150px"> @  
-                    <select>
+                    <input type="text" v-model="mypg.email" style="width : 150px"> @  
+                    <select v-model="domain">
                         <option value="1">도메인</option>
-                        <option value="naver">naver.com</option>
-                        <option value="1">daum.net</option>
-                        <option value="1">hanmail.com</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="hanmail.com">hanmail.com</option>
                         </select>
               </li> 
               <br><br>
               <li>
                 <label for="add">
                     주소</label>
-               <input v-model="addr" type="text" style="width: 150px" class="in3" placeholder=" 주소" disabled></input>
+               <input v-model="mypg.addr" type="text" style="width: 150px" class="in3" placeholder=" 주소" disabled></input>
 				<button id="btn" @click="fnSearchAddr">주소 찾기</button><br>
-				<input v-model="addrDetail" type="text" class="in" placeholder=" 상세주소"
+				<input v-model="mypg.addrDetail" type="text" class="in" placeholder=" 상세주소"
 				style="margin-left : 340px; padding-right : 100px; width:270px"></input></li>
             </div>          
           </ul>
@@ -112,15 +112,16 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 var app = new Vue({ 
     el: '#app',
     data: {
-    	user : {}
-	,  roadFullAddr : ""
-	, addr : ""
-	, addrDetail : ""
-	, list : []
-	,joinId : ""
-	,passwd : ""
-	,passwd2 : ""
-	,name : ""
+    	mypg : {}
+		, roadFullAddr : ""
+		, addr : ""
+		, addrDetail : ""
+		, list : []
+		, joinId : ""
+		, passwd : ""
+		, passwd2 : ""
+		, name : ""
+		, domain : ""
 	
     }   
     , methods: {
@@ -133,8 +134,14 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
-                	console.log(data.user);
-	                self.user = data.user;
+                	console.log(data.mypg);
+	                self.mypg = data.mypg;
+	                self.mypg.intro = "";
+	                self.mypg.cintro = "";
+	                self.mypg.passwd = "";
+	                self.mypg.phone = "";
+	                self.mypg.email = "";
+	                self.mypg.addr = "";
                 }
             }); 
         }
@@ -148,18 +155,49 @@ var app = new Vue({
     		var self = this;
     		self.roadFullAddr = roadFullAddr;
     		// 도로명 주소
-    		self.addr = roadAddrPart1;
+    		self.mypg.addr = roadAddrPart1;
     		// 상세 주소
-    		self.addrDetail = addrDetail;
+    		self.mypg.addrDetail = addrDetail;
     	}
 
-		, fnUserUpdate : function(){
+		,  
+		//프로필 하단 정보수정란
+		fnUserUpdate : function(){
 	    	var self = this;
-	    	if(self.list.passwd != self.list.passwd2){
+	    	var pwJ = /^[A-Za-z0-9]{6,12}$/;
+			var nmJ = /^[ㄱ-힣]{2,6}$/;
+			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
+	    	if(self.mypg.passwd != self.mypg.passwd2){
     			alert("비밀번호 두개가 다르다");
     			return;
     		} 
-	    	var nparmap = self.info;
+	    	if(!pwJ.test(self.mypg.passwd)) {
+				alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
+				return;
+			}
+			if(self.mypg.passwd != self.mypg.passwd2) {
+				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				return;
+			}
+			if(self.mypg.phone == null) {
+				alert("전화번호를 입력해주세요.");
+				return;
+			}
+			if(self.mypg.email == null) {
+				alert("이메일을 입력해주세요.");
+				
+			} else {
+				self.mypg.email =  self.mypg.email + "@" + self.domain;
+			}
+			if(self.mypg.addr == null) {
+				alert("주소를 입력해주세요.");
+				
+			} else {
+				self.mypg.addr =  self.mypg.addr + " " +self.mypg.addrDetail;
+			}
+			
+	    	var nparmap = self.mypg;
+	    	console.log(self.mypg);
 	           $.ajax({
 	                url:"/mypage/edit.dox",
 	                dataType:"json",	
@@ -167,14 +205,11 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) { 
 	                	alert("수정되었습니다.");
-	                	console.log(data.user);
+	                	console.log(data);
 	                	
 	                }
 	        }); 
 	    }
-            
-			// alert("수정완료.");
-			// location.href ="/mypage.do"	
     } 
     , created: function () {
     	var self = this;

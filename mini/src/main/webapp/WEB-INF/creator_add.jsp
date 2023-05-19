@@ -71,7 +71,7 @@ var app = new Vue({
             });
         },
         OkCre: function() {
-        	alert("완료");
+        	alert("신청이 완료되었습니다");
             location.href = "/main.do";
         },
         Nocre: function() {
