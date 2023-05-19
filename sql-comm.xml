@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mini.mapper.CommunityMapper">
+	
+	<!-- 게시판 리스트 -->
+	<select id="selectCbrdList" parameterType="hashmap" resultType="com.mini.model.Cbrd">
+		SELECT * 
+		FROM T3_CBRD
+		ORDER BY CBNO DESC, CDATE DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 총 게시글 수 -->
+	<select id="selectCbrdListCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(CBNO) AS CBRDCNT
+		FROM T3_CBRD
+	</select>
+
+	
+	<!-- 게시글 추가 -->
+	<select id="insertCbrd" parameterType="hashmap">
+		INSERT INTO T3_CBRD
+		VALUES (NULL, #{userId}, #{cate1}, #{cate2}, #{ctitle}, #{ccont}, 0, NOW(), NULL, 'N')
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteCbrd" parameterType="hashmap">
+		UPDATE T3_CBRD
+		SET
+			DELYN = 'Y',
+			UDATE = NOW()
+		WHERE CBNO = #{boardKey}
+	</delete>
+	
+	<!-- 게시글 가져오기 -->
+	<select id="getCbrd" parameterType="hashmap" resultType="com.mini.model.Cbrd">
+		SELECT
+			CBNO,
+			ID,
+			CATE1,
+			CATE2,
+			CTITLE,
+			CCONT,
+			CDATE,
+			UDATE,
+			COMMENTCNT,
+			HITS
+		FROM T3_CBRD
+		WHERE CBNO = #{cbno}
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateCbrd" parameterType="hashmap">
+		UPDATE T3_CBRD
+		SET
+			CTITLE = #{ctitle},
+			CCONT = #{ccont},
+			CATE1 = #{cate1},
+			CATE2 = #{cate2},
+			UDATE = NOW()
+		WHERE CBNO = #{cbno}
+	</update>
+	
+	<!-- 게시글 조회수 -->
+	<update id="updateCbrdCnt" parameterType="hashmap">
+		UPDATE T3_CBRD
+		SET
+			HITS = HITS + 1
+		WHERE CBNO = #{cbno}
+	</update>
+	
+	<!-- 카테고리 -->
+	<select id="selectCbrdListcate" parameterType="hashmap" resultType="com.mini.model.DescList">
+		SELECT 
+			CNUM,
+			CINFO
+		FROM T3_DESC 
+		WHERE CID="CATE1" || CID="CATE2"
+	</select>
+	
+	<!-- 1차 카테고리 -->
+	<select id="selectCbrdListcate1" parameterType="hashmap" resultType="com.mini.model.DescList">
+		SELECT 
+			CNUM,
+			CINFO
+		FROM T3_DESC 
+		WHERE CID="CATE1"
+	</select>
+	
+	<!-- 2차 카테고리 -->
+	<select id="selectCbrdListcate2" parameterType="hashmap" resultType="com.mini.model.DescList">
+		SELECT 
+			CNUM,
+			CINFO,
+			PCOMM1
+		FROM T3_DESC 
+		WHERE CID="CATE2" AND PCOMM1=#{pcomm1}
+	</select>
+	
+	<!-- 댓글 추가 -->
+	<insert id="insertCbrdComment" parameterType="hashmap">
+		INSERT INTO T3_CMRE
+		VALUES
+			<!-- (NULL, NULL, #{cbno}, #{userId}, #{conte}, NULL, NOW(), NULL, 0, 0, 'Y', 'N') --> 
+			(NULL, NULL, #{cbno}, 'test20', 'test', NULL, NOW(), NULL, 0, 0, 'Y', 'N')
+	</insert>
+	
+	<!-- 게시판 리스트 댓글 개수 -->
+	<update id="updateCbrdCommentCnt" parameterType="hashmap">
+	UPDATE T3_CBRD
+	SET T3_CBRD.COMMENTCNT = (
+		SELECT COUNT(CNO)
+		FROM T3_CMRE
+		WHERE CBNO = #{cbno}
+	)
+	WHERE T3_CBRD.CBNO = #{cbno}
+	</update>
+	
+	<!-- 게시글 댓글 리스트 -->
+	<select id="selectCommentList" parameterType="hashmap" resultType="com.mini.model.Cmre">
+		SELECT 
+			CNO,
+			CBNO,
+			ID,
+			CONTE,
+			RECONTE,
+			CDATE,
+			UDATE,
+			SHOWYN,
+			DELYN,
+			RECNO
+		FROM T3_CMRE
+		WHERE CBNO = #{cbno}
+		ORDER BY CDATE ASC
+	</select>
+	
+	<!-- 게시글 내 댓글 수 -->
+	<select id="selectsumcnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(CNO) AS CCNT
+		FROM T3_CMRE
+		WHERE CBNO = #{cbno};
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteComment" parameterType="hashmap">
+		UPDATE T3_CMRE
+		SET
+			DELYN = 'Y',
+			UDATE = NOW()
+		WHERE CNO = #{cno}
+	</update>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="hashmap">
+		UPDATE T3_CMRE
+		SET
+			CONTE = #{conte},
+			UDATE = NOW()
+		WHERE CNO = #{cno}
+		
+	</update>
+	
+</mapper>
