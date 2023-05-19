@@ -14,41 +14,35 @@ public class MypageServicelmpl implements MypageService{
 	@Autowired
 	MypageMapper mypagemapper;
 	
-	@Override
-	public void creadd(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		mypagemapper.creaddUpage(map);
-	}
-	@Override
-	public void editMyPageUser(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		mypagemapper.updatemyPage(map);
-	}
-	@Override
-	public void editMyCreUser(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		mypagemapper.updateCrePage(map);
-	}
-	@Override
-	public void upjjim(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		mypagemapper.jjimUpage(map);
-	}
-	@Override
-	public void uppoto(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		mypagemapper.portfileUpage(map);
-	}
+	// 프로필 아이디/주소 불러오기
 	@Override
 	public User getUserInfo(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return mypagemapper.selectUserInfo(map);
 	}
+	
+	//프로필 하단 정보 수정/업데이트
 	@Override
-	public void addId(HashMap<String, Object> map) {
+	public User getProDown(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		
+		return null;
+	}
+
+	//프로필 상단 업데이트
+	@Override
+	public User getUserUpdate(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//프로필 상단(남김말/정보) 불러오기
+	@Override
+	public User getProUp(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	
+
+
+
 }

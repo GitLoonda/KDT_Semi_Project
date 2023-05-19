@@ -55,7 +55,7 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
      <!-- 이력 -->
      <div class="Umy_text">정보</div>
-     <textarea class="Umy_box" readonly>{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{user.addr}}</textarea>
      <!--포트폴리오(이미지)-->
      <div class="Umy_text">포트폴리오</div>
      <div class="Cmy_Portfolio">
@@ -67,7 +67,7 @@
      </div>
      <!--후기 개수-->
      <div class="Umy_text">의뢰 후기(x건)</div>
-     <div class="Umy_box"></div>
+     <textarea class="Umy_box" style= "resize : none;" readonly ></textarea>>
   
 </div>
 </div>

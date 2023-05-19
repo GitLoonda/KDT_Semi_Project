@@ -31,7 +31,7 @@
               </div>
         </div>
         <div class="serve">
-    <input class="servename" type="text" placeholder="크리에이터 00님">
+    <input class="servename" type="text" placeholder="크리에이터 00님" readonly>
     <br>
     <b>남김말</b>
     <br>
@@ -65,7 +65,7 @@
         <ul>
             <li>
               <label>아이디</label>
-              <input name="id" type="text" readonly="readonly">
+              <input type="text" :placeholder="user.id" readonly>
             </li>
             <li>
               <label>비밀번호</label>
@@ -120,9 +120,24 @@ var app = new Vue({
 	, list : []
 	, dropArea : ""
 	, fileList : ""
+	, user : {}
     }   
     , methods: {
-    	fnSearchAddr : function(){ // 주소 검색창 생성
+    	fnGetInfo : function(){
+            var self = this;
+            var nparmap = {id : app.sessionId};
+            $.ajax({
+                url:"/user/info.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+                	console.log(data.user);
+	                self.user = data.user;
+                }
+            }); 
+        }
+    	,fnSearchAddr : function(){ // 주소 검색창 생성
     		var self = this;
     		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
     		window.open("addr.do", "test", option);
@@ -170,7 +185,8 @@ var app = new Vue({
 		
     }   
     , created: function () {
-    
+    	var self = this;
+    	self.fnGetInfo();
 	}
 });
     

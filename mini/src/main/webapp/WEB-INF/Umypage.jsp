@@ -36,7 +36,7 @@
     <br>
     <b>소개/공지</b>
     <br>
-    <input type="text" placeholder="소개/공지란 입니다.">
+    <input type="text" placeholder="user.intro">
     <br><br>
     <b>거래 평점</b>
     <!--별 찍기(평점)-->
@@ -54,18 +54,18 @@
      <!-- 이력 -->
      <br> <br> <br>
      <div class="Umy_text">정보</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{user.addr}}</textarea>
      <div class="Umy_text">등록제품</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{user.addr}}</textarea>
      <div class="Umy_text">후기</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{user.addr}}</textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{user.addr}}</textarea>
     
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
-     <textarea class="Umy_box">{{user.addr}}</textarea></div>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{user.addr}}</textarea></div>
      </div>
     </div>
 </body>

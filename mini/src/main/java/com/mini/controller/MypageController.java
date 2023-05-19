@@ -52,23 +52,48 @@ public class MypageController {
         return "/creator_add";
     }
 	
-	// mypage 내용 불러오기
+	// 프로필 아이디/주소 불러오기
     @RequestMapping(value = "/user/info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String info1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		User user = mypageService.getUserInfo(map);
 		resultMap.put("user", user);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
-    // 프로필 정보수정
-    @RequestMapping(value = "/user/upinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    
+  //프로필 하단 정보 수정/업데이트
+    @RequestMapping(value = "/mypage/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String addAccount(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String up1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		mypageService.addId(map);
+		User user = mypageService.getProDown(map);
+		resultMap.put("user", user);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+    
+  //프로필 상단 업데이트
+    @RequestMapping(value = "/user/uppro.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String up2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User user = mypageService.getUserUpdate(map);
+		resultMap.put("user", user);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+    
+  //프로필 상단(남김말/정보) 불러오기
+    @RequestMapping(value = "/user/infoup.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String info2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User user = mypageService.getProUp(map);
+		resultMap.put("mypg", user);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+    
 }
