@@ -15,7 +15,7 @@
 <body>
   <div id="app">    
     <div class="user_edit">
-    <!--사용자 프로필 수정-->
+    <!--사용자 프로필 수정--> 
      <div class="Cpage_btn">
     <span>크리에이터 프로필 수정</span>
     </div>

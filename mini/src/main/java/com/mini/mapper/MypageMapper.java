@@ -20,6 +20,6 @@ public interface MypageMapper {
 	
 	//프로필 상단(남김말/정보) 불러오기
 	void selectUppro(HashMap<String, Object> map);
-	
+	 
 	
 }

@@ -9,7 +9,7 @@
 		FROM T3_USER 
 		where ID = #{id}
 	</select>
-	
+	 
 	<!-- 프로필 하단 정보 수정/업데이트 -->
 	<update id="updateMyPage" parameterType="hashmap">
 		UPDATE T3_USER 

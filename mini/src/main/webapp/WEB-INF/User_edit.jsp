@@ -17,7 +17,7 @@
 	<!--사용자 프로필 수정-->
 	<div class="Umypage_btn">
 	<span>사용자프로필 수정</span>
-      </div>
+      </div> 
     <hr width="92%">
     <div class="profile_up">
           <div class="up_img">

@@ -19,4 +19,4 @@ public interface MypageService {
 	User getProUp(HashMap<String, Object> map);
 	
 	
-}
+} 

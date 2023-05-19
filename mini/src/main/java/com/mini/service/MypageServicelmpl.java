@@ -27,7 +27,7 @@ public class MypageServicelmpl implements MypageService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+ 
 	//프로필 상단 업데이트
 	@Override
 	public User getUserUpdate(HashMap<String, Object> map) {

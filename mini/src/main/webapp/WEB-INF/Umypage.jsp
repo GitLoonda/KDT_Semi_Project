@@ -13,7 +13,7 @@
 </style>
 <body>
 	<div id="app">
-	<div class="user_edit">
+	<div class="user_edit"> 
 	<!--사용자 프로필-->
 	<div class="Umypage_btn">
       <span>사용자프로필 </span>

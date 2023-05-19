@@ -74,7 +74,7 @@ public class MypageController {
 		return new Gson().toJson(resultMap);
 	}
     
-  //프로필 상단 업데이트
+  //프로필 상단 업데이트 
     @RequestMapping(value = "/user/uppro.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String up2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
