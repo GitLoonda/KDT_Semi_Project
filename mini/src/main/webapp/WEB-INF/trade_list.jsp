@@ -118,6 +118,10 @@
 			sessionNick:"${sessionNick}",
 			sessionUstatus:"${sessionUstatus}",
 			
+			// 페이징 관련
+			item1:"",
+			item2:"",
+			item3:"",
 			item1n:"",
 			item2n:"",
 			item3n:"",
@@ -131,6 +135,9 @@
 			// 리스트 불러오기,페이징6
 			fnGetTradeList : function(item1, item1n, item2, item2n, item3, item3n){
 				var self = this;
+				self.item1=item1;
+				self.item2=item2;
+				self.item3=item3;
 				self.item1n=item1n;
 				self.item2n=item2n;
 				self.item3n=item3n;
@@ -159,7 +166,7 @@
 			self.selectPage = pageNum;
 			var startNum = ((pageNum-1) * 15);
 			var lastNum = 15;
-			var nparmap = {startNum : startNum, lastNum : lastNum};
+			var nparmap = {startNum : startNum, lastNum : lastNum, cate1:self.item1, cate2:self.item2, cate3:self.item3, brdset:self.brdset};
 			console.log(startNum);
 			console.log(lastNum);
 			$.ajax({

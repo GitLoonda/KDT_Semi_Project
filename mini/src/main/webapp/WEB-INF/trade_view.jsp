@@ -209,7 +209,7 @@
 					<div id="Tviewbox1" v-for="(list, index) in list">
 						<div class="optionT">[{{list.kindname}}]{{list.btitle}}</div>
 						<hr>
-						<div class="report"><span class="recdate">{{list.tbno}} {{list.cdate}}</span><button>신고</button></div>
+						<div class="report"><span class="recdate">{{list.tbno}} {{list.cdate}}</span><button @click="fnReportBoard(tbno)">신고</button></div>
 						<div class="infobox1">
 							<div class="infobox1_1">
 								<img class="infoimg" :src="list.path" >
@@ -466,6 +466,12 @@
 					}
 				}); 
 			},
+			//게시글 신고 팝업
+			fnReportBoard : function(tbno) {
+    		let popUrl = "/reportboard.do";
+    		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
+    		window.open(popUrl,"게시글 신고",popOption);	
+    		},
 
 			combtn(cno){
 				// 작업하던부위
