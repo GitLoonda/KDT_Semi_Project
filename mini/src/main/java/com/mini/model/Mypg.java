@@ -1,6 +1,6 @@
 package com.mini.model;
 import lombok.Data;
-
+ 
 public class Mypg {
     private String id;
     private String passwd;
