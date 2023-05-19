@@ -63,7 +63,7 @@
 							
 						</div>
 						<div class="listbox">
-							<!-- 거래글 리스트 불러오기/필터없음./리스트 -->
+							<!-- 거래글 리스트 불러오기/리스트 -->
 							<div class="itembox" v-for="(item, index) in list" @click="fnView(item.tbno)">
 								<!-- 이미지 src 참고 -->
 								<img id="tmp" class="imgbox" :src="item.path">
@@ -209,8 +209,17 @@
 			self.pageChange("./tradeview.do",{tbno:tbno});
 		}
 		,fnAddTradebtn(){
+			var self=this;
+			console.log(self.sessionId);
+			if(self.sessionId==''){
+				alert("로그인이 필요합니다.")
+				location.href="login.do";
+			}else{
+				location.href="tradeadd.do";
+			}
+				
 			
-			location.href="tradeadd.do";
+			
 		}
 		}
 		, created: function () {

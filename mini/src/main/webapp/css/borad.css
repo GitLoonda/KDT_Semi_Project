@@ -56,7 +56,10 @@
 
 #sellbox1 .imgbox {
   width: 100%;
+  height: 150px;
   border-bottom: 1px solid black;
+  background-image: url("../img/share/no-image01.gif") ;
+  background-size: 100% 150px;
 }
 
 #sellbox1 .itemtxt {
