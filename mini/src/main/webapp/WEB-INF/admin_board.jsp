@@ -136,7 +136,7 @@
                             <td v-if="item.brdFlg == 'BF1'">거래게시판</td>
                             <td v-else-if="item.brdFlg == 'BF2'">의뢰게시판</td>
                             <td v-else>홍보게시판</td>
-                            <td>{{item.btitle}}</td>     
+                            <td @click="fnBoardView(tbNo)"><a href="javascript:;">{{item.btitle}}</a></td>     
                             <td>{{item.id}}</td>     
                             <td>{{item.cdate}}</td>     
                             <td v-if="item.delYn == 'Y'">블라인드</td>     
@@ -464,6 +464,13 @@ var app = new Vue({
     		var self = this;
     		console.log(cbNo);
     		self.pageChange("/commread.do", {cbNo : cbNo});
+    	}
+    	
+    	, fnBoardView : function(tbNo){
+    	
+    		var self = this;
+    		console.log(tbNo);
+    		self.pageChange("/tradeview.do", {tbNo : tbNo});
     	}
     	
     }   

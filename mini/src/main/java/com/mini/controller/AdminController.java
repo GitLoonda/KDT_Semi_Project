@@ -336,8 +336,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/comment.do") //어드민 메인
-	public String admin_comment(Model model) throws Exception{
-		
+	public String admin_comment(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
 		return "/admin_comment";
 	}
 	

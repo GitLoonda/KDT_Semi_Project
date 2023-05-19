@@ -145,7 +145,7 @@
                             
                             <td>{{item.tbNo}}</td>
                             <td>{{item.cno}}</td>
-                            <td @click=""><a href="javascript:;">{{item.conte}}</a></td>
+                            <td @click="fnBoardCommentView(cno)"><a href="javascript:;">{{item.conte}}</a></td>
                             <td>{{item.id}}</td>     
                             <td>{{item.cdate}}</td>     
                             <td v-if="item.delYn == 'Y'">삭제처리완료</td>     
@@ -274,7 +274,7 @@
                             
                             <td>{{item.cbNo}}</td>
                             <td>{{item.cno}}</td>
-                            <td @click=""><a href="javascript:;">{{item.conte}}</a></td>
+                            <td @click="fnBoardCommentView(cno)"><a href="javascript:;">{{item.conte}}</a></td>
                             <td>{{item.id}}</td>     
                             <td>{{item.cdate}}</td>     
                             <td v-if="item.delYn == 'Y'">삭제처리완료</td>     
@@ -334,6 +334,7 @@ var app = new Vue({
     	, commPageCount : 1
     	, commCnt : 0
     	, sessionId : "${sessionId}"
+    	, cno : "${map.cno}"
     }   
     , methods: {
     	
@@ -459,9 +460,9 @@ var app = new Vue({
     		document.body.removeChild(form);
     	}
     	
-    	, fnView : function(boardNo){
+    	, fnBoardCommentView : function(cno){
     		var self = this;
-    		self.pageChange("./read.do", {boardKey : boardNo});
+    		self.pageChange("/commread.do", {cno : cno});
     	}
     	
     }   
