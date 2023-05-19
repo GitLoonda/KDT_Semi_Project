@@ -56,6 +56,9 @@
 				height: 450px;
 				background-color: white;
 				border: 1px solid black;
+				border-bottom: 1px solid black;
+				background-image: url("../img/share/no-image01.gif") ;
+				background-size: 100% 450px;
 			}
 			
 			.infobox1_2{
@@ -258,7 +261,7 @@
 						<div class="infobox2">
 							<div class="infocont" v-html="cont"></div>
 							<div class="info2btn">
-								<button>수정</button>
+								<button @click="fntoEdit(tbno)">수정</button>
 								<button @click="fnTbrdDel()">삭제</button>
 							</div>
 						</div>
@@ -316,6 +319,10 @@
 		</body>
 </html>
 <script type="text/javascript">
+
+
+
+
 	var app = new Vue({ 
 		el: '#app',
 		data: {
@@ -482,6 +489,40 @@
 				// if(cno==document.getElementById("#cno").attr("value"))
 				self.none = !self.none;
 				self.flex = !self.flex;
+			},
+			// 페이지 변경
+			pageChange : function(url, param) {
+				var target = "_self";
+				if(param == undefined){
+				//	this.linkCall(url);
+					return;
+				}
+				var form = document.createElement("form"); 
+				form.name = "dataform";
+				form.action = url;
+				form.method = "post";
+				form.target = target;
+				for(var name in param){
+					var item = name;
+					var val = "";
+					if(param[name] instanceof Object){
+						val = JSON.stringify(param[name]);
+					} else {
+						val = param[name];
+					}
+					var input = document.createElement("input");
+					input.type = "hidden";
+					input.name = item;
+					input.value = val;
+					form.insertBefore(input, null);
+				}
+				document.body.appendChild(form);
+				form.submit();
+				document.body.removeChild(form);
+    		},
+			fntoEdit(tbno){
+				var self=this;
+				self.pageChange("/tradeeidt.do",{tbno:tbno});
 			}
 			
 		},

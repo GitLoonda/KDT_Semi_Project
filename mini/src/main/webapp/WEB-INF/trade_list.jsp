@@ -18,7 +18,7 @@
 			<div id="app">
 				<div class="container">
 					<div id="sellbox1">
-						<template v-if="(brdset=='BF1')">
+						<template v-if="(sbrdflg=='BF1')">
 							<div class="cateF">
 								<template v-if="(item1n!=null && item2n!=null && item3n!=null)">
 									거래 게시판 > {{item1n}} > {{item2n}} > {{item3n}}  
@@ -34,7 +34,7 @@
 								</template>
 							</div>
 						</template>
-						<template v-else="(brdset=='BF2')">
+						<template v-else="(sbrdflg=='BF2')">
 							<div class="cateF">
 								<template v-if="(item1n!=null && item2n!=null && item3n!=null)">
 									의뢰 게시판 > {{item1n}} > {{item2n}} > {{item3n}}  
@@ -59,7 +59,7 @@
 							</select>
 						</div>
 						<div>
-							1-15 / <span>{{listcnt}}</span><span><button @click="fnAddTradebtn">글쓰기</button></span>
+							1-15 / <span>{{listcnt}}</span><span><button @click="fnAddTradebtn()">글쓰기</button></span>
 							
 						</div>
 						<div class="listbox">
@@ -71,9 +71,11 @@
 								<div class="itemtxt">{{item.btitle}}</div>
 								<div class="itemtxt">{{item.bprice}} 원</div>
 								<div class="itemtxt">
+									<span>조회수</span>
+									<span>{{item.hits}}</span>
 									<span>댓글</span>
-									<span>0</span>
-									<span> 찜</span>
+									<span>{{item.commcnt}}</span>
+									<span>찜</span>
 									<span>{{item.likes}}</span>
 								</div>
 							</div>
@@ -111,7 +113,7 @@
 			jimsumcnt:[],
 
 			//세션
-			brdset:"${mainlist.brdflg}",
+			sbrdflg:"${mainlist.brdflg}",
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
@@ -141,11 +143,10 @@
 				self.item1n=item1n;
 				self.item2n=item2n;
 				self.item3n=item3n;
-				console.log(self.item1n);
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
-         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3, brdset:self.brdset};
+         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3, sbrdflg:self.sbrdflg};
 					console.log(nparmap);
 				$.ajax({
 					url:"/trade/list.dox",
@@ -166,7 +167,7 @@
 			self.selectPage = pageNum;
 			var startNum = ((pageNum-1) * 15);
 			var lastNum = 15;
-			var nparmap = {startNum : startNum, lastNum : lastNum, cate1:self.item1, cate2:self.item2, cate3:self.item3, brdset:self.brdset};
+			var nparmap = {startNum : startNum, lastNum : lastNum, cate1:self.item1, cate2:self.item2, cate3:self.item3, sbrdflg:self.sbrdflg};
 			console.log(startNum);
 			console.log(lastNum);
 			$.ajax({
@@ -213,16 +214,17 @@
     	},
 		fnView(tbno){
 			var self = this;
-			self.pageChange("./tradeview.do",{tbno:tbno});
+			self.pageChange("/tradeview.do",{tbno:tbno});
 		}
 		,fnAddTradebtn(){
 			var self=this;
 			console.log(self.sessionId);
+			console.log(self.sbrdflg);
 			if(self.sessionId==''){
 				alert("로그인이 필요합니다.")
 				location.href="login.do";
 			}else{
-				location.href="tradeadd.do";
+				self.pageChange("/tradeadd.do",{abrdfig:self.sbrdflg});
 			}
 				
 			
@@ -232,7 +234,7 @@
 		, created: function () {
 			var self = this;
 			self.fnGetTradeList();	
-			console.log(self.mainlist);	
+			console.log("${mainlist}");	
 		}
 	});
 </script>

@@ -37,7 +37,7 @@ public class BoardController {
         // 중고거래,제작의뢰 클릭시 게시글리스트 이동
         // 다른페이지에서 접근시 null로 날라와서 아래와같이 적용
         String brdF = String.valueOf(map.get("brdflg"));
-        if(brdF.equals("2")){
+        if(brdF.equals("2") || brdF.equals("BF2") ){
             map.put("brdflg","BF2");
         }else{
             map.put("brdflg","BF1");
@@ -64,11 +64,23 @@ public class BoardController {
     //거래 등록 게시판
     @RequestMapping("/tradeadd.do") //거래게시판 페이지
     public String tradeadd(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        request.setAttribute("brdfig", map.get("abrdfig"));
+
         request.setAttribute("sessionId", session.getAttribute("sessionId"));
         request.setAttribute("sessionName", session.getAttribute("sessionName"));
         request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
         request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_add";
+    }
+    //거래글 수정
+    @RequestMapping("/tradeeidt.do") //거래게시판 페이지
+    public String tradeedit(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        request.setAttribute("tbno",map.get("tbno"));
+        request.setAttribute("sessionId", session.getAttribute("sessionId"));
+        request.setAttribute("sessionName", session.getAttribute("sessionName"));
+        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
+        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
+        return "/trade_edit";
     }
 
 
@@ -88,8 +100,6 @@ public class BoardController {
 	}
     
     // tradeadd.do
-    
-
     //게시판 선택값 가져오기
     @RequestMapping(value = "/trade/option.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -279,8 +289,6 @@ public class BoardController {
     HashMap<String, Object> resultMap = new HashMap<String, Object>();
     resultMap = boardService.searchTbrdInfo(map);
     
-    
-
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }
@@ -352,7 +360,47 @@ public class BoardController {
     return new Gson().toJson(resultMap);
     }
     
-	
 
+    // tradeeidt.do
+	// 게시판 수정 리스트 불러오기
+    @RequestMapping(value = "/tradeedit/viewlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchviewlist(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap = boardService.searchviewlist(map);
+    resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+    // 게시판에 등록된 이미지 리스트 가져오기
+    @RequestMapping(value = "/tradeedit/viewfilelist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchviewfilelist(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap = boardService.searchviewfilelist(map);
+    resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+    
+    //이미지 삭제
+    @RequestMapping(value = "/tradeedit/viewfileDel.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String viewfileDel(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.viewfileDel(map);
+		resultMap.put("result", "성공");
+		return new Gson().toJson(resultMap);
+	}
+
+    //게시글 업데이트
+    @RequestMapping(value = "/trade/update.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String tradeupdate(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.tradeupdate(map);
+
+        resultMap.put("tbno",map.get("tbno"));
+		resultMap.put("result", "성공");
+		return new Gson().toJson(resultMap);
+	}
 
 }

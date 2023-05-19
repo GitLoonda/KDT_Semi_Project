@@ -91,6 +91,7 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map) {
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		boardMapper.updateViewCnt(map);
 		resultMap.put("ujimcnt",boardMapper.jimCnt(map));
 		resultMap.put("list", boardMapper.selectTbrdInfo(map));
 		return resultMap;
@@ -140,4 +141,29 @@ public class BoardServicelmpl implements BoardService{
 		return resultMap;
 	}
 	
+
+	// tradeedit.do
+	// 글정보 가져오기
+	public HashMap<String, Object> searchviewlist(HashMap<String, Object> map) {
+		
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("list", boardMapper.selectviewlist(map));
+		return resultMap;
+	}
+	// 글에 등록된 이미지 가져오기
+	public HashMap<String, Object> searchviewfilelist(HashMap<String, Object> map) {
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("timglist", boardMapper.selectviewfilelist(map));
+		return resultMap;
+	}
+	// 이미지 삭제
+	@Override
+	public void viewfileDel(HashMap<String, Object> map) {
+		boardMapper.viewfiledelete(map);
+	}
+	// 게시글 업데이트
+	@Override
+	public void tradeupdate(HashMap<String, Object> map) {
+		boardMapper.Tradeupdate(map);
+	}
 }

@@ -45,6 +45,7 @@
 		T1.PATH AS PATH,
 		CDATE,
 		UDATE,
+		IFNULL(COMMCNT,0) AS COMMCNT,
 		DELYN
 	FROM T3_TBRD B
 	INNER JOIN T3_DESC D1 ON B.BRDFLG = D1.CNUM
@@ -54,13 +55,14 @@
 	INNER JOIN T3_DESC D5 ON B.CATE3 = D5.CNUM
 	INNER JOIN T3_DESC D7 ON B.BSTATUS = D7.CNUM
 	LEFT JOIN (SELECT TBNO,PATH,REP FROM T3_TIMG WHERE REP='Y') T1 ON B.TBNO = T1.TBNO
+	LEFT JOIN (SELECT TBNO,COUNT(CNO) AS COMMCNT FROM T3_CMRE GROUP BY TBNO) C1 ON B.TBNO = C1.TBNO
 	WHERE DELYN="N" 
 	<choose>
 		<when test="#{brdset}==null">
 			AND BRDFLG="BF1"
 		</when>
 		<otherwise>
-			AND BRDFLG=#{brdset}
+			AND BRDFLG=#{sbrdflg}
 		</otherwise>
 	</choose>
 	<choose>
@@ -87,7 +89,7 @@
 	SELECT
 		COUNT(TBNO) AS TBRDCNT
 	FROM T3_TBRD
-	WHERE DELYN="N" AND BRDFLG=#{brdset}
+	WHERE DELYN="N" AND BRDFLG=#{sbrdflg}
 	<choose>
 		<when test="cate1 !=null and cate2!=null and cate3!=null">
 			AND CATE1=#{cate1} AND CATE2=#{cate2} AND CATE3=#{cate3}
@@ -251,6 +253,13 @@
 	WHERE B.TBNO = #{tbno}
 	ORDER BY TBNO DESC
 </select>
+<!-- 조회수 -->
+<update id="updateViewCnt" parameterType="hashmap">
+	UPDATE T3_TBRD
+	SET HITS=HITS+1
+	WHERE TBNO=#{tbno};
+</update>
+
 
 <!-- 게시글 상세 거래 상태 변경 -->
 <update id="TbrdbstModify"  parameterType="hashmap" >
@@ -276,6 +285,7 @@
 	FROM T3_JJIM 
 	WHERE TBNO=#{tbno}
 </select>
+
 <!-- 사용자 찜 체크 -->
 <select id="jimCnt" parameterType="hashmap" resultType="int">
 	SELECT COUNT(JJNO) AS JIMCNT
@@ -316,26 +326,80 @@
 	WHERE TBNO=#{tbno};
 </select>
 
+<!-- 댓글 리스트 조회 -->
 <select id="selectTbrdcomm" parameterType="hashmap" resultType="com.mini.model.Cmre">
-SELECT 
-	CNO,
-	TBNO,
-	CBNO,
-	ID,
-	CONTE,
-	RECONTE,
-	CDATE,
-	UDATE,
-	RECNO,
-	REVWFLG,
-	SHOWYN,
-	DELYN
-FROM T3_CMRE 
-WHERE TBNO=#{tbno}
-ORDER BY CNO ASC
+	SELECT 
+		CNO,
+		TBNO,
+		CBNO,
+		ID,
+		CONTE,
+		RECONTE,
+		CDATE,
+		UDATE,
+		RECNO,
+		REVWFLG,
+		SHOWYN,
+		DELYN
+	FROM T3_CMRE 
+	WHERE TBNO=#{tbno}
+	ORDER BY CNO ASC
 </select>
+<!-- 수정 리스트 조회 -->
+<select id="selectviewlist" parameterType="hashmap" resultType="com.mini.model.TbrdList">
+	SELECT
+		TBNO,
+		ID,
+		BPRICE,
+		BTITLE,
+		BCONT,
+		HITS,
+		LIKES,
+		BRDFLG,
+		KIND,
+		CATE1,
+		CATE2,
+		CATE3,
+		BPROD,
+		BPROS,
+		BSTATUS,
+		BPUR,
+		BBOX,
+		BRCPT,
+		BCMS,
+		LOCAL1,
+		LOCAL2,
+		LOCAL3,
+		UDATE,
+		DELYN
+	FROM T3_TBRD
+	WHERE TBNO=#{tbno};
 
+</select>
+<select id="selectviewfilelist" parameterType="hashmap" resultType="com.mini.model.Timg">
+	SELECT 
+		TPATHNO,
+		TBNO,
+		PATH,
+		REP
+		FROM T3_TIMG
+	WHERE TBNO=#{tbno}
+</select>
+<delete id="viewfiledelete">
+	DELETE 
+	FROM T3_TIMG
+	WHERE TPATHNO=#{tpathno};
+</delete>
 
-
+<update id="Tradeupdate" parameterType="hashmap" useGeneratedKeys="true" keyProperty="tbno" keyColumn="TBNO">
+	UPDATE T3_TBRD
+		SET 
+			BPRICE=#{bprice}, BTITLE=#{btitle}, BCONT=#{bcont},BPROD=#{bprod},
+			CATE1=#{cate1}, CATE2=#{cate2}, CATE3=#{cate3},BPROS=#{bpros},
+			BSTATUS=#{bstatus}, BPUR=#{bpur}, BBOX=#{bbox},BRCPT=#{brcpt}, 
+			BCMS=#{bcms}, LOCAL1=#{local1}, LOCAL2=#{local2}, LOCAL3=#{local3},
+			uDATE=NOW()
+	WHERE TBNO=#{tbno}
+</update>
 
 </mapper>

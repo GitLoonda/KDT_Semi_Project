@@ -3,11 +3,23 @@ package com.mini.model;
 import lombok.Data;
 
 public class TbrdList {
+
     private int tbno;
-    private String id;
-    private String nick;
-    private String phone;
-    private String email;
+    private String brdflg;
+    private String kind;
+    private String cate1;
+    private String cate2;
+    private String cate3;
+    private String bprod;
+    private String bpros;
+    private String bstatus;
+    private String bpur;
+    private String bbox;
+    private String brcpt;
+    private String bcms;
+    private String local1;
+    private String local2;
+    private String local3;
     private int bprice;
     private String btitle;
     private String bcont;
@@ -22,7 +34,6 @@ public class TbrdList {
     private String bprodname;
     private String bprosname;
     private String bstatusname;
-    private String bstatus;
     private String bpurname;
     private String bboxname;
     private String brcptname;
@@ -33,9 +44,14 @@ public class TbrdList {
     private String cdate;
     private String udate;
     private String delYn;
+    private int commcnt;
+
+    private String id;
+    private String nick;
+    private String phone;
+    private String email;
     private int tbrdcnt;
     private String path;
-
 
 
 }

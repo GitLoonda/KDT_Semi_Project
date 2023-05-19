@@ -49,4 +49,14 @@ public interface BoardService {
     //게시글 상세 댓글 리스트
     HashMap<String, Object> searchCommInfo(HashMap<String, Object> map);
 
+    //tradeedit.do
+    //수정 리스트 
+    HashMap<String, Object> searchviewlist(HashMap<String, Object> map);
+    //등록된 파일 리스트
+    HashMap<String, Object> searchviewfilelist(HashMap<String, Object> map);
+    //이미지 삭제
+    void viewfileDel(HashMap<String, Object> map);
+    // 게시글 업데이트
+    void tradeupdate(HashMap<String, Object> map);
+
 }
