@@ -112,6 +112,12 @@
 
 			//세션
 			brdset:"${mainlist.brdflg}",
+			test1 : "${mainlist.brdflg}",
+			test5 : "${mainlist.kind}",
+			test2 : "${mainlist.cate1}",
+			test3 : "${mainlist.cate2}",
+			test4 : "${mainlist.cate3}",
+			test6 : "${mainlist.keyword}",
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
@@ -232,7 +238,8 @@
 		, created: function () {
 			var self = this;
 			self.fnGetTradeList();	
-			console.log(self.mainlist);	
+			console.log("${mainlist}");
+			console.log(self.test1, self.test2, self.test3, self.test4, self.test5, self.test6);
 		}
 	});
 </script>

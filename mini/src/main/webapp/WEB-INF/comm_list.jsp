@@ -220,7 +220,8 @@
 			},
 		    sessionId : "",
 		    sessionAdminflg : "",
-		    
+		    test1 : "${mainlist.cinfo1}",
+		    test2 : "${mainlist.cinfo2}",
 		    
 			/* 페이징 추가 5 */
 			selectPage: 1,
@@ -365,6 +366,7 @@
 			var self = this;
 			self.fnGetList();
 			self.cate1List();
+			console.log("${mainlist}");
 		}
 	
 	});
