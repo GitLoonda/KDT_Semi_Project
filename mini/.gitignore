@@ -8,7 +8,7 @@ m2e.projectLocation
 .seetings/
 .project
 .vscode/
-.class
+*.class
 
 HELP.md
 target/
