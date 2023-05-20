@@ -32,7 +32,7 @@
             <a><h2>상품거래 카테고리</h2></a>
             <div id="sellCategory">
                 <div class="sellCateList">
-                    <a @click="fnCateSelect('SPO')" href="javascript:;">
+                    <a @click="fnCateSelect(1, 'SPO', '스포츠')" href="javascript:;">
 	                    <div>
 	                    	<img src="img/main/sport.jpg" alt="cate1">
 	                    </div>
@@ -40,7 +40,7 @@
                     </a>
                 </div>
                 <div class="sellCateList">
-                    <a @click="fnCateSelect('CEL')" href="javascript:;">
+                    <a @click="fnCateSelect(1, 'CEL', '연예인')" href="javascript:;">
 	                    <div>
 	                    	<img src="img/main/talent.jpg" alt="cate1">
 	                    </div>
@@ -48,7 +48,7 @@
                     </a>
                 </div>
                 <div class="sellCateList">
-                    <a @click="fnCateSelect('MOV')" href="javascript:;">
+                    <a @click="fnCateSelect(1, 'MOV', '영화')" href="javascript:;">
 	                    <div>
 	                    	<img src="img/main/movie.jpg" alt="cate1">
 	                    </div>
@@ -56,7 +56,7 @@
                     </a>
                 </div>
                 <div class="sellCateList">
-                    <a @click="fnCateSelect('ANI')" href="javascript:;">
+                    <a @click="fnCateSelect(1, 'ANI', '애니메이션')" href="javascript:;">
 	                    <div>
 	                    	<img src="img/main/anime.jpg" alt="cate1">
 	                    </div>
@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <div class="sellCateList">
-                    <a @click="fnCateSelect('GAM')" href="javascript:;">
+                    <a @click="fnCateSelect(1, 'GAM', '게임')" href="javascript:;">
 	                    <div>
 	                    	<img src="img/main/game.jpg" alt="cate1">
 	                    </div>
@@ -102,27 +102,27 @@
             <a><h2>의뢰 카테고리</h2></a>
             <div id="commCategory">
                 <div class="commCateList">
-                    <a @click="fnCateSelect('BM1')" href="javascript:;">
+                    <a @click="fnCateSelect(2, 'BM1', '조립')" href="javascript:;">
 	                    <img src="img/main/plamodel.jpg" alt="cate1">
 	                    <p>조립</p>
                     </a>
                 </div>
                 <div class="commCateList">
-                    <a @click="fnCateSelect('BM2')" href="javascript:;">
+                    <a @click="fnCateSelect(2, 'BM2', '도색')" href="javascript:;">
 	                    <img src="img/main/paint.jpg" alt="cate1">
 	                    <p>도색</p>
                     </a>
                 </div>
                 <div class="commCateList">
-                    <a @click="fnCateSelect('BM3')" href="javascript:;">
+                    <a @click="fnCateSelect(2, 'BM3', '수리')" href="javascript:;">
 	                    <img src="img/main/rapair.jpg" alt="cate1">
 	                    <p>수리</p>
                     </a>
                 </div>
                 <div class="commCateList">
-                   <a @click="fnCateSelect('BM4')" href="javascript:;">
+                   <a @click="fnCateSelect(2, 'BM4', '커미션')" href="javascript:;">
 	                   <img src="img/board/160628_7.png" alt="cate1">
-	                   <p>기타</p>
+	                   <p>커미션</p>
                    </a>
                 </div>
             </div>
@@ -202,9 +202,9 @@
 	    		form.submit();
 	    		document.body.removeChild(form);
 	    	}
-	    	, fnCateSelect : function(item) {
+	    	, fnCateSelect : function(i, item, item2) {
         		var self = this;
-        		self.pageChange("/trade.do", {cate1 : item});       		 
+        		self.pageChange("/trade.do", {brdflg : i, cnum : item, cinfo : item2});       		 
         	}
 	    	, fnView(tbNo){
 				var self = this;

@@ -59,23 +59,23 @@
             <div id="navbar">
                 <ul class="menu">
                     <li >
-                        <a href="javascript:;"@click="fnTrade(1)">중고거래</a>
+                        <a href="javascript:;"@click="fnCateSelect(1)">중고거래</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li  v-for="item in cate1">
-                                    <a href="javascript:;" @click="fnCateSelect(item.cNum,item.cInfo)">
+                                    <a href="javascript:;" @click="fnCateSelect(1, item.cNum,item.cInfo)">
                                     {{item.cInfo}}
                                     <span>></span>
                                     </a>
                                     <ul class="dep2">
 		                                <li  v-for="item2 in cate2">
-		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;"@click="fnCateSelect(item.cNum,item.cInfo, item2.cNum,item2.cInfo)">
+		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;"@click="fnCateSelect(1, item.cNum,item.cInfo, item2.cNum,item2.cInfo)">
 		                                    {{item2.cInfo}}
 		                                    <span>></span>
 		                                    </a>
 		                                    <ul class="dep3">
 				                                <li  v-for="item3 in cate3">
-				                                    <a href="javascript:;"@click="fnCateSelect(item.cNum,item.cInfo, item2.cNum,item2.cInfo,item3.cNum,item3.cInfo)">
+				                                    <a href="javascript:;"@click="fnCateSelect(1, item.cNum,item.cInfo, item2.cNum,item2.cInfo, item3.cNum,item3.cInfo)">
 				                                    {{item3.cInfo}}
 				                                    </a>
 				                                </li>
@@ -86,18 +86,25 @@
                             </ul>
                         </div>
                     </li>
-                    <li >
-                        <a href="javascript:;" @click="fnTrade(2)">제작의뢰</a>
+                    <li>
+                        <a href="javascript:;" @click="fnCateSelect(2)">제작의뢰</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li v-for="item in bcms">
-                                    <a href="javascript:;">{{item.cInfo}}</a>
+                                    <a href="javascript:;" @click="fnCateSelect(2, item.cNum, item.cInfo)">{{item.cInfo}}</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li v-for="item in cate1">
-                        <a href="javascript:;" @click="fnComm(item.cNum,item.cInfo)">{{item.cInfo}}</a>
+                        <a href="javascript:;" @click="fnComm(item.cNum, item.cInfo)">{{item.cInfo}}</a>
+                         <div class="category">
+                            <ul class="dep1">
+                                <li v-for="item2 in cate2">
+                                    <a href="javascript:;" v-if="item2.pComm1 == item.cNum" @click="fnComm(item.cNum, item.cInfo, item2.cNum, item2.cInfo)">{{item2.cInfo}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -177,28 +184,25 @@
         	, fnLogout : function() {
         		location.href = "logout.do";
         	}
-        	, fnTrade : function(i) {
-        		var self = this;
-        		self.pageChange("/trade.do", {brdflg : i});
-        	}
-        	, fnCateSelect : function(item, item2, item3, item4, item5, item6) {
+        	, fnCateSelect : function(i, item, item2, item3, item4, item5, item6) {
         		var self = this;
         		if(typeof tlist !== 'undefined') {
         			tlist.fnGetTradeList(item, item2, item3, item4, item5, item6);
         			return;
         		}
-        		else {
-        			if(item2 == null) {
-            			self.pageChange("/trade.do", {cate1 : item, cate2 : null, cate3 : null});
-            		 	return;
-            		}
-            		else if(item3 == null) {
-            		 	self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : null});
-            		 	return;
-            		} else {
-                        self.pageChange("/trade.do", {cate1 : item, cate2 : item3, cate3 : item5});
-                    }
-        		}
+       			if(item == null) {
+       				self.pageChange("/trade.do", {brdflg : i, cnum1 : null, cinfo1 : null, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
+       				return;	
+       			}
+       			if(item3 == null) {
+           			self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
+           		 	return;
+           		}
+           		if(item5 == null) {
+           		 	self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : null, cinfo3 : null});
+           		 	return;
+           		} 
+                   self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : item5, cinfo3 : item6});
         	}
         	, fnSearch : function(){
         		var self = this;

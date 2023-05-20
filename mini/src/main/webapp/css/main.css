@@ -8,6 +8,7 @@
 	width : 1080px;
 	height : 300px;
 	margin : auto;
+	margin-top : 250px;
 	z-index: 1;
 }
 .VueCarousel-slide {
@@ -71,6 +72,7 @@
 	box-shadow : 5px 5px 5px 0 #ccc;
 }
 .itembox {
+	width : 140px;
     margin: 0 20px;
     background-color: #ccc;
     border-radius : 5px;

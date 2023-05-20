@@ -114,12 +114,12 @@ a {
     line-height: 40px;
     text-align: center;
     font-weight: bold;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .category {
     width : fit-content;
     position : static;
-     z-index : 2;
+    z-index : 99;
 }
 #navbar .dep1, .dep2, .dep3 {
     
@@ -129,36 +129,36 @@ a {
     background-color: #ADD4D9;
     border : 2px solid #bbd8f2;
     width : 160px;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .dep1 li {
     list-style: none;
     position : relative;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .dep2 {
     position : absolute;
     top : 0%;
     left : 100%;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .dep2 li {
     position : relative;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .dep3 {
     position : absolute;
     top : 0%;
     left : 100%;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .category ul li {
     text-align : left;
-    z-index: 2;
+    z-index: 99;
 }
 #navbar .dep3 li {
     text-align : right;
-    z-index: 2;
+    z-index: 99;
 }
 .category ul li span {
     float : right;
