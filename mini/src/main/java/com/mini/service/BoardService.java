@@ -49,6 +49,12 @@ public interface BoardService {
     //게시글 상세 댓글 리스트
     HashMap<String, Object> searchCommInfo(HashMap<String, Object> map);
 
+    // 게시글 댓글 수정
+    void updateComm(HashMap<String,Object> map);
+
+    // 게시글 댓글 삭제
+    void delcomm(HashMap<String,Object> map);
+    
     //tradeedit.do
     //수정 리스트 
     HashMap<String, Object> searchviewlist(HashMap<String, Object> map);

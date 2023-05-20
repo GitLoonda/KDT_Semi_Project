@@ -132,7 +132,7 @@ public class BoardServicelmpl implements BoardService{
 	public void TbrdcommInsert(HashMap<String, Object> map) {
 		boardMapper.TbrdcommAdd(map);
 	}
-
+	// 게시글 댓글 리스트
 	@Override
 	public HashMap<String, Object> searchCommInfo(HashMap<String, Object> map) {
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
@@ -140,7 +140,14 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("cnt", boardMapper.selectsumcnt(map));
 		return resultMap;
 	}
-	
+	// 게시글 댓글 수정
+	public void updateComm(HashMap<String, Object> map) {
+		boardMapper.commEdit(map);
+	}
+	//게시글 댓글 삭제
+	public void delcomm(HashMap<String, Object> map) {
+		boardMapper.commDel(map);
+	}
 
 	// tradeedit.do
 	// 글정보 가져오기

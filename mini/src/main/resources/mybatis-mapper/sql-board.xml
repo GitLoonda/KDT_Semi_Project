@@ -313,18 +313,33 @@
 	WHERE TBNO= #{tbno}
 </update>
 
-<!-- 게시글 상세 댓글 -->
+<!-- 게시글 댓글 등록-->
 <insert id="TbrdcommAdd"  parameterType="hashmap" >
 	INSERT INTO T3_CMRE 
-	VALUES (NULL,#{tbno},NULL,#{id},#{conetent},NULL,NOW(),NULL,NULL,'0','N','N')
+	VALUES (NULL,#{tbno},NULL,#{id},#{conetent},NULL,NOW(),NULL,NULL,'0',#{comms},'N')
 </insert>
 
-<!-- 게시글 댓글 리스트 -->
+<!-- 게시글 댓글 갯수 -->
 <select id="selectsumcnt" parameterType="hashmap" resultType="int">
 	SELECT COUNT(CNO) AS CNT
 	FROM T3_CMRE 
 	WHERE TBNO=#{tbno};
 </select>
+
+<!-- 게시글 댓글 수정 -->
+<update id="commEdit" parameterType="hashmap">
+	UPDATE T3_CMRE
+	SET CONTE=#{conetent}
+	WHERE CNO=#{cno} AND ID=#{id};
+</update>
+
+<!-- 게시글 댓글 삭제 -->
+<update id="commDel" parameterType="hashmap">
+	UPDATE T3_CMRE
+	SET DELYN="Y"
+	WHERE CNO=#{cno}
+</update>
+
 
 <!-- 댓글 리스트 조회 -->
 <select id="selectTbrdcomm" parameterType="hashmap" resultType="com.mini.model.Cmre">

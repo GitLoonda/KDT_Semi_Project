@@ -32,7 +32,6 @@ public interface BoardMapper {
     
     //거래글 등록
     void TradeAdd (HashMap<String, Object> map);
-    
     void TradeImgAdd(HashMap<String, Object> map);
 
     //tradeview
@@ -61,9 +60,12 @@ public interface BoardMapper {
     
     // 게시글 상세 댓글 등록
     void TbrdcommAdd (HashMap<String, Object> map);
-
     List<Cmre> selectTbrdcomm (HashMap<String, Object> map);
     int selectsumcnt(HashMap<String, Object> map);
+    // 게시글 댓글 수정
+    void commEdit(HashMap<String, Object> map);
+    // 게시글 댓글 삭제
+    void commDel(HashMap<String, Object> map);
 
     //tradeedit.do
     // 글정보 가져오기

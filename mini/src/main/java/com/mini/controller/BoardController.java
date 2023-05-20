@@ -346,6 +346,14 @@ public class BoardController {
     @ResponseBody
     public String TbrdcommInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        String commf = String.valueOf(map.get("comms"));
+        if(commf.equals("true")){
+            map.put("comms","Y");
+        }else{
+            map.put("comms","N");
+        }
+
         boardService.TbrdcommInsert(map);
         resultMap.put("message", "성공");
         return new Gson().toJson(resultMap);
@@ -354,12 +362,33 @@ public class BoardController {
     @RequestMapping(value = "/tradeView/commlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String searchCommInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-    HashMap<String, Object> resultMap = new HashMap<String, Object>();
-    resultMap = boardService.searchCommInfo(map);
-    resultMap.put("result", "success");
-    return new Gson().toJson(resultMap);
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap = boardService.searchCommInfo(map);
+        resultMap.put("result", "success");
+        return new Gson().toJson(resultMap);
     }
+
+    //게시글 댓글 수정
+    @RequestMapping(value = "/tradeView/commedit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String updateComm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        boardService.updateComm(map);
+        resultMap.put("result", "success");
+        return new Gson().toJson(resultMap);
+    }
+    //게시글 댓글 삭제
     
+    @RequestMapping(value = "/tradeView/commDel.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String delcomm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        boardService.delcomm(map);
+        resultMap.put("result", "success");
+        return new Gson().toJson(resultMap);
+    }
 
     // tradeeidt.do
 	// 게시판 수정 리스트 불러오기

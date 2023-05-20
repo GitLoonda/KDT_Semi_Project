@@ -100,6 +100,7 @@
 
 			#Tviewbox2{
 				padding: 0px 30px;
+				margin-bottom: 50px;
 			}
 			#Tviewbox2 hr{
 				border: 2px solid black;
@@ -118,7 +119,6 @@
 				background-color: aliceblue;
 			}
 			.commbox{
-				background-color: azure;
 				margin-bottom: 20px;
 				border: 1px solid black;
 			}
@@ -169,6 +169,7 @@
 				align-items: baseline;
 			}
 			.commbox2_2{
+				display: flex;
 				margin-right: 20px;
 			}
 			.commid{
@@ -203,6 +204,18 @@
 				width: 10%;
 				
 			}
+			.commedit{
+				display: flex;
+				border: 0px;
+				margin-bottom: 10px;
+				justify-content: center;
+			}
+			.infocont3{
+				width: 80%;
+				height: 100px;
+				resize: none;
+				border-right: 0px;
+			}
 
 		</style>
 		<body>
@@ -219,6 +232,7 @@
 							</div>
 							<div class="infobox1_2">
 								<div class="infobox1_2_1">
+									<template v-if="(sessionId == list.id)">
 									<div>
 										<template v-if="(list.kindname=='구매')">
 											<label for="a1"><input id="a1" type="radio" name="a"v-model="bstatus" value="BS1">구매</label>
@@ -239,6 +253,11 @@
 										</template>
 										<button @click="bstbtn()">적용</button>
 									</div>
+									</template>
+									<template>
+										<div></div>
+									</template>
+
 									<div>[{{list.bstatusname}}]{{list.btitle}}</div>
 									<div>가격 : {{list.bprice}}</div>
 									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
@@ -260,10 +279,20 @@
 						</div>
 						<div class="infobox2">
 							<div class="infocont" v-html="cont"></div>
-							<div class="info2btn">
-								<button @click="fntoEdit(tbno)">수정</button>
-								<button @click="fnTbrdDel()">삭제</button>
-							</div>
+							<template v-if="(sessionId == list.id)">
+								<div class="info2btn" >
+									<button @click="fntoEdit(tbno)">수정</button>
+									<button @click="fnTbrdDel()">삭제</button>
+								</div>
+							</template>
+							<template>
+								<template v-if="(sessionId == list.id)">
+									<div class="info2btn" >
+									</div>
+								</template>
+							</template>
+							
+
 						</div>
 					</div>
 					<!-- 염관상품,댓글 -->
@@ -275,44 +304,62 @@
 							</div>
 						</div>
 						<div class="commbox">
-							댓글({{commcnt}}개)
-							<div class="commpath" v-model="file1"> 첨부파일 이름 <button>첨부</button></div>
-							<div class="commimg" > <img class="cimg" src=""> 이미지 미리보기</div>
+							댓글({{commcnt}}개) <label for="comms"> <input id="comms" type="checkbox" v-model="comms">비밀 댓글</label>
 							<div class="commin">
 								<textarea class="infocont2" name="" id="" cols="30" rows="10" v-model="commcont"></textarea>
 								<button class="commbtn" @click="fncommIn()">등록</button>
 							</div>
 						</div>
+<!--  -->
 						<div  v-for="(commlist, index) in commlist">
-							<div class="commbox2" v-if="commlist.delYn == 'N'">
-								<div class="commbox2_1">
+							<!-- 댓글입력창 전환 설정 같지 않을때 기본표시 -->
+							<template v-if="comminfo.cno!=commlist.cno">
+								<div class="commbox2">
+									<div class="commbox2_1">
 										<div><img class="pimg" src="img/board/160628_7.png"></div>
 										<div class="commbox2_1_1">
 											<div class="commid">{{commlist.id}}</div>
-											<div>{{commlist.conte}}</div>
+											
+											<template v-if="(commlist.delYn=='Y')">
+												<div>삭제된 글입니다.</div>
+											</template>
+											<template v-else-if="(commlist.showYn=='Y' || commlist.id==sessionId || listid==sessionId)">
+												<div>{{commlist.conte}}</div>
+											</template>
+											<template v-else>
+												<div>비밀 댓글입니다.</div>
+											</template>
 										</div>
 								</div>
 								<div class="commbox2_2">
-									<span id="combtn" class="coma">
-										<button @click="combtn(commlist.cno)">답글</button> 
-									</span>
-									<span class="coma">신고</span>
-									<span class="coma">수정</span>
-									<span class="coma">삭제</span>
-									<span class="coma">{{commlist.cdate}}</span>
+									<div>
+										<template v-if="commlist.delYn=='N'">
+											<span id="combtn" class="coma">
+												<button @click="combtn(commlist.cno)">답글</button> 
+											</span>
+											<span class="coma">신고</span>
+											<template v-if="(commlist.id==sessionId || listid==sessionId)">
+												<button class="coma" @click="fncedit(commlist)">수정</button>
+												<button class="coma" @click="fncDel(commlist.cno)">삭제</button>
+											</template>
+										</template>
+									</div>
+									<div>
+										<div class="coma">{{commlist.cdate}}</div>
+										<template v-if="commlist.udate!=''">
+											<div class="coma">{{commlist.udate}}</div>
+										</template>
+									</div>
 								</div>
+							</template>
+							<template v-if="comminfo.cno==commlist.cno">
+								<div class="commedit">
+									<textarea class="infocont3" name="" id="" cols="30" rows="10" v-model="editcommcont"></textarea>
+									<button class="commbtn" @click="fncommedit()">수정</button>
+								</div>
+							</template>
 							</div>
-							<div v-else>
-								삭제된 댓글
-							</div>
-							<!-- 답글클릭시 보임 -->
-							<div :id="commlist.cno" :class="{recommin1:none,recommin2:flex}" :value="commlist.cno">
-								<textarea class="recommcont" cols="30" rows="10" v-model="commcont"></textarea>
-								<button class="recommbtn" @click="fnrecommin()">등록</button>
-							</div>
-						</div>
-						
-						
+						</div>					
 					</div>
 				</div>
 			</div>
@@ -341,9 +388,14 @@
 
 
 			list:[],
+			listid:"",
 			commlist:[],
 			commcont:"",
 			commcnt:0,
+			comms:true,
+			editcommNo:"",
+			comminfo:{},
+			editcommcont:"",
 			jimst:0,
 			jimsum:0
 		},
@@ -358,44 +410,18 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
+						
 						self.list = data.list; 
 						self.jimst=data.ujimcnt;
 						self.cont=data.list[0].bcont;
 						self.bstatus=data.list[0].bstatus;
+						self.listid=data.list[0].id;
+						console.log(self.list);
 					}
 				}); 
 			},
-			// 댓글입력
-			fncommIn : function(){
-				var self = this;
-         	  	var nparmap = {tbno : self.tbno, id:self.sessionId , conetent:self.commcont};
-				$.ajax({
-					url:"/tradeView/commin.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						alert("저장!");
-						self.fncommlist();
-						self.commcont="";
-					}
-				}); 
-			},
-			//댓글 리스트
-			fncommlist : function(){
-				var self = this;
-         	  	var nparmap = {tbno : self.tbno};
-				$.ajax({
-					url:"/tradeView/commlist.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						self.commcnt=data.cnt;
-						self.commlist=data.commlist;
-					}
-				}); 
-			},
+			
+
 			// 거래상태변경
 			bstbtn(){
 				var self = this;
@@ -520,9 +546,88 @@
 				form.submit();
 				document.body.removeChild(form);
     		},
+			// 글 수정
 			fntoEdit(tbno){
 				var self=this;
 				self.pageChange("/tradeeidt.do",{tbno:tbno});
+			},
+			// 댓글입력
+			fncommIn : function(){
+				var self = this;
+				if(self.commcont==''){
+					alert("글내용이 없습니다.");
+					return;
+				}
+         	  	var nparmap = {tbno : self.tbno, id:self.sessionId , conetent:self.commcont, comms:self.comms};
+				$.ajax({
+					url:"/tradeView/commin.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						alert("저장!");
+						self.fncommlist();
+						self.commcont="";
+					}
+				}); 
+			},
+			//댓글 리스트
+			fncommlist : function(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno};
+				$.ajax({
+					url:"/tradeView/commlist.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						self.commcnt=data.cnt;
+						self.commlist=data.commlist;
+						console.log(self.commlist);
+					}
+				}); 
+			},
+			// 댓글 수정
+			fncedit(commlist){
+				var self = this;
+				self.editcommNo = commlist.cno;
+				self.comminfo = commlist;
+				console.log(self.editcommNo);
+				console.log(self.comminfo);
+			}
+			,fncommedit(){
+				var self= this;
+				if(self.editcommcont==''){
+					alert("글내용이 없습니다.");
+					return;
+				}
+         	  	var nparmap = {cno : self.editcommNo, id:self.sessionId , conetent:self.editcommcont };
+				$.ajax({
+					url:"/tradeView/commedit.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						alert("저장!");
+						self.comminfo={};
+						self.editcommNo="";
+						self.editcommcont="";
+						self.fncommlist();
+					}
+				}); 
+			},fncDel(cno){
+				var self= this;
+         	  	var nparmap = {cno : cno};
+				$.ajax({
+					url:"/tradeView/commDel.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						alert("삭제!");
+						self.fncommlist();
+					}
+				}); 
 			}
 			
 		},
