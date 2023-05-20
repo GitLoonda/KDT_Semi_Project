@@ -112,16 +112,14 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 var app = new Vue({ 
     el: '#app',
     data: {
-    	mypg : {}
-		, roadFullAddr : ""
-		, addr : ""
-		, addrDetail : ""
-		, list : []
-		, joinId : ""
-		, passwd : ""
-		, passwd2 : ""
-		, name : ""
-		, domain : ""
+	  roadFullAddr : ""
+	, addr : ""
+	, addrDetail : ""
+	, list : []
+	, dropArea : ""
+	, fileList : ""
+	, mypg : {}
+    , domain : ""
 	
     }   
     , methods: {
@@ -168,15 +166,11 @@ var app = new Vue({
 			var nmJ = /^[ㄱ-힣]{2,6}$/;
 			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
 	    	if(self.mypg.passwd != self.mypg.passwd2){
-    			alert("비밀번호 두개가 다르다");
+    			alert("비밀번호와 비밀번호 확인이 서로 일치하지 않습니다.");
     			return;
     		} 
 	    	if(!pwJ.test(self.mypg.passwd)) {
 				alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
-				return;
-			}
-			if(self.mypg.passwd != self.mypg.passwd2) {
-				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
 				return;
 			}
 			if(self.mypg.phone == null) {

@@ -28,18 +28,22 @@
 					</td>
             <br>
         <select class="creadd_cate">
-            <option value="1">신청 카테고리</option>
-            <option value="1">의뢰</option>
-            <option value="1">제작</option>
-            <option value="1">기타</option>
+            <option value="car">신청 카테고리</option>
+            <option value="plz">의뢰</option>
+            <option value="make">제작</option>
+            <option value="non">기타</option>
             </select>
         <div class="creator_intro">
-        <br>
             <div class="creaddintr"> 소개 </div>
-            <textarea placeholder="포트폴리오 1부, SNS주소 필수 첨부."></textarea>
+            <br>
+            <textarea placeholder="포트폴리오 1부, SNS주소 필수 첨부" style= "resize : none;"></textarea>
         </div>
         <div class="cre_add_end">
+
+         <!--요청 시 등록 데이터 DB 크리에이터승인(admin/cuser) 보내기--> 
         <button class="bt1" @click="OkCre()">요청</button>
+
+        <!--취소 시 사용자 프로필로-->
         <button class="bt1" @click="Nocre()">취소</button>
         </div>
 
@@ -71,7 +75,7 @@ var app = new Vue({
             });
         },
         OkCre: function() {
-        	alert("신청이 완료되었습니다");
+        	alert("등록신청이 완료되었습니다");
             location.href = "/main.do";
         },
         Nocre: function() {

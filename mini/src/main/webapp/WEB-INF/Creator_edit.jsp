@@ -83,9 +83,9 @@
             <li>
                 <label>이메일</label>
                     <input type="text" v-model="mypg.email" style="width : 150px"> @  
-                    <select>
+                      <select v-model="domain">
                         <option value="1">도메인</option>
-                        <option value="naver">naver.com</option>
+                        <option value="naver.com">naver.com</option>
                         <option value="daum.net">daum.net</option>
                         <option value="hanmail.com">hanmail.com</option>
                         </select>
@@ -161,38 +161,34 @@ var app = new Vue({
 	,  
 	//프로필 하단 정보수정란
 	fnUserUpdate : function(){
-    	var self = this;
-    	var pwJ = /^[A-Za-z0-9]{6,12}$/;
-		var nmJ = /^[ㄱ-힣]{2,6}$/;
-		var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
-    	if(self.mypg.passwd != self.mypg.passwd2){
-			alert("비밀번호 두개가 다르다");
-			return;
-		} 
-    	if(!pwJ.test(self.mypg.passwd)) {
-			alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
-			return;
-		}
-		if(self.mypg.passwd != self.mypg.passwd2) {
-			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-			return;
-		}
-		if(self.mypg.phone == null) {
-			alert("전화번호를 입력해주세요.");
-			return;
-		}
-		if(self.mypg.email == null) {
-			alert("이메일을 입력해주세요.");
-			
-		} else {
-			self.mypg.email =  self.mypg.email + "@" + self.domain;
-		}
-		if(self.mypg.addr == null) {
-			alert("주소를 입력해주세요.");
-			
-		} else {
-			self.mypg.addr =  self.mypg.addr + " " +self.mypg.addrDetail;
-		}
+	    	var self = this;
+	    	var pwJ = /^[A-Za-z0-9]{6,12}$/;
+			var nmJ = /^[ㄱ-힣]{2,6}$/;
+			var nkJ = /^[a-zA-zㄱ-힣0-9]{2,6}$/;
+	    	if(self.mypg.passwd != self.mypg.passwd2){
+    			alert("비밀번호와 비밀번호 확인이 서로 일치하지 않습니다.");
+    			return;
+    		} 
+	    	if(!pwJ.test(self.mypg.passwd)) {
+				alert( "비밀번호는 6~12자리의 영문대소문자/숫자로 구성되어야합니다.");
+				return;
+			}
+			if(self.mypg.phone == null) {
+				alert("전화번호를 입력해주세요.");
+				return;
+			}
+			if(self.mypg.email == null) {
+				alert("이메일을 입력해주세요.");
+				
+			} else {
+				self.mypg.email =  self.mypg.email + "@" + self.domain;
+			}
+			if(self.mypg.addr == null) {
+				alert("주소를 입력해주세요.");
+				
+			} else {
+				self.mypg.addr =  self.mypg.addr + " " +self.mypg.addrDetail;
+			}
 		
     	var nparmap = self.mypg;
     	console.log(self.mypg);
