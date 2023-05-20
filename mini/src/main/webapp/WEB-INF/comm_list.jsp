@@ -73,7 +73,7 @@
 	
 
 	
-		<!-- 페이징 추가 2-->
+/* 페이징 추가 */
 	.pagination {
         margin:24px;
         display: inline-flex;
@@ -117,11 +117,12 @@
 				<span>  >  </span>
 
 				<span>
-					<template v-if="test2 != null">
-						커뮤니티 > {{test2}} 
+					<!-- 테스트1,테스트2 가 값이 있을때 -->
+					<template v-if="cate1 != '' && cate2 != ''">
+						커뮤니티 > {{cate1n}} > {{cate2n}}
 					</template>
-					<template v-else>  
-						커뮤니티 
+					<template v-else="cate1 != null">  
+						커뮤니티 > {{cate1n}}
 					</template>					
 				</span>
 			</div>
@@ -146,7 +147,7 @@
 						<tr v-for="(item, index) in list" v-if="item.delYn == 'N'">
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>							
-							<td>[{{test2}}]</td>
+							<td>[{{cate1n}}]</td>
 							<td v-if="item.commentcnt == 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}</a></td>
 							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}} ({{item.commentcnt}})</a></td>
 							<td>{{item.hits}}</td>
@@ -158,7 +159,7 @@
 						<tr v-else>
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							<td >[{{test2}}]</td>
+							<td >[{{cate1n}}]</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -216,9 +217,11 @@
 		    sessionNick : "${sessionNick}",
 		    sessionAdminflg : "${sessionAdminflg}",
 		    
-		    test1 : "${mainlist.info1}",
-		    test2 : "${mainlist.info2}",
-		    
+		    cate1 : "${mainlist.cnum}",
+		    cate1n : "${mainlist.cinfo}",
+		    cate2 : "${mainlist.cnum2}",
+		    cate2n : "${mainlist.cinfo2}",
+
 			/* 페이징 추가 5 */
 			selectPage: 1,
 			pageCount: 1,
@@ -226,15 +229,12 @@
 		}
 		, methods: {
 			// 리스트 불러오기,페이징6
-			fnGetList: function (test1, test2) {
+			fnGetList: function (cate1, cate2) {
 				var self = this;
-				self.test1 = test1;
-				self.test2 = test2;
-				console.log(self.test1);
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage - 1) * 15);
 				var lastNum = 15;
-				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: test1, cate1name: test2};
+				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: cate1, cate2:cate2};
 				console.log(nparmap);
 				$.ajax({
 					url: "/comm/list.dox",
@@ -255,7 +255,7 @@
 				self.selectPage = pageNum;
 				var startNum = ((pageNum - 1) * 15);
 				var lastNum = 15;
-				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: self.test1, cate1name: test2};
+				var nparmap = {startNum: startNum, lastNum: lastNum,  cate1: self.cate1, cate2:self.cate2};
 				console.log(startNum);
 				console.log(lastNum);
 				$.ajax({
@@ -341,7 +341,7 @@
 		}
 		, created: function () {
 			var self = this;
-			self.fnGetList();
+			self.fnGetList(self.cate1, self.cate2);
 			console.log("${mainlist}");
 
 		}

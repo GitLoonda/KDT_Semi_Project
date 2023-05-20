@@ -20,7 +20,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public HashMap<String, Object> searchCbrdList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("cnt", communityMapper.selectCbrdListCnt(resultMap));
+		resultMap.put("cnt", communityMapper.selectCbrdListCnt(map));
 		resultMap.put("list", communityMapper.selectCbrdList(map));
 		resultMap.put("ccnt", communityMapper.selectsumcnt(map));
 		return resultMap;

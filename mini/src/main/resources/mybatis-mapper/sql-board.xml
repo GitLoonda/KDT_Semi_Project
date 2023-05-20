@@ -334,7 +334,7 @@
 </update>
 
 <!-- 게시글 댓글 삭제 -->
-<update id="commDel" parameterType="hashmap">
+<update id="commDel"  parameterType="hashmap">
 	UPDATE T3_CMRE
 	SET DELYN="Y"
 	WHERE CNO=#{cno}
