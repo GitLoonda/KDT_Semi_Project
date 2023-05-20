@@ -7,6 +7,8 @@ public class Cbrd {
 	private String id;
 	private String cate1;
 	private String cate2;
+	private String cate1name;
+	private String cate2name;
 	private String ctitle;
 	private String ccont;
 	private int hits;

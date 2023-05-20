@@ -115,18 +115,14 @@
 			<div class="category_path">
 				<a href="main.do"> 홈 </a> 
 				<span>  >  </span>
-				<a href="comm.do"> 커뮤니티 </a> 
-				<span>  >  </span>
+
 				<span>
-					<select v-model="inlist.cate1" id="cate" @click="cate2List()">
-						<option value="0" hidden>1차</option>
-						<option v-for="(cate1, index) in listcate1" :value="cate1.cnum">{{cate1.cinfo}}</option>
-					</select>
-					<span>  >  </span>
-					<select v-model="inlist.cate2" id="cate" >
-						<option value="0" hidden>2차</option>
-						<option v-for="(cate2, index) in listcate2" :value="cate2.cnum">{{cate2.cinfo}}</option>
-					</select>
+					<template v-if="test2 != null">
+						커뮤니티 > {{test2}} 
+					</template>
+					<template v-else>  
+						커뮤니티 
+					</template>					
 				</span>
 			</div>
 			<div class="listcnt">
@@ -149,15 +145,8 @@
 						<!-- 글 삭제 X -->
 						<tr v-for="(item, index) in list" v-if="item.delYn == 'N'">
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
-							<td>{{item.cbno}}</td>
-							
-							<td v-if="item.cate1 == 'SPO'">스포츠</td>
-                            <td v-else-if="item.cate1 == 'CEL'">연예인</td>
-                            <td v-else-if="item.cate1 == 'MOV'">영화</td>
-                            <td v-else-if="item.cate1 == 'ANI'">애니메이션</td>
-                            <td v-else-if="item.cate1 == 'GAM'">게임</td>
-                            <td v-else>NULL</td>
-
+							<td>{{item.cbno}}</td>							
+							<td>[{{test2}}]</td>
 							<td v-if="item.commentcnt == 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}</a></td>
 							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}} ({{item.commentcnt}})</a></td>
 							<td>{{item.hits}}</td>
@@ -169,14 +158,7 @@
 						<tr v-else>
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							
-							<td v-if="item.cate1 == 'SPO'">스포츠</td>
-                            <td v-else-if="item.cate1 == 'CEL'">연예인</td>
-                            <td v-else-if="item.cate1 == 'MOV'">영화</td>
-                            <td v-else-if="item.cate1 == 'ANI'">애니메이션</td>
-                            <td v-else-if="item.cate1 == 'GAM'">게임</td>
-                            <td v-else>NULL</td>	
-
+							<td >[{{test2}}]</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -200,16 +182,16 @@
 			</div>
 			<!-- 페이징 추가 3-->
 				<template>
-				  <paginate
-				    :page-count="pageCount"
-				    :page-range="3"
-				    :margin-pages="2"
-				    :click-handler="fnSearch"
-				    :prev-text="'<'"
-				    :next-text="'>'"
-				    :container-class="'pagination'"
-				    :page-class="'page-item'">
-				  </paginate>
+					<paginate
+					  	:page-count="pageCount"
+					    :page-range="3"
+					    :margin-pages="2"
+					    :click-handler="fnSearch"
+					    :prev-text="'<'"
+					    :next-text="'>'"
+					    :container-class="'pagination'"
+					    :page-class="'page-item'">
+					</paginate>
 				</template>
 			</div>
 		</div>
@@ -229,15 +211,13 @@
 			listcnt: "",
 			keyword : "",
 			info : {},
-			listcate1:{},
-			listcate2:{},
-			inlist:{
-				cate1:"0",
-				cate2:"0"
-			},
-		    sessionId : "",
-		    sessionAdminflg : "",
+
+		    sessionId : "${sessionId}",
+		    sessionNick : "${sessionNick}",
+		    sessionAdminflg : "${sessionAdminflg}",
 		    
+		    test1 : "${mainlist.info1}",
+		    test2 : "${mainlist.info2}",
 		    
 			/* 페이징 추가 5 */
 			selectPage: 1,
@@ -246,14 +226,16 @@
 		}
 		, methods: {
 			// 리스트 불러오기,페이징6
-			fnGetList: function () {
+			fnGetList: function (test1, test2) {
 				var self = this;
+				self.test1 = test1;
+				self.test2 = test2;
+				console.log(self.test1);
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage - 1) * 15);
 				var lastNum = 15;
-				var nparmap = {keyword : self.keyword, kind : self.selectItem, startNum: startNum, lastNum: lastNum };
-				console.log(startNum);
-				console.log(lastNum);
+				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: test1, cate1name: test2};
+				console.log(nparmap);
 				$.ajax({
 					url: "/comm/list.dox",
 					dataType: "json",
@@ -268,12 +250,14 @@
 				});
 			}
 			/* 페이징 추가 7 */
-			, fnSearch: function (pageNum) {
+			, fnSearch: function(pageNum) {
 				var self = this;
 				self.selectPage = pageNum;
 				var startNum = ((pageNum - 1) * 15);
 				var lastNum = 15;
-				var nparmap = { startNum: startNum, lastNum: lastNum };
+				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: self.test1, cate1name: test2};
+				console.log(startNum);
+				console.log(lastNum);
 				$.ajax({
 					url: "/comm/list.dox",
 					dataType: "json",
@@ -318,7 +302,14 @@
 			}
 			
 			, fnAdd: function () {
+				var self = this;
+				console.log(self.sessionId);
+				if(self.sessionId == ''){
+					alert("로그인이 필요합니다.");
+					location.href="login.do";
+				} else {
 				location.href = "/commadd.do";
+				}
 			}
 			
 	    	, fnView : function(cbno){
@@ -344,43 +335,15 @@
 	             }); 
 	    	}
 	    	
-	    	, cate1List : function(){
-				var self = this;
-				var nparmap = {};
-				$.ajax({
-					url:"/comm/cate1.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data)
-						self.listcate1 = data.listcate1;
-					}
-				});
-	    	}
-        	
-	    	, cate2List : function(){
-				var self = this;
-				var nparmap = {pcomm1 : self.inlist.cate1};
-				$.ajax({
-					url:"/comm/cate2.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data)
-						self.listcate2 = data.listcate2
-					}
-				});
-				
-			}
+	    	
 
 
 		}
 		, created: function () {
 			var self = this;
 			self.fnGetList();
-			self.cate1List();
+			console.log("${mainlist}");
+
 		}
 	
 	});

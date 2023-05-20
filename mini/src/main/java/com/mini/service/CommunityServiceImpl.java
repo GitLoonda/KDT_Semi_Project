@@ -31,6 +31,8 @@ public class CommunityServiceImpl implements CommunityService {
 		public HashMap<String, Object> searchCbrdCateList(HashMap<String, Object> map) {
 			HashMap<String,Object> resultMap = new HashMap<String,Object>();
 			resultMap.put("listcate", communityMapper.selectCbrdListcate(map));
+			resultMap.put("listcate1", communityMapper.selectCbrdListcate1(map));
+			resultMap.put("listcate2", communityMapper.selectCbrdListcate2(map));
 			return resultMap;
 		
 		}
