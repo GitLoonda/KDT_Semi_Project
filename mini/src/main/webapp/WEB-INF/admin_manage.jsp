@@ -150,6 +150,8 @@
 <jsp:include page="/layout/footer.jsp"></jsp:include>
 </html>
 <script type="text/javascript">
+
+document.title="👨🏻‍✈️ 관리자 계정 관리";
 <!-- 페이징 추가 4-->
 Vue.component('paginate', VuejsPaginate)
 var app = new Vue({ 

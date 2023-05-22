@@ -96,6 +96,14 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("list", boardMapper.selectTbrdInfo(map));
 		return resultMap;
 	}
+	@Override
+	public HashMap<String, Object> searchNick(HashMap<String, Object> map) {
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("nicks",boardMapper.selectNick(map));
+		return resultMap;
+	}
+
 	//게시글 찜 갯수
 	@Override
 	public int searchjimcnt(HashMap<String, Object> map){
@@ -172,5 +180,19 @@ public class BoardServicelmpl implements BoardService{
 	@Override
 	public void tradeupdate(HashMap<String, Object> map) {
 		boardMapper.Tradeupdate(map);
+	}
+
+	// tradeset 댓글 사용자 리스트 가져오기
+	
+	@Override
+	public HashMap<String, Object> searchSCommInfo(HashMap<String, Object> map) {
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("commlist", boardMapper.selectSCommInfo(map));
+		return resultMap;
+	}
+	// 거래 사용자 지정
+	@Override
+	public void tradeset(HashMap<String, Object> map) {
+		boardMapper.tradesetupdate(map);
 	}
 }

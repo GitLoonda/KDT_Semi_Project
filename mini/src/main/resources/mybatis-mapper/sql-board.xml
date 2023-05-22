@@ -232,6 +232,7 @@
 		LOCAL2 AS LOCAL2NAME,
 		LOCAL3 AS LOCAL3NAME,
 		T1.PATH AS PATH,
+		TRADE,
 		B.CDATE AS CDATE,
 		UDATE,
 		DELYN
@@ -253,6 +254,14 @@
 	WHERE B.TBNO = #{tbno}
 	ORDER BY TBNO DESC
 </select>
+
+<select id="selectNick" parameterType="hashmap" resultType="com.mini.model.User">
+	SELECT NICK
+	FROM T3_USER
+	WHERE ID=#{id}
+</select>
+
+
 <!-- 조회수 -->
 <update id="updateViewCnt" parameterType="hashmap">
 	UPDATE T3_TBRD
@@ -264,8 +273,17 @@
 <!-- 게시글 상세 거래 상태 변경 -->
 <update id="TbrdbstModify"  parameterType="hashmap" >
 	UPDATE T3_TBRD
+		<choose>
+		<when test="bstatus.equals('BS1') or bstatus.equals('BS2') or bstatus.equals('BS3')">
+				SET BSTATUS=#{bstatus},
+				TRADE=NULL
+			WHERE TBNO= #{tbno}
+		</when>
+		<otherwise>
 		SET BSTATUS=#{bstatus}
-	WHERE TBNO= #{tbno}
+		WHERE TBNO= #{tbno}
+		</otherwise>
+	</choose>
 </update>
 <!-- 찜등록 -->
 <insert id="jimAdd" parameterType="hashmap" >
@@ -345,18 +363,20 @@
 <select id="selectTbrdcomm" parameterType="hashmap" resultType="com.mini.model.Cmre">
 	SELECT 
 		CNO,
-		TBNO,
-		CBNO,
-		ID,
+		C.TBNO AS TBNO,
+		C.CBNO AS CBNO,
+		C.ID AS ID,
 		CONTE,
 		RECONTE,
-		CDATE,
-		UDATE,
+		C.CDATE AS CDATE,
+		C.UDATE AS UDATE,
 		RECNO,
 		REVWFLG,
 		SHOWYN,
-		DELYN
-	FROM T3_CMRE 
+		NICK,
+		C.DELYN AS DELYN
+	FROM T3_CMRE C
+	INNER JOIN T3_USER U ON C.ID = U.ID
 	WHERE TBNO=#{tbno}
 	ORDER BY CNO ASC
 </select>
@@ -415,6 +435,22 @@
 			BCMS=#{bcms}, LOCAL1=#{local1}, LOCAL2=#{local2}, LOCAL3=#{local3},
 			uDATE=NOW()
 	WHERE TBNO=#{tbno}
+</update>
+<!-- 댓글 아이디 닉네임 가져오기 -->
+<select id="selectSCommInfo" parameterType="hashmap" resultType="com.mini.model.Cmre">
+	SELECT 
+		DISTINCT C.ID AS ID, NICK
+	FROM T3_CMRE C
+	INNER JOIN T3_USER U ON C.ID=U.ID
+	WHERE TBNO=231
+	ORDER BY CNO ASC
+</select>
+
+<update id="tradesetupdate" parameterType="hashmap">
+UPDATE T3_TBRD
+SET TRADE= #{setuid},
+	BSTATUS = "BS4"
+WHERE TBNO=#{tbno}
 </update>
 
 </mapper>

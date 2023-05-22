@@ -4,6 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 				
 	<!-- 폰트 추가 -->
@@ -74,6 +75,7 @@
 
 </style>
 <body>
+	
 	<div id="app" >
 		<div class="container">
 			<h2>📢 공지사항</h2>
@@ -136,7 +138,7 @@
         		<div style="text-align: center; margin-top: 10px">
         			제목 / 아이디 : 
 		        	<input s class=txtbox1 type="text" v-model="keyword" @keyup.enter="fnGetList">
-					<button class=btn @click="fnGetList">검색</button>	
+					<button class=btn @click="fnGetList">찾기</button>	
 				</div>
 	       
         </div>
@@ -145,6 +147,9 @@
 </body>
 </html>
 <script type="text/javascript">
+
+document.title="📢 공지사항 ";
+
 <!-- 페이징 추가 4-->
 Vue.component('paginate', VuejsPaginate)
 var app = new Vue({ 

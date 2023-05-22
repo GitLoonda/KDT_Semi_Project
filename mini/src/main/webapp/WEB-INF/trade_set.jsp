@@ -38,24 +38,19 @@ select, textarea{
 </style>
 <body>
 	<div id="app">
-		<form id="report">
+		<div id="report">
 	        <img src="img/main/unity-logo-200x100-1.jpg">
 	        <div><h2>거래설정</h2></div>
 			<div class="div2">
-				<select style="height: 30px;">
-					<option hidden> 거래자 선택 </option>
-					<option value="1"> 스팸 홍보/ 도배 </option>
-					<option value="2"> 음란물 </option>
-					<option value="3"> 불법정보 포함 </option>
-					<option value="4"> 청소년에게 유해한 내용 </option>
-					<option value="5"> 욕설/혐오/차별적 표현 </option>
-					<option value="6"> 개인정보 노출 </option>
+				<select style="height: 30px;" V-for = "(commlist,index) in commlist" v-model="setid">
+					<option value="" disabled> 거래자 선택 </option>
+					<option :value="commlist.id">{{commlist.nick}}</option>
 				</select>
 			</div>
 			<div class="div2">
-				<button id="btn" @click="">거래하기</button>
+				<button id="btn" @click="fntradeset()">거래하기</button>
 			</div>
-     	</form>
+     	</div>
 	</div>
 </body>
 </html>
@@ -64,26 +59,53 @@ select, textarea{
 	var app = new Vue({ 
 		el: '#app',
 		data: {
-			tbno : "${tbno}",
+			tbno : opener.document.getElementById('tbno').value,
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
 			sessionNick:"${sessionNick}",
 			sessionUstatus:"${sessionUstatus}",
+			commlist:{},
+			setid:"",
 
 		},methods: {
-
+			//댓글 리스트
+			fncommlist : function(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno};
+				$.ajax({
+					url:"/tradeSet/commlist.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						self.commlist=data.commlist;
+						console.log(self.commlist);
+					}
+				}); 
+			},
+			fntradeset : function(){
+				var self = this;
+         	  	var nparmap = {tbno : self.tbno, setuid:self.setid};
+				$.ajax({
+					url:"/tradeSet/fntradeset.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						alert("거래 선택완료");
+						opener.parent.apptv.fnGetList();
+						window.close("tradeset.do");
+						
+					}
+				}); 
+			},
 
 
 		}, created: function () {
 			var self = this;
+			self.fncommlist();
 			console.log(self.tbno);
-			console.log(opener.document.getElementById('tbno').value);
-			console.log(self.sessionName);
-			console.log(self.sessionNick);
-			console.log(self.sessionUstatus);
-			
-			
 			
 		}
 	});

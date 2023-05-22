@@ -219,7 +219,8 @@
 
 		</style>
 		<body>
-			<div id="app">
+			<div id="apptv">
+				<!-- 게시판번호 넘겨줄때 -->
 			<input type='hidden' id='tbno' name='tbno' :value='tbno' />
 				<!-- 게시글 상세 -->
 				<div class="container">
@@ -237,17 +238,17 @@
 									<div>
 										<template v-if="(list.kindname=='구매')">
 											<label for="a1"><input id="a1" type="radio" name="a"v-model="bstatus" value="BS1">구매</label>
-											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4">예약/거래중</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4" disabled>예약/거래중</label>
 											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
 										</template>
 										<template v-else-if="(list.kindname=='판매')">
 											<label for="a2"><input id="a2" type="radio" name="a"v-model="bstatus" value="BS2">판매</label>
-											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4">예약/거래중</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4"disabled>예약/거래중</label>
 											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
 										</template>
 										<template v-else-if="(list.kindname=='의뢰')">
 											<label for="a3"><input id="a3" type="radio" name="a"v-model="bstatus" value="BS3">의뢰요청</label>
-											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4">예약/거래중</label>
+											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4"disabled>예약/거래중</label>
 											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
 										</template>
 										<template v-else>
@@ -274,7 +275,27 @@
 									<template v-else>
 										<button @click="jmbtnin()">찜</button>
 									</template>
-									<button @click="tradeset(list.tbno)">거래하기</button>
+
+									<template v-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid==sessionId">
+										<button @click="tradeset(list.tbno)">거래하기</button>
+									</template>
+									<!-- <template v-else-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid!=sessionId">
+										<button @click="tradeset(list.tbno)">거래요청</button>
+									</template> -->
+									<template v-else-if="list.bstatusname=='예약/거래'">
+										<template v-if="listid==sessionId">
+											<button @click="tradeset(list.tbno)">예약/거래중</button>
+											<div>{{nickname}}({{list.trade}})님과 거래중 입니다.</div>
+										</template>
+										<template v-else>
+											<button @click="tradeset(list.tbno)" disabled>예약/거래중</button>
+										</template>
+									</template>
+									<template v-else-if="list.bstatusname=='완료'">
+										<div>{{nickname}}({{list.trade}})님과 거래 완료</div>
+									</template>
+									
+
 								</div>
 							</div>
 						</div>
@@ -319,7 +340,7 @@
 									<div class="commbox2_1">
 										<div><img class="pimg" src="img/board/160628_7.png"></div>
 										<div class="commbox2_1_1">
-											<div class="commid">{{commlist.id}}</div>
+											<div class="commid">{{commlist.nick}}</div>
 											
 											<template v-if="(commlist.delYn=='Y')">
 												<div>삭제된 글입니다.</div>
@@ -371,8 +392,8 @@
 
 
 
-	var app = new Vue({ 
-		el: '#app',
+	var apptv = new Vue({ 
+		el: '#apptv',
 		data: {
 			tbno : "${trlist.tbno}",
 			// 세션
@@ -390,6 +411,7 @@
 
 			list:[],
 			listid:"",
+
 			commlist:[],
 			commcont:"",
 			commcnt:0,
@@ -397,6 +419,8 @@
 			editcommNo:"",
 			comminfo:{},
 			editcommcont:"",
+			nickname:"",
+			
 			jimst:0,
 			jimsum:0
 		},
@@ -411,14 +435,35 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						
 						self.list = data.list; 
 						self.jimst=data.ujimcnt;
 						self.cont=data.list[0].bcont;
 						self.bstatus=data.list[0].bstatus;
 						self.listid=data.list[0].id;
+
+						if(data.list[0].trade==undefined){
+						}else{
+							self.getnickname();
+						}
 						console.log(self.list);
+						
+						
 					}
+				}); 
+			},
+			getnickname(){
+				var self = this;
+				var nparmap = {id:self.list[0].trade}
+				$.ajax({
+					url:"/tradeView/ncik.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						self.nickname=data.nicks[0].nick;
+						console.log(self.nickname);
+					}
+					
 				}); 
 			},
 			
@@ -443,6 +488,11 @@
 			jmbtnin(){
 				var self = this;
          	  	var nparmap = {tbno : self.tbno,id : self.sessionId};
+				if(self.sessionId==''){
+					alert("로그인 정보가 없어 로그인창으로 이동합니다.");
+					location.href="login.do";
+					return;
+				}
 				$.ajax({
 					url:"/tradeView/jjimin.dox",
 					dataType:"json",	
@@ -482,6 +532,7 @@
 					data : nparmap,
 					success : function(data) { 
 						self.jimsum=data.jimsum;
+						
 					}
 				}); 
 			},
@@ -555,6 +606,11 @@
 			// 댓글입력
 			fncommIn : function(){
 				var self = this;
+				if(self.sessionId==''){
+					alert("로그인 정보가 없어 로그인창으로 이동합니다.");
+					location.href="login.do";
+					return;
+				}
 				if(self.commcont==''){
 					alert("글내용이 없습니다.");
 					return;
@@ -632,7 +688,7 @@
 			},
 			tradeset(tbno){
 				let popUrl = "/tradeset.do";
-				
+
     			let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
 				window.open(popUrl,"거래 설정",popOption);
 			}
@@ -643,12 +699,6 @@
 			self.fnGetList();
 			self.fncommlist();
 			self.jimsumcnt();
-			console.log(self.tbno);
-			console.log(self.sessionId);
-			console.log(self.sessionName);
-			console.log(self.sessionNick);
-			console.log(self.sessionUstatus);
-			
 		}
 	});
 

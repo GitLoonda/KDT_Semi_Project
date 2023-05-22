@@ -71,7 +71,7 @@ public class BoardController {
     // 거래자 설정
     @RequestMapping("/tradeset.do") //거래게시판 페이지
     public String tradeset(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-        System.out.println(map);
+        
         return "/trade_set";
     }
 
@@ -285,6 +285,17 @@ public class BoardController {
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }
+
+    @RequestMapping(value = "/tradeView/ncik.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchNick(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap = boardService.searchNick(map);
+    
+    resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+
     // 거래상태변경
     @RequestMapping(value = "/tradeView/bstupdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -425,4 +436,25 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 
+    // tradeset.do
+    // 댓글사용자 리스트 불러오기
+    @RequestMapping(value = "/tradeSet/commlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchSCommInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap = boardService.searchSCommInfo(map);
+        resultMap.put("result", "success");
+        return new Gson().toJson(resultMap);
+    }
+    // 거래자 선택 적용
+    
+    @RequestMapping(value = "/tradeSet/fntradeset.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String tradeset(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.tradeset(map);
+		
+        resultMap.put("result", "성공");
+		return new Gson().toJson(resultMap);
+	}
 }

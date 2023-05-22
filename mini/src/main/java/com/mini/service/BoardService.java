@@ -29,7 +29,8 @@ public interface BoardService {
     //tradeview.do
     //게시글 상세
     HashMap<String, Object> searchTbrdInfo(HashMap<String, Object> map);
-
+    // 거래자 닉네임 
+    HashMap<String, Object> searchNick(HashMap<String, Object> map);
     //게시글 찜 갯수
     int searchjimcnt(HashMap<String, Object> map);
     
@@ -65,4 +66,8 @@ public interface BoardService {
     // 게시글 업데이트
     void tradeupdate(HashMap<String, Object> map);
 
+    // 댓글 사용자 리스트 가져오기
+    HashMap<String, Object> searchSCommInfo(HashMap<String, Object> map);
+    // 거래 사용자 지정
+    void tradeset(HashMap<String, Object> map);
 }

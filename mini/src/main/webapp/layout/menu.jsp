@@ -7,6 +7,7 @@
 	<script src="../js/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<link rel="stylesheet" href="../css/menu.css">
+	<link href="/img/main/unity-logo-200x100-1.jpg" rel="shortcut icon" type="image/x-icon">
 	<title></title>
 </head>
 <style>
@@ -81,6 +82,6 @@
         </ul>
       </li>
     </ul>
-   </div>
+</div>
 </body>
 </html>
