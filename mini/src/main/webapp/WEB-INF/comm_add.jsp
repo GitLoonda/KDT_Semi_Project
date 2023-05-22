@@ -62,7 +62,7 @@
 						<td style="text-align : center;" >첨부파일</td>
 						<td>
 							<div>
-							    <input type="file" id="file1" name="file1" > 
+							    <input type="file" id="file" name="file" multiple > 
 							</div>
 						</td>
 					</tr>
@@ -96,33 +96,35 @@ var app = new Vue({
 		listcate1:{},
 		listcate2:{},
 		inlist:{
+			id:"${sessionId}",
 			cate1:"0",
 			cate2:"0"
 		},
-		sessionId:""
+		sessionId:"${sessionId}",
+		sessionName:"${sessionName}",
+		sessionNick:"${sessionNick}",
+		sessionStatus:"${sessionStatus}",
     }
     
     , components: {VueEditor}
     
     , methods: {
     	
-    	// 파일 업로드
-	    upload : function(){
-			var form = new FormData();
-	        form.append( "file1", $("#file1")[0].files[0] );
-	        
-	         $.ajax({
-	             url : "/upload.do"
-	           , type : "POST"
-	           , processData : false
-	           , contentType : false
-	           , data : form
-	           , success:function(response) { 
-	        	   
-	           }
-	           
-	       });
-		}
+		// 파일 업로드
+		upload : function(form){
+    	var self = this;
+         $.ajax({
+             url : "/comm/upload.dox"
+           , type : "POST"
+           , processData : false
+           , contentType : false
+           , data : form
+           , success:function(response) { 
+        	   
+           }
+           
+       });
+	}
     	
     	// 목록으로 이동
     	,fnList : function(){
@@ -136,11 +138,11 @@ var app = new Vue({
     	// 글 저장
     	,fnAddCbrd : function(){
             var self = this;
+            var nparmap = {id: self.sessionId, ctitle: self.ctitle, ccont: self.ccont, cate1: self.inlist.cate1, cate2: self.inlist.cate2}
             if(self.inlist.cate1 == "0"){
             	alert("1차 카테고리를 선택하세요.");
             	return;
             }
-            
             if(self.inlist.cate2 == "0"){
             	alert("2차 카테고리를 선택하세요.");
             	return;
@@ -154,14 +156,19 @@ var app = new Vue({
             	return;
             }
             
-            var nparmap = {ctitle : self.ctitle, ccont : self.ccont};
-            console.log( self.ccont );
             $.ajax({
                 url:"/comm/add.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+					var form = new FormData();
+					files = document.getElementById("file").files;
+					for(var i=0;i<files.length;i++){
+						form.append( "files", files[i]);
+					}
+					form.append( "cbno",  data.cbno);
+					self.upload(form);
                 	alert("저장되었습니다.");
                 	location.href="/comm.do";
                 }

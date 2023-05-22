@@ -134,8 +134,6 @@ var app = new Vue({
                 success : function(data) {  
                 	console.log(data.mypg);
 	                self.mypg = data.mypg;
-	                self.mypg.intro = "";
-	                self.mypg.cintro = "";
 	                self.mypg.passwd = "";
 	                self.mypg.phone = "";
 	                self.mypg.email = "";
@@ -200,6 +198,7 @@ var app = new Vue({
 	                success : function(data) { 
 	                	alert("수정되었습니다.");
 	                	console.log(data);
+	                	location.href ="/main.do";
 	                	
 	                }
 	        }); 

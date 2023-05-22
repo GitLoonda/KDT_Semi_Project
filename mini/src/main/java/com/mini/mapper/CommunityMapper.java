@@ -18,6 +18,7 @@ public interface CommunityMapper {
     
 	// 게시판 등록
 	void insertCbrd(HashMap<String, Object> map);
+	void CommImgAdd(HashMap<String, Object> map);
 	
 	// 게시판 삭제
 	void deleteCbrd(HashMap<String, Object> map);
@@ -42,6 +43,9 @@ public interface CommunityMapper {
     
     //댓글 갯수
     int selectsumcnt(HashMap<String, Object> map);
+    
+    //제목 옆 댓글 갯수 업데이트
+    void updatecommentcnt(HashMap<String, Object> map);
 	
 	// 댓글 추가
 	void insertCbrdComment(HashMap<String, Object> map);

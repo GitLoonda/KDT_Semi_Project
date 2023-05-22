@@ -19,6 +19,11 @@ public interface MypageMapper {
 	//프로필 상단 정보 수정/업데이트
 	void updateUppro(HashMap<String, Object> map);
 
-	 
+	//크리에이터 신청
+	void insCreadd(HashMap<String, Object> map);
+	
+	void insCreimg(HashMap<String, Object> map);
+	
+	void insCrebor(HashMap<String, Object> map);
 	
 }

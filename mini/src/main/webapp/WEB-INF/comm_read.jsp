@@ -91,6 +91,10 @@
 	.coma{
 		margin: 0px 3px ;
 	}
+	.deletebox{
+		margin-left: 30px;
+		margin-bottom: 20px;
+	}
 	.editbox{
 		margin-top: 10px;
 	}
@@ -126,43 +130,52 @@
 					<div v-if="sessionId != null">
 						<div>
 							<div class="commpath">첨부파일 <input type="file" id="file1"></div>
-							<div class="commimg" > <img class="cimg" src=""> 이미지 미리보기</div>
 						</div>
 						<textarea v-model="comment" rows="3" cols="100"></textarea>
 						<button @click="fnComment()" class="btn">등록</button>
-						<div style="text-align: right"><input type="checkbox">비밀댓글 설정</div>
+						<div style="text-align: right"><input type="checkbox" v-model="comms">비밀댓글 설정</div>
 					</div>
 				</div>
 				<div v-for="(item, index) in commentList">
-					<div class="commbox2" v-if="item.delYn == 'N'">
+					<div class="commbox2">
 						<div class="commbox2_1">
 							<div><img class="pimg" src="img/board/160628_7.png"></div>
 							<div class="commbox2_1_1">
-								<div class="commid">{{item.id}}</div>
-								<div>{{item.conte}}</div>
+								<div class="commid">{{item.nick}}</div>								
+							<template v-if="item.delYn == 'Y'" class="deletebox">
+									<div> 삭제된 댓글 입니다.</div>
+								</template>
+								
+								<template v-else-if="(item.showYn=='Y' || item.id==sessionId || info.id == sessionId)">
+									<div>{{item.conte}}</div>
+								</template>
+								
+								<template v-else>
+									<div>비밀 댓글입니다.</div>
+								</template>
+								 
+								
 							</div>
 						</div>
 						<div class="commbox2_2">
 							<span v-if="info.id == sessionId || sessionAdminflg == 'Y'">
-								<span class="coma" @click="fnEdit(item)">수정</span>
-								<span class="coma" @click="fnRemoveComment(item)">삭제</span>
+								<span class="coma" @click="fncedit(item)">수정</span>
+								<span class="coma" @click="fnRemoveComment(item.cno)">삭제</span>
 							</span>
 							<span v-else>
 								<span class="coma" @click="fnReportComment()">신고</span>
 								<span class="coma" @click="">답글</span>
 							</span>
-							<span class="coma">{{item.cdate}}</span>
+							<span class="coma" v-if="item.udate == null">{{item.cdate}}</span>
+							<span class="coma" v-else>{{item.udate}}</span>
+
 						</div>
 					</div>
-					<div v-else>
-						<span>
-						삭제된 댓글 입니다.
-						</span>
-					</div>
-					<div class="editbox" v-if="cInfo.cno == item.cno">
+					<template v-if="comminfo.cno == item.cno">
+						<div class="editbox">
 						<textarea v-model="editconte" rows="3" cols="100"></textarea>
-						<button @click="fnEditComment" class="btn" style="margin-bottom : 30px;">수정</button>
-					</div>
+						<button class="btn" @click="fnEditComment()">수정</button>
+					</template>
 				</div>
 			</div>
 		</div>
@@ -177,18 +190,23 @@ var app = new Vue({
        list : [] 
        , info : {}
        , cbno : "${map.cbno}"
-       , sessionId : "test20"
-       , sessionAdminflg : ""
-       , ccnt : ""
+       , sessionId : "${sessionId}"
+       , sessionAdminflg : "${sessionAdminflg}"
+       
+ 
  	   , comment : ""
  	   , commentList : []
- 	   , cInfo : {}
+       , ccnt : ""
+       , comms: true
+       , comminfo : {}
+       , editcommNo: ""
        , editconte : ""
+       
     }   
     , methods: {
     	fnGetBoard : function(){
             var self = this;
-            var nparmap = {cbno : self.cbno};
+            var nparmap = {cbno : self.cbno, id:self.sessionId};
             $.ajax({
                 url:"/comm/read.dox",
                 dataType:"json",	
@@ -197,8 +215,7 @@ var app = new Vue({
                 success : function(data) {
                 	console.log(data);
 	                self.info = data.info;
-	                self.commentList = data.commentList;
-	                self.ccnt=data.ccnt;
+
                 }
             }); 
         }
@@ -215,7 +232,7 @@ var app = new Vue({
    		 if(!confirm("정말 삭제하시겠습니까?")){
    			 return;
    		 }
-            var nparmap = {boardKey : cbno};
+            var nparmap = {cbno : cbno};
             $.ajax({
                 url:"/comm/remove.dox",
                 dataType:"json",	
@@ -277,27 +294,54 @@ var app = new Vue({
     		window.open(popUrl,"댓글 신고",popOption);	
     	}
     	
-    	//댓글    	
+    	//댓글 작성
     	, fnComment : function(){
     		var self = this;
-            var nparmap = {cbno : self.cbno, conte : self.conte, id : self.id};
+			if(self.sessionId==''){
+				alert("로그인 정보가 없어 로그인창으로 이동합니다.");
+				location.href="login.do";
+				return;
+			}
+    		if(self.comment==''){
+				alert("댓글내용이 없습니다.");
+				return;
+			}
+            var nparmap = {cbno: self.cbno, conte: self.comment, id: self.sessionId, comms: self.comms};
             $.ajax({
                 url:"/comm/comment.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.conte = "";
 	                alert("댓글이 작성되었습니다.");
+                	self.comment = "";
 	                self.fnGetBoard();
+                	
                 }
             }); 
     	}
     	
+    	//댓글 리스트
+		, fncommlist : function(){
+			var self = this;
+     	  	var nparmap = {cbno : self.cbno};
+			$.ajax({
+				url:"/comment/commlist.dox",
+				dataType:"json",	
+				type : "POST", 
+				data : nparmap,
+				success : function(data) { 
+					self.ccnt = data.ccnt;
+					self.commentList=data.commlist;
+				}
+			}); 
+		}
+    	
+    	
     	//댓글 삭제
-    	, fnRemoveComment : function(item){
+    	, fnRemoveComment : function(cno){
     		var self = this;
-            var nparmap = item;
+            var nparmap = {cno : cno};
             $.ajax({
                 url:"/comment/remove.dox",
                 dataType:"json",	
@@ -306,23 +350,37 @@ var app = new Vue({
                 success : function(data) {
 	                alert("댓글이 삭제되었습니다.");
 	                self.fnGetBoard();
+	                self.fncommlist();
                 }
             }); 
     	}
     	
     	//댓글 수정
-    	, fnEditComment : function(){
+    	,fncedit(commentList){
     		var self = this;
-            var nparmap = self.cInfo;
+    		self.editcommNo = commentList.cno;
+    		self.comminfo = commentList;
+			console.log(self.editcommNo);
+			console.log(self.comminfo);
+		}
+    	, fnEditComment(){
+			var self= this;
+			if(self.editconte == ''){
+				alert("댓글 내용이 없습니다.");
+				return;
+			}
+            var nparmap = {cno : self.editcommNo, id: self.sessionId, conte: self.editconte};
             $.ajax({
                 url:"/comment/edit.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.editconte = self.cInfo.conte;
 	                alert("댓글이 수정되었습니다.");
-	                self.cInfo = {};
+	                self.comminfo={};
+	                self.editcommNo="";
+	                self.editconte="";
+	                self.fn
 	                self.fnGetBoard();
                 }
             }); 
@@ -339,6 +397,8 @@ var app = new Vue({
     , created: function () {
     	var self = this;
     	self.fnGetBoard();
+    	self.fncommlist();
+
 	}
 });
 </script>

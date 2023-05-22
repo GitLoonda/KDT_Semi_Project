@@ -16,6 +16,7 @@ public class Cbrd {
 	private String udate;
 	private String delYn;
 	private int commentcnt;
+	private String nick;
 	
 	
 	public int getCbno() {

@@ -18,6 +18,8 @@ public interface CommunityService {
 	
 	// 게시글 등록
 	void addCbrd(HashMap<String, Object> map);
+	void CommImgInsert(HashMap<String, Object> map);
+
 	
 	// 게시글 삭제
 	void removeCbrd(HashMap<String, Object> map);
@@ -27,6 +29,10 @@ public interface CommunityService {
 	
 	// 게시글 수정
 	void editCbrd(HashMap<String, Object> map);
+	
+	//게시글 상세 댓글 리스트
+    HashMap<String, Object> selectCommentList(HashMap<String, Object> map);
+
 	
 	// 댓글 등록
 	void addCbrdComment(HashMap<String, Object> map);
