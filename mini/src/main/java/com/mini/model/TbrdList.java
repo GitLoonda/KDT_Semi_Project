@@ -52,6 +52,7 @@ public class TbrdList {
     private String email;
     private int tbrdcnt;
     private String path;
+    private String jjno;
 
 
 }

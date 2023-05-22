@@ -1,6 +1,8 @@
 package com.mini.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +34,21 @@ public class LoginController {
 		String name = (String) session.getAttribute("sessionName");
 		String nick = (String) session.getAttribute("sessionNick");
 		String ustatus = (String) session.getAttribute("sessionuStatus");
+		List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)session.getAttribute("productlist");
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
 		session.removeAttribute(nick);
 		session.removeAttribute(ustatus);
+		if(list == null) {
+			session.removeAttribute("productlist");
+		}
+		else {
+			for(int i = 0; i < list.size(); i++) {
+				list.remove(i);
+			}
+			session.removeAttribute("productlist");
+		}
 		
 		session.invalidate();
 
@@ -49,11 +61,21 @@ public class LoginController {
 		String name = (String) session.getAttribute("sessionName");
 		String nick = (String) session.getAttribute("sessionNick");
 		String ustatus = (String) session.getAttribute("sessionUstatus");
+		List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)session.getAttribute("productlist");
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
 		session.removeAttribute(nick);
 		session.removeAttribute(ustatus);
+		if(list == null) {
+			session.removeAttribute("productlist");
+		}
+		else {
+			for(int i = 0; i < list.size(); i++) {
+				list.remove(i);
+			}
+			session.removeAttribute("productlist");
+		}
 		
 		session.invalidate();
 

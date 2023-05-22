@@ -24,22 +24,33 @@
  	margin : auto;
  	text-align : center;
  }
+ .listbox h2 {
+ 	text-align : left;
+ }
  .itembox {
  	width : 100%;
  	display : flex;
  	margin : 25px 0;
  	background : #eee;
+ 	padding : 10px 10px 0 10px;
+ 	border-radius : 5px;
  }
- .itembox a {
- 	float : right;
- 	margin : 10px;
+ .itembox button {
+ 	width : 2em;
+ 	height : 2em;
+ 	border : none;
+ 	border-radius : 5px;
+ }
+ .itembox button:hover {
+ 	background : #ccc;
  }
  .imgbox {
  	width : 150px;
  	height : 150px;
  	margin : 15px;
  	background-image : url("../img/share/no-image01.gif") ;
- 	background-size : 100% 150px;
+ 	background-size : 100% 100%;
+ 	overflow : hidden;
  }
  .imgbox img {
  	width : 150px;
@@ -47,6 +58,7 @@
  }
  .descbox {
  	width : 80%;
+ 	margin-left : 30px;
  }
  .descbox p {
  	text-align : left;
@@ -63,7 +75,6 @@
  .btnbox button:hover {
  	background : #ccc;
  }
- 
 </style>
 <body>
 	<div id="app">
@@ -97,15 +108,40 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-    	
+    	sessionId : "${sessionId}",
+    	sessionNick : "${sessionNick}",
+		sessionStatus : "${sessionStatus}",
+		recentList : "${recentlist}"
     }   
     , methods: {
-    	fnMain : function() {
-    		location.href = "main.do";
-    	} 
+    	fnPermission : function() {
+    		var self = this;
+    		if(self.sessionId == "" || self.sessionId == null) {
+    			location.href = "denied.do";
+    			return;
+    		}
+    		self.fnGetRecentList();
+    	}
+		,  fnGetRecentList : function() {
+			var self = this;
+			var list = JSON.stringify(self.recentList);
+			var nparmap = {"test" : 1, "list" : list};
+			$.ajax({
+                url:"/recentList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {            
+               		
+                }
+            });  
+			
+		}
     }   
     , created: function () {
-    
+    	var self = this;
+    	self.$nextTick(self.fnPermission());
+    	console.log(self.recentList);
 	}
 });
 </script>

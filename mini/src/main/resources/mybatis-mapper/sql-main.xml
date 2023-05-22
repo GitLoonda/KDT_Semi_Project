@@ -82,4 +82,60 @@
 		LIMIT 5
 	</select>
 	
+	<select id="selectRecentList" parameterType="hashmap" resultType="com.mini.model.TbrdList">
+		SELECT 
+				TBNO,
+				BSTATUS,
+				BTITLE, 
+				NICK, 
+				BPRICE,
+				LOCAL1, 
+				LOCAL2, 
+				LOCAL3,
+				I.PATH
+		FROM T3_TBRD T
+		INNER JOIN T3_USER U ON T.ID = U.ID
+		LEFT JOIN (
+			SELECT TBNO, PATH, REP
+			FROM T3_TIMG
+			WHERE REP = "Y"
+		) I ON T.TBNO = I.TBNO
+		WHERE TBNO IN (
+		<foreach collection='list' index='index' item='item' separator=','>
+			#{item.tbno}
+		</foreach>
+		)
+		AND DELYN ="N" AND BSTATUS NOT IN ("BS4", "BS5")
+		ORDER BY TBNO DESC
+	</select>
+	
+	<select id="selectJjimList" parameterType="hashmap" resultType="com.mini.model.TbrdList">
+		SELECT 
+				 JJNO,
+				 J.TBNO,
+				 BSTATUS,
+				 BTITLE, 
+				 NICK, 
+				 BPRICE,
+				 LOCAL1, 
+				 LOCAL2, 
+				 LOCAL3, 
+				 I.PATH
+		FROM T3_JJIM J
+		INNER JOIN T3_TBRD T ON T.TBNO = J.TBNO
+		INNER JOIN T3_USER U ON U.ID = T.ID
+		LEFT JOIN (
+			SELECT TBNO, PATH, REP
+			FROM T3_TIMG
+			WHERE REP = "Y"
+		) I ON T.TBNO = I.TBNO
+		WHERE J.ID = #{id} AND DELYN ="N" AND BSTATUS NOT IN ("BS4", "BS5")	
+		ORDER BY JJNO DESC
+	</select>
+	
+	<delete id="deleteJjim" parameterType="hashmap">
+		DELETE FROM T3_JJIM
+		WHERE JJNO = #{jjno};
+	</delete>
+	
 </mapper>
