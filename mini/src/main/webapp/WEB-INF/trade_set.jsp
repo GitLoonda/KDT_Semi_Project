@@ -78,10 +78,11 @@ select, textarea{
 		}, created: function () {
 			var self = this;
 			console.log(self.tbno);
-			console.log(self.sessionId);
+			console.log(opener.document.getElementById('tbno').value);
 			console.log(self.sessionName);
 			console.log(self.sessionNick);
 			console.log(self.sessionUstatus);
+			
 			
 			
 		}

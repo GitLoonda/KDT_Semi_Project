@@ -220,6 +220,7 @@
 		</style>
 		<body>
 			<div id="app">
+			<input type='hidden' id='tbno' name='tbno' :value='tbno' />
 				<!-- 게시글 상세 -->
 				<div class="container">
 					<div id="Tviewbox1" v-for="(list, index) in list">
