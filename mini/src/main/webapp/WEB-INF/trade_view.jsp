@@ -315,7 +315,7 @@
 									<div>판매자 정보 :{{list.nick}} | {{list.email}} | {{list.phone}}</div>
 									<div>제품 상태 : {{list.bprodname}}</div>
 									<div>거래 방법 : {{list.bpurname}}</div>
-									<div>조회 수 : {{list.hits}} 찜: {{jimsum}} 판매자 평점 : {{list.grade}}</div>
+									<div>조회 수 : {{list.hits}} 찜: {{jimsum}} 판매자 평점 : {{usersum}}</div>
 									<div>거래 지역 : {{list.local1name}} {{list.local2name}} {{list.local3name}}</div>
 								</div>
 								<div class="infobox1_2_2">
@@ -488,6 +488,7 @@
 			
 			jimst:0,
 			jimsum:0,
+			usersum:0,
 			// 에디터
 			reconte:"",
 			vwreconte:"",
@@ -510,15 +511,11 @@
 						console.log(data);
 						self.list = data.list; 
 						self.jimst=data.ujimcnt;
-
 						self.cont=data.list[0].bcont;
 						self.bstatus=data.list[0].bstatus;
 						self.listid=data.list[0].id;
 						self.brdflg=data.list[0].brdflg;
-						
 						self.recnt=data.reCnt;
-						
-
 						if(data.list[0].trade==undefined){
 						}else{
 							self.getnickname();
@@ -526,17 +523,31 @@
 						if(self.recnt>=1){
 							self.reviewlist();
 						}
-						
 						// console.log(self.recnt);
 						// console.log(self.bstatus);
-						
-						
+						self.getgrdinfo();
 					}
 				}); 
 			},
+			getgrdinfo(){
+				var self = this;
+				var nparmap = {id:self.listid};
+				$.ajax({
+					url:"/tradeView/grdinfo.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						self.usersum=data.grdnum[0].usum;						
+						self.usersum=self.usersum+self.list[0].grade;
+					}
+					
+				}); 
+			},
+
 			getnickname(){
 				var self = this;
-				var nparmap = {id:self.list[0].trade}
+				var nparmap = {id:self.list[0].trade};
 				$.ajax({
 					url:"/tradeView/ncik.dox",
 					dataType:"json",	
@@ -544,31 +555,15 @@
 					data : nparmap,
 					success : function(data) { 
 						self.nickname=data.nicks[0].nick;
-						// console.log(self.nickname);
 					}
-					
-				}); 
-			},
-			getgrdinfo(){
-				var self = this;
-				var nparmap = {id:self.listid}
-				$.ajax({
-					url:"/tradeView/getgrdinfo.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data);
-					}
-					
 				}); 
 			},
 			
 			
-
 			// 거래상태변경
 			bstbtn(){
 				var self = this;
+
          	  	var nparmap = {tbno : self.tbno,bstatus : self.bstatus};
 				$.ajax({
 					url:"/tradeView/bstupdate.dox",
@@ -840,7 +835,8 @@
 			self.fnGetList();
 			self.fncommlist();
 			self.jimsumcnt();
-			self.getgrdinfo();
+			
+
 		}
 	});
 

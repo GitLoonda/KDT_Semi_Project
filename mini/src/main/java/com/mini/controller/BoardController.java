@@ -308,17 +308,18 @@ public class BoardController {
     @ResponseBody
     public String searchTbrdInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
     HashMap<String, Object> resultMap = new HashMap<String, Object>();
-    resultMap = boardService.searchTbrdInfo(map);
     
+    resultMap = boardService.searchTbrdInfo(map);
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }
+
     // 평점 불러오기
-    @RequestMapping(value = "/tradeView/getgrdinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/tradeView/grdinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String searchgrdinfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
     HashMap<String, Object> resultMap = new HashMap<String, Object>();
- 
+    resultMap=boardService.searchgrdinfo(map);
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }

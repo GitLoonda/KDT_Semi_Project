@@ -256,8 +256,8 @@
 	ORDER BY TBNO DESC
 </select>
 <!-- 평점 -->
-<select id="selectgrdinfo" parameterType="hashmap" resultType="String">
-	SELECT SUM(CINFO)
+<select id="selectgrdinfo" parameterType="hashmap" resultType="com.mini.model.Grd">
+	SELECT SUM(CINFO) as USUM
 	FROM T3_GRD GR
 	INNER JOIN T3_DESC D ON GR.GRDNUM = D.CNUM
 	WHERE ID=#{id};

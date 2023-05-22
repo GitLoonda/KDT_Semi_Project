@@ -38,7 +38,7 @@ public interface BoardMapper {
     //게시글 상세
     // 게시글정보
     List<TbrdList> selectTbrdInfo(HashMap<String, Object> map);
-    int selectgrdinfo(HashMap<String, Object> map);
+    List<Grd> selectgrdinfo(HashMap<String, Object> map);
     // 조회수
     void updateViewCnt(HashMap<String, Object> map);
     // 닉네임 찾기

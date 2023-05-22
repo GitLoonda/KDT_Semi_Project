@@ -71,12 +71,11 @@
 								<div class="itemtxt">{{item.btitle}}</div>
 								<div class="itemtxt">{{item.bprice}} 원</div>
 								<div class="itemtxt">
-									<span>조회수</span>
-									<span>{{item.hits}}</span>
-									<span>댓글</span>
-									<span>{{item.commcnt}}</span>
-									<span>찜</span>
-									<span>{{item.likes}}</span>
+									<span>댓글</span><span>{{item.commcnt}}</span>
+									<span>찜</span><span>{{item.likes}}</span>
+								</div>
+								<div class="itemtxt">
+									<span>조회수</span><span>{{item.hits}}</span>
 								</div>
 							</div>
 						</div>
