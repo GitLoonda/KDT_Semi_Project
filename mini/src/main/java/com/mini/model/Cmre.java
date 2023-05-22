@@ -15,6 +15,7 @@ public class Cmre {
 	private String showYn;
 	private int tbno;
 	private String udate;
+	private String nick;
 	
 	
 	

@@ -26,6 +26,7 @@ public class TbrdList {
     private int hits;
     private int likes;
     private int grade;
+
     private String brdname;
     private String kindname;
     private String cate1name;
@@ -45,7 +46,7 @@ public class TbrdList {
     private String udate;
     private String delYn;
     private int commcnt;
-
+    private String trade;
     private String id;
     private String nick;
     private String phone;

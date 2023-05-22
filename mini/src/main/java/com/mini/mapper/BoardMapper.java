@@ -38,6 +38,7 @@ public interface BoardMapper {
     //게시글 상세
     List<TbrdList> selectTbrdInfo(HashMap<String, Object> map);
     void updateViewCnt(HashMap<String, Object> map);
+    List<TbrdList> selectNick(HashMap<String, Object> map);
     // 찜 했는지 검증
     int jimCnt(HashMap<String, Object> map);
 
@@ -62,6 +63,7 @@ public interface BoardMapper {
     void TbrdcommAdd (HashMap<String, Object> map);
     List<Cmre> selectTbrdcomm (HashMap<String, Object> map);
     int selectsumcnt(HashMap<String, Object> map);
+
     // 게시글 댓글 수정
     void commEdit(HashMap<String, Object> map);
     // 게시글 댓글 삭제
@@ -76,6 +78,14 @@ public interface BoardMapper {
     void viewfiledelete(HashMap<String, Object> map);
     // 게시글 업데이트
     void Tradeupdate(HashMap<String, Object> map);
+
+    //tradeset.do
+    //댓글 사용자 가져오기
+    List<Cmre> selectSCommInfo (HashMap<String, Object> map);
+    // 거래자 지정
+    void tradesetupdate(HashMap<String, Object> map);
+    
+    
 }
 
 

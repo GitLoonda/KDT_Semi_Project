@@ -234,11 +234,7 @@
 		, created: function () {
 			var self = this;
 			self.fnGetTradeList();	
-			console.log("${mainlist}");	
-			console.log(self.sessionId);
-			console.log(self.sessionName);
-			console.log(self.sessionNick);
-			console.log(self.sessionUstatus);
+
 		}
 	});
 </script>

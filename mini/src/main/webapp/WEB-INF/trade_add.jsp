@@ -735,11 +735,6 @@
 			var self = this;
 			self.optionlist();
 			self.userinfolist();
-			console.log(self.sessionId);
-			console.log(self.sessionName);
-			console.log(self.sessionNick);
-			console.log(self.sessionUstatus);
-			
 		}
 	});
 
