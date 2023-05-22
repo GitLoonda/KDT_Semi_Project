@@ -94,6 +94,7 @@ public class BoardServicelmpl implements BoardService{
 		boardMapper.updateViewCnt(map);
 		resultMap.put("ujimcnt",boardMapper.jimCnt(map));
 		resultMap.put("list", boardMapper.selectTbrdInfo(map));
+		resultMap.put("reCnt",boardMapper.reviewCnt(map));
 		return resultMap;
 	}
 	@Override
@@ -103,6 +104,16 @@ public class BoardServicelmpl implements BoardService{
 		resultMap.put("nicks",boardMapper.selectNick(map));
 		return resultMap;
 	}
+
+	
+    public HashMap<String, Object> searchgrdinfo(HashMap<String, Object> map) {
+		
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		
+		resultMap.put("grdnum",boardMapper.selectgrdinfo(map));
+		return resultMap;
+	}
+
 
 	//게시글 찜 갯수
 	@Override
@@ -146,6 +157,7 @@ public class BoardServicelmpl implements BoardService{
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("commlist", boardMapper.selectTbrdcomm(map));
 		resultMap.put("cnt", boardMapper.selectsumcnt(map));
+		
 		return resultMap;
 	}
 	// 게시글 댓글 수정
@@ -156,7 +168,14 @@ public class BoardServicelmpl implements BoardService{
 	public void delcomm(HashMap<String, Object> map) {
 		boardMapper.commDel(map);
 	}
-
+	// 게시글 리뷰 불러오기
+	@Override
+	public HashMap<String, Object> searchreviewlist(HashMap<String, Object> map) {
+	HashMap<String,Object> resultMap = new HashMap<String,Object>();
+	resultMap.put("reviewlist", boardMapper.selectreviewlist(map));
+	
+	return resultMap;
+}
 	// tradeedit.do
 	// 글정보 가져오기
 	public HashMap<String, Object> searchviewlist(HashMap<String, Object> map) {
@@ -195,4 +214,15 @@ public class BoardServicelmpl implements BoardService{
 	public void tradeset(HashMap<String, Object> map) {
 		boardMapper.tradesetupdate(map);
 	}
+	// 리뷰 등록
+	
+	public void reviewInsert(HashMap<String, Object> map) {
+		boardMapper.reviewAdd(map);
+	}
+
+	// 평점 등록
+	public void fngrdset(HashMap<String, Object> map) {
+		boardMapper.fngrdsetAdd(map);
+	}
+
 }

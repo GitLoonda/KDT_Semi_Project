@@ -33,7 +33,10 @@ public interface BoardService {
     HashMap<String, Object> searchNick(HashMap<String, Object> map);
     //게시글 찜 갯수
     int searchjimcnt(HashMap<String, Object> map);
-    
+
+    // 게시글 평점
+    HashMap<String, Object> searchgrdinfo(HashMap<String, Object> map);
+
     //거래상태 변경
     void Tbrdbstupdate(HashMap<String, Object> map);
     
@@ -55,7 +58,9 @@ public interface BoardService {
 
     // 게시글 댓글 삭제
     void delcomm(HashMap<String,Object> map);
-    
+    // 사용자 리뷰 
+    HashMap<String, Object> searchreviewlist(HashMap<String, Object> map);
+
     //tradeedit.do
     //수정 리스트 
     HashMap<String, Object> searchviewlist(HashMap<String, Object> map);
@@ -70,4 +75,11 @@ public interface BoardService {
     HashMap<String, Object> searchSCommInfo(HashMap<String, Object> map);
     // 거래 사용자 지정
     void tradeset(HashMap<String, Object> map);
+    // 리뷰 등록
+    void reviewInsert(HashMap<String, Object> map);
+
+    void fngrdset(HashMap<String, Object> map);
+
+    
+
 }

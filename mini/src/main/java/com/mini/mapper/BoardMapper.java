@@ -36,9 +36,15 @@ public interface BoardMapper {
 
     //tradeview
     //게시글 상세
+    // 게시글정보
     List<TbrdList> selectTbrdInfo(HashMap<String, Object> map);
+    int selectgrdinfo(HashMap<String, Object> map);
+    // 조회수
     void updateViewCnt(HashMap<String, Object> map);
+    // 닉네임 찾기
     List<TbrdList> selectNick(HashMap<String, Object> map);
+    // 리뷰수 카운트
+    int reviewCnt(HashMap<String, Object> map);
     // 찜 했는지 검증
     int jimCnt(HashMap<String, Object> map);
 
@@ -69,6 +75,8 @@ public interface BoardMapper {
     // 게시글 댓글 삭제
     void commDel(HashMap<String, Object> map);
 
+    // 게시글 리뷰 리스트
+    List<Cmre> selectreviewlist(HashMap<String, Object> map);
     //tradeedit.do
     // 글정보 가져오기
     List<TbrdList> selectviewlist(HashMap<String, Object> map);
@@ -84,7 +92,10 @@ public interface BoardMapper {
     List<Cmre> selectSCommInfo (HashMap<String, Object> map);
     // 거래자 지정
     void tradesetupdate(HashMap<String, Object> map);
-    
+    // 리뷰 등록
+    void reviewAdd(HashMap<String, Object> map);
+    // 평점 등록
+    void fngrdsetAdd(HashMap<String, Object> map);
     
 }
 
