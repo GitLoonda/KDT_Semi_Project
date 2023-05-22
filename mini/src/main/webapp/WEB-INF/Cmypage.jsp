@@ -31,9 +31,9 @@
               </div>
         </div>
        <div class="serve">
-    <input class="servename" type="text" placeholder="크리에이터 00님" readonly>
+    <input class="servename" type="text" :placeholder="mypg.crenick + '님'" readonly>
     <br>
-    <b>소개/공지</b>
+    <b>남김말/공지</b>
     <br>
     <input type="text" :placeholder="mypg.cintro" readonly>
     <br><br>
@@ -67,7 +67,14 @@
      </div>
      <!--후기 개수-->
      <div class="Umy_text">의뢰 후기(x건)</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly ></textarea>>
+     <textarea class="Umy_box" style= "resize : none;" readonly >
+    
+	의뢰 후기  
+     
+      {{mypg.id}} : {{mypg.conte}}
+      
+      {{mypg.id}} : {{mypg.conte}}
+      </textarea>>
   
 </div>
 </div>

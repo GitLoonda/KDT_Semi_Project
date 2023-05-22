@@ -18,6 +18,7 @@
 	<div class="Umypage_btn">
       <span>사용자프로필 </span>
 	<button class="btn1" @click="UpProfile()">프로필 수정</button>
+	<button class="btn1" @click="Crefile()">크리에이터 프로필</button>
       <button class="btn2" @click="CreatAdd()">크리에이터 등록</button>
       </div>
     <hr width="92%">
@@ -32,11 +33,11 @@
               </div>
         </div>
      <div class="serve">
-    <input class="servename" type="text" placeholder="크리에이터 00님" readonly>
+    <input class="servename" type="text" :placeholder="mypg.nick + '님' " readonly>
     <br>
     <b>소개/공지</b>
     <br>
-    <input type="text" :placeholder="mypg.cintro" readonly>
+    <input type="text" :placeholder="mypg.intro" readonly>
     <br><br>
     <!--별 찍기(평점)-->
     <div class="Cmy_star">
@@ -59,12 +60,14 @@
      <div class="Umy_text">정보</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
      <div class="Umy_text">등록제품</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.conte}}</textarea>
      <div class="Umy_text">후기</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>
+     거래후기 :  {{mypg.conte}}
+     </textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.jjno}} 번</textarea>
     
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
@@ -103,6 +106,9 @@ var app = new Vue({
 		,UpProfile(){
 			location.href ="/useredit.do";
 			
+		}
+		,Crefile(){
+			location.href ="/Cpage.do";
 		}
     }   
     , created: function () {

@@ -74,5 +74,18 @@ public class MypageController {
 		return new Gson().toJson(resultMap);
 	}
     
+  // 크리에이터 요청
+    @RequestMapping(value = "/user/creadd.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String creadd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Mypg mypg = mypageService.upcreadd(map);
+		resultMap.put("mypg", mypg);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+    
+
+    
 
 }

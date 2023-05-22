@@ -36,6 +36,22 @@ public class Mypg {
     private String pinfo;
     private String cintro;
     
+    private String jjno;
+    private String tbno;
+    
+    private String crecont;
+    private String crepathno;
+    
+    private String conte;
+    
+    private String ctitle;
+    private String ccont;
+    private String btitle;
+    private String reconte;
+    private String crenick;
+
+    
+    
     
  
     
@@ -223,6 +239,66 @@ public class Mypg {
 	}
 	public void setCintro(String cintro) {
 		this.cintro = cintro;
+	}
+	public String getJjno() {
+		return jjno;
+	}
+	public void setJjno(String jjno) {
+		this.jjno = jjno;
+	}
+	public String getTbno() {
+		return tbno;
+	}
+	public void setTbno(String tbno) {
+		this.tbno = tbno;
+	}
+	public String getCrecont() {
+		return crecont;
+	}
+	public void setCrecont(String crecont) {
+		this.crecont = crecont;
+	}
+	public String getCrepathno() {
+		return crepathno;
+	}
+	public void setCrepathno(String crepathno) {
+		this.crepathno = crepathno;
+	}
+	public String getConte() {
+		return conte;
+	}
+	public void setConte(String conte) {
+		this.conte = conte;
+	}
+	public String getCtitle() {
+		return ctitle;
+	}
+	public void setCtitle(String ctitle) {
+		this.ctitle = ctitle;
+	}
+	public String getCcont() {
+		return ccont;
+	}
+	public void setCcont(String ccont) {
+		this.ccont = ccont;
+	}
+	public String getBtitle() {
+		return btitle;
+	}
+	public void setBtitle(String btitle) {
+		this.btitle = btitle;
+	}
+	public String getReconte() {
+		return reconte;
+	}
+	public void setReconte(String reconte) {
+		this.reconte = reconte;
+	}
+	public String getCrenick() {
+		return crenick;
+	}
+	public void setCrenick(String crenick) {
+		this.crenick = crenick;
 	}
 
 }

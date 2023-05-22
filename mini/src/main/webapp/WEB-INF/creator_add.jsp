@@ -18,7 +18,7 @@
         <div class="creator_adbox">
         <h3><div class="creaddti">크리에이터 등록</div></h3>
         <hr width="95%">
-        <div><input type="text" placeholder="크리에이터명"></div>
+        <div><input type="text" v-model="mypg.crenick" :placeholder="mypg.crenick"></div>
         <br>
 				<td><div style="font-size:22px">★ 포트폴리오 첨부하기 ★</div></td>
 				<td>
@@ -36,7 +36,7 @@
         <div class="creator_intro">
             <div class="creaddintr"> 소개 </div>
             <br>
-            <textarea placeholder="포트폴리오 1부, SNS주소 필수 첨부" style= "resize : none;"></textarea>
+            <textarea v-model = "mypg.crecont" placeholder="포트폴리오 1부, SNS주소 필수 첨부" style= "resize : none;"></textarea>
         </div>
         <div class="cre_add_end">
 
@@ -56,10 +56,10 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-	
+	mypg : {}
     }   
     , methods: {
-        upload: function() {
+       /* upload: function() {
             var form = new FormData();
             form.append("file1", $("#file1")[0].files[0]);
 
@@ -73,15 +73,45 @@ var app = new Vue({
                     // 성공 시 동작
                 }
             });
-        },
-        OkCre: function() {
-        	alert("등록신청이 완료되었습니다");
-            location.href = "/main.do";
-        },
-        Nocre: function() {
-        	alert("취소");
+        },*/
+        fnGetInfo : function(){
+            var self = this;
+            var nparmap = {id : app.sessionId};
+            $.ajax({
+                url:"/user/info.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+                	console.log(data.mypg);
+                }
+            }); 
+        }
+        
+			    ,OkCre : function(){
+			        var self = this;
+			        var nparmap = self.mypg;
+			        console.log(self.mypg);
+			        $.ajax({
+			            url:"/user/creadd.dox",
+			            dataType:"json",	
+			            type : "POST", 
+			            data : nparmap,
+			            success : function(data) {  
+			            	alert("등록신청이 완료되었습니다");
+			            	console.log(data);
+
+			            }
+			        }); 
+			    }
+       , Nocre() {
+        	alert("취소했습니다.");
             location.href = "/mypage.do";
         }
     }
+    , created: function () {
+    	var self = this;
+    	self.fnGetInfo();
+}
 });
   </script>

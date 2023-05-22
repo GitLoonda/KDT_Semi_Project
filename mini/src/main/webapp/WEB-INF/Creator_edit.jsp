@@ -11,6 +11,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <style>
+.serve textarea {
+margin-left : 30px;
+height : 120px;
+width : 500px;}
 </style>
 <body>
   <div id="app">    
@@ -31,15 +35,11 @@
               </div>
         </div>
         <div class="serve">
-    <input class="servename" type="text" :placeholder="mypg.nick + '님'" readonly>
+    <input class="servename" type="text" :placeholder="mypg.crenick + '님'" readonly>
     <br>
-    <b>남김말</b>
-    <br>
-    <input class=twobox type="text" v-model="mypg.intro" :placeholder="mypg.intro">
-    <br>
-    <b>정보</b>
-    <br>
-    <input class=twobox type="text" v-model="mypg.addr" :placeholder="mypg.addr">
+    <b>남김말/공지</b>
+    <br><br>
+ <textarea type="text" v-model="mypg.cintro" :placeholder="mypg.cintro" style= "resize : none;"></textarea> <br>
     </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -135,8 +135,6 @@ var app = new Vue({
                 success : function(data) {  
                 	console.log(data.mypg);
 	                self.mypg = data.mypg;
-	                self.mypg.intro = "";
-	                self.mypg.cintro = "";
 	                self.mypg.passwd = "";
 	                self.mypg.phone = "";
 	                self.mypg.email = "";

@@ -5,9 +5,12 @@
 
 	<!-- 아이디/주소 내역 받아오기 -->
 	<select id="selectUserInfo" parameterType="hashmap" resultType="com.mini.model.Mypg">
-		SELECT * 
-		FROM T3_USER 
-		LEFT JOIN T3_PROF ON T3_USER.ID = T3_PROF.ID
+		SELECT *
+			FROM T3_USER
+			LEFT JOIN T3_PROF ON T3_USER.ID = T3_PROF.ID
+			LEFT JOIN T3_CMRE ON T3_USER.ID = T3_CMRE.ID
+			LEFT JOIN T3_JJIM ON T3_USER.ID = T3_JJIM.ID
+			
 		where T3_USER.ID = #{id}
 	</select>
 	 
@@ -33,7 +36,39 @@
 		CINTRO = #{cintro}
 		WHERE ID = #{id}
 	</update>
+	
+	<!-- 크리에이터 닉네임 -->
+	<update id="insCreadd" parameterType="hashmap">
+		UPDATE T3_USER
+		SET
+		CRENICK = #{crenick}
+		WHERE ID = #{id}
+	</update>
+	<!-- 크리에이터 포트폴리오 -->
+	<update id="insCreimg" parameterType="hashmap">
+		UPDATE T3_CREIMG
+		SET
+		CREPATHNO = #{crepathno}
+		WHERE ID = #{id}
+	</update>
+	<!-- 크리에이터등록요청 작성내용 -->
+	<update id="insCrebor" parameterType="hashmap">
+		UPDATE T3_CREBRD
+		SET
+		CRECONT = #{crecont}
+		WHERE ID = #{id}
+	</update>
 
+	<!-- 후기 불러오기 -->
+	<select id="selectHugi" parameterType="hashmap" resultType="com.mini.model.Mypg">
+			SELECT 
+			ID,
+			TBNO,
+			RECONTE,
+			FROM T3_TBRD
+			LEFT JOIN T3_TBRD ON T3_TBRD.TBNO = T3_CMRE.TBNO
+			WHERE ID = #{id}
+	</select>
 	
 
 	

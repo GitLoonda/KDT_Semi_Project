@@ -12,6 +12,10 @@ public interface MypageService {
 	
 	//프로필 하단 정보 수정/업데이트
 	Mypg getProDown(HashMap<String, Object> map);
+	
+	//크리에이터 신청
+	Mypg upcreadd(HashMap<String, Object> map);
+	
 
 	
 } 
