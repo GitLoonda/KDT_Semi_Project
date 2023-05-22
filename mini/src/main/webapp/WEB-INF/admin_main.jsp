@@ -77,7 +77,7 @@
 		<div class="container">
 			<div><h2>📰 관리자 메인 페이지</h2> </div>
 			<div style="float : right; margin-right : 20px">
-				<div>{{sessionId}} 님 환영합니다 😀</div>
+				<div>{{sessionNick}} 님 환영합니다 😀</div>
 			</div>
 			<pre>
 			</pre>
@@ -91,6 +91,7 @@
 				<li><a href="/notice/insert.do">⩊ 공지사항 업로드</a></li>
 				<li>⩊ 크리에이터 승인 대기 <a href="/admin/main.do">{{recogCnt}}</a>개 </li>
 				<li>⩊ 신고 처리 대기 <a href="/admin/blacklist.do">{{cnt}}</a>개</li>
+				<li> <a href="/main.do" style="font-size: 1.1rem;"><strong> ⚙ 메인 페이지로 이동 ⚙ </strong></a></li>
 			
 
 			<pre>
@@ -159,6 +160,8 @@
 </body>
 </html>
 <script type="text/javascript">
+
+document.title="📰 관리자 메인페이지";
 <!-- 페이징 추가 4-->
 Vue.component('paginate', VuejsPaginate)
 var app = new Vue({ 
@@ -171,6 +174,7 @@ var app = new Vue({
     	, adminCnt : 0
    		, sessionId : "${sessionId}"
    		, sessionUstatus : "${sessionUstatus}"
+   		, sessionNick : "${sessionNick}"
    		, keyword : ""
 	    <!-- 페이징 추가 5-->
 		, selectPage : 1

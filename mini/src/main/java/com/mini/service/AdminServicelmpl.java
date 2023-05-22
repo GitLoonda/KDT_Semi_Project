@@ -21,7 +21,7 @@ public class AdminServicelmpl implements AdminService{
 
 	@Override
 	public void addAdmin(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method x
 		
 		adminmapper.insertAdmin(map);
 		
@@ -70,6 +70,7 @@ public class AdminServicelmpl implements AdminService{
 		return adminmapper.selectMyAdmin(map);
 	}
 
+	// 비밀번호 찾기 (리스트)
 	@Override
 	public HashMap<String, Object> searchUserInfo(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -101,6 +102,7 @@ public class AdminServicelmpl implements AdminService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		User user = adminmapper.findPasswd(map);
+		
 			if(user != null) {
 				resultMap.put("user", user);
 				resultMap.put("result", "success");
@@ -334,6 +336,13 @@ public class AdminServicelmpl implements AdminService{
 	public int creatorCnt(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminmapper.creatorCnt(map);
+	}
+
+	// 게시글 신고 처리
+	@Override
+	public void boardReport(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		adminmapper.boardReport(map);
 	}
 
 

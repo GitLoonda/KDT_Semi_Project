@@ -31,11 +31,13 @@ public class LoginController {
 		String name = (String) session.getAttribute("sessionName");
 		String nick = (String) session.getAttribute("sessionNick");
 		String ustatus = (String) session.getAttribute("sessionuStatus");
+		String admin = (String) session.getAttribute("sessionuAdminFlg");
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
 		session.removeAttribute(nick);
 		session.removeAttribute(ustatus);
+		session.removeAttribute(admin);
 		
 		session.invalidate();
 
@@ -48,11 +50,15 @@ public class LoginController {
 		String name = (String) session.getAttribute("sessionName");
 		String nick = (String) session.getAttribute("sessionNick");
 		String ustatus = (String) session.getAttribute("sessionUstatus");
+		String admin = (String) session.getAttribute("sessionuAdminFlg");
+
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
 		session.removeAttribute(nick);
 		session.removeAttribute(ustatus);
+		session.removeAttribute(admin);
+
 		
 		session.invalidate();
 
@@ -70,6 +76,7 @@ public class LoginController {
 			session.setAttribute("sessionName", user.getName());
 			session.setAttribute("sessionNick", user.getNick());
 			session.setAttribute("sessionUstatus", user.getUstatus());
+			session.setAttribute("sessionAdminFlg", user.getAdminflg());
 		}
 		return new Gson().toJson(resultMap);
 	}

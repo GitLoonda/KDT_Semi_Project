@@ -50,6 +50,9 @@
 
 </html>
 <script type="text/javascript">
+
+document.title="📢 공지사항 상세";
+
 var app = new Vue({ 
     el: '#app',
     data: {

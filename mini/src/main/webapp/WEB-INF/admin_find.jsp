@@ -7,6 +7,7 @@
 		<script src="../js/jquery.js"></script>
 		<script src="../js/vue.js"></script>
 		<title>비밀번호 찾기</title>
+		<link href="/img/main/unity-logo-200x100-1.jpg" rel="shortcut icon" type="image/x-icon">
 		<style>
 	        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 	
@@ -77,20 +78,20 @@
 				<div class="div2">
 					<button id="btn" @click="fnMatch()">입력</button>
 				</div>
-			</div>
 			
-			<div class="div2" v-if="quiz != ''">
-				{{quiz}}
-				<div class="div2">
+			
+				<div class="div2" v-if="quiz != ''">
+					{{quiz}}
+					<div class="div2">
 						<input type="text" class="in" v-model="answer" placeholder="답변하세요"></input>
 				</div>
-	
+		
 				<div class="div2">
 					<button id="btn" @click="fnFind()">비밀번호 찾기</button>
 				</div>
-				<div class="div2" v-if="passwd != ''">비밀번호는 {{passwd}} 입니다</div>
+					<div class="div2" v-if="passwd != ''">비밀번호는 {{passwd}} 입니다</div>
+				</div>
 			</div>
-			
 			<div><a href="login.do"> ▪ 로그인 하시겠습니까? ▪ </a></div>
 			<a href="join.do"> ▪ 아직 회원가입을 안하셨나요? ▪ </a>
 		</div> 
@@ -121,8 +122,11 @@ var app = new Vue({
 	            data : nparmap,
 	            success : function(data) { 
 	            	console.log(data);
+	            	
 	            	if(data.result == "success"){
                 		self.passwd = data.user.passwd;
+                	}else{
+                		alert(data.message);
                 	}
 	            }
 	        }); 
@@ -137,6 +141,10 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	console.log(data);
+                	
+                	if(data.message != undefined){
+                		alert(data.message);
+                	}
                 	if(data.result == "success"){
                 		self.quiz = data.user.cinfo;
                 	}

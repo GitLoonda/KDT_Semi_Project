@@ -35,6 +35,7 @@ public class AdminController {
 	@Autowired
 	HttpSession session;
 	
+	// 관리자 로그인 페이지
 	@RequestMapping("/admin/login.do") //어드민 메인
     public String admin(Model model) throws Exception{ 
 		
@@ -42,17 +43,20 @@ public class AdminController {
 		String name = (String) session.getAttribute("sessionName");
 		String status = (String) session.getAttribute("sessionUstatus");
 		String adminFlg = (String) session.getAttribute("sessionAdminFlg");
+		String nick = (String) session.getAttribute("sessionNick");
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
 		session.removeAttribute(status);
 		session.removeAttribute(adminFlg);
+		session.removeAttribute(nick);
 		
 		session.invalidate();
 
         return "/admin_login";
     }
 	
+	// 관리자 로그인
 	@RequestMapping(value = "/admin/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String get(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -66,17 +70,20 @@ public class AdminController {
 			session.setAttribute("sessionName", user.getName());
 			session.setAttribute("sessionUstatus", user.getUstatus());
 			session.setAttribute("sessionAdminFlg", user.getAdminflg());
+			session.setAttribute("sessionNick", user.getNick());
 		}
 		return new Gson().toJson(resultMap);
 	}
 	
 	
+	// 관리자 회원가입 페이지
 	@RequestMapping("/admin/join.do") //어드민 메인
 	public String admin_join(Model model) throws Exception{
 		
 		return "/admin_join";
 	}
 	
+	// 관리자 회원가입
 	@RequestMapping(value = "/admin/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_join(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -86,6 +93,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 관리자 회원가입시 질문
 	@RequestMapping(value = "/admin/quiz.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_quiz(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -94,7 +102,8 @@ public class AdminController {
 		resultMap.put("quizList", quizList);
 		return new Gson().toJson(resultMap);
 	}
-	
+
+	// 관리자 아이디 중복 체크
 	@RequestMapping(value = "/admin/check.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String check(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -105,12 +114,14 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 관리자 비밀번호 찾기 페이지
 	@RequestMapping("/admin/find.do") //어드민 메인
 	public String admin_find(Model model) throws Exception{
 		
 		return "/admin_find";
 	}
 	
+	// 관리자 비밀번호 찾기 ( 질문 )
 	@RequestMapping(value = "/admin/find.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String find(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -127,6 +138,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 
+	// 관리자 비밀번호 찾기
 	@RequestMapping(value = "/admin/findpasswd.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String match(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -140,12 +152,14 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 
+	// 관리자 회원가입 주소 팝업
 	@RequestMapping("/admin/addr.do") 
     public String addr(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception{
 		
 		return "/admin_addrPopup";
     }
 	
+	// 관리자 메인 페이지
 	@RequestMapping("/admin/main.do") //어드민 메인
 	public String admin_main(HttpServletRequest request, Model model) throws Exception{
 		
@@ -155,11 +169,11 @@ public class AdminController {
 		return "/admin_main";
 	}
 	
+	// 관리자 메인
 	@RequestMapping(value = "/admin/main.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_main(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
 		
 		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
 		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
@@ -182,6 +196,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 크리에이터 승인
 	@RequestMapping(value = "/admin/recogCreator.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String recogCreator(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
@@ -191,12 +206,14 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 블랙리스트 페이지
 	@RequestMapping("/admin/blacklist.do") //어드민 메인
 	public String admin_blacklist(Model model) throws Exception{
 		
 		return "/admin_blacklist";
 	}
 	
+	// 신고접수 (블랙리스트)
 	@RequestMapping(value = "/admin/blacklist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_blacklist(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -217,6 +234,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 블랙리스트 먹이기
 	@RequestMapping(value = "/admin/blacklist/ban.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String blacklist_ban(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
@@ -226,12 +244,14 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 관리자계정 승인 페이지
 	@RequestMapping("/admin/manage.do") //어드민 메인
 	public String admin_manage(Model model) throws Exception{
 		
 		return "/admin_manage";
 	}
 	
+	// 관리자 계정 승인
 	@RequestMapping(value = "/admin/manage.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_manage(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -251,6 +271,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 관리자 계정 승인 (버튼클릭)
 	@RequestMapping(value = "/admin/recogAdmin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_recogAdmin(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -270,12 +291,14 @@ public class AdminController {
 //	}
 //	
 	
+	// 게시물 관리 페이지
 	@RequestMapping("/admin/board.do") //어드민 메인
 	public String admin_board(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
 		return "/admin_board";
 	}
 	
+	// 게시물 관리
 	@RequestMapping(value = "/admin/boardlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_boardlist(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -299,6 +322,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 게시물 관리 블라인드
 	@RequestMapping(value = "/admin/boardlist/blind.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_blind(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -308,6 +332,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 게시물 관리 삭제
 	@RequestMapping(value = "/admin/boardlist/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_remove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -317,6 +342,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 게시물 댓글 삭제
 	@RequestMapping(value = "/admin/boardlist/comm/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_commRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -326,6 +352,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 게시물 댓글 블라인드
 	@RequestMapping(value = "/admin/boardlist/commBlind.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_commBlind(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -335,12 +362,14 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 관리자 댓글 관리 페이지
 	@RequestMapping("/admin/comment.do") //어드민 메인
 	public String admin_comment(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
 		return "/admin_comment";
 	}
 	
+	// 관리자 댓글 관리
 	@RequestMapping(value = "/admin/comment.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String admin_comment(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -381,8 +410,7 @@ public class AdminController {
         return "/notice";
     }
 	
-	
-	
+	// 공지사항
 	@RequestMapping(value = "/notice.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String noticeList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -404,6 +432,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 공지사항 상세피이지
 	@RequestMapping("/notice/info.do") 
     public String read(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
@@ -412,6 +441,7 @@ public class AdminController {
         return "/notice_info";
     }
 	
+	// 공지사항 상세
 	@RequestMapping(value = "/notice/info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String notice_info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -422,12 +452,14 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 공지사항 등록 페이지
 	@RequestMapping("/notice/insert.do") 
     public String insert(Model model) throws Exception{
 
         return "/notice_insert";
     }
 	
+	// 공지사항 등록
 	@RequestMapping(value = "/notice/insert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String notice_insert(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -439,7 +471,7 @@ public class AdminController {
 	}
 	
 	
-	// 수정
+	// 공지사항 수정 페이지
 	@RequestMapping("/modify.do") 
     public String modify(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
@@ -456,6 +488,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 공지사항 수정 
 	@RequestMapping(value = "/notice/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String notice_edit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -465,6 +498,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 파일 업로드
 	@RequestMapping("/upload.do")
     public String result(@RequestParam("file1") MultipartFile multi, @RequestParam("boardIdx") int boardIdx, HttpServletRequest request,HttpServletResponse response, Model model)
     {
@@ -526,5 +560,5 @@ public class AdminController {
         
         return fileName;
     }
-
+ 
 }

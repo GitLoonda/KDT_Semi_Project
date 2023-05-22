@@ -2,6 +2,7 @@
 li{list-style:none}
 a{text-decoration:none;font-size:14px}
 
+
 .header {
   position: fixed;
   margin:0 auto;
@@ -9,8 +10,7 @@ a{text-decoration:none;font-size:14px}
   right: 0;
   top: 0;
   background-color: white;
-  width: 1024px;
-  z-index:99;
+  width: 100%;
 }
 
 .menu {

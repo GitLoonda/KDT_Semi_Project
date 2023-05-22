@@ -79,7 +79,7 @@
 		<div class="container">
 			<h2>🕵🏻‍♀️ 신고접수</h2>
 			<div style="float : right; margin-right : 20px">
-				<div>{{sessionId}} 님 환영합니다 😀</div>
+				<div>{{sessionNick}} 님 환영합니다 😀</div>
 			</div>
 			<pre>
 			</pre>
@@ -155,6 +155,8 @@
 </body>
 </html>
 <script type="text/javascript">
+
+document.title="🕵🏻‍♀️ 신고접수";
 <!-- 페이징 추가 4-->
 Vue.component('paginate', VuejsPaginate)
 var app = new Vue({ 
@@ -164,6 +166,7 @@ var app = new Vue({
     	, blackUser : []
     	, keyword : ""
     	, sessionId : "${sessionId}"
+    	, sessionNick : "${sessionNick}"
 	    <!-- 페이징 추가 5-->
 		, selectPage : 1
 		, pageCount : 1
