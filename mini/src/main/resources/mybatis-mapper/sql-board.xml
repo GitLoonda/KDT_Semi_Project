@@ -158,9 +158,9 @@
 </select>
 <select id="selectUserInfo" parameterType="hashmap" resultType="com.mini.model.User">
 	SELECT 
-	PHONE,
-	EMAIL,
-	CREAFLG
+		PHONE,
+		EMAIL,
+		CREAFLG
 	FROM T3_USER WHERE ID=#{userid}
 </select>
 
@@ -192,7 +192,7 @@
 		#{brdflg}, #{kind}, #{cate1}, #{cate2}, #{cate3},
 		#{bprod}, #{bpros}, #{bstatus}, #{bpur}, #{bbox},
 		#{brcpt}, #{bcms}, #{local1}, #{local2}, #{local3},
-		NOW(), NULL, 'N')
+		NULL,NOW(), NULL, 'N')
 </insert>
 <!-- 이미지 등록 -->
 <insert id="TradeImgAdd" parameterType="hashmap">
@@ -256,7 +256,7 @@
 <!-- 조회수 -->
 <update id="updateViewCnt" parameterType="hashmap">
 	UPDATE T3_TBRD
-	SET HITS=HITS+1
+		SET HITS=HITS+1
 	WHERE TBNO=#{tbno};
 </update>
 
@@ -264,13 +264,13 @@
 <!-- 게시글 상세 거래 상태 변경 -->
 <update id="TbrdbstModify"  parameterType="hashmap" >
 	UPDATE T3_TBRD
-	SET BSTATUS=#{bstatus}
+		SET BSTATUS=#{bstatus}
 	WHERE TBNO= #{tbno}
 </update>
 <!-- 찜등록 -->
 <insert id="jimAdd" parameterType="hashmap" >
 	INSERT INTO T3_JJIM
-	VALUES(NULL,#{id},#{tbno});;
+	VALUES(NULL,#{id},#{tbno})
 </insert>
 <!-- 찜등록시 게시글에 likes 수 증가 -->
 <update id="likeAdd" parameterType="hashmap" >
@@ -309,7 +309,7 @@
 
 <update id="BrdDel"  parameterType="hashmap" >
 	UPDATE T3_TBRD
-	SET DELYN="Y"
+		SET DELYN="Y"
 	WHERE TBNO= #{tbno}
 </update>
 

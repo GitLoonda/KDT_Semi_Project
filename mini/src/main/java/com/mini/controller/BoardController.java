@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
@@ -44,43 +45,34 @@ public class BoardController {
         }
         
         request.setAttribute("mainlist", map);
-        request.setAttribute("sessionId", session.getAttribute("sessionId"));
-        request.setAttribute("sessionName", session.getAttribute("sessionName"));
-        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
-        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_list";
     }
     //게시글 상세
 	@RequestMapping("/tradeview.do") 
     public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         request.setAttribute("trlist", map);
-        request.setAttribute("sessionId", session.getAttribute("sessionId"));
-        request.setAttribute("sessionName", session.getAttribute("sessionName"));
-        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
-        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_view";
     }
     
     //거래 등록 게시판
     @RequestMapping("/tradeadd.do") //거래게시판 페이지
     public String tradeadd(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+      
         request.setAttribute("brdfig", map.get("abrdfig"));
-
-        request.setAttribute("sessionId", session.getAttribute("sessionId"));
-        request.setAttribute("sessionName", session.getAttribute("sessionName"));
-        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
-        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_add";
     }
     //거래글 수정
     @RequestMapping("/tradeeidt.do") //거래게시판 페이지
     public String tradeedit(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+       
         request.setAttribute("tbno",map.get("tbno"));
-        request.setAttribute("sessionId", session.getAttribute("sessionId"));
-        request.setAttribute("sessionName", session.getAttribute("sessionName"));
-        request.setAttribute("sessionNick", session.getAttribute("sessionNick"));
-        request.setAttribute("sessionUstatus", session.getAttribute("sessionUstatus"));
         return "/trade_edit";
+    }
+    // 거래자 설정
+    @RequestMapping("/tradeset.do") //거래게시판 페이지
+    public String tradeset(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        System.out.println(map);
+        return "/trade_set";
     }
 
 
@@ -98,6 +90,7 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+    
     
     // tradeadd.do
     //게시판 선택값 가져오기

@@ -273,7 +273,7 @@
 									<template v-else>
 										<button @click="jmbtnin()">찜</button>
 									</template>
-									<button>거래하기</button>
+									<button @click="tradeset(list.tbno)">거래하기</button>
 								</div>
 							</div>
 						</div>
@@ -628,6 +628,11 @@
 						self.fncommlist();
 					}
 				}); 
+			},
+			tradeset(tbno){
+				let popUrl = "/tradeset.do";
+    			let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
+				window.open(popUrl,"거래 설정",popOption);
 			}
 			
 		},
@@ -636,7 +641,11 @@
 			self.fnGetList();
 			self.fncommlist();
 			self.jimsumcnt();
-			
+			console.log(self.tbno);
+			console.log(self.sessionId);
+			console.log(self.sessionName);
+			console.log(self.sessionNick);
+			console.log(self.sessionUstatus);
 			
 		}
 	});

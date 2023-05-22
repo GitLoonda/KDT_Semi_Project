@@ -776,8 +776,10 @@
 			self.userinfolist();
 			self.fnFilelist();
 			console.log(self.tbno);
-			
-			
+			console.log(self.sessionId);
+			console.log(self.sessionName);
+			console.log(self.sessionNick);
+			console.log(self.sessionUstatus);
 		}
 	});
 
