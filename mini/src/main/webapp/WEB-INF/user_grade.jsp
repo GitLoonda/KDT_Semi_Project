@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>게시글 신고</title>
+	<title>리뷰점수</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/defcss.css">
@@ -27,28 +27,28 @@ body{
 img{
 	margin-top: 30px;
 }
-select, textarea{
-	width: 50%;
-	margin: 10px;
-	padding: 3px;
-}
+
 #btn {
 	margin-top: 30px;
+}
+.radiobox{
+	
 }
 </style>
 <body>
 	<div id="app">
 		<div id="report">
 	        <img src="img/main/unity-logo-200x100-1.jpg">
-	        <div><h2>거래설정</h2></div>
-			<div class="div2">
-				<select style="height: 30px;"  v-model="setid">
-					<option value="" disabled> 거래자 선택 </option>
-					<option V-for = "(commlist,index) in commlist" v-if="commlist.id!=listid" :value="commlist.id">{{commlist.nick}}</option>
-				</select>
+	        <div><h2>리뷰 평점</h2></div>
+			<div class="radiobox">
+				<label for="g1"><input id="g1" type="radio" name="setbox" value="GR1" v-model="setgrd">아주 별로에요</label>
+				<label for="g2"><input id="g2" type="radio" name="setbox" value="GR2" v-model="setgrd">별로에요</label>
+				<label for="g3"><input id="g3" type="radio" name="setbox" value="GR3" v-model="setgrd">보통이에요</label>
+				<label for="g4"><input id="g4" type="radio" name="setbox" value="GR4" v-model="setgrd">좋아요</label>
+				<label for="g5"><input id="g5" type="radio" name="setbox" value="GR5" v-model="setgrd">아주 좋아요</label>
 			</div>
 			<div class="div2">
-				<button id="btn" @click="fntradeset()">거래하기</button>
+				<button id="btn" @click="fngrdset()">점수보내기</button>
 			</div>
      	</div>
 	</div>
@@ -60,43 +60,31 @@ select, textarea{
 		el: '#app',
 		data: {
 			tbno : opener.document.getElementById('tbno').value,
-			listid: opener.document.getElementById('listid').value,
+			brdflg : opener.document.getElementById('brdflg').value,
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
 			sessionNick:"${sessionNick}",
 			sessionUstatus:"${sessionUstatus}",
-			commlist:{},
-			setid:"",
+			gralist:{
+
+			},
+			setgrd:"",
 
 		},methods: {
-			//댓글 리스트
-			fncommlist : function(){
+			//평점 주기
+			fngrdset : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno};
+         	  	var nparmap = {tbno : self.tbno, id:self.sessionId, setgrd:self.setgrd, brdflg:self.brdflg};
 				$.ajax({
-					url:"/tradeSet/commlist.dox",
+					url:"/tradeGrd/fngrdset.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						self.commlist=data.commlist;
-						console.log(self.commlist);
-					}
-				}); 
-			},
-			fntradeset : function(){
-				var self = this;
-         	  	var nparmap = {tbno : self.tbno, setuid:self.setid};
-				$.ajax({
-					url:"/tradeSet/fntradeset.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						alert("거래 선택완료");
-						opener.parent.apptv.fnGetList();
-						window.close("tradeset.do");
+						alert("평점주기완료!");
+						opener.parent.apptv.fnrebtn();
+						window.close("usergrade.do");
 						
 					}
 				}); 
@@ -105,8 +93,6 @@ select, textarea{
 
 		}, created: function () {
 			var self = this;
-			self.fncommlist();
-			console.log(self.tbno);
 			
 		}
 	});

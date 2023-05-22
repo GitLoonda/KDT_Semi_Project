@@ -215,6 +215,7 @@
 		HITS,
 		LIKES,
 		GRADE,
+		BRDFLG,
 		D1.CINFO AS BRDNAME,
 		D2.CINFO AS KINDNAME,
 		D3.CINFO AS CATE1NAME,
@@ -254,6 +255,15 @@
 	WHERE B.TBNO = #{tbno}
 	ORDER BY TBNO DESC
 </select>
+<!-- 평점 -->
+<select id="selectgrdinfo" parameterType="hashmap" resultType="String">
+	SELECT SUM(CINFO)
+	FROM T3_GRD GR
+	INNER JOIN T3_DESC D ON GR.GRDNUM = D.CNUM
+	WHERE ID=#{id};
+</select>
+
+
 
 <select id="selectNick" parameterType="hashmap" resultType="com.mini.model.User">
 	SELECT NICK
@@ -377,7 +387,7 @@
 		C.DELYN AS DELYN
 	FROM T3_CMRE C
 	INNER JOIN T3_USER U ON C.ID = U.ID
-	WHERE TBNO=#{tbno}
+	WHERE TBNO=#{tbno} AND REVWFLG=0
 	ORDER BY CNO ASC
 </select>
 <!-- 수정 리스트 조회 -->
@@ -442,7 +452,7 @@
 		DISTINCT C.ID AS ID, NICK
 	FROM T3_CMRE C
 	INNER JOIN T3_USER U ON C.ID=U.ID
-	WHERE TBNO=231
+	WHERE TBNO=#{tbno}
 	ORDER BY CNO ASC
 </select>
 
@@ -452,5 +462,30 @@ SET TRADE= #{setuid},
 	BSTATUS = "BS4"
 WHERE TBNO=#{tbno}
 </update>
+
+<insert id="reviewAdd" parameterType="hashmap">
+INSERT INTO T3_CMRE(TBNO,ID,RECONTE,CDATE,REVWFLG,DELYN)
+	VALUES(#{tbno},#{id},#{reconte},NOW(),1,'N')
+</insert>
+
+<select id="reviewCnt" resultType="int">
+	SELECT COUNT(CNO)
+	FROM T3_CMRE
+	WHERE TBNO=#{tbno} and REVWFLG=1;
+</select>
+
+<select id="selectreviewlist" parameterType="hashmap" resultType="com.mini.model.Cmre">
+	SELECT CNO,RECONTE,CDATE,REVWFLG
+	FROM T3_CMRE
+	WHERE TBNO=#{tbno} AND REVWFLG=1 
+	ORDER BY CNO ASC LIMIT 1;
+</select>
+
+
+<!-- usergrade.do -->
+<insert id="fngrdsetAdd" parameterType="hashmap">
+INSERT INTO T3_GRD(ID,TBNO,GRDNUM,BRDSET)
+	VALUES(#{id},#{tbno},#{setgrd},#{brdflg})
+</insert>
 
 </mapper>

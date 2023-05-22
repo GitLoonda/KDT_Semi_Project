@@ -85,9 +85,10 @@
 			}
 			.infocont{
 				width: 100%;
-				height: 100%;
+				min-height: 150px;
 				font-size: 15pt;
 				resize: none;
+				border: 1px solid #ccc;
 			}
 			.infocont p{
 				margin-left: 5px;
@@ -96,6 +97,7 @@
 			}
 			.info2btn{
 				text-align: right;
+				margin-top: 10px;
 			}
 
 			#Tviewbox2{
@@ -216,12 +218,45 @@
 				resize: none;
 				border-right: 0px;
 			}
+			#Tviewbox3{
+				padding: 0px 30px;
+				margin-bottom: 50px;
+			}
+			/*에디터 설정  */
+			#Tviewbox3 .quillWrapper{
+				border: 1px solid black;
+				background-color: white;
+			}
+			#Tviewbox3 .editbox{
+				margin: 20px auto;
+			}
+			#Tviewbox3 .btnbox{
+				margin: 20px auto;
+				text-align: center;
+			}
+			#Tviewbox3 .rebtndox{
+				margin: 10px;
+				text-align: center;
+			}
+			#Tviewbox3 .reviewbox{
+				text-align: center;
+			}
+			#Tviewbox3 .infocont4{
+				width: 100%;
+				height: 80px;
+				resize: none;
+				border-right: 0px;
+			}
+
 
 		</style>
 		<body>
 			<div id="apptv">
 				<!-- 게시판번호 넘겨줄때 -->
 			<input type='hidden' id='tbno' name='tbno' :value='tbno' />
+			<input type='hidden' id='brdflg' name='brdflg' :value='brdflg' />
+			<input type='hidden' id='listid' name='listid' :value='listid' />
+			
 				<!-- 게시글 상세 -->
 				<div class="container">
 					<div id="Tviewbox1" v-for="(list, index) in list">
@@ -239,17 +274,32 @@
 										<template v-if="(list.kindname=='구매')">
 											<label for="a1"><input id="a1" type="radio" name="a"v-model="bstatus" value="BS1">구매</label>
 											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4" disabled>예약/거래중</label>
-											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+												<template v-if="list.bstatusname=='예약/거래'">
+													<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+												</template>
+												<template v-if="list.bstatusname!='예약/거래'">
+													<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5" disabled>거래완료</label>
+												</template>
 										</template>
 										<template v-else-if="(list.kindname=='판매')">
 											<label for="a2"><input id="a2" type="radio" name="a"v-model="bstatus" value="BS2">판매</label>
 											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4"disabled>예약/거래중</label>
-											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+											<template v-if="list.bstatusname=='예약/거래'">
+												<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+											</template>
+											<template v-if="list.bstatusname!='예약/거래'">
+												<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5" disabled>거래완료</label>
+											</template>
 										</template>
 										<template v-else-if="(list.kindname=='의뢰')">
 											<label for="a3"><input id="a3" type="radio" name="a"v-model="bstatus" value="BS3">의뢰요청</label>
 											<label for="a4"><input id="a4" type="radio" name="a"v-model="bstatus" value="BS4"disabled>예약/거래중</label>
-											<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+											<template v-if="list.bstatusname=='예약/거래'">
+												<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5">거래완료</label>
+											</template>
+											<template v-if="list.bstatusname!='예약/거래'">
+												<label for="a5"><input id="a5" type="radio" name="a"v-model="bstatus" value="BS5" disabled>거래완료</label>
+											</template>
 										</template>
 										<template v-else>
 										</template>
@@ -276,7 +326,7 @@
 										<button @click="jmbtnin()">찜</button>
 									</template>
 
-									<template v-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid==sessionId">
+									<template v-if="(list.bstatusname=='구매' || list.bstatusname=='판매' || list.bstatusname=='의뢰요청') && listid==sessionId">
 										<button @click="tradeset(list.tbno)">거래하기</button>
 									</template>
 									<!-- <template v-else-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid!=sessionId">
@@ -294,8 +344,6 @@
 									<template v-else-if="list.bstatusname=='완료'">
 										<div>{{nickname}}({{list.trade}})님과 거래 완료</div>
 									</template>
-									
-
 								</div>
 							</div>
 						</div>
@@ -313,12 +361,10 @@
 									</div>
 								</template>
 							</template>
-							
-
 						</div>
 					</div>
 					<!-- 염관상품,댓글 -->
-					<div id="Tviewbox2">
+					<div id="Tviewbox2" v-if="bstatus!='BS5'" >
 						<div>연관 상품</div>
 						<div class="shbox">
 							<div class="itembox">
@@ -332,7 +378,6 @@
 								<button class="commbtn" @click="fncommIn()">등록</button>
 							</div>
 						</div>
-<!--  -->
 						<div  v-for="(commlist, index) in commlist">
 							<!-- 댓글입력창 전환 설정 같지 않을때 기본표시 -->
 							<template v-if="comminfo.cno!=commlist.cno">
@@ -376,26 +421,48 @@
 							</template>
 							<template v-if="comminfo.cno==commlist.cno">
 								<div class="commedit">
-									<textarea class="infocont3" name="" id="" cols="30" rows="10" v-model="editcommcont"></textarea>
+									<textarea class="infocont4" name="" id="" cols="30" rows="10" v-model="editcommcont"></textarea>
 									<button class="commbtn" @click="fncommedit()">수정</button>
 								</div>
 							</template>
 							</div>
-						</div>					
+						</div>	
+						<!-- 완료시 표시 페이지 -->
+						<div id="Tviewbox3" v-else-if="bstatus=='BS5'">
+							<!-- 리뷰갯수가 1이상일때 -->
+							<template v-if="list[0].trade!=sessionId || recnt>=1">
+								<div class="reviewbox">
+								<div>거래후기</div>
+								<div class="infocont2" v-html="vwreconte"></div>
+								</div>
+							</template>
+
+							<tamplate v-else-if="list[0].trade==sessionId">
+								<div>
+									<vue-editor v-model="reconte">
+
+									</vue-editor> <!-- 2. 화면 에디터 추가 -->
+									<div class="rebtndox"><button @click="fnreP(tbno)">리뷰등록</button> </div>
+									
+								</div>
+							</tamplate>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</body>
 </html>
 <script type="text/javascript">
-
-
-
+	console.log(Vue);
+	Vue.use(Vue2Editor);
+	const VueEditor = Vue2Editor.VueEditor;
 
 	var apptv = new Vue({ 
 		el: '#apptv',
 		data: {
 			tbno : "${trlist.tbno}",
+			brdflg:"",
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
@@ -404,8 +471,6 @@
 
 			file1:"",
 			cont:"",
-			none:true,
-			flex:false,
 			bstatus:"",
 
 
@@ -422,8 +487,15 @@
 			nickname:"",
 			
 			jimst:0,
-			jimsum:0
+			jimsum:0,
+			// 에디터
+			reconte:"",
+			vwreconte:"",
+			recnt:0,
+			relist:{}
 		},
+			components: {VueEditor},
+
 			methods: {
 			//게시글 상세 리스트
 			fnGetList : function(){
@@ -435,17 +507,28 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
+						console.log(data);
 						self.list = data.list; 
 						self.jimst=data.ujimcnt;
+
 						self.cont=data.list[0].bcont;
 						self.bstatus=data.list[0].bstatus;
 						self.listid=data.list[0].id;
+						self.brdflg=data.list[0].brdflg;
+						
+						self.recnt=data.reCnt;
+						
 
 						if(data.list[0].trade==undefined){
 						}else{
 							self.getnickname();
 						}
-						console.log(self.list);
+						if(self.recnt>=1){
+							self.reviewlist();
+						}
+						
+						// console.log(self.recnt);
+						// console.log(self.bstatus);
 						
 						
 					}
@@ -461,11 +544,26 @@
 					data : nparmap,
 					success : function(data) { 
 						self.nickname=data.nicks[0].nick;
-						console.log(self.nickname);
+						// console.log(self.nickname);
 					}
 					
 				}); 
 			},
+			getgrdinfo(){
+				var self = this;
+				var nparmap = {id:self.listid}
+				$.ajax({
+					url:"/tradeView/getgrdinfo.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+					}
+					
+				}); 
+			},
+			
 			
 
 			// 거래상태변경
@@ -652,6 +750,7 @@
 				console.log(self.editcommNo);
 				console.log(self.comminfo);
 			}
+			// 댓글 수정
 			,fncommedit(){
 				var self= this;
 				if(self.editcommcont==''){
@@ -672,6 +771,7 @@
 						self.fncommlist();
 					}
 				}); 
+				// 댓글 삭제
 			},fncDel(cno){
 				var self= this;
          	  	var nparmap = {cno : cno};
@@ -686,11 +786,52 @@
 					}
 				}); 
 			},
+			// 거래대상 선정
 			tradeset(tbno){
 				let popUrl = "/tradeset.do";
-
     			let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
 				window.open(popUrl,"거래 설정",popOption);
+			},
+			fnreP(tbno){
+				let popUrl = "/usergrade.do";
+				let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
+				window.open(popUrl,"거래 설정",popOption);
+			},
+			// 리뷰 글쓰기
+			fnrebtn(tbno){
+				var self = this;
+				if(self.reconte==''){
+					alert("글내용이 없습니다.");
+					return;
+				}
+         	  	var nparmap = {tbno : self.tbno, id:self.sessionId , reconte:self.reconte};
+				$.ajax({
+					url:"/tradeView/reviewin.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) {
+						self.fnGetList();
+						alert("저장!");
+						
+					}
+				}); 
+			},
+			reviewlist(){
+				var self = this;
+				var nparmap = {tbno : self.tbno};
+				$.ajax({
+					url:"/tradeView/reviewlist.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) {
+						// console.log(data);
+						self.relist=data.reviewlist;
+						// console.log(self.relist);
+						self.vwreconte=self.relist[0].reconte;
+					}
+				}); 
 			}
 			
 		},
@@ -699,6 +840,7 @@
 			self.fnGetList();
 			self.fncommlist();
 			self.jimsumcnt();
+			self.getgrdinfo();
 		}
 	});
 

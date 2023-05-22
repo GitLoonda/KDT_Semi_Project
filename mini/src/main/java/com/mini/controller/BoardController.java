@@ -84,17 +84,23 @@ public class BoardController {
         return "/trade_add";
     }
     //거래글 수정
-    @RequestMapping("/tradeeidt.do") //거래게시판 페이지
+    @RequestMapping("/tradeeidt.do") 
     public String tradeedit(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
        
         request.setAttribute("tbno",map.get("tbno"));
         return "/trade_edit";
     }
     // 거래자 설정
-    @RequestMapping("/tradeset.do") //거래게시판 페이지
+    @RequestMapping("/tradeset.do") 
     public String tradeset(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         
         return "/trade_set";
+    }
+    // 거래평점
+    @RequestMapping("/usergrade.do") 
+    public String usergrade(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        
+        return "/user_grade";
     }
 
 
@@ -307,6 +313,16 @@ public class BoardController {
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }
+    // 평점 불러오기
+    @RequestMapping(value = "/tradeView/getgrdinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchgrdinfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+ 
+    resultMap.put("result", "success");
+    return new Gson().toJson(resultMap);
+    }
+
 
     @RequestMapping(value = "/tradeView/ncik.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -457,6 +473,27 @@ public class BoardController {
 		resultMap.put("result", "성공");
 		return new Gson().toJson(resultMap);
 	}
+    // 리뷰 등록
+    @RequestMapping(value = "/tradeView/reviewin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String reviewInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        boardService.reviewInsert(map);
+        resultMap.put("message", "성공");
+        return new Gson().toJson(resultMap);
+    }
+
+    // 리뷰리스트 불러오기
+    
+    @RequestMapping(value = "/tradeView/reviewlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchreviewlist(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap = boardService.searchreviewlist(map);
+        resultMap.put("result", "success");
+        return new Gson().toJson(resultMap);
+    }
 
     // tradeset.do
     // 댓글사용자 리스트 불러오기
@@ -476,6 +513,17 @@ public class BoardController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardService.tradeset(map);
 		
+        resultMap.put("result", "성공");
+		return new Gson().toJson(resultMap);
+	}
+    
+    // usergrade.do
+    //  평점등록
+     @RequestMapping(value = "/tradeGrd/fngrdset.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String fngrdset(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.fngrdset(map);
         resultMap.put("result", "성공");
 		return new Gson().toJson(resultMap);
 	}
