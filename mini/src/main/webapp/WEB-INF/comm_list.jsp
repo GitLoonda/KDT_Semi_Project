@@ -43,7 +43,7 @@
 		border-width: 1px 0;
 	}
 	table tbody tr:hover td{
-		background-color:lightcyan;
+		background-color: aliceblue;
 	}
 
 	table td {
@@ -71,13 +71,14 @@
 		text-align: right;
 	}
 	
-
+	.pageline {
+		text-align: center; 
+	}
 	
 /* 페이징 추가 */
 	.pagination {
         margin:24px;
-        display: inline-flex;
-        
+    	display: inline-flex;
     }
     ul {
         text-align: center;
@@ -144,22 +145,24 @@
 					</thead>
 					<tbody>
 						<!-- 글 삭제 X -->
-						<tr v-for="(item, index) in list" v-if="item.delYn == 'N'">
+						<tr v-for="(item, index) in list" v-if="item.delYn != 'Y'">
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>							
-							<td>[{{cate1n}}]</td>
+							<td v-if="cate1 != '' && cate2 != ''"></td>
+							<td v-else="cate1 != null">[{{item.cate2name}}]</td>
 							<td v-if="item.commentcnt == 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}</a></td>
 							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}} ({{item.commentcnt}})</a></td>
 							<td>{{item.hits}}</td>
-							<td>{{item.id}}</td>
+							<td>{{item.nick}}</td>
 							<td v-if="item.udate == null">{{item.cdate}}</td>
-							<td v-else>{{item.udate}}</td>
+							<td v-else>{{item.udate}}</t	d>
 						</tr>
 						<!-- 글 삭제 O -->
-						<tr v-else>
+						<tr v-else >
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
-							<td >[{{cate1n}}]</td>
+							<td v-if="cate1 != '' && cate2 != ''"></td>
+							<td v-else="cate1 != null">[{{item.cate2name}}]</td>
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -182,18 +185,20 @@
 				<button class="btn" @click="fnGetList" >검색</button>
 			</div>
 			<!-- 페이징 추가 3-->
-				<template>
-					<paginate
-					  	:page-count="pageCount"
-					    :page-range="3"
-					    :margin-pages="2"
-					    :click-handler="fnSearch"
-					    :prev-text="'<'"
-					    :next-text="'>'"
-					    :container-class="'pagination'"
-					    :page-class="'page-item'">
-					</paginate>
-				</template>
+				<div class="pageline">
+					<template>
+						<paginate
+						  	:page-count="pageCount"
+						    :page-range="3"
+						    :margin-pages="2"
+						    :click-handler="fnSearch"
+						    :prev-text="'<'"
+						    :next-text="'>'"
+						    :container-class="'pagination'"
+						    :page-class="'page-item'">
+						</paginate>
+					</template>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -234,7 +239,7 @@
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage - 1) * 15);
 				var lastNum = 15;
-				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: cate1, cate2:cate2};
+				var nparmap = {startNum: startNum, lastNum: lastNum, cate1: cate1, cate2: cate2};
 				console.log(nparmap);
 				$.ajax({
 					url: "/comm/list.dox",
@@ -255,9 +260,7 @@
 				self.selectPage = pageNum;
 				var startNum = ((pageNum - 1) * 15);
 				var lastNum = 15;
-				var nparmap = {startNum: startNum, lastNum: lastNum,  cate1: self.cate1, cate2:self.cate2};
-				console.log(startNum);
-				console.log(lastNum);
+				var nparmap = {startNum: startNum, lastNum: lastNum,  cate1: self.cate1, cate2: self.cate2};
 				$.ajax({
 					url: "/comm/list.dox",
 					dataType: "json",
