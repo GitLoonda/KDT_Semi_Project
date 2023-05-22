@@ -155,7 +155,7 @@
 							<td>{{item.hits}}</td>
 							<td>{{item.nick}}</td>
 							<td v-if="item.udate == null">{{item.cdate}}</td>
-							<td v-else>{{item.udate}}</t	d>
+							<td v-else>{{item.udate}}</td>
 						</tr>
 						<!-- 글 삭제 O -->
 						<tr v-else >
