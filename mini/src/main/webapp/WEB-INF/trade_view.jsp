@@ -631,6 +631,7 @@
 			},
 			tradeset(tbno){
 				let popUrl = "/tradeset.do";
+				
     			let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
 				window.open(popUrl,"거래 설정",popOption);
 			}
