@@ -94,8 +94,9 @@ select, textarea{
 					data : nparmap,
 					success : function(data) { 
 						alert("거래 선택완료");
+						opener.parent.apptv.fnGetList();
 						window.close("tradeset.do");
-						app.fnGetList
+						
 					}
 				}); 
 			},

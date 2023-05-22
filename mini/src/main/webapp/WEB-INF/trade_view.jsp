@@ -279,18 +279,20 @@
 									<template v-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid==sessionId">
 										<button @click="tradeset(list.tbno)">거래하기</button>
 									</template>
-									<template v-else-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid!=sessionId">
+									<!-- <template v-else-if="(list.bstatusname=='구매' || list.bstatusname=='판매') && listid!=sessionId">
 										<button @click="tradeset(list.tbno)">거래요청</button>
-									</template>
+									</template> -->
 									<template v-else-if="list.bstatusname=='예약/거래'">
 										<template v-if="listid==sessionId">
 											<button @click="tradeset(list.tbno)">예약/거래중</button>
 											<div>{{nickname}}({{list.trade}})님과 거래중 입니다.</div>
 										</template>
-
 										<template v-else>
 											<button @click="tradeset(list.tbno)" disabled>예약/거래중</button>
 										</template>
+									</template>
+									<template v-else-if="list.bstatusname=='완료'">
+										<div>{{nickname}}({{list.trade}})님과 거래 완료</div>
 									</template>
 									
 
@@ -391,7 +393,7 @@
 
 
 	var apptv = new Vue({ 
-		el: '#app',
+		el: '#apptv',
 		data: {
 			tbno : "${trlist.tbno}",
 			// 세션
@@ -443,7 +445,7 @@
 						}else{
 							self.getnickname();
 						}
-						
+						console.log(self.list);
 						
 						
 					}
@@ -461,6 +463,7 @@
 						self.nickname=data.nicks[0].nick;
 						console.log(self.nickname);
 					}
+					
 				}); 
 			},
 			
