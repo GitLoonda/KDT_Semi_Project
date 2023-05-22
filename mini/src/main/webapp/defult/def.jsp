@@ -49,7 +49,9 @@
                 </template>
                 <template v-else>
                 	<div id="myInfo">
-                		<p>{{sessionNick}}님, 환영합니다.</p>
+                		<p>{{sessionNick}}님, 환영합니다.
+                			<a href="/admin/main.do" v-if="sessionAdminFlg == 'Y'" style="font-size: 1.3rem"> ⚙</a>
+                		</p>
                 		<button @click="fnMyPage">마이페이지</button>
                 		<button @click="fnLogout">로그아웃</button>
                 	</div>
@@ -134,6 +136,7 @@
     		sessionId : "${sessionId}",
     		sessionNick : "${sessionNick}",
     		sessionStatus : "${sessionStatus}",
+    		sessionAdminFlg : "${sessionAdminFlg}",
             // 검색값 전달
             select:{
                 setcate1:"",

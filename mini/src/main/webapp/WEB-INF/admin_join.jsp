@@ -7,6 +7,7 @@
 		<script src="../js/jquery.js"></script>
 		<script src="../js/vue.js"></script>
 		<title>관리자 등록</title>
+		<link href="/img/main/unity-logo-200x100-1.jpg" rel="shortcut icon" type="image/x-icon">
 		<style>
 	        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 	

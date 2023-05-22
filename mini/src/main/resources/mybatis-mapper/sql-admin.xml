@@ -329,7 +329,6 @@
 		WHERE ADMINFLG = 'Y'
 	</select>
 	
-
 	<!-- 게시글 관리 리스트 -->
 	<select id="adminBoardList" parameterType="hashmap" resultType="com.mini.model.Board">
 	
@@ -353,8 +352,6 @@
 		ORDER BY CDATE DESC
 		
 		LIMIT #{startNum} , #{lastNum}
-		
-
 		
 	</select>
 	
@@ -515,9 +512,6 @@
 		
 		LIMIT #{startNum} , #{lastNum}
 		
-		
-		
-		
 	</select>
 	
 	<!-- 댓글 삭제(블라인드) -->
@@ -542,6 +536,24 @@
 		SELECT COUNT(*)
 		FROM T3_CMRE
 		WHERE TBNO IS NULL
+	</select>
+	
+	
+	<!-- 게시물 신고 처리 -->
+	<update id="boardReport" parameterType="hashmap">
+		INSERT INTO T3_BAN
+			VALUES(#{id} , #{cbNo} , #{cno} , #{content} , NOW())
+	
+	</update>
+	
+	<!-- 게시물 신고 처리 대상 정보 -->
+	<select id="boardSearchReport" parameterType="hashmap" resultType="com.mini.model.Comm">
+		SELECT
+			ID,
+		FROM
+			T3_CBRD
+		WHERE CBNO = #{cbNo}
+	
 	</select>
 	
 </mapper>

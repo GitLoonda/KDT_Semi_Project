@@ -154,12 +154,18 @@ public interface AdminMapper {
 	void adminCommentRemove(HashMap<String, Object> map);
 	
 	// 댓글 갯수 (거래쪽게시글)
-	
 	int boardCommentCnt(HashMap<String, Object> map);
 	
 	// 댓글 갯수 (커뮤니티)
-	
 	int commCommentCnt(HashMap<String, Object> map);
+
+	/* -----------------------------------------------*/
+	
+	// 게시글 신고 처리
+	void boardReport(HashMap<String, Object> map);
+	
+	// 게시글 신고 처리
+	List<Comm> boardSearchReport(HashMap<String, Object> map);
 }
 
 
