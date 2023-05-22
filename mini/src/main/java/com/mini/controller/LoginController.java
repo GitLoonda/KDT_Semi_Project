@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-	
 	@Autowired
 	LoginService loginservice;
 	
@@ -148,6 +147,6 @@ public class LoginController {
 		HashMap<String, Object> resultMap = loginservice.changePwd(map);
 		return new Gson().toJson(resultMap);
 	}
-
+	
 
 }
