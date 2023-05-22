@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.mini.service.MainService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class MainController {
 	
 	@Autowired
 	MainService mainService;
+	
+	@Autowired
+	HttpSession session;
 
 	@RequestMapping("/main.do") //메인페이지
     public String main(Model model) throws Exception{
@@ -49,6 +54,15 @@ public class MainController {
         return "/recent_list";
     }
 	
+	@RequestMapping(value = "/main/recentList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String findRecentList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", mainService.searchRecentList(map));
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
 	@RequestMapping("/jjim.do") //메인페이지
     public String jjim(Model model) throws Exception{
 		
@@ -60,5 +74,23 @@ public class MainController {
 		
         return "/access_denied";
     }
+	
+	@RequestMapping(value = "/main/jjimList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String findJjimList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", mainService.searchJjimList(map));
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+
+	@RequestMapping(value = "/main/jjimDel.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String jjimDel(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		mainService.removeJjim(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
 	
 }

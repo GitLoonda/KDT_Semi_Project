@@ -4,6 +4,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,26 @@ public class BoardController {
 	@RequestMapping("/tradeview.do") 
     public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         request.setAttribute("trlist", map);
+        List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)session.getAttribute("recentlist");
+        HashMap<String, Object> recent = new HashMap<String, Object>();
+        recent.put("tbno", map.values().toString());
+        System.out.println(recent);
+        if(list == null) {
+        	list = new ArrayList<HashMap<String, Object>>();
+        	list.add(recent);
+        	System.out.println(list.get(0).values());
+        }
+        boolean recentFlg = false;
+        for(int i = 0; i < list.size(); i++) {
+        	if(list.get(i).values() == recent.values()) {
+        		recentFlg = !recentFlg;
+        	}
+        	System.out.println(list.get(i));
+        }
+        if(!recentFlg) {
+    		list.add(recent);
+    		session.setAttribute("recentlist", list);
+    	}
         return "/trade_view";
     }
     

@@ -170,6 +170,22 @@
 		           		self.sellRcmd = self.rcm.sell;
 		           		self.buyRcmd = self.rcm.buy;
 		           		self.commRcmd = self.rcm.comm;
+		           		for(var i = 0; i < 5; i++) {
+	 	         			if(self.sellRcmd[i].bTitle.length > 9) {
+	 	         				self.sellRcmd[i].bTitle = self.sellRcmd[i].bTitle.slice(0, 8) + "...";
+	 	         			}
+	 	         		}
+		           		for(var i = 0; i < 5; i++) {
+	 	         			if(self.sellRcmd[i].bTitle.length > 9) {
+	 	         				self.sellRcmd[i].bTitle = self.sellRcmd[i].bTitle.slice(0, 8) + "...";
+	 	         			}
+	 	         			if(self.buyRcmd[i].bTitle.length > 9) {
+	 	         				self.buyRcmd[i].bTitle = self.buyRcmd[i].bTitle.slice(0, 8) + "...";
+	 	         			}
+	 	         			if(self.commRcmd[i].bTitle.length > 9) {
+	 	         				self.commRcmd[i].bTitle = self.commRcmd[i].bTitle.slice(0, 8) + "...";
+	 	         			}
+	 	         		}
 	                }
 	            }); 
 	        }
@@ -208,7 +224,7 @@
         	}
 	    	, fnView(tbNo){
 				var self = this;
-				self.pageChange("./tradeview.do",{tbno : tbNo});
+				self.pageChange("./tradeview.do", {tbno : tbNo});
 			}
 	    }   
 	    , created: function () {

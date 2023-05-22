@@ -189,9 +189,9 @@ a {
     right: 200px;
    	display : grid;
    	grid-template-rows: repeat(3, 50px);
-   	padding : 20px;
+   	padding : 10px;
    	background-color : #eee;
-   	border-radius : 10px;
+   	border-radius : 5px;
    	row-gap : 30px;
  }
 .sidebar div {
