@@ -109,11 +109,11 @@
                 </ul>
             </div>
 			
-			<div class=sidebar>
-            	<div @click="fnRecent"><a href="javascript:;">최근 본 상품</a></div>
-            	<div @click="fnJjim"><a href="javascript:;">찜한 상품</a></div>
+			<!-- <div class=sidebar>
+            	<div><a href="javascript:;">최근 본 상품</a></div>
+            	<div><a href="javascript:;">찜한 상품</a></div>
             	<div><a href="#header">맨 위로</a></div>
-         </div>
+         </div> -->
         </div>
     </div>
     </body>
@@ -184,12 +184,6 @@
         	, fnLogout : function() {
         		location.href = "logout.do";
         	}
-        	, fnRecent : function() {
-        		location.href = "recent.do";
-        	}
-        	, fnJjim : function() {
-        		location.href = "jjim.do";
-        	}
         	, fnCateSelect : function(i, item, item2, item3, item4, item5, item6) {
         		var self = this;
         		if(typeof tlist !== 'undefined') {
@@ -229,13 +223,9 @@
        				return;
        			}
         	}
-        	, fnComm : function(item, item2, item3, item4) {
+        	, fnComm : function(item, item2) {
         		var self = this;
-        		if(item3 == null) {
-        			self.pageChange("/comm.do", {cnum : item, cinfo : item2});
-           		 	return;
-           		}
-        		self.pageChange("/comm.do", {cnum : item, cinfo : item2, cnum2 : item3, cinfo2 : item4});
+        		self.pageChange("/comm.do", {cnum : item, cinfo : item2});
         	}
         	, pageChange : function(url, param) {
         		var target = "_self";

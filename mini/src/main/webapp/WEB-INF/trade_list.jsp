@@ -158,9 +158,6 @@
 						self.list = data.list;
 						self.listcnt = data.cnt;
 						self.pageCount = Math.ceil(self.listcnt / 15);
-						for(var i = 0; i < self.list.length; i++) {
-	 	         			self.list[i].bprice = self.list[i].bprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	 	         		}
 					}
 				}); 
 			},
@@ -182,9 +179,6 @@
 					self.list = data.list;
 					self.listcnt = data.cnt;
 					self.pageCount = Math.ceil(self.listcnt / 15);
-					for(var i = 0; i < self.list.length; i++) {
- 	         			self.list[i].bprice = self.list[i].bprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
- 	         		}
 				}
 			});
 		},

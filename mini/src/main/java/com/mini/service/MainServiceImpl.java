@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.mini.mapper.BoardMapper;
 import com.mini.mapper.MainMapper;
 import com.mini.model.Desc;
-import com.mini.model.TbrdList;
 
 
 @Service
@@ -34,26 +33,4 @@ public class MainServiceImpl implements MainService{
 		resultMap.put("comm", mainMapper.selectCommList(map));
 		return resultMap;
 	}
-	
-	@Override
-	public List<TbrdList> searchRecentList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return mainMapper.selectRecentList(map);
-	}
-
-	@Override
-	public List<TbrdList> searchJjimList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return mainMapper.selectJjimList(map);
-	}
-
-	@Override
-	public void removeJjim(HashMap<String, Object> map) {
-		mainMapper.deleteJjim(map);
-		return;
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 }
