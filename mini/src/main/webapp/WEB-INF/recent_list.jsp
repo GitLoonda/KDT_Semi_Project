@@ -83,13 +83,13 @@
 			
 			<div class="listbox">
 			<h2>최근 본 상품</h2>
-				<div class="itembox" v-for="i in 4">
+				<div class="itembox" v-for="(item, index) in list">
 					<div class="imgbox">
-						<img src="" alt="">
+						<img :src="item.path" alt="">
 					</div>
 					<div class="descbox">
-						<p>BSTATUS</p>
-						<p>BTITLE</p>
+						<p>{{item.btitle}}</p>
+						<p>가격 : {{item.bprice}}</p>
 						<p>NICK</p>
 						<p>BPRICE</p>
 						<p>LOCAL1 LOCAL2 LOCAL3</p>
@@ -113,7 +113,8 @@ var app = new Vue({
     	sessionId : "${sessionId}",
     	sessionNick : "${sessionNick}",
 		sessionStatus : "${sessionStatus}",
-		recentList : "${recentlist}"
+		recentList : "${recentlist}",
+		list : []
     }   
     , methods: {
     	fnPermission : function() {
@@ -129,12 +130,13 @@ var app = new Vue({
 			var list = JSON.stringify(self.recentList);
 			var nparmap = {"test" : 1, "list" : list};
 			$.ajax({
-                url:"/recentList.dox",
+                url:"/main/recentList.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {            
-               		
+               		self.list = data.list;
+               		console.log(self.list);
                 }
             });  
 			
