@@ -8,7 +8,7 @@ import com.mini.model.Mypg;
 
  
 @Mapper
-public interface MypageMapper {
+public interface MypageMapper { 
 
 	// 프로필 아이디/주소 불러오기
 	Mypg selectUserInfo(HashMap<String, Object> map);

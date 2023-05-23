@@ -128,7 +128,7 @@ var app = new Vue({
                 	console.log(data.mypg);
 	                self.mypg = data.mypg;
                 }
-            }); 
+            });  
         }
 		, CreatAdd(){ 
 			location.href ="/creadd.do";

@@ -61,7 +61,7 @@ public class MypageController {
 		resultMap.put("mypg", mypg);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
-	}
+	} 
     
   //프로필 하단 정보 수정/업데이트
     @RequestMapping(value = "/mypage/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

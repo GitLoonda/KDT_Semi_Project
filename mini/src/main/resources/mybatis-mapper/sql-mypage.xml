@@ -58,7 +58,7 @@
 
 
 
-
+ 
 
 	<!-- 후기 불러오기 -->
 	<select id="selectHugi" parameterType="hashmap" resultType="com.mini.model.Mypg">

@@ -31,7 +31,7 @@ public class Mypg {
     private String cnum;
     private String cinfo;
     
-    
+     
     private String intro;
     private String pinfo;
     private String cintro;

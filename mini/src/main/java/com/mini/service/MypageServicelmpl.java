@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mini.mapper.MypageMapper;
 import com.mini.model.Mypg;
-
+  
 @Service
 public class MypageServicelmpl implements MypageService{
 	

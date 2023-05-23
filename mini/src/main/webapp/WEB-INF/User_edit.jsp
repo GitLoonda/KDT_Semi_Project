@@ -156,7 +156,7 @@ var app = new Vue({
     		self.mypg.addrDetail = addrDetail;
     	}
 
-		,  
+		,   
 		//프로필 하단 정보수정란
 		fnUserUpdate : function(){
 	    	var self = this;

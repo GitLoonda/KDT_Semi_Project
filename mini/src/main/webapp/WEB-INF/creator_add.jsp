@@ -83,7 +83,7 @@ var app = new Vue({
                 }
             }); 
         }
-        
+         
 		    , OkCre : function(){
 		        var self = this;
 		        if(self.mypg.crenick == null){
