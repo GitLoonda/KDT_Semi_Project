@@ -50,7 +50,11 @@ public class MypageServicelmpl implements MypageService{
 		return null;
 	}
 
-
-
+	@Override
+	public void addMyPageImg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		mypagemapper.deleteMyPageImg(map);
+		mypagemapper.insertMyPageImg(map);
+	}
 
 }

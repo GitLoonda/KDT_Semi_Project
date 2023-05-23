@@ -19,6 +19,6 @@ public interface MypageService {
 	//프로필 후기, 커뮤작성, 찜목록 , 등록제품 불러오기
 	Mypg getUserPro(HashMap<String, Object> map);
 		
-
+	void addMyPageImg(HashMap<String, Object> map);
 	
 } 
