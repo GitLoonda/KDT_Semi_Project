@@ -84,7 +84,7 @@
 	
 	<select id="selectRecentList" parameterType="hashmap" resultType="com.mini.model.TbrdList">
 		SELECT 
-				TBNO,
+				T.TBNO,
 				BSTATUS,
 				BTITLE, 
 				NICK, 
@@ -100,12 +100,12 @@
 			FROM T3_TIMG
 			WHERE REP = "Y"
 		) I ON T.TBNO = I.TBNO
-		WHERE TBNO IN (
-		<foreach collection='list' index='index' item='item' separator=','>
-			#{item.tbno}
+		WHERE T.TBNO IN (
+		<foreach collection='recentList' index='index' item='item' separator=','>
+			#{item}
 		</foreach>
 		)
-		AND DELYN ="N" AND BSTATUS NOT IN ("BS4", "BS5")
+		AND DELYN ='N' AND BSTATUS NOT IN ('BS4', 'BS5')
 		ORDER BY TBNO DESC
 	</select>
 

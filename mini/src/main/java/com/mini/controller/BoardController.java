@@ -53,26 +53,17 @@ public class BoardController {
 	@RequestMapping("/tradeview.do") 
     public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         request.setAttribute("trlist", map);
-        List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)session.getAttribute("recentlist");
-        HashMap<String, Object> recent = new HashMap<String, Object>();
-        recent.put("tbno", map.values().toString());
-        System.out.println(recent);
-        if(list == null) {
-        	list = new ArrayList<HashMap<String, Object>>();
-        	list.add(recent);
-        	System.out.println(list.get(0).values());
+        List<String> recentList =  (List<String>) session.getAttribute("recentList");
+        if(recentList == null) {
+        	List<String> list = new ArrayList<String>();
+        	list.add((String) map.get("tbno"));
+        	recentList = list;
+        } else {
+        	recentList.add((String) map.get("tbno"));
         }
-        boolean recentFlg = false;
-        for(int i = 0; i < list.size(); i++) {
-        	if(list.get(i).values() == recent.values()) {
-        		recentFlg = !recentFlg;
-        	}
-        	System.out.println(list.get(i));
-        }
-        if(!recentFlg) {
-    		list.add(recent);
-    		session.setAttribute("recentlist", list);
-    	}
+        session.setAttribute("recentList", recentList);
+        System.out.println(recentList);
+        
         return "/trade_view";
     }
     

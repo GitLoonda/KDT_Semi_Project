@@ -1,7 +1,8 @@
 package com.mini.controller;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.mini.service.LoginService;
 import com.mini.model.User;
+import com.mini.service.LoginService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,7 +34,7 @@ public class LoginController {
 		String nick = (String) session.getAttribute("sessionNick");
 		String ustatus = (String) session.getAttribute("sessionuStatus");
 		String admin = (String) session.getAttribute("sessionuAdminFlg");
-		List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)session.getAttribute("productlist");
+		List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)session.getAttribute("productList");
 		
 		session.removeAttribute(id);
 		session.removeAttribute(name);
@@ -41,7 +42,7 @@ public class LoginController {
 		session.removeAttribute(ustatus);
 		session.removeAttribute(admin);
 		if(list == null) {
-			session.removeAttribute("productlist");
+			session.removeAttribute("productList");
 		}
 		else {
 			for(int i = 0; i < list.size(); i++) {
@@ -69,13 +70,13 @@ public class LoginController {
 		session.removeAttribute(ustatus);
 		session.removeAttribute(admin);
 		if(list == null) {
-			session.removeAttribute("productlist");
+			session.removeAttribute("productList");
 		}
 		else {
 			for(int i = 0; i < list.size(); i++) {
 				list.remove(i);
 			}
-			session.removeAttribute("productlist");
+			session.removeAttribute("productList");
 		}
 		
 		session.invalidate();
@@ -95,6 +96,8 @@ public class LoginController {
 			session.setAttribute("sessionNick", user.getNick());
 			session.setAttribute("sessionUstatus", user.getUstatus());
 			session.setAttribute("sessionAdminFlg", user.getAdminflg());
+			List<String> list = new ArrayList<String>();
+			session.setAttribute("recentList", list);
 		}
 		return new Gson().toJson(resultMap);
 	}

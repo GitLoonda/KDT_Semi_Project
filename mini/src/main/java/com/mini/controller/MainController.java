@@ -1,6 +1,7 @@
 package com.mini.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,7 @@ public class MainController {
 	@ResponseBody
 	public String findRecentList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		map.put("recentList", (List<String>) session.getAttribute("recentList"));
 		resultMap.put("list", mainService.searchRecentList(map));
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
