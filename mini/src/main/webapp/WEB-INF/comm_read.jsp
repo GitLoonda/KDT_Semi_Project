@@ -95,8 +95,10 @@
 		margin-left: 30px;
 		margin-bottom: 20px;
 	}
-	.editbox{
+	.editbox, .replybox{
 		margin-top: 10px;
+		margin-left: 30px;
+		margin-bottom: 20px;
 	}
 	
 </style>
@@ -164,10 +166,10 @@
 						<div class="commbox2_2">
 							<span v-if="info.id == sessionId || sessionAdminflg == 'Y'">
 								<span class="coma" @click="fncedit(item)">수정</span>
-								<button class="coma" @click="fnRemoveComment(item.cno)">삭제</button>
+								<span class="coma" @click="fnRemoveComment(item.cno)">삭제</span>
 							</span>
 							<span v-else>
-								<button class="coma" @click="fnReportComment(('c'+item.cno))">신고</button>
+								<span class="coma" @click="fnReportComment(('c'+item.cno))">신고</span>
 								<span class="coma" @click="fnReplyComment(item.cno)">답글</span>
 							</span>
 							<span class="coma" v-if="item.udate == null">{{item.cdate}}</span>
@@ -395,22 +397,28 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
 	                alert("댓글이 수정되었습니다.");
-	                self.comminfo={};
-	                self.editcommNo="";
-	                self.editconte="";
+	                self.comminfo= {};
+	                self.editcommNo= "";
+	                self.editconte= "";
 	                self.fnGetBoard();
                 	self.fncommlist();
                 }
             }); 
     	} 
     	
+    	//대댓글 작성
     	,fnReplyComment(){
     		var self= this;
-			if(self.replyconte == ''){
-				alert("댓글 내용이 없습니다.");
+    		if(self.sessionId==''){
+				alert("로그인 정보가 없어 로그인창으로 이동합니다.");
+				location.href="login.do";
 				return;
 			}
-            var nparmap = {cno : self.cno};
+    		if(self.comment==''){
+				alert("댓글내용이 없습니다.");
+				return;
+			}
+            var nparmap = {cno : self.cno, conte: self.replyconte, id: self.sessionId, comms: self.comms};
             $.ajax({
                 url:"/comment/reply.dox",
                 dataType:"json",	
@@ -418,12 +426,13 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
 	                alert("댓글이 작성되었습니다.");
-	                self.comminfo={};
+	                self.recomment="";
                 	self.fncommlist();
+                	self.fnGetBoard();
                 }
             }); 
     	}
-    	
+
     	
     	, fnEdit : function(item){
     		var self = this;

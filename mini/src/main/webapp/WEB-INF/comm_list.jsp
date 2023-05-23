@@ -133,7 +133,7 @@
 				<table class="board_list">
 					<thead>
 						<tr>
-							<th scope="col" v-if="info.id == sessionId || sessionAdminflg == 'Y'"></th>
+							<!-- <th scope="col" v-if="list.id == sessionId || sessionAdminflg == 'Y'"></th>  -->
 							<th scope="col">No.</th>
 							<th scope="col"></th>
 							<th scope="col">제목</th>
@@ -145,7 +145,8 @@
 					<tbody>
 						<!-- 글 삭제 X -->
 						<tr v-for="(item, index) in list" v-if="item.delYn != 'Y'">
-							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
+							<!-- <td v-if="item.id == sessionId || sessionAdminflg == 'Y'" @click=""><input type="checkbox" v-bind:value="item" v-model="checkList"></td>  
+							<td v-else></td> -->
 							<td>{{item.cbno}}</td>							
 							<td v-if="cate1 != '' && cate2 != ''"></td>
 							<td v-else="cate1 != null">[{{item.cate2name}}]</td>
@@ -158,10 +159,12 @@
 						</tr>
 						<!-- 글 삭제 O -->
 						<tr v-else>
-							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
+							<!-- <td v-if="item.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td> 
+							<td v-else></td>  -->
 							<td>{{item.cbno}}</td>
-							<td v-if="cate1 != '' && cate2 != ''"></td>
-							<td v-else="cate1 != null">[{{item.cate2name}}]</td>
+							<td></td>
+							<!--<td v-if="cate1 != '' && cate2 != ''"></td>
+							<td v-else="cate1 != null">[{{item.cate2name}}]</td> -->
 							<td> 삭제된 게시글 입니다. </td>
 							<td></td>
 							<td></td>
@@ -172,7 +175,7 @@
 			</div>
 			<div class="btns">
 				<button class="btn" @click="fnAdd()">글쓰기</button>
-				<button class="btn" v-if="info.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemove(item.cno)">삭제</button>
+				<!-- <button class="btn" v-if="list.id == sessionId || sessionAdminflg == 'Y'" @click="fnRemove(list.cbno)">삭제</button> -->
 			</div>
 			<div class="searchbox">
 				<select>
@@ -318,13 +321,13 @@
 	    		var self = this;
 	    		self.pageChange("/commread.do", {cbno : cbno});
 	    	}
-	    	
-	    	, fnRemove : function(cno){
+	    	/*
+	    	, fnRemove : function(cbno){
 	    		 var self = this;
 	    		 if(!confirm("정말 삭제하시겠습니까?")){
 	    			 return;
 	    		 }
-	             var nparmap = {cno: cno};
+	             var nparmap = {cbno: cbno};
 	             $.ajax({
 	                 url:"/comm/remove.dox",
 	                 dataType:"json",	
@@ -332,11 +335,11 @@
 	                 data : nparmap,
 	                 success : function(data) {
 	                	alert("삭제되었습니다.");
-	 	                self.fnGetList();
+	 	                self.fnGetList(self.cate1, self.cate2);
 	                 }
 	             }); 
 	    	}
-	    	
+	    	*/
 	    	
 
 
@@ -345,7 +348,7 @@
 			var self = this;
 			self.fnGetList(self.cate1, self.cate2);
 			console.log("${mainlist}");
-
+			console.log("${sessionAdminflg}");
 		}
 	
 	});
