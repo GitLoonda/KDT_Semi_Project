@@ -8,7 +8,6 @@
 	width : 1080px;
 	height : 300px;
 	margin : auto;
-	margin-top : 250px;
 	z-index: 1;
 }
 .VueCarousel-slide {
@@ -31,10 +30,11 @@
  	height : 100%;
  	z-index: 1;
 }
-.label img {
-	width : 100%;
- 	height : 100%;
- 	z-index: 1;
+label div {
+ 	 width : 100%;
+	 height : 100%;
+	 z-index: 1;
+	 background-size: cover;
 }
 #container h2 {
     margin-left: 4em;

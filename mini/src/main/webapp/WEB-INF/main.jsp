@@ -16,16 +16,13 @@
 	<div id="app">
 		<carousel :per-page="1" :autoplay="true" :loop="true">
             <slide>
-                <a class="label" href="javascript:;"><img src="assets/banner/11729.jpg" alt="banner1"></a>
+                <a class="label" href="javascript:;"><div style="background-image : url('../assets/banner/11729.jpg')" alt="banner1"></div></a>
             </slide>
             <slide>
-                <a class="label" href="javascript:;"><img src="assets/banner/11730.jpg" alt="banner2"></a>
+                <a class="label" href="javascript:;"><div style="background-image : url('../assets/banner/11730.jpg')" alt="banner2"></div></a>
            	</slide>
             <slide>
-                <a class="label" href="javascript:;"><img src="assets/banner/11732.jpg" alt="banner3"></a>
-            </slide>
-            <slide>
-                <a class="label" href="javascript:;"><img src="img/board/160628_7.png" alt="banner4"></a>
+                <a class="label" href="javascript:;"><div style="background-image : url('../assets/banner/11732.jpg')" alt="banner3"></div></a>
             </slide>
         </carousel>
         <div id="container">

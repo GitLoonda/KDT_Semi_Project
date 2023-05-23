@@ -112,8 +112,8 @@
             </div>
 			
 			<div class=sidebar>
-	           	<div><a href="javascript:;">최근 본 상품</a></div>
-	           	<div><a href="javascript:;">찜한 상품</a></div>
+	           	<div><a @click="fnRecent" href="javascript:;">최근 본 상품</a></div>
+	           	<div><a @click="fnJjim" href="javascript:;">찜한 상품</a></div>
 	           	<div><a href="#header">맨 위로</a></div>
          	</div>
         </div>
