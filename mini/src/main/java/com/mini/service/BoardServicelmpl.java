@@ -110,7 +110,7 @@ public class BoardServicelmpl implements BoardService{
 		
 		HashMap<String,Object> resultMap = new HashMap<String,Object>();
 		
-		resultMap.put("grdnum",boardMapper.selectgrdinfo(map));
+		resultMap.put("grd",boardMapper.selectgrdinfo(map));
 		return resultMap;
 	}
 

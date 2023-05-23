@@ -479,7 +479,6 @@
 			list:[],
 			listid:"",
 			sid:"",
-
 			commlist:[],
 			commcont:"",
 			commcnt:0,
@@ -535,16 +534,18 @@
 			},
 			getgrdinfo(){
 				var self = this;
+				var num=0;
 				var nparmap = {id:self.listid};
 				$.ajax({
 					url:"/tradeView/grdinfo.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
-					success : function(data) { 
-						console.log(data);
-						self.usersum=data.grdnum[0].grdnum;	
-						self.usersum=self.usersum+self.list[0].grade;
+					success : function(data) {
+						
+						num=data.grd[0].usum;
+						num=num+self.list[0].grade;
+						self.usersum=num;
 					}
 					
 				}); 

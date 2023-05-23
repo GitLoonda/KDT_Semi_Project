@@ -60,7 +60,7 @@ select, textarea{
 		el: '#app',
 		data: {
 			tbno : opener.document.getElementById('tbno').value,
-			listid: opener.document.getElementById('listid').value,
+			sid: opener.document.getElementById('sid').value,
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",

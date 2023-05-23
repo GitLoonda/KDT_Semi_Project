@@ -101,7 +101,7 @@ public class BoardController {
         return "/user_grade";
     }
     // 댓글신고
-    // 거래평점
+    // 신고
     @RequestMapping("/contban.do") 
     public String commban(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         
