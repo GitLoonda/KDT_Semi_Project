@@ -97,6 +97,10 @@ public interface BoardMapper {
     // 평점 등록
     void fngrdsetAdd(HashMap<String, Object> map);
     
+
+    // report.do
+    List<Ban> selectbanlist (HashMap<String, Object> map);
+    void banAdd (HashMap<String, Object> map);
 }
 
 

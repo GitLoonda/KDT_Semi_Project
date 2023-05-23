@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>거래대상지정</title>
+	<title>댓글 신고</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/defcss.css">
@@ -40,63 +40,74 @@ select, textarea{
 	<div id="app">
 		<div id="report">
 	        <img src="img/main/unity-logo-200x100-1.jpg">
-	        <div><h2>거래설정</h2></div>
+	        <div><h2>댓글 신고</h2></div>
 			<div class="div2">
-				<select style="height: 30px;"  v-model="setid">
-					<option value="" disabled> 거래자 선택 </option>
-					<option V-for = "(commlist,index) in commlist" v-if="commlist.id!=listid" :value="commlist.id">{{commlist.nick}}</option>
+				<select style="height: 30px;" v-model="report">
+					<option value="0" disabled> 신고 사유 </option>
+					<option v-for="(banlist,index) in banlist" :value="banlist.cnum">{{banlist.cinfo}}</option>
 				</select>
 			</div>
 			<div class="div2">
-				<button id="btn" @click="fntradeset()">거래하기</button>
+				<textarea style="resize: none; height: 80px; " placeholder="세부사유" v-model="reconte"></textarea>
+			</div>
+			<div class="div2">
+				<button id="btn" @click="fnbanin">신고하기</button>
 			</div>
      	</div>
 	</div>
 </body>
 </html>
-
 <script type="text/javascript">
 	var app = new Vue({ 
 		el: '#app',
 		data: {
-			tbno : opener.document.getElementById('tbno').value,
-			listid: opener.document.getElementById('listid').value,
 			// 세션
+			tbno : opener.document.getElementById('tbno').value,
+			brdflg : opener.document.getElementById('brdflg').value,
+			id : opener.document.getElementById('listid').value,
+			scno: opener.document.getElementById('scno').value,
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
 			sessionNick:"${sessionNick}",
 			sessionUstatus:"${sessionUstatus}",
-			commlist:{},
-			setid:"",
+			report:"0",
+			setgrd:"",
+			reconte:"",
+			banlist:{},
 
 		},methods: {
-			//댓글 리스트
-			fncommlist : function(){
+			//평점 주기
+			banlistinfo(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno};
+         	  	var nparmap = {};
 				$.ajax({
-					url:"/tradeSet/commlist.dox",
+					url:"/report/banlist.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						self.commlist=data.commlist;
-						console.log(self.commlist);
+						console.log(data);
+						self.banlist=data.banlist;
 					}
 				}); 
 			},
-			fntradeset : function(){
+			fnbanin : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno, setuid:self.setid};
+				var cno=self.scno.slice(1,6);
+				if(self.report=="0"){
+					alert("신고사유를 선택해주세요");
+					return;
+				}
+				
+         	  	var nparmap = {cno : cno, id:self.id, brdflg:self.brdflg, bset:self.report, reconte:self.reconte};
 				$.ajax({
-					url:"/tradeSet/fntradeset.dox",
+					url:"/report/baninsert.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						alert("거래 선택완료");
-						opener.parent.apptv.fnGetList();
-						window.close("tradeset.do");
+						alert("신고되었습니다.");
+						window.close("reportboard.do");
 						
 					}
 				}); 
@@ -105,8 +116,9 @@ select, textarea{
 
 		}, created: function () {
 			var self = this;
-			self.fncommlist();
-			console.log(self.tbno);
+			self.banlistinfo();
+			console.log(self.scno);
+			console.log(self.scno.slice(1,6));
 			
 		}
 	});

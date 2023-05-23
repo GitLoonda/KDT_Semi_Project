@@ -256,6 +256,7 @@
 			<input type='hidden' id='tbno' name='tbno' :value='tbno' />
 			<input type='hidden' id='brdflg' name='brdflg' :value='brdflg' />
 			<input type='hidden' id='listid' name='listid' :value='listid' />
+			<input type='hidden' id='scno' name='scno' :value='scno' />
 			
 				<!-- 게시글 상세 -->
 				<div class="container">
@@ -391,7 +392,7 @@
 												<div>삭제된 글입니다.</div>
 											</template>
 											<template v-else-if="(commlist.showYn=='Y' || commlist.id==sessionId || listid==sessionId)">
-												<div>{{commlist.conte}}</div>
+												<div><input :id="('c'+index)" :value="commlist.cno" hidden> {{commlist.conte}}</div>
 											</template>
 											<template v-else>
 												<div>비밀 댓글입니다.</div>
@@ -404,7 +405,7 @@
 											<span id="combtn" class="coma">
 												<button @click="combtn(commlist.cno)">답글</button> 
 											</span>
-											<span class="coma">신고</span>
+											<button class="coma" @click="cbanbtn(('c'+commlist.cno))">신고</button>
 											<template v-if="(commlist.id==sessionId || listid==sessionId)">
 												<button class="coma" @click="fncedit(commlist)">수정</button>
 												<button class="coma" @click="fncDel(commlist.cno)">삭제</button>
@@ -463,6 +464,7 @@
 		data: {
 			tbno : "${trlist.tbno}",
 			brdflg:"",
+			scno:"",
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
@@ -782,6 +784,15 @@
 					}
 				}); 
 			},
+			cbanbtn(cno){
+				var self=this;
+				self.scno = cno;
+
+				let popUrl = "/contban.do";
+    			let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
+				window.open(popUrl,"거래 설정",popOption);
+			},
+
 			// 거래대상 선정
 			tradeset(tbno){
 				let popUrl = "/tradeset.do";
@@ -828,7 +839,8 @@
 						self.vwreconte=self.relist[0].reconte;
 					}
 				}); 
-			}
+			},
+			
 			
 		},
 		 created: function () {

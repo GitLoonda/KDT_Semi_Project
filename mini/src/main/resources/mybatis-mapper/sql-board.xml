@@ -496,4 +496,32 @@ INSERT INTO T3_GRD(ID,TBNO,GRDNUM,BRDSET)
 	VALUES(#{id},#{tbno},#{setgrd},#{brdflg})
 </insert>
 
+<!-- report.do -->
+<select id="selectbanlist" parameterType="hashmap" resultType="com.mini.model.DescList">
+	SELECT CNUM,CINFO
+	FROM T3_DESC
+	WHERE CID="BSET"
+</select>
+
+<insert id="banAdd" parameterType="hashmap">
+	INSERT INTO T3_BAN
+
+	<choose>
+		<when test="tbno!=null">
+		VALUES(NULL,#{id},#{tbno},NULL,NULL,#{bset},#{reconte},NOW())
+		</when>
+		<when test="cbno!=null">
+		VALUES(NULL,#{id},NULL,#{cbno},NULL,#{bset},#{reconte},NOW())
+		</when>
+		<when test="cno!=null">
+		VALUES(NULL,#{id},NULL,NULL,#{cno},#{bset},#{reconte},NOW())
+		</when>
+
+		<otherwise>
+		</otherwise>
+	</choose>
+
+</insert>
+
+
 </mapper>

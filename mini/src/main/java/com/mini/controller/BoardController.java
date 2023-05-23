@@ -100,7 +100,13 @@ public class BoardController {
         
         return "/user_grade";
     }
-
+    // 댓글신고
+    // 거래평점
+    @RequestMapping("/contban.do") 
+    public String commban(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+        
+        return "/report_cont";
+    }
 
     // trade.do
     //게시판 리스트 불러오기
@@ -526,6 +532,26 @@ public class BoardController {
 	public String fngrdset(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardService.fngrdset(map);
+        resultMap.put("result", "성공");
+		return new Gson().toJson(resultMap);
+	}
+
+    // reportboard.do
+    @RequestMapping(value = "/report/banlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchbanlist(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchbanlist(map);
+        
+        resultMap.put("result", "성공");
+		return new Gson().toJson(resultMap);
+	}
+    
+    @RequestMapping(value = "/report/baninsert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String banInsert(Model model, @RequestParam HashMap<String, Object> map ) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.banInsert(map);
         resultMap.put("result", "성공");
 		return new Gson().toJson(resultMap);
 	}

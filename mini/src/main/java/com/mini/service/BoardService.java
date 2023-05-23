@@ -80,6 +80,11 @@ public interface BoardService {
 
     void fngrdset(HashMap<String, Object> map);
 
+    // report.do
+    // 신고리스트 불러오기
+    HashMap<String, Object> searchbanlist(HashMap<String, Object> map);
+    // 밴등록
+    void banInsert(HashMap<String, Object> map);
     
 
 }

@@ -225,4 +225,18 @@ public class BoardServicelmpl implements BoardService{
 		boardMapper.fngrdsetAdd(map);
 	}
 
+
+	// report.do
+	public HashMap<String, Object> searchbanlist(HashMap<String, Object> map) {
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("banlist", boardMapper.selectbanlist(map));
+		return resultMap;
+	}
+	// 밴 등록
+	public void banInsert(HashMap<String, Object> map) {
+		boardMapper.banAdd(map);
+	}
+
+
+
 }
