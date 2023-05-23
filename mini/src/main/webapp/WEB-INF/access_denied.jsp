@@ -20,24 +20,32 @@
 		width : 1080px;
 		margin : auto;
 	}
-	.controller {
+	.container {
 		width : 100%;
 		margin : auto;
-		background : #ccc;
+		margin-top : 50px;
 	}
-	.controller div {
-		position : absolute;
-		top : 50%;
-		left : 50%;
+	.container div {
 		padding : 50px;
 		text-align : center;
+	}
+	.container div p {
+		margin-bottom : 50px;
 	}
 	.controller div a {
 		color : #5a5d69;
 	}
 	.controller div a:visited {
 		color : #5a5d69;
-	} 
+	}
+	.btn2 {	
+		border : none;
+		width : 6em;
+		height : 3em;
+	}
+	.btn2:hover {
+		background : #ccc;
+	}
 	
 </style>
 <body>
@@ -45,7 +53,7 @@
 		<div class="container">
 			<div>
 				<p>페이지 접근이 거부되었습니다.</p>
-				<a href="javascript:;" @click="fnMain">메인화면</a>
+				<a href="javascript:;" @click="fnMain"><button class="btn2">메인화면</button></a>
 			</div>
 		</div>
 	</div> 

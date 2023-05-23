@@ -15,7 +15,7 @@
  .container {
  	width : 1080px;
  	margin : auto;
- 	margin-top : 250px;
+ 	margin-top : 50px;
  	
  }
  .listbox {
@@ -88,14 +88,13 @@
 						<img :src="item.path" alt="">
 					</div>
 					<div class="descbox">
-						<p>{{item.btitle}}</p>
-						<p>가격 : {{item.bprice}}</p>
-						<p>NICK</p>
-						<p>BPRICE</p>
-						<p>LOCAL1 LOCAL2 LOCAL3</p>
+						</template>
+						<p>제목 : {{item.btitle}}</p>
+						<p>게시자 : {{item.nick}}</p>
+						<p>가격 : {{item.bprice}}원</p>
+						<p>주소 : {{item.local1}} {{item.local2}} {{item.local3}}</p>
 						<div class="btnbox">
-							<button>거래하기</button>
-							<button>찜 하기</button>
+							<button @click="fnView(item.tbno)">거래하기</button>
 						</div>	
 					</div>
 					<a @click="" href="javascript:;">X</a>
@@ -124,8 +123,8 @@ var app = new Vue({
     			return;
     		}
     		self.fnGetRecentList();
-    	}
-		,  fnGetRecentList : function() {
+    	}	
+		, fnGetRecentList : function() {
 			var self = this;
 			var list = JSON.stringify(self.recentList);
 			var nparmap = {"test" : 1, "list" : list};
@@ -136,10 +135,44 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {            
                		self.list = data.list;
-               		console.log(self.list);
-                }
-            });  
-			
+               		for(var i = 0; i < self.list.length; i++) {
+ 	         			self.list[i].bprice = self.list[i].bprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+ 	         		}                
+               	}
+            });
+		}
+		, pageChange : function(url, param) {
+    		var target = "_self";
+    		if(param == undefined){
+    		//	this.linkCall(url);
+    			return;
+    		}
+    		var form = document.createElement("form"); 
+    		form.name = "dataform";
+    		form.action = url;
+    		form.method = "post";
+    		form.target = target;
+    		for(var name in param){
+				var item = name;
+				var val = "";
+				if(param[name] instanceof Object){
+					val = JSON.stringify(param[name]);
+				} else {
+					val = param[name];
+				}
+				var input = document.createElement("input");
+	    		input.type = "hidden";
+	    		input.name = item;
+	    		input.value = val;
+	    		form.insertBefore(input, null);
+			}
+    		document.body.appendChild(form);
+    		form.submit();
+    		document.body.removeChild(form);
+    	}
+    	, fnView(tbNo){
+			var self = this;
+			self.pageChange("./tradeview.do", {tbno : tbNo});
 		}
     }   
     , created: function () {

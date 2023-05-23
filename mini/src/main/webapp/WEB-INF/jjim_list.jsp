@@ -15,7 +15,7 @@
  .container {
  	width : 1080px;
  	margin : auto;
- 	margin-top : 250px;
+ 	margin-top : 50px;
  	
  }
  .listbox {
