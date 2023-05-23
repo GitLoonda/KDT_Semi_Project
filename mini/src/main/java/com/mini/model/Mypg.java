@@ -49,6 +49,12 @@ public class Mypg {
     private String btitle;
     private String reconte;
     private String crenick;
+    private String cbno;
+    private String hits;
+    private String path;
+    private String bcont;
+    private String bprice;
+    
 
     
     

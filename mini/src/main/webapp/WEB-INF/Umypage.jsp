@@ -67,11 +67,12 @@
      </textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.jjno}} 번</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.jjno}}</textarea>
     
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea></div>
+     <textarea class="Umy_box" style= "resize : none;" readonly>
+     {{mypg.nick}} + {{mypg.ctitle}} +{{mypg.ccont}}</textarea></div>
      </div>
     </div>
 </body>
@@ -80,13 +81,15 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-    	mypg : {}
+    	mypg : {},
+    	id : "${sessionId}"
     }   
-    , methods: {
+    ,  methods: {
     	// 프로필 내역 받아오기
     	fnGetInfo : function(){
             var self = this;
-            var nparmap = {id : app.sessionId};
+            var nparmap = {id : self.id};
+            console.log(nparmap);
             $.ajax({
                 url:"/user/info.dox",
                 dataType:"json",	

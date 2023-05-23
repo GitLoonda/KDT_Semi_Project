@@ -25,5 +25,12 @@ public interface MypageMapper {
 	void insCreimg(HashMap<String, Object> map);
 	
 	void insCrebor(HashMap<String, Object> map);
+	//프로필에서 후기 , 커뮤니티작성글 , 찜목록 , 등록제품 불러오기
+	Mypg selectHugi(HashMap<String, Object> map);
 	
+	Mypg selectcommu(HashMap<String, Object> map);
+	
+	Mypg selectjjim(HashMap<String, Object> map);
+	
+	Mypg selectpro(HashMap<String, Object> map);
 }
