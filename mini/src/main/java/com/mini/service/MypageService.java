@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.mini.model.Mypg;
 
-
+ 
 public interface MypageService {
 	
 	// 프로필 아이디/주소 불러오기

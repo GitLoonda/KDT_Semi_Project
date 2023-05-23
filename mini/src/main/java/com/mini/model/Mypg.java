@@ -1,6 +1,6 @@
 package com.mini.model;
 import lombok.Data;
- 
+  
 public class Mypg {
     private String id;
     private String passwd;
@@ -305,6 +305,36 @@ public class Mypg {
 	}
 	public void setCrenick(String crenick) {
 		this.crenick = crenick;
+	}
+	public String getCbno() {
+		return cbno;
+	}
+	public void setCbno(String cbno) {
+		this.cbno = cbno;
+	}
+	public String getHits() {
+		return hits;
+	}
+	public void setHits(String hits) {
+		this.hits = hits;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public String getBcont() {
+		return bcont;
+	}
+	public void setBcont(String bcont) {
+		this.bcont = bcont;
+	}
+	public String getBprice() {
+		return bprice;
+	}
+	public void setBprice(String bprice) {
+		this.bprice = bprice;
 	}
 
 }

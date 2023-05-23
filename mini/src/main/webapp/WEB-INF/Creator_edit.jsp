@@ -10,7 +10,7 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<style>
+<style> 
 .serve textarea {
 margin-left : 30px;
 height : 120px;

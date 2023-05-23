@@ -103,7 +103,7 @@ var app = new Vue({
         }
 
     	
-		, CreatAdd(){
+		, CreatAdd(){ 
 			location.href ="/creadd.do";
 		}
 		,UpProfile(){

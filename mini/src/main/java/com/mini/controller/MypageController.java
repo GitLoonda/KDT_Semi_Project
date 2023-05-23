@@ -83,7 +83,7 @@ public class MypageController {
 		resultMap.put("mypg", mypg);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
-	}
+	} 
     
     // 프로필에서 후기 , 커뮤니티작성글 , 찜목록 , 등록제품 불러오기
     @RequestMapping(value = "/user/hugi.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

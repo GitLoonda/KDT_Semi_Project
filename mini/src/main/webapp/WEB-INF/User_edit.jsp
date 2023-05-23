@@ -9,7 +9,7 @@
 	<title>사용자프로필 수정</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
-<style>
+<style> 
 </style>
 <body>
 	<div id="app">

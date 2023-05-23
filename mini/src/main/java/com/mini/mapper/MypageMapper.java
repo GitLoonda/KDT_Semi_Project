@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.mini.model.Mypg;
 
-
+ 
 @Mapper
 public interface MypageMapper {
 

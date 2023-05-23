@@ -19,7 +19,7 @@ public class MypageServicelmpl implements MypageService{
 	public Mypg getUserInfo(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return mypagemapper.selectUserInfo(map);
-	}
+	} 
 	
 	//프로필 하단 정보 수정/업데이트
 	@Override
