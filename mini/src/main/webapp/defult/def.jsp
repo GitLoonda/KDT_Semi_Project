@@ -61,23 +61,23 @@
             <div id="navbar">
                 <ul class="menu">
                     <li >
-                        <a href="javascript:;"@click="fnCateSelect(1)">중고거래</a>
+                        <a href="javascript:;"@click="fnCateSelect('BF1')">중고거래</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li  v-for="item in cate1">
-                                    <a href="javascript:;" @click="fnCateSelect(1, item.cNum,item.cInfo)">
+                                    <a href="javascript:;" @click="fnCateSelect('BF1', item.cNum,item.cInfo)">
                                     {{item.cInfo}}
                                     <span>></span>
                                     </a>
                                     <ul class="dep2">
 		                                <li  v-for="item2 in cate2">
-		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;"@click="fnCateSelect(1, item.cNum,item.cInfo, item2.cNum,item2.cInfo)">
+		                                    <a v-if="item2.pComm1 == item.cNum" href="javascript:;"@click="fnCateSelect('BF1', item.cNum,item.cInfo, item2.cNum,item2.cInfo)">
 		                                    {{item2.cInfo}}
 		                                    <span>></span>
 		                                    </a>
 		                                    <ul class="dep3">
 				                                <li  v-for="item3 in cate3">
-				                                    <a href="javascript:;"@click="fnCateSelect(1, item.cNum,item.cInfo, item2.cNum,item2.cInfo, item3.cNum,item3.cInfo)">
+				                                    <a href="javascript:;"@click="fnCateSelect('BF1', item.cNum,item.cInfo, item2.cNum,item2.cInfo, item3.cNum,item3.cInfo)">
 				                                    {{item3.cInfo}}
 				                                    </a>
 				                                </li>
@@ -89,21 +89,21 @@
                         </div>
                     </li>
                     <li>
-                        <a href="javascript:;" @click="fnCateSelect(2)">제작의뢰</a>
+                        <a href="javascript:;" @click="fnCateSelect('BF2')">제작의뢰</a>
                         <div class="category">
                             <ul class="dep1">
                                 <li v-for="item in bcms">
-                                    <a href="javascript:;" @click="fnCateSelect(2, item.cNum, item.cInfo)">{{item.cInfo}}</a>
+                                    <a href="javascript:;" @click="fnCateSelect('BF2', item.cNum, item.cInfo)">{{item.cInfo}}</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li v-for="item in cate1">
-                        <a href="javascript:;" @click="fnComm(item.cNum, item.cInfo)">{{item.cInfo}}</a>
+                        <a href="javascript:;" @click="fnComm('BF2',item.cNum, item.cInfo)">{{item.cInfo}}</a>
                          <div class="category">
                             <ul class="dep1">
                                 <li v-for="item2 in cate2">
-                                    <a href="javascript:;" v-if="item2.pComm1 == item.cNum" @click="fnComm(item.cNum, item.cInfo, item2.cNum, item2.cInfo)">{{item2.cInfo}}</a>
+                                    <a href="javascript:;" v-if="item2.pComm1 == item.cNum" @click="fnComm('BF2', item.cNum, item.cInfo, item2.cNum, item2.cInfo)">{{item2.cInfo}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -193,25 +193,27 @@
         	, fnJjim : function() {
         		location.href = "jjim.do";
         	}
-        	, fnCateSelect : function(i, item, item2, item3, item4, item5, item6) {
+        	,
+
+			 fnCateSelect : function(brdfig, item, item2, item3, item4, item5, item6) {
         		var self = this;
         		if(typeof tlist !== 'undefined') {
-        			tlist.fnGetTradeList(item, item2, item3, item4, item5, item6);
+        			tlist.fnGetTradeList(brdfig,item, item2, item3, item4, item5, item6);
         			return;
         		}
        			if(item == null) {
-       				self.pageChange("/trade.do", {brdflg : i, cnum1 : null, cinfo1 : null, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
+       				self.pageChange("/trade.do", {brdflg : brdfig, cnum1 : null, cinfo1 : null, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
        				return;	
        			}
        			if(item3 == null) {
-           			self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
+           			self.pageChange("/trade.do", {brdflg : brdfig, cnum1 : item, cinfo1 : item2, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
            		 	return;
            		}
            		if(item5 == null) {
-           		 	self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : null, cinfo3 : null});
+           		 	self.pageChange("/trade.do", {brdflg : brdfig, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : null, cinfo3 : null});
            		 	return;
            		} 
-                   self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : item5, cinfo3 : item6});
+                   self.pageChange("/trade.do", {brdflg : brdfig, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : item5, cinfo3 : item6});
         	}
         	, fnSearch : function(){
         		var self = this;
@@ -220,15 +222,15 @@
         			return;
         		}
        			if(self.option == "구매") {
-       				self.pageChange("/trade.do", {brdflg : 1, kind : 1, keyword : self.keyword});
+       				self.pageChange("/trade.do", {brdflg : 'BF1', kind : 'KI1', keyword : self.keyword});
        				return;
        			}
        			if(self.option == "판매") {
-       				self.pageChange("/trade.do", {brdflg : 1, kind : 2, keyword : self.keyword});
+       				self.pageChange("/trade.do", {brdflg : 'BF1', kind : 'KI2', keyword : self.keyword});
        				return;
        			}
        			if(self.option == "의뢰") {
-       				self.pageChange("/trade.do", {brdflg : 2, kind : 3, keyword : self.keyword});
+       				self.pageChange("/trade.do", {brdflg : 'BF2', kind : 'KI3', keyword : self.keyword});
        				return;
        			}
         	}
