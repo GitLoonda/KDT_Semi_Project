@@ -197,7 +197,7 @@
         	, fnCateSelect : function(i, item, item2, item3, item4, item5, item6) {
         		var self = this;
         		if(typeof tlist !== 'undefined') {
-        			tlist.fnGetTradeList(item, item2, item3, item4, item5, item6);
+        			tlist.fnGetTradeList(i,item, item2, item3, item4, item5, item6);
         			return;
         		}
        			if(item == null) {

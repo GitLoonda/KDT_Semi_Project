@@ -57,6 +57,7 @@
 	LEFT JOIN (SELECT TBNO,PATH,REP FROM T3_TIMG WHERE REP='Y') T1 ON B.TBNO = T1.TBNO
 	LEFT JOIN (SELECT TBNO,COUNT(CNO) AS COMMCNT FROM T3_CMRE GROUP BY TBNO) C1 ON B.TBNO = C1.TBNO
 	WHERE DELYN="N" 
+<!-- 	
 	<choose>
 		<when test="#{brdset}==null">
 			AND BRDFLG="BF1"
@@ -65,6 +66,7 @@
 			AND BRDFLG=#{sbrdflg}
 		</otherwise>
 	</choose>
+	 -->
 	<choose>
 		<when test="cate1 !=null and cate2!=null and cate3!=null">
 			AND CATE1=#{cate1} AND CATE2=#{cate2} AND CATE3=#{cate3}
