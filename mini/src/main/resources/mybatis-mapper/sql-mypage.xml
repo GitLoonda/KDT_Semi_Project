@@ -57,9 +57,6 @@
 	</insert>
 
 
-
- 
-
 	<!-- 후기 불러오기 -->
 	<select id="selectHugi" parameterType="hashmap" resultType="com.mini.model.Mypg">
 			SELECT CNO, U2.NICK, CONTE

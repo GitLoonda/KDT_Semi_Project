@@ -74,7 +74,9 @@ border: 3px dashed #dbdbdb;
 border: 3px dashed red;
 }
 .upload-box .drag-file .image {
-width: 40px;
+width: 180px;
+height : 220px;
+object-fit : cover;
 }
 .upload-box .drag-file .message {
 margin-bottom: 0;

@@ -60,22 +60,19 @@
      <div class="Umy_text">정보</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
      <div class="Umy_text">등록제품</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>
-     제품명 : {{mypg.btitle}}
-     
-     제품가격 : {{mypg.bprice}}
-     
-     제품내용 : {{mypg.bcont}}</textarea>
+     <textarea v-for="dong in hugi" class="Umy_box" style= "resize : none;" readonly>
+     <p>제품명 : {{dong.btitle}}</p> 
+     <p>제품가격 : {{hugi.bprice}}</p>    
+     <p>제품내용 : {{hugi.bcont}}</p>
+     </textarea>
      <div class="Umy_text">후기</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>
-     거래후기
-     
-     {{mypg.nick}} - {{mypg.conte}}
+     거래후기 {{hugi}}
      </textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>
-     찜 번호 : {{mypg.jjno}}
+     찜 번호 : {{jjjim}}
      
      찜 제품명 : {{mypg.btitle}}
      
@@ -85,9 +82,9 @@
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>
-     제목 : {{mypg.ctitle}}
+     제목 : {{commu}}
      
-     내용 : {{mypg.ccont}}</textarea></div>
+     내용 : {{hugi.ccont}}</textarea></div>
      </div>
     </div>
 </body>
@@ -97,7 +94,11 @@ var app = new Vue({
     el: '#app',
     data: {
     	mypg : {},
-    	id : "${sessionId}"
+    	id : "${sessionId}",
+    	hugi : [],
+    	commu : [],
+    	jjjim : [],
+    	dong : []
     }   
     ,  methods: {
     	// 프로필 내역 받아오기
@@ -125,8 +126,12 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
-                	console.log(data.mypg);
-	                self.mypg = data.mypg;
+                	console.log(data);
+	                self.hugi = data.hugi;
+	                self.jjjim = data.jjjim;
+	                self.commu = data.commu;
+	                self.dong = data.dong;
+	                
                 }
             });  
         }
