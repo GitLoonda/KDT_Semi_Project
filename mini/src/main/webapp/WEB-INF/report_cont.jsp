@@ -62,10 +62,9 @@ select, textarea{
 		el: '#app',
 		data: {
 			// 세션
-			tbno : opener.document.getElementById('tbno').value,
-			brdflg : opener.document.getElementById('brdflg').value,
-			id : opener.document.getElementById('listid').value,
+			sid : opener.document.getElementById('sid').value,
 			scno: opener.document.getElementById('scno').value,
+			
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
 			sessionNick:"${sessionNick}",
@@ -99,7 +98,7 @@ select, textarea{
 					return;
 				}
 				
-         	  	var nparmap = {cno : cno, id:self.id, brdflg:self.brdflg, bset:self.report, reconte:self.reconte};
+         	  	var nparmap = {cno : cno, id:self.sid, bset:self.report, reconte:self.reconte};
 				$.ajax({
 					url:"/report/baninsert.dox",
 					dataType:"json",	

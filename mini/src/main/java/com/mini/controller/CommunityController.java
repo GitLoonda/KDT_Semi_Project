@@ -39,6 +39,12 @@ public class CommunityController {
 
         return "/comm_list";
     }
+	@RequestMapping("/commreport.do") //커뮤니티 게시판 메인
+    public String commreport(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+	
+		return "/report_comment";
+	}
+
 	
 	//리스트
 	@RequestMapping(value = "/comm/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

@@ -255,7 +255,7 @@
 				<!-- 게시판번호 넘겨줄때 -->
 			<input type='hidden' id='tbno' name='tbno' :value='tbno' />
 			<input type='hidden' id='brdflg' name='brdflg' :value='brdflg' />
-			<input type='hidden' id='listid' name='listid' :value='listid' />
+			<input type='hidden' id='sid' name='sid' :value='sid' />
 			<input type='hidden' id='scno' name='scno' :value='scno' />
 			
 				<!-- 게시글 상세 -->
@@ -392,7 +392,7 @@
 												<div>삭제된 글입니다.</div>
 											</template>
 											<template v-else-if="(commlist.showYn=='Y' || commlist.id==sessionId || listid==sessionId)">
-												<div><input :id="('c'+index)" :value="commlist.cno" hidden> {{commlist.conte}}</div>
+												<div><input :id="('c'+commlist.cno)" :value="commlist.cno" hidden> {{commlist.conte}}</div>
 											</template>
 											<template v-else>
 												<div>비밀 댓글입니다.</div>
@@ -478,6 +478,7 @@
 
 			list:[],
 			listid:"",
+			sid:"",
 
 			commlist:[],
 			commcont:"",
@@ -516,6 +517,7 @@
 						self.cont=data.list[0].bcont;
 						self.bstatus=data.list[0].bstatus;
 						self.listid=data.list[0].id;
+						self.sid=data.list[0].id;
 						self.brdflg=data.list[0].brdflg;
 						self.recnt=data.reCnt;
 						if(data.list[0].trade==undefined){

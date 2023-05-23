@@ -64,7 +64,7 @@ select, textarea{
 			// 세션
 			tbno : opener.document.getElementById('tbno').value,
 			brdflg : opener.document.getElementById('brdflg').value,
-			id : opener.document.getElementById('listid').value,
+			id : opener.document.getElementById('sid').value,
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
 			sessionNick:"${sessionNick}",

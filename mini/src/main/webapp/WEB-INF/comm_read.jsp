@@ -102,6 +102,9 @@
 </style>
 <body>
 	<div id="app">
+		<input type='hidden' id='scbno' name='scbno' :value='scbno' />
+		<input type='hidden' id='sid' name='sid' :value='sid' />
+		<input type='hidden' id='scno' name='scno' :value='scno' />
 		<div class="container">
 			<div class="card1">
 				<div class="card2">
@@ -148,7 +151,7 @@
 								</template>
 								
 								<template v-else-if="(item.showYn=='Y' || item.id==sessionId || info.id == sessionId)">
-									<div>{{item.conte}}</div>
+									<div><input :id="('c'+item.cno)" :value="item.cno" hidden> {{item.conte}}</div>
 								</template>
 								
 								<template v-else>
@@ -161,10 +164,10 @@
 						<div class="commbox2_2">
 							<span v-if="info.id == sessionId || sessionAdminflg == 'Y'">
 								<span class="coma" @click="fncedit(item)">수정</span>
-								<span class="coma" @click="fnRemoveComment(item.cno)">삭제</span>
+								<button class="coma" @click="fnRemoveComment(item.cno)">삭제</button>
 							</span>
 							<span v-else>
-								<span class="coma" @click="fnReportComment()">신고</span>
+								<button class="coma" @click="fnReportComment(('c'+item.cno))">신고</button>
 								<span class="coma" @click="fnReplyComment(item.cno)">답글</span>
 							</span>
 							<span class="coma" v-if="item.udate == null">{{item.cdate}}</span>
@@ -198,7 +201,9 @@ var app = new Vue({
        , cbno : "${map.cbno}"
        , sessionId : "${sessionId}"
        , sessionAdminflg : "${sessionAdminflg}"
-       
+       , sid:""
+	   , scbno:0
+	   , scno:""
  
  	   , comment : ""
  	   , commentList : []
@@ -207,6 +212,7 @@ var app = new Vue({
        , comminfo : {}
        , editcommNo: ""
        , editconte : ""
+	   , replyconte:"" 
        
     }   
     , methods: {
@@ -221,7 +227,9 @@ var app = new Vue({
                 success : function(data) {
                 	console.log(data);
 	                self.info = data.info;
-
+					self.scbno=data.info.cbno;
+					self.sid=data.info.id;
+					
                 }
             }); 
         }
@@ -288,14 +296,17 @@ var app = new Vue({
     	
     	//게시글 신고 팝업
     	, fnReportBoard : function() {
-    		let popUrl = "/reportboard.do";
+    		let popUrl = "/commreport.do";
     		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
     		window.open(popUrl,"게시글 신고",popOption);	
     	}
     	
     	//댓글 신고 팝업
-    	, fnReportComment : function() {
-    		let popUrl = "/reportcomment.do";
+    	, fnReportComment : function(cno) {
+			var self=this;
+			self.scno = cno;
+			console.log(self.scno);
+    		let popUrl = "/contban.do";
     		let popOption = "width = 650px, height=550px, top=200px, left=300px, scrollbars=yes";
     		window.open(popUrl,"댓글 신고",popOption);	
     	}
