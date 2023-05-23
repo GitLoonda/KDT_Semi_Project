@@ -60,14 +60,19 @@ public class BoardController {
     //게시글 상세
 	@RequestMapping("/tradeview.do") 
     public String tradeview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-        request.setAttribute("trlist", map);
+		request.setAttribute("trlist", map);
         List<String> recentList =  (List<String>) session.getAttribute("recentList");
-        if(recentList == null) {
+        String temp = map.values().toString().replaceAll("[^0-9]", "");
+        if(recentList.isEmpty()) {
         	List<String> list = new ArrayList<String>();
         	list.add((String) map.get("tbno"));
         	recentList = list;
         } else {
-        	recentList.add((String) map.get("tbno"));
+        	for(int i=0; i < recentList.size(); i++) {
+        		if(!recentList.get(i).equals(temp)) {
+        			recentList.add((String) map.get("tbno"));
+        		}
+        	}
         }
         session.setAttribute("recentList", recentList);
         

@@ -59,7 +59,7 @@
 	<div id="app">
 		<div class="container">
 			<div class="logobox">
-				<img src="img/main/unity-logo-200x100-1.jpg" alt="logo">
+				<a href="javascript:;" @click="fnMain"><img src="img/main/unity-logo-200x100-1.jpg"></a>
 			</div>
 			<h2>비밀번호 초기화</h2>
 			<template v-if="verifyFlg == 1">
@@ -79,16 +79,14 @@
 			</template>
 			<template v-if="verifyFlg == 2">
 				<div class="div2">
-					<p class="p1">비밀번호 찾기 질문</p>
+					<p class="p1">비밀번호 초기화 질문</p>
 					<input v-model="info.quiz" type="text" class="in" disabled>
 				</div>
 				<div class="div2">
-					<p class="p1">비밀번호 찾기 답변</p>
+					<p class="p1">비밀번호 초기화 답변</p>
 					<input v-model="info.answer" type="text" class="in">
 				</div>
-				<div class="div2">
 		         	<button class="btn" @click="fnQuiz">확인</button>
-				</div>
 			</template>
 			<template v-if="verifyFlg == 3">
 				<div class="div2">
@@ -204,6 +202,9 @@ var app = new Vue({
  					}
                  }
             }); 
+    	} 
+    	, fnMain : function() {
+    		location.href = "main.do";
     	} 
     
     }   
