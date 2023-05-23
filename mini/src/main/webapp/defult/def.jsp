@@ -213,8 +213,6 @@
            		 	return;
            		} 
                    self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : item5, cinfo3 : item6});
-<<<<<<< HEAD
-=======
         	}
         	, fnRecomSearch : function(keyword) {
         		var self = this;
@@ -234,7 +232,6 @@
        				self.pageChange("/trade.do", {brdflg : 2, kind : 3, keyword : keyword});
        				return;
        			}
->>>>>>> branch 'main' of https://github.com/GitLoonda/KDT_Semi_Project
         	}
         	, fnSearch : function(){
         		var self = this;
