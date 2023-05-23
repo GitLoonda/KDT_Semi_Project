@@ -328,6 +328,15 @@ public class CommunityController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//대댓글 
+		@RequestMapping(value = "/comment/reply.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String cReply(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+			return new Gson().toJson(resultMap);
+		}
+	
 	
 	
 	

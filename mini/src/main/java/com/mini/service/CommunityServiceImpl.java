@@ -22,7 +22,6 @@ public class CommunityServiceImpl implements CommunityService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cnt", communityMapper.selectCbrdListCnt(map));
 		resultMap.put("list", communityMapper.selectCbrdList(map));
-		resultMap.put("ccnt", communityMapper.selectsumcnt(map)); 
 		return resultMap;
 	}
 	

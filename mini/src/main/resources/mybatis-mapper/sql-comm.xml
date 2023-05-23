@@ -6,7 +6,7 @@
 	<!-- 게시판 리스트 -->
 	<select id="selectCbrdList" parameterType="hashmap" resultType="com.mini.model.Cbrd">
 		SELECT 
-			CBNO, 
+			B.CBNO, 
 			B.ID AS ID, 
 			CATE1, 
 			CATE2, 
@@ -15,15 +15,16 @@
 			HITS, 
 			B.CDATE,
 			B.UDATE, 
-			DELYN, 
-			COMMENTCNT, 
+			DELYN,  
 			D1.CINFO AS CATE1NAME, 
 			D2.CINFO AS CATE2NAME,
-			U1.NICK AS NICK
+			U1.NICK AS NICK,
+			IFNULL(COMMCNT,0) AS COMMCNT
 		FROM T3_CBRD B
 		INNER JOIN T3_DESC D1 ON B.CATE1 = D1.CNUM
 		INNER JOIN T3_DESC D2 ON B.CATE2 = D2.CNUM
 		INNER JOIN T3_USER U1 ON B.ID = U1.ID
+		LEFT JOIN (SELECT CBNO ,COUNT(CNO) AS COMMCNT FROM T3_CMRE GROUP BY CBNO) C1 ON B.CBNO = C1.CBNO
 		
 		<choose>
 			<when test="cate1 != '' and cate2 == ''">
@@ -68,12 +69,6 @@
 		WHERE CBNO = #{cbno};
 	</select>
 	
-	<!-- 제목 옆 댓글 수 업데이트 -->
-	<update id="updatecommentcnt" parameterType="hashmap">
-		UPDATE T3_CBRD C
-		SET C.COMMENTCNT = (SELECT COUNT(CNO) FROM CRME WHERE CBNO = #{cbno})
-		WHERE C.CBNO = #{cbno}
-	</update>
 	
 	<!-- 게시글 추가 -->
 	<select id="insertCbrd" parameterType="hashmap" >
@@ -99,7 +94,7 @@
 	<!-- 게시글 가져오기 -->
 	<select id="getCbrd" parameterType="hashmap" resultType="com.mini.model.Cbrd">
 		SELECT
-			CBNO,
+			B.CBNO,
 			B.ID,
 			CATE1,
 			CATE2,
@@ -109,11 +104,13 @@
 			B.UDATE,
 			HITS,
 			D1.CINFO AS CATE1NAME, 
-			D2.CINFO AS CATE2NAME
+			D2.CINFO AS CATE2NAME,
+			IFNULL(COMMCNT,0) AS COMMCNT
 		FROM T3_CBRD B
 		INNER JOIN T3_DESC D1 ON B.CATE1 = D1.CNUM
 		INNER JOIN T3_DESC D2 ON B.CATE2 = D2.CNUM
-		WHERE CBNO = #{cbno}
+		LEFT JOIN (SELECT CBNO, COUNT(CNO) AS COMMCNT FROM T3_CMRE GROUP BY CBNO) C1 ON B.CBNO = C1.CBNO
+		WHERE B.CBNO = #{cbno}
 	</select>
 	
 	<!-- 게시글 수정 -->

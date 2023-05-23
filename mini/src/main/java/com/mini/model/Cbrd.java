@@ -15,7 +15,7 @@ public class Cbrd {
 	private String cdate;
 	private String udate;
 	private String delYn;
-	private int commentcnt;
+	private int commcnt;
 	private String nick;
 	
 	
@@ -79,11 +79,11 @@ public class Cbrd {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
-	public int getCommentcnt() {
-		return commentcnt;
+	public int getCommcnt() {
+		return commcnt;
 	}
-	public void setCommentcnt(int commentcnt) {
-		this.commentcnt = commentcnt;
+	public void setCommtcnt(int commcnt) {
+		this.commcnt = commcnt;
 	}
 	
 	

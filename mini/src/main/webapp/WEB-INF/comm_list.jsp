@@ -150,8 +150,8 @@
 							<td>{{item.cbno}}</td>							
 							<td v-if="cate1 != '' && cate2 != ''"></td>
 							<td v-else="cate1 != null">[{{item.cate2name}}]</td>
-							<td v-if="item.commentcnt == 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}</a></td>
-							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}} ({{item.commentcnt}})</a></td>
+							<td v-if="item.commcnt == 0" @click="fnView(item.cbno)"> <a>{{item.ctitle}}</a></td>
+							<td v-else @click="fnView(item.cbno)"><a>{{item.ctitle}} ({{item.commcnt}})</a></td>
 							<td>{{item.hits}}</td>
 							<td>{{item.nick}}</td>
 							<td v-if="item.udate == null">{{item.cdate}}</td>

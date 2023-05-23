@@ -141,7 +141,8 @@
 						<div class="commbox2_1">
 							<div><img class="pimg" src="img/board/160628_7.png"></div>
 							<div class="commbox2_1_1">
-								<div class="commid">{{item.nick}}</div>								
+								<div class="commid">{{item.nick}}</div>	
+															
 							<template v-if="item.delYn == 'Y'" class="deletebox">
 									<div> 삭제된 댓글 입니다.</div>
 								</template>
@@ -164,7 +165,7 @@
 							</span>
 							<span v-else>
 								<span class="coma" @click="fnReportComment()">신고</span>
-								<span class="coma" @click="">답글</span>
+								<span class="coma" @click="fnReplyComment()">답글</span>
 							</span>
 							<span class="coma" v-if="item.udate == null">{{item.cdate}}</span>
 							<span class="coma" v-else>{{item.udate}}</span>
@@ -175,6 +176,11 @@
 						<div class="editbox">
 						<textarea v-model="editconte" rows="3" cols="100"></textarea>
 						<button class="btn" @click="fnEditComment()">수정</button>
+					</template>
+					<template v-if="comminfo.cno != item.cno">
+						<div class="replybox">
+						<textarea v-model="replyconte" rows="3" cols="100"></textarea>
+						<button class="btn" @click="">등록</button>
 					</template>
 				</div>
 			</div>
@@ -314,7 +320,8 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
 	                alert("댓글이 작성되었습니다.");
-                	self.comment = "";
+					self.comment="";
+                	self.fncommlist();
 	                self.fnGetBoard();
                 	
                 }
@@ -380,11 +387,31 @@ var app = new Vue({
 	                self.comminfo={};
 	                self.editcommNo="";
 	                self.editconte="";
-	                self.fn
 	                self.fnGetBoard();
+                	self.fncommlist();
                 }
             }); 
     	} 
+    	
+    	,fnReplyComment(){
+    		var self= this;
+			if(self.replyconte == ''){
+				alert("댓글 내용이 없습니다.");
+				return;
+			}
+            var nparmap = {cno : self.cno};
+            $.ajax({
+                url:"/comment/reply.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+	                alert("댓글이 작성되었습니다.");
+	                self.comminfo={};
+                	self.fncommlist();
+                }
+            }); 
+    	}
     	
     	
     	, fnEdit : function(item){
