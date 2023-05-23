@@ -23,10 +23,11 @@
           <div class="up_img">
             <div class="upload-box">
                 <div class="drag-file">
-                  <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                  <img :src="mypg.path" alt="파일 아이콘" class="image" id="preview">
                   <p class="message">이미지</p>
                   <img src="" alt="미리보기 이미지" class="preview">
                 </div>
+                <input type="file" id="file1" name="file1" @change="fnImage"> 
               </div>
         </div>
         <div class="serve">
@@ -42,12 +43,6 @@
     </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
-     <label class="file-label" for="chooseFile">이미지 업로드</label>
-    <input class="file" id="chooseFile"
-      type="file" 
-      @change="handleFiles($event.target.files)"
-      accept="image/png, image/jpeg, image/gif"
-    >
     <div id="imageContainer"></div>
   <div class="Portfolio">
         <h3 style="padding-left: 30px;">찜목록</h3>
@@ -120,6 +115,7 @@ var app = new Vue({
 	, fileList : ""
 	, mypg : {}
     , domain : ""
+    , path : "https://img.icons8.com/pastel-glyph/2x/image-file.png"
 	
     }   
     , methods: {
@@ -196,13 +192,43 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
+	                	self.upload();
 	                	alert("수정되었습니다.");
-	                	console.log(data);
-	                	location.href ="/main.do";
-	                	
+	 	        	    location.href ="/main.do";
 	                }
 	        }); 
 	    }
+		
+		, fnImage : function(){
+			var self = this;
+			var img = $("#file1")[0].files[0];
+			if (img) {
+		    	var reader = new FileReader();
+		    	reader.onload = function(e) {
+		      	document.getElementById('preview').src = e.target.result;
+		    };
+		    	reader.readAsDataURL(img);
+		  	} else {
+		    document.getElementById('preview').src = "";
+		  }
+		}
+		, upload : function(){
+			var self = this;
+			var form = new FormData();
+	        form.append( "file1", $("#file1")[0].files[0] );
+	        form.append( "id", self.mypg.id);
+	         $.ajax({
+	             url : "/mypage/upload.dox"
+	           , type : "POST"
+	           , processData : false
+	           , contentType : false
+	           , data : form
+	           , success:function(response) { 
+	        	   
+	           }
+	           
+	       });
+		}
     } 
     , created: function () {
     	var self = this;
