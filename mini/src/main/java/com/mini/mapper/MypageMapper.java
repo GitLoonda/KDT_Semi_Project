@@ -34,4 +34,8 @@ public interface MypageMapper {
 	Mypg selectjjim(HashMap<String, Object> map);
 	
 	Mypg selectpro(HashMap<String, Object> map);
+	
+	void deleteMyPageImg(HashMap<String, Object> map);
+	
+	void insertMyPageImg(HashMap<String, Object> map);
 }
