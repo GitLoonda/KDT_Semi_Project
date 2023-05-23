@@ -538,7 +538,8 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						self.usersum=data.grdnum[0].usum;						
+						console.log(data);
+						self.usersum=data.grdnum[0].grdnum;	
 						self.usersum=self.usersum+self.list[0].grade;
 					}
 					

@@ -113,6 +113,8 @@
 
 			//세션
 			sbrdflg:"${mainlist.brdflg}",
+			kind:"${mainlist.kind}",
+			keyword:"${mainlist.keyword}",
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
@@ -120,7 +122,6 @@
 			sessionUstatus:"${sessionUstatus}",
 			
 			// 페이징 관련
-			sbrdflg:"",
 			item1:"",
 			item2:"",
 			item3:"",
@@ -135,9 +136,8 @@
 		}   
 		, methods: {
 			// 리스트 불러오기,페이징6
-			fnGetTradeList : function(brdflg,item1, item1n, item2, item2n, item3, item3n){
+			fnGetTradeList : function(item1, item1n, item2, item2n, item3, item3n){
 				var self = this;
-				self.sbrdflg=brdflg
 				self.item1=item1;
 				self.item2=item2;
 				self.item3=item3;
@@ -147,7 +147,7 @@
 				/* selectPage 시작점에서 ~까지 가져올지  */
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
-         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3, sbrdflg:self.sbrdflg};
+         	  	var nparmap = {startNum : startNum, lastNum : lastNum, cate1:item1, cate2:item2, cate3:item3, sbrdflg:self.sbrdflg,skind:self.kind,keyword:self.keyword };
 					console.log(nparmap);
 				$.ajax({
 					url:"/trade/list.dox",

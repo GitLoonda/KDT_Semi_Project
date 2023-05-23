@@ -45,7 +45,16 @@ public class BoardController {
         }else{
             map.put("brdflg","BF1");
         }
-        
+        String kinF = String.valueOf(map.get("kind"));
+        if(kinF.equals("1")){
+            map.put("kind","KI1");
+        }else if(kinF.equals("2")){
+            map.put("kind","KI2");
+        }else if(kinF.equals("3")){
+            map.put("kind","KI3");
+        }
+
+        System.out.println(map);
         request.setAttribute("mainlist", map);
         return "/trade_list";
     }
@@ -311,6 +320,7 @@ public class BoardController {
     public String searchgrdinfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
     HashMap<String, Object> resultMap = new HashMap<String, Object>();
     resultMap=boardService.searchgrdinfo(map);
+
     resultMap.put("result", "success");
     return new Gson().toJson(resultMap);
     }

@@ -32,7 +32,7 @@
                             <option>판매</option>
                             <option>의뢰</option>
                         </select>
-                        <input v-model="keyword" type="text">
+                        <input v-model="keywords" type="text">
                         <a href="javascript:;"><button @click="fnSearch">검색</button></a>
                         
                     </div>
@@ -132,7 +132,8 @@
     		cate3 : [],
     		bcms : [],
     		option : "",
-    		keyword : "",
+			keywords:"",
+    		keyword :"",
     		sessionId : "${sessionId}",
     		sessionNick : "${sessionNick}",
     		sessionStatus : "${sessionStatus}",
@@ -215,6 +216,7 @@
         	}
         	, fnSearch : function(){
         		var self = this;
+				self.keyword="%"+self.keywords+"%"
         		if(self.option == null || self.option == "") {
         			alert("게시판을 선택해주세요.");
         			return;
