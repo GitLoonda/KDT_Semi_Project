@@ -51,7 +51,8 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-	mypg : {}
+	mypg : {},
+	id : "${sessionId}"
     }   
     , methods: {
        /* upload: function() {
@@ -85,7 +86,19 @@ var app = new Vue({
         
 		    , OkCre : function(){
 		        var self = this;
-		        var nparmap = {id : self.id,
+		        if(self.mypg.crenick == null){
+	    			alert("크리에이터명을 입력해주세요.");
+	    			return;
+	    		} 
+		        if(self.mypg.cretitle == null){
+	    			alert("제목을 입력해주세요.");
+	    			return;
+	    		}
+		        if(self.mypg.crecont == null){
+	    			alert("내용을을 입력해주세요.");
+	    			return;
+	    		}
+		        var nparmap = {id : self.sessionId,
 		        				crenick : self.mypg.crenick,
 		        				cretitle : self.mypg.cretitle,
 		        				crecont : self.mypg.crecont};

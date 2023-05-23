@@ -29,14 +29,14 @@ public class MypageServicelmpl implements MypageService{
 			mypagemapper.updateUppro(map);
 			return null;	
 	}
-	
+	 
 	//크리에이터 신청
 	@Override
 	public Mypg upcreadd(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		// mypagemapper.insCreadd(map);
-		 // mypagemapper.insCreimg(map);
-		mypagemapper.insCrebor(map);
+		mypagemapper.insCreadd(map);
+		//mypagemapper.insCreimg(map);
+		//mypagemapper.insCrebor(map);
 		return null; 
 	}
 	// 프로필에서 후기 , 커뮤니티작성글 , 찜목록 , 등록제품 불러오기

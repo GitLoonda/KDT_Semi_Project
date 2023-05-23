@@ -60,19 +60,34 @@
      <div class="Umy_text">정보</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.addr}}</textarea>
      <div class="Umy_text">등록제품</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.conte}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>
+     제품명 : {{mypg.btitle}}
+     
+     제품가격 : {{mypg.bprice}}
+     
+     제품내용 : {{mypg.bcont}}</textarea>
      <div class="Umy_text">후기</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>
-     거래후기 :  {{mypg.conte}}
+     거래후기
+     
+     {{mypg.nick}} - {{mypg.conte}}
      </textarea>
      <!-- 사용자만 볼수 있음-->
      <div class="Umy_text">찜 목록</div>
-     <textarea class="Umy_box" style= "resize : none;" readonly>{{mypg.jjno}}</textarea>
+     <textarea class="Umy_box" style= "resize : none;" readonly>
+     찜 번호 : {{mypg.jjno}}
+     
+     찜 제품명 : {{mypg.btitle}}
+     
+     찜한 가격 : {{mypg.bprice}}
+     </textarea>
     
      <!--후기 개수-->
      <div class="Umy_text">커뮤니티 작성글</div>
      <textarea class="Umy_box" style= "resize : none;" readonly>
-     {{mypg.nick}} + {{mypg.ctitle}} +{{mypg.ccont}}</textarea></div>
+     제목 : {{mypg.ctitle}}
+     
+     내용 : {{mypg.ccont}}</textarea></div>
      </div>
     </div>
 </body>
@@ -101,8 +116,20 @@ var app = new Vue({
                 }
             }); 
         }
-
-    	
+    	,fnHugiInfo : function(){
+            var self = this;
+            var nparmap = {id : self.id};
+            $.ajax({
+                url:"/user/hugi.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+                	console.log(data.mypg);
+	                self.mypg = data.mypg;
+                }
+            }); 
+        }
 		, CreatAdd(){ 
 			location.href ="/creadd.do";
 		}
@@ -117,6 +144,7 @@ var app = new Vue({
     , created: function () {
     	var self = this;
     	self.fnGetInfo();
+    	self.fnHugiInfo();
 	}
 });
 </script>

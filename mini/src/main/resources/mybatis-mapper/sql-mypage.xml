@@ -8,10 +8,7 @@
 		SELECT *
 			FROM T3_USER
 			LEFT JOIN T3_PROF ON T3_USER.ID = T3_PROF.ID
-			LEFT JOIN T3_CMRE ON T3_USER.ID = T3_CMRE.ID
-			LEFT JOIN T3_JJIM ON T3_USER.ID = T3_JJIM.ID
-			
-		where T3_USER.ID = #{id}
+			WHERE T3_USER.ID = #{id}
 	</select>
 	 
 	<!-- 프로필 하단 정보 수정/업데이트 -->
@@ -37,6 +34,8 @@
 		WHERE ID = #{id}
 	</update>
 	
+	
+	
 	<!-- 크리에이터 닉네임 -->
 	<update id="insCreadd" parameterType="hashmap">
 		UPDATE T3_USER
@@ -56,6 +55,10 @@
 		INSERT INTO T3_CREBRD
 		VALUES(NULL, #{id}, #{cretitle}, #{crecont}, NOW(), "N", "N")
 	</insert>
+
+
+
+
 
 	<!-- 후기 불러오기 -->
 	<select id="selectHugi" parameterType="hashmap" resultType="com.mini.model.Mypg">
