@@ -165,7 +165,7 @@
 							</span>
 							<span v-else>
 								<span class="coma" @click="fnReportComment()">신고</span>
-								<span class="coma" @click="fnReplyComment()">답글</span>
+								<span class="coma" @click="fnReplyComment(item.cno)">답글</span>
 							</span>
 							<span class="coma" v-if="item.udate == null">{{item.cdate}}</span>
 							<span class="coma" v-else>{{item.udate}}</span>
@@ -177,7 +177,7 @@
 						<textarea v-model="editconte" rows="3" cols="100"></textarea>
 						<button class="btn" @click="fnEditComment()">수정</button>
 					</template>
-					<template v-if="comminfo.cno != item.cno">
+					<template v-else>
 						<div class="replybox">
 						<textarea v-model="replyconte" rows="3" cols="100"></textarea>
 						<button class="btn" @click="">등록</button>
@@ -416,7 +416,7 @@ var app = new Vue({
     	
     	, fnEdit : function(item){
     		var self = this;
-    		self.cInfo = item;
+    		self.comminfo = item;
     	}
     	
     	

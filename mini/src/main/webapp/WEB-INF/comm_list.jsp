@@ -118,7 +118,6 @@
 				<span>  >  </span>
 
 				<span>
-					<!-- 테스트1,테스트2 가 값이 있을때 -->
 					<template v-if="cate1 != '' && cate2 != ''">
 						커뮤니티 > {{cate1n}} > {{cate2n}}
 					</template>
@@ -158,7 +157,7 @@
 							<td v-else>{{item.udate}}</td>
 						</tr>
 						<!-- 글 삭제 O -->
-						<tr v-else >
+						<tr v-else>
 							<td v-if="info.id == sessionId || sessionAdminflg == 'Y'"><input type="checkbox" v-bind:value="item" v-model="checkList"></td>
 							<td>{{item.cbno}}</td>
 							<td v-if="cate1 != '' && cate2 != ''"></td>
@@ -325,7 +324,7 @@
 	    		 if(!confirm("정말 삭제하시겠습니까?")){
 	    			 return;
 	    		 }
-	             var nparmap = {boardKey : cno};
+	             var nparmap = {cno: cno};
 	             $.ajax({
 	                 url:"/comm/remove.dox",
 	                 dataType:"json",	
