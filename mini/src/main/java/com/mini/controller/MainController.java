@@ -65,6 +65,26 @@ public class MainController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	@RequestMapping(value = "/main/recentDel.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteRecentItem(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<String> list  = (List<String>) session.getAttribute("recentList");
+		String temp = map.values().toString().replaceAll("[^0-9]", "");
+		if(!list.isEmpty()) {
+			for(int i=0; i < list.size(); i++) {
+				System.out.println("2 " + list.get(i));
+				System.out.println("2 " + temp);
+				if(list.get(i).equals(temp)) {
+					list.remove(i);
+				}
+			}
+			session.setAttribute("recentList", list);
+		}
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
 	@RequestMapping("/jjim.do") //메인페이지
     public String jjim(Model model) throws Exception{
 		

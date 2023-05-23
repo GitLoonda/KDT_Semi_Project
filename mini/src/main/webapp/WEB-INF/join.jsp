@@ -376,15 +376,15 @@ var app = new Vue({
 				alert("성별을 선택해주세요.");
 				return;
 			}
-			if(self.bYear == null) {
+			if(self.bYear == "") {
 				alert("생년을 선택해주세요.");
 				return;
 			}
-			if(self.bMonth == null) {
+			if(self.bMonth == "") {
 				alert("생월을 선택해주세요.");
 				return;
 			}
-			if(self.bDay == null) {
+			if(self.bDay == "") {
 				alert("생일을 선택해주세요.");
 				return;
 			}
@@ -397,7 +397,7 @@ var app = new Vue({
 				return;
 			}
 			self.list.addr = self.addr + ", " + self.addrDetail;
-			if(self.list.addr == null) {
+			if(self.list.addr == ", ") {
 				alert("주소를 입력해주세요.");
 				return;
 			}

@@ -32,7 +32,7 @@
  	display : flex;
  	margin : 25px 0;
  	background : #eee;
- 	padding : 10px 10px 0 10px;
+ 	padding : 10px 10px 10px 10px;
  	border-radius : 5px;
  }
  .itembox button {
@@ -69,7 +69,7 @@
  	width : 5em;
  	height : 2em;
  	float : right;
- 	margin : 0 10px 10px 10px;
+ 	margin : 10px;
  	border-radius : 0;
  	border : none;
  }
@@ -97,7 +97,7 @@
 							<button @click="fnView(item.tbno)">거래하기</button>
 						</div>	
 					</div>
-					<a @click="" href="javascript:;">X</a>
+					<a @click="fnDel(item.tbno)" href="javascript:;">X</a>
 				</div>
 			</div>
 		</div>
@@ -170,15 +170,34 @@ var app = new Vue({
     		form.submit();
     		document.body.removeChild(form);
     	}
-    	, fnView(tbNo){
+    	, fnView(tbno){
 			var self = this;
-			self.pageChange("./tradeview.do", {tbno : tbNo});
+			self.pageChange("./tradeview.do", {tbno : tbno});
 		}
+    	, fnDel(tbno) {
+    		var self = this;
+    		if(!confirm("해당 항목을 삭제하시겠습니까?")) {
+    			return;
+    		}
+    		var nparmap = {tbno : tbno};
+   		 	$.ajax({
+        		url:"/main/recentDel.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	if(data.result == "success") {
+                		alert("항목이 삭제되었습니다.");
+                		self.fnGetRecentList();
+                		return;
+                	}
+                }
+            }); 
+    	}
     }   
     , created: function () {
     	var self = this;
     	self.$nextTick(self.fnPermission());
-    	console.log(self.recentList);
 	}
 });
 </script>

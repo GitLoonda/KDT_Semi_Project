@@ -71,7 +71,7 @@
 	<div id="app">
 		<div class="container">
 			<div class="logobox">
-				<img src="img/main/unity-logo-200x100-1.jpg" alt="logo">
+				<a href="javascript:;" @click="fnMain"><img src="img/main/unity-logo-200x100-1.jpg"></a>
 			</div>
 			<h2>아이디 찾기</h2>
 			<template v-if="verifyFlg == 1">
@@ -134,6 +134,9 @@ var app = new Vue({
     	, fnFindPw : function() {
     		location.href = "findPw.do";
     	}
+    	, fnMain : function() {
+    		location.href = "main.do";
+    	} 
     	
     }   
     , created: function () {
