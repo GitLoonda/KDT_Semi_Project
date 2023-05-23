@@ -196,10 +196,10 @@
         	}
         	, fnCateSelect : function(i, item, item2, item3, item4, item5, item6) {
         		var self = this;
-        		if(typeof tlist !== 'undefined') {
-        			tlist.fnGetTradeList(i,item, item2, item3, item4, item5, item6);
-        			return;
-        		}
+        		// if(typeof tlist !== 'undefined') {
+        		// 	tlist.fnGetTradeList(i,item, item2, item3, item4, item5, item6);
+        		// 	return;
+        		// }
        			if(item == null) {
        				self.pageChange("/trade.do", {brdflg : i, cnum1 : null, cinfo1 : null, cnum2 : null, cinfo2 : null, cnum3 : null, cinfo3 : null});
        				return;	
