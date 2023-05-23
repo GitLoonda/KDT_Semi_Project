@@ -11,7 +11,7 @@
 </head>
 <style>
 </style>
-<body> 
+<body>  
   <div id="app">
   <div class="user_edit">
     <!--사용자 프로필-->

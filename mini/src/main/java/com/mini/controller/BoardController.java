@@ -71,7 +71,6 @@ public class BoardController {
         	recentList.add((String) map.get("tbno"));
         }
         session.setAttribute("recentList", recentList);
-        System.out.println(recentList);
         
         return "/trade_view";
     }

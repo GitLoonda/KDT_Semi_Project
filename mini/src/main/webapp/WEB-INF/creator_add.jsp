@@ -11,7 +11,7 @@
 </head>
 <style>
 </style>
-<body>
+<body> 
     <div id="app">
         <br><br><br><br> 
     <div class="user_edit">
@@ -27,12 +27,7 @@
 						</div>
 					</td>
             <br>
-        <select class="creadd_cate">
-            <option value="car">신청 카테고리</option>
-            <option value="plz">의뢰</option>
-            <option value="make">제작</option>
-            <option value="non">기타</option>
-            </select>
+            <div><input type="text" v-model="mypg.cretitle" placeholder="제목을 입력하세요." style="width:500px;"></div>
         <div class="creator_intro">
             <div class="creaddintr"> 소개 </div>
             <br>
@@ -88,22 +83,25 @@ var app = new Vue({
             }); 
         }
         
-			    ,OkCre : function(){
-			        var self = this;
-			        var nparmap = self.mypg;
-			        console.log(self.mypg);
-			        $.ajax({
-			            url:"/user/creadd.dox",
-			            dataType:"json",	
-			            type : "POST", 
-			            data : nparmap,
-			            success : function(data) {  
-			            	alert("등록신청이 완료되었습니다");
-			            	console.log(data);
-
-			            }
-			        }); 
-			    }
+		    , OkCre : function(){
+		        var self = this;
+		        var nparmap = {id : self.id,
+		        				crenick : self.mypg.crenick,
+		        				cretitle : self.mypg.cretitle,
+		        				crecont : self.mypg.crecont};
+		        console.log(nparmap);
+		        $.ajax({
+		            url:"/user/creadd.dox",
+		            dataType:"json",	
+		            type : "POST", 
+		            data : nparmap,
+		            success : function(data) {  
+		            	alert("등록신청이 완료되었습니다");
+		            	console.log(data);
+		
+		            }
+		        }); 
+		    }
        , Nocre() {
         	alert("취소했습니다.");
             location.href = "/mypage.do";
@@ -112,6 +110,8 @@ var app = new Vue({
     , created: function () {
     	var self = this;
     	self.fnGetInfo();
+    	console.log(app.sessionId);
+    	console.log(self.id);
 }
 });
   </script>

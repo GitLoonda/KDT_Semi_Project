@@ -38,7 +38,7 @@
                     </div>
                     <div id="RcmdItem">
                         <span>추천 검색어 : </span>
-                        <span v-for="item in cate3"><a @click="" href="javascript:;">{{item.cInfo}}</a>, </span>
+                        <span v-for="item in cate3"><a @click="fnRecomSearch(item.cinfo)" href="javascript:;">{{item.cInfo}}</a>, </span>
                     </div>
                 </div>
                 <template v-if="sessionId == ''">
@@ -213,6 +213,28 @@
            		 	return;
            		} 
                    self.pageChange("/trade.do", {brdflg : i, cnum1 : item, cinfo1 : item2, cnum2 : item3, cinfo2 : item4, cnum3 : item5, cinfo3 : item6});
+<<<<<<< HEAD
+=======
+        	}
+        	, fnRecomSearch : function(keyword) {
+        		var self = this;
+        		if(self.option == null || self.option == "") {
+        			alert("게시판을 선택해주세요.");
+        			return;
+        		}
+       			if(self.option == "구매") {
+       				self.pageChange("/trade.do", {brdflg : 1, kind : 1, keyword : keyword});
+       				return;
+       			}
+       			if(self.option == "판매") {
+       				self.pageChange("/trade.do", {brdflg : 1, kind : 2, keyword : keyword});
+       				return;
+       			}
+       			if(self.option == "의뢰") {
+       				self.pageChange("/trade.do", {brdflg : 2, kind : 3, keyword : keyword});
+       				return;
+       			}
+>>>>>>> branch 'main' of https://github.com/GitLoonda/KDT_Semi_Project
         	}
         	, fnSearch : function(){
         		var self = this;

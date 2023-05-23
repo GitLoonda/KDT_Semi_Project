@@ -44,32 +44,55 @@
 		CRENICK = #{crenick}
 		WHERE ID = #{id}
 	</update>
+	
 	<!-- 크리에이터 포트폴리오 -->
-	<update id="insCreimg" parameterType="hashmap">
-		UPDATE T3_CREIMG
-		SET
-		CREPATHNO = #{crepathno}
-		WHERE ID = #{id}
-	</update>
+	<insert id="insCreimg" parameterType="hashmap">
+		INSERT INTO T3_CREIMG
+		VALUES(#{crepathno})
+	</insert>
+	
 	<!-- 크리에이터등록요청 작성내용 -->
-	<update id="insCrebor" parameterType="hashmap">
-		UPDATE T3_CREBRD
-		SET
-		CRECONT = #{crecont}
-		WHERE ID = #{id}
-	</update>
+	<insert id="insCrebor" parameterType="hashmap">
+		INSERT INTO T3_CREBRD
+		VALUES(NULL, #{id}, #{cretitle}, #{crecont}, NOW(), "N", "N")
+	</insert>
 
 	<!-- 후기 불러오기 -->
 	<select id="selectHugi" parameterType="hashmap" resultType="com.mini.model.Mypg">
-			SELECT 
-			ID,
-			TBNO,
-			RECONTE,
-			FROM T3_TBRD
-			LEFT JOIN T3_TBRD ON T3_TBRD.TBNO = T3_CMRE.TBNO
-			WHERE ID = #{id}
+			SELECT CNO, U2.NICK, CONTE
+			FROM T3_USER U
+			INNER JOIN T3_TBRD T ON U.ID = T.ID
+			LEFT JOIN T3_CMRE C ON T.TBNO = C.TBNO
+			LEFT JOIN T3_USER U2 ON C.ID = U2.ID
+			WHERE U.ID = #{id}
 	</select>
 	
-
+	<!-- 커뮤니티 작성글 불러오기 -->
+	<select id="selectcommu" parameterType="hashmap" resultType="com.mini.model.Mypg">
+			SELECT C.CBNO, U.ID, CTITLE, CCONT, HITS, C.CDATE, PATH
+			FROM T3_USER U
+			INNER JOIN T3_CBRD C ON U.ID = C.ID
+			LEFT JOIN T3_CIMG I ON C.CBNO = I.CBNO
+			WHERE U.ID = #{id}
+	</select>
+	
+	<!-- 찜목록 불러오기 -->
+	<select id="selectjjim" parameterType="hashmap" resultType="com.mini.model.Mypg">
+			SELECT JJNO, J.ID, J.TBNO, BPRICE, BTITLE, BCONT
+			FROM T3_JJIM J 
+			INNER JOIN T3_TBRD T ON J.TBNO = T.TBNO
+			WHERE J.id = #{id}
+	</select>
+	
+	<!-- 등록 제품 불러오기 -->
+	<select id="selectpro" parameterType="hashmap" resultType="com.mini.model.Mypg">
+			SELECT T.TBNO, U.ID, BPRICE, BTITLE, BCONT, PATH
+			FROM T3_USER U
+			INNER JOIN T3_TBRD T ON U.ID = T.ID
+			LEFT JOIN T3_TIMG I ON T.TBNO = I.TBNO
+			where U.ID = #{id}
+	</select>
+	
+	
 	
 </mapper>

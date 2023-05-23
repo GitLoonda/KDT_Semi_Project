@@ -9,7 +9,7 @@
 	<title>사용자프로필 수정</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
-<style>
+<style> 
 </style>
 <body>
 	<div id="app">
@@ -81,7 +81,7 @@
             <br>
             <li>
                 <label>이메일</label>
-                    <input type="text" v-model="mypg.email" style="width : 150px"> @  
+                    <input type="text" v-model="mypg.email" style="width : 150px"> 
                     <select v-model="domain">
                         <option value="1">도메인</option>
                         <option value="naver.com">naver.com</option>
