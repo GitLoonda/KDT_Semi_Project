@@ -71,10 +71,8 @@ public class MainController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<String> list  = (List<String>) session.getAttribute("recentList");
 		String temp = map.values().toString().replaceAll("[^0-9]", "");
-		if(!list.isEmpty()) {
+		if(list != null) {
 			for(int i=0; i < list.size(); i++) {
-				System.out.println("2 " + list.get(i));
-				System.out.println("2 " + temp);
 				if(list.get(i).equals(temp)) {
 					list.remove(i);
 				}
