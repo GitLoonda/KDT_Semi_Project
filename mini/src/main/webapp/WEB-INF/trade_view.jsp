@@ -341,7 +341,10 @@
 										</template>
 									</template>
 									<template v-else-if="list.bstatusname=='완료'">
-										<div>{{nickname}}({{list.trade}})님과 거래 완료</div>
+										<template v-if="listid==sessionId">
+											<div>{{nickname}}({{list.trade}})님과 거래 완료</div>
+										</template>
+										
 									</template>
 								</div>
 							</div>
