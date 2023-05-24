@@ -63,7 +63,7 @@ public class BoardController {
 		request.setAttribute("trlist", map);
         List<String> recentList =  (List<String>) session.getAttribute("recentList");
         String temp = map.values().toString().replaceAll("[^0-9]", "");
-        if(recentList.isEmpty()) {
+        if(recentList == null) {
         	List<String> list = new ArrayList<String>();
         	list.add((String) map.get("tbno"));
         	recentList = list;
