@@ -437,12 +437,14 @@
 							<!-- 리뷰갯수가 1이상일때 -->
 							<template v-if="list[0].trade!=sessionId || recnt>=1">
 								<div class="reviewbox">
-								<div>거래후기</div>
+								
 									<template v-if="recnt==0">
-										<div class="infocont2" v-html="vwreconte" hidden></div>
+										<div>거래후기</div>
+										<div class="infocont2"> 후기가 등록되지 않았습니다.</div>
 									</template>
 									<template v-if="recnt==1">
-										<div class="infocont2" v-html="vwreconte"></div>
+											<div>거래후기</div>
+											<div class="infocont2" v-html="vwreconte"></div>
 									</template>
 								</div>
 							</template>
@@ -551,10 +553,13 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) {
-						
+						console.log(data.grd[0].usum);
 						num=data.grd[0].usum;
+						console.log(num);
 						num=num+self.list[0].grade;
+						console.log(num);
 						self.usersum=num;
+						console.log(self.usersum);
 					}
 					
 				}); 

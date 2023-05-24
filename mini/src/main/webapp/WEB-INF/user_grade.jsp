@@ -61,6 +61,7 @@ img{
 		data: {
 			tbno : opener.document.getElementById('tbno').value,
 			brdflg : opener.document.getElementById('brdflg').value,
+			sid:opener.document.getElementById('sid').value,
 			// 세션
 			sessionId:"${sessionId}",
 			sessionName:"${sessionName}",
@@ -75,7 +76,7 @@ img{
 			//평점 주기
 			fngrdset : function(){
 				var self = this;
-         	  	var nparmap = {tbno : self.tbno, id:self.sessionId, setgrd:self.setgrd, brdflg:self.brdflg};
+         	  	var nparmap = {tbno : self.tbno, id:self.sid, setgrd:self.setgrd, brdflg:self.brdflg};
 				$.ajax({
 					url:"/tradeGrd/fngrdset.dox",
 					dataType:"json",	
@@ -93,7 +94,6 @@ img{
 
 		}, created: function () {
 			var self = this;
-			
 		}
 	});
 
