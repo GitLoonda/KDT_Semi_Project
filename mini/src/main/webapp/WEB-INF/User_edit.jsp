@@ -23,9 +23,7 @@
           <div class="up_img">
             <div class="upload-box">
                 <div class="drag-file">
-                  <img :src="mypg.path" alt="파일 아이콘" class="image" id="preview">
-                  <p class="message">이미지</p>
-                  <img src="" alt="미리보기 이미지" class="preview">
+                  <img :src="mypg.path" alt="파일 아이콘" class="image" id="preview">          
                 </div>
                 <input type="file" id="file1" name="file1" @change="fnImage"> 
               </div>
@@ -239,4 +237,3 @@ var app = new Vue({
 });
     
     </script>
-

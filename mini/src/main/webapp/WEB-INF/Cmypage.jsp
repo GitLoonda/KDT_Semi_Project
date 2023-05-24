@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
 	<title>크리에이터 프로필</title>

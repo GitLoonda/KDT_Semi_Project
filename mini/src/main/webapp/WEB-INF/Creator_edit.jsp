@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 	<meta charset="UTF-8">
 	<jsp:include page="/defult/def.jsp"></jsp:include>
 	 <link rel="stylesheet" href="/css/user.css">

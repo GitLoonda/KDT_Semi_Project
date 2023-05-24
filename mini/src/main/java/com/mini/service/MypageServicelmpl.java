@@ -40,21 +40,20 @@ public class MypageServicelmpl implements MypageService{
 		return null; 
 	}
 	// 프로필에서 후기 , 커뮤니티작성글 , 찜목록 , 등록제품 불러오기
-	@Override
-	public Mypg getUserPro(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		mypagemapper.selectHugi(map);
-		mypagemapper.selectcommu(map);
-		mypagemapper.selectjjim(map);
-		mypagemapper.selectpro(map);
-		return null;
-	}
 
 	@Override
-	public void addMyPageImg(HashMap<String, Object> map) {
+	public HashMap<String, Object> getUserPro(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		mypagemapper.deleteMyPageImg(map);
-		mypagemapper.insertMyPageImg(map);
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("hugi", mypagemapper.selectHugi(map));
+		resultMap.put("commu", mypagemapper.selectcommu(map));
+		resultMap.put("jjjim", mypagemapper.selectjjim(map));
+		resultMap.put("dong", mypagemapper.selectpro(map));
+		return resultMap;
 	}
+
+ 
+
+
 
 }

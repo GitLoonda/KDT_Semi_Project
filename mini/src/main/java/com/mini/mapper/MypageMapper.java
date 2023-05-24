@@ -1,6 +1,7 @@
 package com.mini.mapper;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -27,15 +28,11 @@ public interface MypageMapper {
 	void insCrebor(HashMap<String, Object> map);
 	
 	//프로필에서 후기 , 커뮤니티작성글 , 찜목록 , 등록제품 불러오기
-	Mypg selectHugi(HashMap<String, Object> map);
+	List<Mypg> selectHugi(HashMap<String, Object> map);
 	
-	Mypg selectcommu(HashMap<String, Object> map);
+	List<Mypg> selectcommu(HashMap<String, Object> map);
 	
-	Mypg selectjjim(HashMap<String, Object> map);
+	List<Mypg> selectjjim(HashMap<String, Object> map);
 	
-	Mypg selectpro(HashMap<String, Object> map);
-	
-	void deleteMyPageImg(HashMap<String, Object> map);
-	
-	void insertMyPageImg(HashMap<String, Object> map);
+	List<Mypg> selectpro(HashMap<String, Object> map);
 }
