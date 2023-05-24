@@ -39,13 +39,15 @@ public class BoardController {
         
         // 중고거래,제작의뢰 클릭시 게시글리스트 이동
         // 다른페이지에서 접근시 null로 날라와서 아래와같이 적용
-        System.out.println(map);
         String brdF = String.valueOf(map.get("brdflg"));
-        if(brdF.equals("2") || brdF.equals("BF2") ){
+        if(brdF.equals("3") || brdF.equals("BF3") ){
+            map.put("brdflg","BF3");
+        }else if(brdF.equals("2") || brdF.equals("BF2") ){
             map.put("brdflg","BF2");
         }else{
             map.put("brdflg","BF1");
         }
+
         String kinF = String.valueOf(map.get("kind"));
         if(kinF.equals("1")){
             map.put("kind","KI1");
@@ -117,7 +119,6 @@ public class BoardController {
     @RequestMapping(value = "/trade/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchTbrdListInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-        System.out.println(map);
 
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
         int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
