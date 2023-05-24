@@ -447,7 +447,6 @@
 </html>
 <script type="text/javascript">
 	
-	console.log(Vue);
 	Vue.use(Vue2Editor);
 	const VueEditor = Vue2Editor.VueEditor;
 
@@ -517,7 +516,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data)
 						self.listbrdf=data.listbrdf;
 						self.listcate1=data.listcate1;
 						self.listcate3=data.listcate3;
@@ -606,14 +604,12 @@
 			userinfolist : function(){
 				var self = this;
 				var nparmap = {userid : self.inlist.id };
-				console.log(nparmap);
 				$.ajax({
 					url:"/trade/userinfo.dox",
 					dataType:"json",
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						self.userinfo=data.userinfo;
 
 					}
@@ -738,7 +734,6 @@
 			var self = this;
 			self.optionlist();
 			self.userinfolist();
-			console.log(self.sessionId);
 		}
 	});
 

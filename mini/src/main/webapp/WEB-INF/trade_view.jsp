@@ -466,7 +466,6 @@
 		</body>
 </html>
 <script type="text/javascript">
-	console.log(Vue);
 	Vue.use(Vue2Editor);
 	const VueEditor = Vue2Editor.VueEditor;
 
@@ -521,7 +520,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						self.list = data.list; 
 						self.jimst=data.ujimcnt;
 						self.cont=data.list[0].bcont;
@@ -750,7 +748,6 @@
 					success : function(data) { 
 						self.commcnt=data.cnt;
 						self.commlist=data.commlist;
-						console.log(self.commlist);
 					}
 				}); 
 			},
@@ -759,8 +756,6 @@
 				var self = this;
 				self.editcommNo = commlist.cno;
 				self.comminfo = commlist;
-				console.log(self.editcommNo);
-				console.log(self.comminfo);
 			}
 			// 댓글 수정
 			,fncommedit(){
@@ -847,9 +842,7 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) {
-						// console.log(data);
 						self.relist=data.reviewlist;
-						// console.log(self.relist);
 						self.vwreconte=self.relist[0].reconte;
 					}
 				}); 
@@ -865,7 +858,6 @@
 			self.fnGetList();
 			self.fncommlist();
 			self.jimsumcnt();
-			console.log(self.sessionId);
 
 		}
 	});

@@ -149,14 +149,12 @@
 				var startNum = ((self.selectPage-1) * 15);
     			var lastNum = 15;
          	  	var nparmap = {startNum : startNum, lastNum : lastNum, sbrdflg:self.sbrdflg,cate1:item1, cate2:item2, cate3:item3,kind:self.kind,keyword:self.keyword };
-					console.log(nparmap);
 				$.ajax({
 					url:"/trade/list.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
-					success : function(data) { 
-						console.log(data);                                      
+					success : function(data) {                                     
 						self.list = data.list;
 						self.listcnt = data.cnt;
 						self.pageCount = Math.ceil(self.listcnt / 15);
@@ -175,8 +173,6 @@
 			var startNum = ((pageNum-1) * 15);
 			var lastNum = 15;
 			var nparmap = {startNum : startNum, lastNum : lastNum, cate1:self.item1, cate2:self.item2, cate3:self.item3, sbrdflg:self.sbrdflg,kind:self.kind,keyword:self.keyword };
-			console.log(startNum);
-			console.log(lastNum);
 			$.ajax({
 				url : "/trade/list.dox",
 				dataType : "json",
@@ -228,8 +224,6 @@
 		}
 		,fnAddTradebtn(){
 			var self=this;
-			console.log(self.sessionId);
-			console.log(self.sbrdflg);
 			if(self.sessionId==''){
 				alert("로그인이 필요합니다.")
 				location.href="login.do";
@@ -244,7 +238,6 @@
 		, created: function () {
 			var self = this;
 			self.fnGetTradeList();	
-			console.log(self.sessionId);
 		}
 	});
 </script>

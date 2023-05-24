@@ -451,7 +451,6 @@
 </html>
 <script type="text/javascript">
 	
-	console.log(Vue);
 	Vue.use(Vue2Editor);
 	const VueEditor = Vue2Editor.VueEditor;
 
@@ -524,7 +523,6 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data)
 						self.listbrdf=data.listbrdf;
 						self.listcate1=data.listcate1;
 						self.listcate3=data.listcate3;
@@ -636,10 +634,8 @@
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
-						console.log(data);
 						self.list=data.list[0];
 						self.uplist=self.list;
-						console.log(self.list);
 						self.setkind();
 						self.setCate2();
 						self.setlocal2();
@@ -654,7 +650,6 @@
             var self = this;
             var nparmap = self.uplist;
 			var nparmap2={tbno:self.tbno};
-			console.log(nparmap2);
 			if(self.uplist.brdflg=="0" || self.uplist.kind=="0"){
 				alert("게시판이나 말머리를 선택해주세요");
 				return;
