@@ -604,13 +604,15 @@
 			// 이메일 연락처 정보
 			userinfolist : function(){
 				var self = this;
-				var nparmap = {userid : self.sessionid };
+				var nparmap = {userid : self.inlist.id };
+				console.log(nparmap);
 				$.ajax({
 					url:"/trade/userinfo.dox",
 					dataType:"json",
 					type : "POST", 
 					data : nparmap,
 					success : function(data) { 
+						console.log(data);
 						self.userinfo=data.userinfo;
 
 					}
@@ -735,6 +737,7 @@
 			var self = this;
 			self.optionlist();
 			self.userinfolist();
+			console.log(self.sessionId);
 		}
 	});
 

@@ -82,7 +82,6 @@ public class BoardController {
     //거래 등록 게시판
     @RequestMapping("/tradeadd.do") //거래게시판 페이지
     public String tradeadd(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-      
         request.setAttribute("brdfig", map.get("abrdfig"));
         return "/trade_add";
     }

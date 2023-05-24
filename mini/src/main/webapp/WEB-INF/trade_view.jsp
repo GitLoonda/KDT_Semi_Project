@@ -366,12 +366,12 @@
 					</div>
 					<!-- 염관상품,댓글 -->
 					<div id="Tviewbox2" v-if="bstatus!='BS5'" >
-						<div>연관 상품</div>
+						<!-- <div>연관 상품</div>
 						<div class="shbox">
 							<div class="itembox">
 								
 							</div>
-						</div>
+						</div> -->
 						<div class="commbox">
 							댓글({{commcnt}}개) <label for="comms"> <input id="comms" type="checkbox" v-model="comms">비밀 댓글</label>
 							<div class="commin">
@@ -408,7 +408,13 @@
 											<button class="coma" @click="cbanbtn(('c'+commlist.cno))">신고</button>
 											<template v-if="(commlist.id==sessionId || listid==sessionId)">
 												<button class="coma" @click="fncedit(commlist)">수정</button>
-												<button class="coma" @click="fncDel(commlist.cno)">삭제</button>
+												
+												<template v-if="list.bstatusname=='예약/거래' || list.bstatusname=='완료'" >
+													<button class="coma" @click="fncDel(commlist.cno)" disabled>삭제</button>
+												</template>
+												<template v-else>
+													<button class="coma" @click="fncDel(commlist.cno)">삭제</button>
+												</template>
 											</template>
 										</template>
 									</div>
@@ -434,7 +440,12 @@
 							<template v-if="list[0].trade!=sessionId || recnt>=1">
 								<div class="reviewbox">
 								<div>거래후기</div>
-								<div class="infocont2" v-html="vwreconte"></div>
+									<template v-if="recnt==0">
+										<div class="infocont2" v-html="vwreconte" hidden></div>
+									</template>
+									<template v-if="recnt==1">
+										<div class="infocont2" v-html="vwreconte"></div>
+									</template>
 								</div>
 							</template>
 
@@ -851,7 +862,7 @@
 			self.fnGetList();
 			self.fncommlist();
 			self.jimsumcnt();
-			
+			console.log(self.sessionId);
 
 		}
 	});

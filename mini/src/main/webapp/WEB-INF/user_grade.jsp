@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>리뷰점수</title>
+	<title>거래점수</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/defcss.css">
@@ -39,7 +39,7 @@ img{
 	<div id="app">
 		<div id="report">
 	        <img src="img/main/unity-logo-200x100-1.jpg">
-	        <div><h2>리뷰 평점</h2></div>
+	        <div><h2>거래점수</h2></div>
 			<div class="radiobox">
 				<label for="g1"><input id="g1" type="radio" name="setbox" value="GR1" v-model="setgrd">아주 별로에요</label>
 				<label for="g2"><input id="g2" type="radio" name="setbox" value="GR2" v-model="setgrd">별로에요</label>

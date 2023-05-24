@@ -173,7 +173,7 @@
 			self.selectPage = pageNum;
 			var startNum = ((pageNum-1) * 15);
 			var lastNum = 15;
-			var nparmap = {startNum : startNum, lastNum : lastNum, cate1:self.item1, cate2:self.item2, cate3:self.item3, sbrdflg:self.sbrdflg};
+			var nparmap = {startNum : startNum, lastNum : lastNum, cate1:self.item1, cate2:self.item2, cate3:self.item3, sbrdflg:self.sbrdflg,kind:self.kind,keyword:self.keyword };
 			console.log(startNum);
 			console.log(lastNum);
 			$.ajax({
@@ -243,7 +243,7 @@
 		, created: function () {
 			var self = this;
 			self.fnGetTradeList();	
-
+			console.log(self.sessionId);
 		}
 	});
 </script>
