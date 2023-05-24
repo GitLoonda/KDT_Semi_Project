@@ -25,7 +25,7 @@
 }
 #searchBar {
     
-    border: 3px solid #ADD4D9;
+    border: 3px solid #bbd8f2;
     background-color: white;
     margin: 0px;
     padding : 0px;
@@ -33,7 +33,7 @@
 }
 #searchBar select {
     border : none;
-    border-right: 3px solid #ADD4D9;
+    border-right: 3px solid #bbd8f2;
     margin: 0px;
     padding : 0px;
     height: 30px;
@@ -49,7 +49,7 @@
     height : 25px;
     width : 24em;
     border: none;
-    border-right: 3px solid #ADD4D9;
+    border-right: 3px solid #bbd8f2;
     border-radius: 0;
 }
 #searchBar input:focus {
@@ -100,7 +100,7 @@
 }
 #navbar {
     height: 40px;
-    background-color: #ADD4D9;
+    background-color: #bbd8f2;
     
 }
 a {
@@ -129,8 +129,8 @@ a {
     display : none;
     margin: 0;
     padding: 0;
-    background-color: #ADD4D9;
-    border : 2px solid #bbd8f2;
+    background-color: #bbd8f2;
+    border : 2px solid #ADD4D9;
     width : 160px;
     z-index: 99;
 }
@@ -167,30 +167,30 @@ a {
     float : right;
 }
 #navbar .menu > li:hover {
-    background-color: #bbd8f2;
+    background-color: #ADD4D9;
     z-index: 999;
 }
 #navbar .menu > li:hover > .category .dep1 {
     display: block;
 }
 #navbar .dep1 > li:hover {
-    background-color: #bbd8f2;
+    background-color: #ADD4D9;
 }
 #navbar .dep1 > li:hover > .dep2 {
     display: block;
 }
 #navbar .dep2 > li:hover {
-    background-color: #bbd8f2;
+    background-color: #ADD4D9;
 }
 #navbar .dep2 > li:hover > .dep3 {
     display: block;
 }
 #navbar .dep3 > li:hover {
-    background-color: #bbd8f2;
+    background-color: #ADD4D9;
 }
 .sidebar {
     position : fixed;
-    left: 1550px;
+    left: 1800px;
    	display : grid;
    	grid-template-rows: repeat(3, 50px);
    	padding : 10px;

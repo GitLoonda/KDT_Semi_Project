@@ -63,13 +63,13 @@
  }
  .descbox p {
  	text-align : left;
- 	font-size : 0.8em;
+ 	font-size : 1em;
  }
  .btnbox button {
  	width : 5em;
  	height : 2em;
  	float : right;
- 	margin : 10px;
+ 	margin : 0 10px;
  	border-radius : 0;
  	border : none;
  }
