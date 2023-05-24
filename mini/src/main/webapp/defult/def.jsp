@@ -98,6 +98,9 @@
                             </ul>
                         </div>
                     </li>
+                    <li>
+                        <a href="javascript:;" @click="fnCateSelect(3)">홍보</a>
+                    </li>
                     <li v-for="item in cate1">
                         <a href="javascript:;" @click="fnComm(item.cNum, item.cInfo)">{{item.cInfo}}</a>
                          <div class="category">
