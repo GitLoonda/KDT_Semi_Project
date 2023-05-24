@@ -70,6 +70,7 @@ public class MainController {
 	public String deleteRecentItem(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<String> list  = (List<String>) session.getAttribute("recentList");
+		System.out.println(list);
 		String temp = map.values().toString().replaceAll("[^0-9]", "");
 		if(list != null) {
 			for(int i=0; i < list.size(); i++) {
