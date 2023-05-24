@@ -50,6 +50,11 @@
 								</template>
 							</div>
 						</template>
+						<template v-else="(sbrdflg=='BF3')">
+							<div class="cateF">
+							홍보 게시판 
+							</div>
+						</template>
 
 						<div class="indexbox1">
 							<select class="indexL">
