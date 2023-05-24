@@ -241,11 +241,9 @@
 			#Tviewbox3 .reviewbox{
 				text-align: center;
 			}
-			#Tviewbox3 .infocont4{
-				width: 100%;
-				height: 80px;
-				resize: none;
-				border-right: 0px;
+			.mainbtn{
+				text-align: center;
+				margin: 10px;
 			}
 
 
@@ -428,7 +426,7 @@
 							</template>
 							<template v-if="comminfo.cno==commlist.cno">
 								<div class="commedit">
-									<textarea class="infocont4" name="" id="" cols="30" rows="10" v-model="editcommcont"></textarea>
+									<textarea class="infocont3" name="" id="" cols="30" rows="10" v-model="editcommcont"></textarea>
 									<button class="commbtn" @click="fncommedit()">수정</button>
 								</div>
 							</template>
@@ -460,7 +458,9 @@
 							</tamplate>
 
 						</div>
+						<div class="mainbtn"><button @click="mainbtn">돌아가기</button></div>
 					</div>
+					
 				</div>
 			</div>
 		</body>
@@ -854,6 +854,9 @@
 					}
 				}); 
 			},
+			mainbtn(){
+				location.href="/trade.do"
+			}
 			
 			
 		},

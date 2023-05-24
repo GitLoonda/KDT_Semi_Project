@@ -80,6 +80,7 @@
 							</div>
 						</div>
 						<!-- 페이징 추가 3 -->
+						<div class="mainbtn"><button @click="mainbtn">메인으로</button></div>
 						<div class="pageline">
 							<template>
 								<paginate
@@ -235,10 +236,10 @@
 			}else{
 				self.pageChange("/tradeadd.do",{abrdfig:self.sbrdflg});
 			}
-				
-			
-			
+		},mainbtn(){
+			location.href="main.do";
 		}
+
 		}
 		, created: function () {
 			var self = this;
