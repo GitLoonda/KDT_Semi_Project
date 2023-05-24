@@ -70,12 +70,17 @@ public class BoardController {
         	list.add((String) map.get("tbno"));
         	recentList = list;
         } else {
+        	boolean addFlg = false;
         	for(int i=0; i < recentList.size(); i++) {
-        		if(!recentList.get(i).equals(temp)) {
-        			recentList.add((String) map.get("tbno"));
+        		if(recentList.get(i).equals(temp)) {
+        			addFlg = !addFlg;
         		}
         	}
+        	if(!addFlg) {
+        		recentList.add((String) map.get("tbno"));
+        	}
         }
+        System.out.println(recentList);
         session.setAttribute("recentList", recentList);
         
         return "/trade_view";
