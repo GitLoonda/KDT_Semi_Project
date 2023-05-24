@@ -321,13 +321,13 @@
 	    		var self = this;
 	    		self.pageChange("/commread.do", {cbno : cbno});
 	    	}
-	    	/*
+	    	
 	    	, fnRemove : function(cbno){
 	    		 var self = this;
 	    		 if(!confirm("정말 삭제하시겠습니까?")){
 	    			 return;
 	    		 }
-	             var nparmap = {cbno: cbno};
+	             var nparmap = {cbno: self.cbno};
 	             $.ajax({
 	                 url:"/comm/remove.dox",
 	                 dataType:"json",	
@@ -339,7 +339,7 @@
 	                 }
 	             }); 
 	    	}
-	    	*/
+	    	
 	    	
 
 

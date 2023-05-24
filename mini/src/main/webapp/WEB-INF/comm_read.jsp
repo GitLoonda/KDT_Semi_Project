@@ -164,13 +164,13 @@
 							</div>
 						</div>
 						<div class="commbox2_2">
-							<span v-if="info.id == sessionId || sessionAdminflg == 'Y'">
+							<span v-if="item.id == sessionId || sessionAdminflg == 'Y'">
 								<span class="coma" @click="fncedit(item)">수정</span>
 								<span class="coma" @click="fnRemoveComment(item.cno)">삭제</span>
 							</span>
 							<span v-else>
 								<span class="coma" @click="fnReportComment(('c'+item.cno))">신고</span>
-								<span class="coma" @click="fnReplyComment(item.cno)">답글</span>
+								<span class="coma" @click="">답글</span>
 							</span>
 							<span class="coma" v-if="item.udate == null">{{item.cdate}}</span>
 							<span class="coma" v-else>{{item.udate}}</span>
@@ -182,11 +182,13 @@
 						<textarea v-model="editconte" rows="3" cols="100"></textarea>
 						<button class="btn" @click="fnEditComment()">수정</button>
 					</template>
-					<template v-else>
+					<!-- <template v-else>
 						<div class="replybox">
-						<textarea v-model="replyconte" rows="3" cols="100"></textarea>
+						<textarea v-model="" rows="3" cols="100"></textarea>
 						<button class="btn" @click="">등록</button>
 					</template>
+					 -->
+					 
 				</div>
 			</div>
 		</div>
@@ -220,7 +222,7 @@ var app = new Vue({
     , methods: {
     	fnGetBoard : function(){
             var self = this;
-            var nparmap = {cbno : self.cbno, id:self.sessionId};
+            var nparmap = {cbno : self.cbno, id: self.sessionId};
             $.ajax({
                 url:"/comm/read.dox",
                 dataType:"json",	
@@ -248,7 +250,7 @@ var app = new Vue({
    		 if(!confirm("정말 삭제하시겠습니까?")){
    			 return;
    		 }
-            var nparmap = {cbno : cbno};
+            var nparmap = {cbno : self.cbno};
             $.ajax({
                 url:"/comm/remove.dox",
                 dataType:"json",	
@@ -361,6 +363,9 @@ var app = new Vue({
     	//댓글 삭제
     	, fnRemoveComment : function(cno){
     		var self = this;
+      		 if(!confirm("정말 삭제하시겠습니까?")){
+       			 return;
+       		 }
             var nparmap = {cno : cno};
             $.ajax({
                 url:"/comment/remove.dox",
