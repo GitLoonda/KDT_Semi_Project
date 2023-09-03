@@ -1,5 +1,6 @@
 # BIRD
 K-DIGITAL TRAINING AWS 기반 SPRING / REACT 풀스택 과정, 세미 프로젝트 
+
 취미 / 서브컬쳐 영역 전반의 중고거래 / 커뮤니티 홈페이지
 
 # Project Member
